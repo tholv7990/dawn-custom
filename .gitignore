@@ -8,3 +8,6 @@
 ehthumbs.db
 Thumbs.db
 .shopify
+
+# Claude Code local settings (personal, not team policy)
+.claude/settings.local.json
