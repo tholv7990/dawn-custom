@@ -155,6 +155,9 @@ body {
 
   --ct-accent: {{ settings.color_accent | default: '#00A76F' }};
   --ct-accent-strong: {{ settings.color_accent_hover | default: '#007867' }};
+  {%- comment -%} RGB triples for Dawn's --color-* vars, which use rgb()/rgba() (hex would break them) {%- endcomment -%}
+  --ct-accent-rgb: {{ settings.color_accent.red }},{{ settings.color_accent.green }},{{ settings.color_accent.blue }};
+  --ct-accent-strong-rgb: {{ settings.color_accent_hover.red }},{{ settings.color_accent_hover.green }},{{ settings.color_accent_hover.blue }};
   --ct-accent-text:#007867; --ct-accent-subtle:#C8FAD6; --ct-accent-border:#5BE49B;
   --ct-accent-glow:rgba(0,167,111,.16);
 
@@ -598,7 +601,9 @@ git commit -m "feat(js): add ct-scrollspy, ct-sticky-atc, ct-quickview utilities
 }
 .button--primary,
 .button:not(.button--secondary):not(.button--tertiary) {
-  --color-button: var(--ct-accent-strong);
+  /* Dawn uses rgba(var(--color-button), …) so these MUST be RGB triples, not hex */
+  --color-button: var(--ct-accent-strong-rgb);
+  --color-button-text: 255, 255, 255;
 }
 .button:hover { transform: translateY(-1px); }
 .button:focus-visible { box-shadow: var(--ct-focus); outline: none; }

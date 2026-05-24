@@ -43,7 +43,9 @@ img { max-width: 100%; }
 }
 .button--primary,
 .button:not(.button--secondary):not(.button--tertiary) {
-  --color-button: var(--ct-accent-strong);
+  /* Dawn uses rgba(var(--color-button), …) so these MUST be RGB triples, not hex */
+  --color-button: var(--ct-accent-strong-rgb);
+  --color-button-text: 255, 255, 255;
 }
 .button:hover { transform: translateY(-1px); }
 .button:focus-visible { box-shadow: var(--ct-focus); outline: none; }
