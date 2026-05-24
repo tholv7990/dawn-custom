@@ -1,0 +1,40 @@
+/* assets/ct-sections.css — shared primitives for all ct-* homepage sections.
+   Ported from dawn-design-system.html; demo tokens → --ct-* (spec §4.1),
+   demo .btn family → .ct-btn (spec §5). Loaded by every ct-* section;
+   duplicate <link>s dedupe at the browser cache (same URL). */
+
+/* ---- Section CTA buttons (demo .btn family) ---- */
+.ct-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--ct-font-body);font-size:15px;font-weight:600;height:var(--ct-touch);padding:0 22px;border-radius:var(--ct-r-pill);border:none;cursor:pointer;white-space:nowrap;text-decoration:none;transition:background .15s,box-shadow .15s,transform .12s,opacity .15s;position:relative;overflow:hidden}
+.ct-btn:focus-visible{outline:none;box-shadow:var(--ct-focus)}
+.ct-btn:active{transform:scale(.97)}
+.ct-btn svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.ct-btn--sm{height:36px;padding:0 16px;font-size:13px}
+.ct-btn--lg{height:56px;padding:0 32px;font-size:16px}
+.ct-btn--full{width:100%}
+.ct-btn--primary{background:var(--ct-accent-strong);color:#fff;box-shadow:var(--ct-shadow-sm)}
+.ct-btn--primary:hover{background:var(--ct-accent);box-shadow:var(--ct-shadow-md);transform:translateY(-1px)}
+.ct-btn--outlined{background:transparent;color:var(--ct-text);border:1px solid var(--ct-border)}
+.ct-btn--outlined:hover{background:var(--ct-bg-control)}
+.ct-btn--soft{background:var(--ct-accent-subtle);color:var(--ct-accent-text)}
+.ct-btn--soft:hover{background:#b8f5c8;box-shadow:var(--ct-shadow-sm)}
+
+/* ---- Eyebrow + kicker + section head ---- */
+.ct-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--ct-accent-subtle);border:1px solid var(--ct-accent-border);border-radius:var(--ct-r-pill);padding:5px 12px;font-size:12px;font-weight:600;color:var(--ct-accent-text);margin-bottom:20px;width:fit-content}
+.ct-eyebrow__dot{width:6px;height:6px;border-radius:50%;background:var(--ct-accent);animation:ct-pulse 2s ease-in-out infinite}
+.ct-kicker{font-family:var(--ct-font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ct-accent-text);margin-bottom:10px}
+.ct-section-head{text-align:center;max-width:640px;margin:0 auto 32px}
+.ct-section-head__title{font-size:clamp(24px,3vw,35px);font-weight:800;color:var(--ct-text);letter-spacing:-.025em;line-height:1.15;margin-bottom:10px}
+.ct-section-head__sub{font-size:15px;color:var(--ct-text-2);line-height:1.65}
+
+/* ---- Rating row (demo .rating-row/.stars/.rating-count) ---- */
+.ct-rating-row{display:flex;align-items:center;gap:6px;margin-top:4px}
+.ct-stars{color:var(--ct-rating);font-size:14px;letter-spacing:1px}
+.ct-rating-count{font-size:13px;color:var(--ct-text-3)}
+
+/* ---- 3-col grid helper ---- */
+.ct-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:760px){.ct-grid-3{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.ct-grid-3{grid-template-columns:1fr}}
+
+@keyframes ct-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+@media(prefers-reduced-motion:reduce){.ct-eyebrow__dot{animation:none}}
