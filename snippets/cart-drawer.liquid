@@ -74,7 +74,7 @@
           </span>
         </button>
       </div>
-      {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
+      {%- assign ct_threshold = settings.free_shipping_threshold | default: 50 | times: 100 -%}
       {%- if ct_threshold == 0 -%}{%- assign ct_threshold = 5000 -%}{%- endif -%}
       {%- if cart != empty -%}
         {%- assign ct_remaining = ct_threshold | minus: cart.total_price -%}

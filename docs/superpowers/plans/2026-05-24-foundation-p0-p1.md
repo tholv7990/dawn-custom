@@ -88,7 +88,7 @@ Insert this object as a **new element in the top-level array**, immediately befo
     { "type": "range", "id": "border_radius", "label": "Corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 8 },
     { "type": "range", "id": "glass_opacity", "label": "Sticky header glass opacity", "min": 0, "max": 1, "step": 0.1, "default": 0.9 },
     { "type": "header", "content": "Commerce" },
-    { "type": "range", "id": "free_shipping_threshold", "label": "Free shipping threshold", "min": 0, "max": 50000, "step": 500, "unit": "¢", "default": 5000, "info": "In cents. 5000 = $50.00" }
+    { "type": "range", "id": "free_shipping_threshold", "label": "Free shipping threshold", "min": 0, "max": 500, "step": 5, "unit": "$", "default": 50, "info": "Order subtotal (store currency) to unlock free shipping. Shopify caps a range max below 10000, so this is in DOLLARS, converted to cents in Liquid." }
   ]
 }
 ```
@@ -832,7 +832,7 @@ git commit -m "feat(card): add hover overlay, quick-view trigger, %-off badge"
 Immediately **after** the `</div>` that closes `<div class="drawer__header">` (i.e., after the close button block, before `<cart-drawer-items`), insert:
 
 ```liquid
-      {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
+      {%- assign ct_threshold = settings.free_shipping_threshold | default: 50 | times: 100 -%}
       {%- if ct_threshold == 0 -%}{%- assign ct_threshold = 5000 -%}{%- endif -%}
       {%- if cart != empty -%}
         {%- assign ct_remaining = ct_threshold | minus: cart.total_price -%}
