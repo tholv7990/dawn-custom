@@ -1,0 +1,31 @@
+/* assets/theme-overrides.css — Minimals design system over Dawn.
+   All values use --ct-* tokens. Components authored in px (root-independent;
+   we never change Dawn's 62.5% html font-size). */
+
+/* ---- Typography ---- */
+body,
+.rte,
+p,
+li,
+input,
+select,
+textarea,
+button {
+  font-family: var(--ct-font-body);
+}
+h1, h2, h3, h4, h5, h6,
+.h0, .h1, .h2, .h3, .h4, .h5 {
+  font-family: var(--ct-font-heading);
+  color: var(--ct-text);
+  letter-spacing: -0.02em;
+  line-height: var(--ct-leading-tight);
+}
+h1, .h1 { font-size: var(--ct-text-3xl); font-weight: var(--ct-fw-bold); }
+h2, .h2 { font-size: var(--ct-text-xl); font-weight: var(--ct-fw-bold); }
+h3, .h3 { font-size: var(--ct-text-lg); font-weight: var(--ct-fw-semi); }
+
+/* ---- Page chrome ---- */
+.color-background-1,
+.gradient { background: var(--ct-bg); }
+.page-width { max-width: var(--ct-mw); }
+img { max-width: 100%; }
