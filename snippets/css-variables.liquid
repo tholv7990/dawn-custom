@@ -50,8 +50,8 @@ body {
   --ct-r-md: {{ settings.border_radius | default: 8 }}px;
   --ct-r-lg:12px; --ct-r-xl:16px; --ct-r-pill:9999px;
 
-  --ct-font-heading: '{{ settings.font_heading.family | default: 'Public Sans' }}', system-ui, sans-serif;
-  --ct-font-body: '{{ settings.font_body.family | default: 'Public Sans' }}', system-ui, sans-serif;
+  --ct-font-heading: "{{ settings.font_heading.family | default: 'Public Sans' }}", system-ui, sans-serif;
+  --ct-font-body: "{{ settings.font_body.family | default: 'Public Sans' }}", system-ui, sans-serif;
   --ct-font-mono: 'DM Mono', ui-monospace, monospace;
 
   --ct-text-xs:12px; --ct-text-sm:13px; --ct-text-base:15px; --ct-text-md:16px;
@@ -70,7 +70,7 @@ body {
   --ct-ease-spring:cubic-bezier(.34,1.56,.64,1);
   --ct-ease-in-out:cubic-bezier(.65,0,.35,1);
 
-  --ct-glass: {{ settings.glass_opacity | default: 0.88 }};
+  --ct-glass: {{ settings.glass_opacity | default: 0.9 }};
 }
 
 @media (prefers-reduced-motion: reduce) {

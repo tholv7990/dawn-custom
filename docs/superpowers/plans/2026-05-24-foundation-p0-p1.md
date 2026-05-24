@@ -86,7 +86,7 @@ Insert this object as a **new element in the top-level array**, immediately befo
     { "type": "font_picker", "id": "font_body", "label": "Body font", "default": "public_sans_n4" },
     { "type": "header", "content": "Shape & layout" },
     { "type": "range", "id": "border_radius", "label": "Corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 8 },
-    { "type": "range", "id": "glass_opacity", "label": "Sticky header glass opacity", "min": 0, "max": 1, "step": 0.04, "default": 0.88 },
+    { "type": "range", "id": "glass_opacity", "label": "Sticky header glass opacity", "min": 0, "max": 1, "step": 0.1, "default": 0.9 },
     { "type": "header", "content": "Commerce" },
     { "type": "range", "id": "free_shipping_threshold", "label": "Free shipping threshold", "min": 0, "max": 50000, "step": 500, "unit": "¢", "default": 5000, "info": "In cents. 5000 = $50.00" }
   ]
@@ -175,8 +175,8 @@ body {
   --ct-r-md: {{ settings.border_radius | default: 8 }}px;
   --ct-r-lg:12px; --ct-r-xl:16px; --ct-r-pill:9999px;
 
-  --ct-font-heading: '{{ settings.font_heading.family | default: 'Public Sans' }}', system-ui, sans-serif;
-  --ct-font-body: '{{ settings.font_body.family | default: 'Public Sans' }}', system-ui, sans-serif;
+  --ct-font-heading: "{{ settings.font_heading.family | default: 'Public Sans' }}", system-ui, sans-serif;
+  --ct-font-body: "{{ settings.font_body.family | default: 'Public Sans' }}", system-ui, sans-serif;
   --ct-font-mono: 'DM Mono', ui-monospace, monospace;
 
   --ct-text-xs:12px; --ct-text-sm:13px; --ct-text-base:15px; --ct-text-md:16px;
@@ -195,7 +195,7 @@ body {
   --ct-ease-spring:cubic-bezier(.34,1.56,.64,1);
   --ct-ease-in-out:cubic-bezier(.65,0,.35,1);
 
-  --ct-glass: {{ settings.glass_opacity | default: 0.88 }};
+  --ct-glass: {{ settings.glass_opacity | default: 0.9 }};
 }
 
 @media (prefers-reduced-motion: reduce) {
