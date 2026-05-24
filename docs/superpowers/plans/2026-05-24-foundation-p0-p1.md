@@ -831,14 +831,15 @@ git commit -m "feat(card): add hover overlay, quick-view trigger, %-off badge"
 Immediately **after** the `</div>` that closes `<div class="drawer__header">` (i.e., after the close button block, before `<cart-drawer-items`), insert:
 
 ```liquid
+      {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
+      {%- if ct_threshold == 0 -%}{%- assign ct_threshold = 5000 -%}{%- endif -%}
       {%- if cart != empty -%}
-        {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
         {%- assign ct_remaining = ct_threshold | minus: cart.total_price -%}
         {%- assign ct_pct = cart.total_price | times: 100 | divided_by: ct_threshold | at_most: 100 -%}
         <div class="ct-cart__bar">
           {%- if ct_remaining > 0 -%}
             <p class="ct-cart__bar-text">
-              {{ 'sections.cart.title' | t }} — add {{ ct_remaining | money }} for <strong>free shipping</strong>
+              Add {{ ct_remaining | money }} more for <strong>free shipping</strong>
             </p>
           {%- else -%}
             <p class="ct-cart__bar-text ct-cart__bar-text--reached">You've unlocked free shipping!</p>
@@ -847,31 +848,40 @@ Immediately **after** the `</div>` that closes `<div class="drawer__header">` (i
         </div>
       {%- endif -%}
 ```
+> `ct_threshold` + zero-guard sit **above** the `cart != empty` check: avoids `divided_by: 0` if a merchant sets the threshold to 0, and makes the value available to the trust row (Slot 3).
 
 - [ ] **Step 2: Add the upsell slot (Slot 2)**
 
 Immediately **after** the closing `</cart-drawer-items>` tag and **before** `<div class="drawer__footer">`, insert:
 
 ```liquid
+      {%- comment -%}
+        NOTE: .drawer__footer must stay the immediate next sibling of cart-drawer-items
+        in the EMPTY state — Dawn's component-cart-drawer.css uses the adjacent combinator
+        `cart-drawer-items.is-empty + .drawer__footer { display:none }`. Any element added
+        here MUST be guarded by `if cart != empty` (as below) to preserve that.
+      {%- endcomment -%}
       {%- if cart != empty and settings.cart_drawer_collection != blank -%}
         <div class="ct-cart__upsell" data-ct-upsell></div>
       {%- endif -%}
 ```
 
-> The upsell is intentionally an empty styled slot for now; it is populated (Dawn app block / recommendation) in the Cart phase (P4). This task only reserves the markup + style.
+> The upsell is intentionally an empty styled slot for now; it is populated (Dawn app block / recommendation) in the Cart phase (P4). This task only reserves the markup + style. The comment guards Dawn's footer-hiding adjacent-sibling rule against future insertions.
 
 - [ ] **Step 3: Add the trust row (Slot 3)**
 
 Immediately **before** `<div class="cart__ctas"` (inside `.drawer__footer`), insert:
 
 ```liquid
-        {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
-        <div class="ct-cart__trust">
-          <span>Secure checkout</span>
-          <span>Free shipping over {{ ct_threshold | money }}</span>
-          <span>90-day returns</span>
-        </div>
+        {%- if cart != empty -%}
+          <div class="ct-cart__trust">
+            <span>Secure checkout</span>
+            <span>Free shipping over {{ ct_threshold | money }}</span>
+            <span>90-day returns</span>
+          </div>
+        {%- endif -%}
 ```
+> Reuses the `ct_threshold` assigned (and zero-guarded) in Slot 1 — no re-assign. Guarded by `cart != empty` for consistency with the other slots.
 
 - [ ] **Step 4: Add cart-drawer CSS to `theme-overrides.css`**
 
@@ -1057,4 +1067,6 @@ Surfaced during Task 5 code review; intentionally deferred to avoid mid-foundati
 Surfaced during Task 12 review; the real Quick View component is built in P4, so refine there:
 4. **Card overlay label/conditions.** The overlay renders for sold-out products with a `choose_options` label. When the P4 Quick View component lands, give it a proper "Quick view" label (add a `quick_view` key to `en.default.json`) and decide whether to suppress/relabel for unavailable products.
 5. **`ct-quickview.js` robustness.** It currently fetches the full product URL and injects `.product` HTML — `<script>` tags won't re-execute, so the in-modal variant/ATC form is non-functional, and the `.product` selector fails on custom product templates. In P4, switch to `fetch(url + '?section_id=<product-section>')` (section-only HTML) and add script re-execution (or scope the modal to gallery + "view full product" link). Also consider removing the persistent modal node on SPA navigation.
+6. **Cart-slot copy → locale keys.** The cart free-shipping bar text and the three trust-row labels ("Secure checkout" / "Free shipping over …" / "90-day returns") are hardcoded English foundation slots. In P4, move them to `en.default.json` locale keys (and/or schema text fields) before non-English use.
+7. **`.ct-cart__upsell:empty` whitespace.** When P4 populates the upsell slot via JS, it must not leave whitespace/text nodes inside the div, or the `:empty { display:none }` rule won't match (use `innerHTML=''` / remove children when clearing).
 </content>

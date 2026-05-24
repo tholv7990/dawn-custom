@@ -74,14 +74,15 @@
           </span>
         </button>
       </div>
+      {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
+      {%- if ct_threshold == 0 -%}{%- assign ct_threshold = 5000 -%}{%- endif -%}
       {%- if cart != empty -%}
-        {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
         {%- assign ct_remaining = ct_threshold | minus: cart.total_price -%}
         {%- assign ct_pct = cart.total_price | times: 100 | divided_by: ct_threshold | at_most: 100 -%}
         <div class="ct-cart__bar">
           {%- if ct_remaining > 0 -%}
             <p class="ct-cart__bar-text">
-              {{ 'sections.cart.title' | t }} — add {{ ct_remaining | money }} for <strong>free shipping</strong>
+              Add {{ ct_remaining | money }} more for <strong>free shipping</strong>
             </p>
           {%- else -%}
             <p class="ct-cart__bar-text ct-cart__bar-text--reached">You've unlocked free shipping!</p>
@@ -489,6 +490,12 @@
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
       </cart-drawer-items>
+      {%- comment -%}
+        NOTE: .drawer__footer must stay the immediate next sibling of cart-drawer-items
+        in the EMPTY state — Dawn's component-cart-drawer.css uses the adjacent combinator
+        `cart-drawer-items.is-empty + .drawer__footer { display:none }`. Any element added
+        here MUST be guarded by `if cart != empty` (as below) to preserve that.
+      {%- endcomment -%}
       {%- if cart != empty and settings.cart_drawer_collection != blank -%}
         <div class="ct-cart__upsell" data-ct-upsell></div>
       {%- endif -%}
@@ -579,12 +586,13 @@
 
         <!-- CTAs -->
 
-        {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
-        <div class="ct-cart__trust">
-          <span>Secure checkout</span>
-          <span>Free shipping over {{ ct_threshold | money }}</span>
-          <span>90-day returns</span>
-        </div>
+        {%- if cart != empty -%}
+          <div class="ct-cart__trust">
+            <span>Secure checkout</span>
+            <span>Free shipping over {{ ct_threshold | money }}</span>
+            <span>90-day returns</span>
+          </div>
+        {%- endif -%}
 
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <button
