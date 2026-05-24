@@ -29,3 +29,31 @@ h3, .h3 { font-size: var(--ct-text-lg); font-weight: var(--ct-fw-semi); }
 .gradient { background: var(--ct-bg); }
 .page-width { max-width: var(--ct-mw); }
 img { max-width: 100%; }
+
+/* ---- Buttons (skins Dawn's .button; never touch .shopify-payment-button) ---- */
+.button,
+.shopify-challenge__button,
+.customer button {
+  font-family: var(--ct-font-body);
+  font-weight: var(--ct-fw-semi);
+  border-radius: var(--ct-r-md);
+  transition: background var(--ct-dur-base) var(--ct-ease-out),
+              transform var(--ct-dur-fast) var(--ct-ease-out),
+              box-shadow var(--ct-dur-base) var(--ct-ease-out);
+}
+.button--primary,
+.button:not(.button--secondary):not(.button--tertiary) {
+  --color-button: var(--ct-accent-strong);
+}
+.button:hover { transform: translateY(-1px); }
+.button:focus-visible { box-shadow: var(--ct-focus); outline: none; }
+
+.button.is-loading { pointer-events: none; color: transparent; position: relative; }
+.button.is-loading::after {
+  content: ''; position: absolute; inset: 50% auto auto 50%;
+  width: 16px; height: 16px; margin: -8px 0 0 -8px;
+  border: 2px solid currentColor; border-top-color: transparent;
+  border-radius: 50%; animation: ct-spin 0.6s linear infinite;
+}
+.button.is-success { background: var(--ct-success) !important; }
+@keyframes ct-spin { to { transform: rotate(360deg); } }
