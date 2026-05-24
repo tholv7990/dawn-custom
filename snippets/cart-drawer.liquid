@@ -74,6 +74,21 @@
           </span>
         </button>
       </div>
+      {%- if cart != empty -%}
+        {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
+        {%- assign ct_remaining = ct_threshold | minus: cart.total_price -%}
+        {%- assign ct_pct = cart.total_price | times: 100 | divided_by: ct_threshold | at_most: 100 -%}
+        <div class="ct-cart__bar">
+          {%- if ct_remaining > 0 -%}
+            <p class="ct-cart__bar-text">
+              {{ 'sections.cart.title' | t }} — add {{ ct_remaining | money }} for <strong>free shipping</strong>
+            </p>
+          {%- else -%}
+            <p class="ct-cart__bar-text ct-cart__bar-text--reached">You've unlocked free shipping!</p>
+          {%- endif -%}
+          <div class="ct-cart__bar-track"><div class="ct-cart__bar-fill" style="width:{{ ct_pct }}%"></div></div>
+        </div>
+      {%- endif -%}
       <cart-drawer-items
         {% if cart == empty %}
           class=" is-empty"
@@ -474,6 +489,9 @@
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
       </cart-drawer-items>
+      {%- if cart != empty and settings.cart_drawer_collection != blank -%}
+        <div class="ct-cart__upsell" data-ct-upsell></div>
+      {%- endif -%}
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
@@ -560,6 +578,13 @@
         </div>
 
         <!-- CTAs -->
+
+        {%- assign ct_threshold = settings.free_shipping_threshold | default: 5000 -%}
+        <div class="ct-cart__trust">
+          <span>Secure checkout</span>
+          <span>Free shipping over {{ ct_threshold | money }}</span>
+          <span>90-day returns</span>
+        </div>
 
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <button

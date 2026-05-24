@@ -158,3 +158,16 @@ fieldset.product-form__input input:checked + label.swatch {
   box-shadow: var(--ct-shadow-md);
 }
 .ct-card__qv-btn:hover { background: var(--ct-accent); color: #fff; }
+
+/* ---- Cart drawer slots (paired with cart-drawer.liquid edit) ---- */
+.ct-cart__bar { padding: 12px 20px; border-bottom: 1px solid var(--ct-border-subtle); }
+.ct-cart__bar-text { font-size: var(--ct-text-sm); color: var(--ct-text-2); margin: 0 0 8px; }
+.ct-cart__bar-text--reached { color: var(--ct-accent-text); font-weight: var(--ct-fw-semi); }
+.ct-cart__bar-track { height: 6px; border-radius: var(--ct-r-pill); background: var(--ct-bg-control); overflow: hidden; }
+.ct-cart__bar-fill { height: 100%; background: var(--ct-accent); border-radius: var(--ct-r-pill); transition: width var(--ct-dur-slow) var(--ct-ease-out); }
+.ct-cart__upsell:empty { display: none; }
+.ct-cart__trust {
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  padding: 10px 20px; font-size: var(--ct-text-xs); color: var(--ct-text-3);
+  font-family: var(--ct-font-mono);
+}
