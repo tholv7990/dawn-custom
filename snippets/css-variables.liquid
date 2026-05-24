@@ -4,8 +4,7 @@
   reset style block, so it outputs raw CSS only (no style wrapper).
   Plain-text comments only — never Liquid tags inside CSS comments.
 {% endcomment %}
-{{ settings.font_heading | font_face: font_display: 'swap' }}
-{{ settings.font_body | font_face: font_display: 'swap' }}
+{%- comment -%} Brand fonts (Public Sans + DM Mono) load via Google Fonts link in theme.liquid {%- endcomment -%}
 
 :root { color-scheme: only light; }
 html { color-scheme: only light; forced-color-adjust: none; }
@@ -50,8 +49,8 @@ body {
   --ct-r-md: {{ settings.border_radius | default: 8 }}px;
   --ct-r-lg:12px; --ct-r-xl:16px; --ct-r-pill:9999px;
 
-  --ct-font-heading: "{{ settings.font_heading.family | default: 'Public Sans' }}", system-ui, sans-serif;
-  --ct-font-body: "{{ settings.font_body.family | default: 'Public Sans' }}", system-ui, sans-serif;
+  --ct-font-heading: 'Public Sans', system-ui, sans-serif;
+  --ct-font-body: 'Public Sans', system-ui, sans-serif;
   --ct-font-mono: 'DM Mono', ui-monospace, monospace;
 
   --ct-text-xs:12px; --ct-text-sm:13px; --ct-text-base:15px; --ct-text-md:16px;
