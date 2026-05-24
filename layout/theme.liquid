@@ -34,6 +34,14 @@
     <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ct-reveal.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ct-countup.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ct-swipe.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ct-accordion.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ct-ba.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ct-scrollspy.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ct-sticky-atc.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'ct-quickview.js' | asset_url }}" defer="defer"></script>
 
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
@@ -253,9 +261,11 @@
           font-size: 1.6rem;
         }
       }
+      {%- render 'css-variables' -%}
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'theme-overrides.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
