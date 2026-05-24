@@ -80,3 +80,57 @@ img { max-width: 100%; }
 }
 .ct-field.has-error .ct-field__input { border-color: var(--ct-error); }
 .ct-field__error { font-size: var(--ct-text-sm); color: var(--ct-error); margin-top: var(--ct-space-1); }
+
+/* ---- Focus ring (universal, keyboard only) ---- */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: none; box-shadow: var(--ct-focus);
+}
+
+/* ---- Scroll reveal base (paired with ct-reveal.js) ---- */
+[data-reveal] {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity var(--ct-dur-slow) var(--ct-ease-out),
+              transform var(--ct-dur-slow) var(--ct-ease-out);
+}
+[data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+/* ---- Skeleton shimmer ---- */
+.ct-skeleton {
+  background: linear-gradient(90deg, var(--ct-bg-surface) 25%, var(--ct-bg-raised) 50%, var(--ct-bg-surface) 75%);
+  background-size: 200% 100%; border-radius: var(--ct-r-md);
+  animation: ct-shimmer 1.4s ease infinite;
+}
+@keyframes ct-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* ---- Badges ---- */
+.ct-badge {
+  display: inline-block; padding: 2px 8px; border-radius: var(--ct-r-sm);
+  font-size: var(--ct-text-xs); font-weight: var(--ct-fw-bold); line-height: 1.6;
+  font-family: var(--ct-font-mono); letter-spacing: .04em; color: #fff;
+}
+.ct-badge--sale { background: var(--ct-badge-sale); }
+.ct-badge--new { background: var(--ct-badge-new); }
+.ct-badge--sold-out { background: var(--ct-stock-out); }
+
+/* ---- Rating stars fix (Dawn SVGs use currentColor) ---- */
+.rating__stars svg,
+.rating-star { color: var(--ct-rating); fill: var(--ct-rating); }
+
+/* ---- Variant swatches: hide Dawn radios, style labels (CSS only) ---- */
+.variant-picker .swatch input[type="radio"],
+fieldset.product-form__input input[type="radio"] {
+  position: absolute; opacity: 0; width: 0; height: 0;
+}
+.variant-picker .swatch label,
+fieldset.product-form__input label.swatch {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 36px; height: 36px; padding: 0 12px;
+  border: 2px solid var(--ct-border); border-radius: var(--ct-r-sm);
+  cursor: pointer; font-size: var(--ct-text-sm); font-weight: var(--ct-fw-semi);
+  transition: border-color var(--ct-dur-fast) var(--ct-ease-out),
+              transform var(--ct-dur-fast) var(--ct-ease-out);
+}
+.variant-picker .swatch input:checked + label,
+fieldset.product-form__input input:checked + label.swatch {
+  border-color: var(--ct-accent); transform: scale(1.06);
+}
