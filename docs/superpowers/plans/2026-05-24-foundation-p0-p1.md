@@ -81,9 +81,6 @@ Insert this object as a **new element in the top-level array**, immediately befo
     { "type": "header", "content": "Brand colours" },
     { "type": "color", "id": "color_accent", "label": "Accent", "default": "#00A76F" },
     { "type": "color", "id": "color_accent_hover", "label": "Accent (hover/strong)", "default": "#007867" },
-    { "type": "header", "content": "Brand type" },
-    { "type": "font_picker", "id": "font_heading", "label": "Heading font", "default": "public_sans_n4" },
-    { "type": "font_picker", "id": "font_body", "label": "Body font", "default": "public_sans_n4" },
     { "type": "header", "content": "Shape & layout" },
     { "type": "range", "id": "border_radius", "label": "Corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 8 },
     { "type": "range", "id": "glass_opacity", "label": "Sticky header glass opacity", "min": 0, "max": 1, "step": 0.1, "default": 0.9 },
@@ -93,7 +90,7 @@ Insert this object as a **new element in the top-level array**, immediately befo
 }
 ```
 
-> Notes: (a) `public_sans_n4` is the Shopify font-library handle for Public Sans — confirm it resolves when you save Theme settings; if Shopify renamed the handle, pick Public Sans in the picker and copy the saved handle. (b) Content max-width reuses Dawn's existing `settings.page_width` (no duplicate slider). (c) Scroll animations are gated by `prefers-reduced-motion` in JS, so no separate toggle is added.
+> Notes: (a) **No `font_picker` settings.** Public Sans is NOT in Shopify's font library, so a `font_picker` default of `public_sans_n4` is rejected on upload by Shopify's server-side schema validation (offline `theme check` does not catch this). The Minimals design is locked to Public Sans, so we hardcode it and load it via Google Fonts in `theme.liquid` (Task 5) instead of exposing a picker. (b) Content max-width reuses Dawn's existing `settings.page_width` (no duplicate slider). (c) Scroll animations are gated by `prefers-reduced-motion` in JS, so no separate toggle is added. (d) **Shopify range `max` must be < 10000** — that's why `free_shipping_threshold` is in dollars (max 500), not cents.
 
 - [ ] **Step 2: Verify Theme Check passes**
 
@@ -129,8 +126,7 @@ This snippet is rendered **inside** `theme.liquid`'s reset `{% style %}` block (
   reset style block, so it outputs raw CSS only (no style wrapper).
   Plain-text comments only — never Liquid tags inside CSS comments.
 {% endcomment %}
-{{ settings.font_heading | font_face: font_display: 'swap' }}
-{{ settings.font_body | font_face: font_display: 'swap' }}
+{%- comment -%} Brand fonts (Public Sans + DM Mono) load via Google Fonts link in theme.liquid {%- endcomment -%}
 
 :root { color-scheme: only light; }
 html { color-scheme: only light; forced-color-adjust: none; }
@@ -175,8 +171,8 @@ body {
   --ct-r-md: {{ settings.border_radius | default: 8 }}px;
   --ct-r-lg:12px; --ct-r-xl:16px; --ct-r-pill:9999px;
 
-  --ct-font-heading: "{{ settings.font_heading.family | default: 'Public Sans' }}", system-ui, sans-serif;
-  --ct-font-body: "{{ settings.font_body.family | default: 'Public Sans' }}", system-ui, sans-serif;
+  --ct-font-heading: 'Public Sans', system-ui, sans-serif;
+  --ct-font-body: 'Public Sans', system-ui, sans-serif;
   --ct-font-mono: 'DM Mono', ui-monospace, monospace;
 
   --ct-text-xs:12px; --ct-text-sm:13px; --ct-text-base:15px; --ct-text-md:16px;
@@ -291,6 +287,17 @@ Immediately **after** the existing line `{{ 'base.css' | asset_url | stylesheet_
 
 ```liquid
     {{ 'theme-overrides.css' | asset_url | stylesheet_tag }}
+```
+
+- [ ] **Step 2b: Load the brand fonts (Public Sans + DM Mono) via Google Fonts**
+
+After the existing `{%- endunless -%}` that closes Dawn's `fonts.shopifycdn.com` preconnect block (near the top of `<head>`, before `<title>`), add:
+
+```liquid
+    {%- comment -%} Minimals brand fonts (design system is locked to Public Sans + DM Mono) {%- endcomment -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 ```
 
 - [ ] **Step 3: Load the 8 JS utilities (defer)**
@@ -1060,7 +1067,7 @@ git commit -m "feat(css): add cart-notification skin"
 
 ### Deferred optimizations (revisit at P5 QA/Lighthouse gate)
 Surfaced during Task 5 code review; intentionally deferred to avoid mid-foundation churn:
-1. **Double `@font-face` load.** Our `font_heading`/`font_body` settings emit `@font-face` in `css-variables.liquid` while Dawn separately emits `@font-face` for its native `type_header_font`/`type_body_font`. If the merchant's Dawn typography differs from the brand fonts, both families download (one unused). At the perf gate, either guide merchants to align Dawn typography with brand fonts, or consolidate to reuse Dawn's `type_*_font` settings (mirroring how we reused `page_width`).
+1. **Google Fonts is render-blocking.** Public Sans + DM Mono load via a `<link>` to `fonts.googleapis.com` in `theme.liquid` (matches the demo). The render-blocking external stylesheet + extra DNS/connection costs hurt LCP. At the perf gate, self-host the woff2 files as theme assets with `@font-face` + `<link rel="preload">` (Dawn's self-hosted approach) instead of Google Fonts. Note Dawn still loads its own `type_*_font` (Assistant) via `font_face` — those are now unused by our typography (we override font-family to `--ct-font-*`), so consider neutralizing Dawn's font output too.
 2. **Unconditional global JS.** All 8 `ct-*.js` load on every page; `ct-sticky-atc.js` (product-only) and `ct-quickview.js` (product-card pages) are candidates for `{% if %}` page-type guards or concatenation if Lighthouse shows impact.
 3. **`forced-color-adjust: none` a11y tradeoff.** The mandated light-mode lock opts the theme out of Windows High-Contrast mode. Confirm this tradeoff is acceptable at the final gate (it is a deliberate design-system requirement, but a real accessibility regression for high-contrast users).
 
