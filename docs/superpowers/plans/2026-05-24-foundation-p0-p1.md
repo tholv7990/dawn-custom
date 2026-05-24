@@ -165,7 +165,7 @@ body {
   --ct-price:#212B36; --ct-price-was:#919EAB; --ct-price-save:#007867;
   --ct-badge-sale:#B71D18; --ct-badge-new:#00A76F; --ct-badge-best:#B76E00;
   --ct-stock-in:#007867; --ct-stock-low:#B76E00; --ct-stock-out:#919EAB;
-  --ct-rating:#FFAB00; --ct-touch:48px;
+  --ct-rating:#FBBC04; --ct-rating-empty:#DADCE0; --ct-touch:48px;
 
   --ct-r-sm:4px;
   --ct-r-md: {{ settings.border_radius | default: 8 }}px;
@@ -712,9 +712,20 @@ git commit -m "feat(css): add ct-field floating-label form pattern"
 .ct-badge--new { background: var(--ct-badge-new); }
 .ct-badge--sold-out { background: var(--ct-stock-out); }
 
-/* ---- Rating stars fix (Dawn SVGs use currentColor → render white on cards) ---- */
+/* ---- Rating stars — Google-style gold fill + light-grey empty.
+   Dawn prints ★★★★★ and clips a gradient to the text; fill width is --percent
+   (set by Dawn on .rating-star). Override the gradient: filled = Google gold,
+   empty = grey (instead of 15% foreground). Dawn's clip + transparent fill inherit. */
+.rating-star::before {
+  background: linear-gradient(
+    90deg,
+    var(--ct-rating) var(--percent),
+    var(--ct-rating-empty) var(--percent)
+  );
+}
+/* Fallback for SVG-based review-app stars */
 .rating__stars svg,
-.rating-star { color: var(--ct-rating); fill: var(--ct-rating); }
+.rating-star svg { fill: var(--ct-rating); color: var(--ct-rating); }
 
 /* ---- Variant swatches: hide Dawn radios, style labels (CSS only) ---- */
 .variant-picker .swatch input[type="radio"],

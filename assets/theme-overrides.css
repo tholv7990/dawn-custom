@@ -112,9 +112,21 @@ img { max-width: 100%; }
 .ct-badge--new { background: var(--ct-badge-new); }
 .ct-badge--sold-out { background: var(--ct-stock-out); }
 
-/* ---- Rating stars fix (Dawn SVGs use currentColor) ---- */
+/* ---- Rating stars — Google-style gold fill + light-grey empty.
+   Dawn prints ★★★★★ and clips a gradient to the text; the fill width is --percent
+   (set by Dawn on .rating-star). We override the gradient so the filled portion is
+   Google gold and the empty portion is a clean grey (instead of 15% foreground).
+   Dawn's -webkit-background-clip:text + transparent text-fill are inherited. ---- */
+.rating-star::before {
+  background: linear-gradient(
+    90deg,
+    var(--ct-rating) var(--percent),
+    var(--ct-rating-empty) var(--percent)
+  );
+}
+/* Fallback for SVG-based review-app stars */
 .rating__stars svg,
-.rating-star { color: var(--ct-rating); fill: var(--ct-rating); }
+.rating-star svg { fill: var(--ct-rating); color: var(--ct-rating); }
 
 /* ---- Variant swatches: hide Dawn radios, style labels (CSS only) ---- */
 .variant-picker .swatch input[type="radio"],
