@@ -770,6 +770,7 @@ Find the closing `</div>` of the `<div class="media media--transparent media--ho
             class="ct-card__qv-btn"
             data-quickview
             data-url="{{ card_product.url }}"
+            tabindex="-1"
             aria-label="{{ 'products.product.choose_options' | t }} {{ card_product.title | escape }}"
           >
             {{ 'products.product.choose_options' | t }}
@@ -780,8 +781,9 @@ Find the closing `</div>` of the `<div class="media media--transparent media--ho
 - [ ] **Step 2: Add card overlay CSS to `theme-overrides.css`**
 
 ```css
-/* ---- Product card overlay (paired with card-product.liquid edit) ---- */
-.card__media { position: relative; }
+/* ---- Product card overlay (paired with card-product.liquid edit) ----
+   Dawn already sets .card__media { position: absolute } (component-card.css),
+   the containing block for these absolute children — do NOT re-position it. */
 .ct-card__badge { position: absolute; top: 10px; left: 10px; z-index: 2; }
 .ct-card__overlay {
   position: absolute; inset: auto 0 0 0; padding: var(--ct-space-3);
@@ -1044,4 +1046,15 @@ git commit -m "feat(css): add cart-notification skin"
 - The token + class vocabulary established here (`--ct-*`, `.ct-*`) is the contract every later plan references.
 - `.ct-card__overlay`, `.ct-cart__bar/__upsell/__trust`, `.ct-buy-trust` markup is now live and styled — P3/P4 build on it (e.g., populating the upsell slot).
 - Swatch / sticky-header / rating selectors marked "first-pass guess" must be re-confirmed against live DOM during their verify steps; record any corrections back into this file.
+
+### Deferred optimizations (revisit at P5 QA/Lighthouse gate)
+Surfaced during Task 5 code review; intentionally deferred to avoid mid-foundation churn:
+1. **Double `@font-face` load.** Our `font_heading`/`font_body` settings emit `@font-face` in `css-variables.liquid` while Dawn separately emits `@font-face` for its native `type_header_font`/`type_body_font`. If the merchant's Dawn typography differs from the brand fonts, both families download (one unused). At the perf gate, either guide merchants to align Dawn typography with brand fonts, or consolidate to reuse Dawn's `type_*_font` settings (mirroring how we reused `page_width`).
+2. **Unconditional global JS.** All 8 `ct-*.js` load on every page; `ct-sticky-atc.js` (product-only) and `ct-quickview.js` (product-card pages) are candidates for `{% if %}` page-type guards or concatenation if Lighthouse shows impact.
+3. **`forced-color-adjust: none` a11y tradeoff.** The mandated light-mode lock opts the theme out of Windows High-Contrast mode. Confirm this tradeoff is acceptable at the final gate (it is a deliberate design-system requirement, but a real accessibility regression for high-contrast users).
+
+### Deferred to P4 (Quick View component)
+Surfaced during Task 12 review; the real Quick View component is built in P4, so refine there:
+4. **Card overlay label/conditions.** The overlay renders for sold-out products with a `choose_options` label. When the P4 Quick View component lands, give it a proper "Quick view" label (add a `quick_view` key to `en.default.json`) and decide whether to suppress/relabel for unavailable products.
+5. **`ct-quickview.js` robustness.** It currently fetches the full product URL and injects `.product` HTML — `<script>` tags won't re-execute, so the in-modal variant/ATC form is non-functional, and the `.product` selector fails on custom product templates. In P4, switch to `fetch(url + '?section_id=<product-section>')` (section-only HTML) and add script re-execution (or scope the modal to gallery + "view full product" link). Also consider removing the persistent modal node on SPA navigation.
 </content>

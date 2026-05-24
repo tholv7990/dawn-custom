@@ -135,8 +135,12 @@ fieldset.product-form__input input:checked + label.swatch {
   border-color: var(--ct-accent); transform: scale(1.06);
 }
 
-/* ---- Product card overlay (paired with card-product.liquid edit) ---- */
-.card__media { position: relative; }
+/* ---- Product card overlay (paired with card-product.liquid edit) ----
+   Dawn already sets .card__media { position: absolute } (component-card.css),
+   which is the containing block for these absolute children — so we must NOT
+   re-position .card__media (doing so collapses Dawn's ratio-fill image).
+   Overlay is a pointer-only enhancement (hover reveal; button is tabindex=-1
+   + aria-hidden) that duplicates the product link for keyboard/AT users. */
 .ct-card__badge { position: absolute; top: 10px; left: 10px; z-index: 2; }
 .ct-card__overlay {
   position: absolute; inset: auto 0 0 0; padding: var(--ct-space-3);
