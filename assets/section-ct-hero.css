@@ -1,0 +1,27 @@
+/* section-ct-hero.css — demo .ct-hero* (already ct-prefixed); tokens → --ct-* */
+.ct-hero{background:var(--ct-bg-raised);border-radius:var(--ct-r-xl);overflow:hidden;border:1px solid var(--ct-border-strong);box-shadow:var(--ct-shadow-md)}
+.ct-hero-inner{display:grid;grid-template-columns:minmax(0,55fr) minmax(0,45fr);min-height:480px}
+.ct-hero-text{padding:56px 48px 56px 56px;display:flex;flex-direction:column;justify-content:center}
+.ct-hero-h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:800;color:var(--ct-text);letter-spacing:-.03em;line-height:1.07;margin-bottom:16px}
+.ct-hero-h1 em{color:var(--ct-accent-text);font-style:normal}
+.ct-hero-h1 p{margin:0}
+.ct-hero-sub{font-size:17px;color:var(--ct-text-2);line-height:1.72;margin-bottom:28px;max-width:440px}
+.ct-hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.ct-hero-pill{display:flex;align-items:center;gap:6px;background:var(--ct-bg);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-pill);padding:5px 12px;font-size:13px;color:var(--ct-text-2)}
+.ct-hero-pill::before{content:'•';color:var(--ct-accent-text);font-size:10px}
+.ct-hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.ct-hero-visual{background:linear-gradient(135deg,var(--ct-accent-subtle) 0%,rgba(200,250,214,.4) 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.ct-hero-visual__glow{position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(0,167,111,.10) 0%,transparent 70%)}
+.ct-hero-visual__img{position:relative;width:100%;height:100%;object-fit:cover}
+.ct-hero-card{position:relative;background:#fff;border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-xl);padding:16px 20px;box-shadow:var(--ct-shadow-lg);width:200px;animation:ct-float 4s ease-in-out infinite;text-align:center}
+.ct-hero-card__emoji{font-size:32px;margin-bottom:8px}
+.ct-hero-card__name{font-size:13px;font-weight:700;color:var(--ct-text)}
+.ct-hero-card__price{font-size:18px;font-weight:800;color:var(--ct-price);margin-top:4px}
+.ct-hero-card__tags{display:flex;gap:4px;justify-content:center;margin-top:6px}
+.ct-hero-card__tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:var(--ct-r-pill)}
+.ct-hero-card__tag--rating{background:var(--ct-accent-subtle);color:var(--ct-accent-text)}
+.ct-hero-card__tag--ship{background:#fff5cc;color:#7a4f01}
+@keyframes ct-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media(max-width:860px){.ct-hero-inner{grid-template-columns:1fr}.ct-hero-visual{min-height:280px}.ct-hero-text{padding:40px 32px}}
+@media(max-width:480px){.ct-hero-text{padding:28px 20px}.ct-hero-h1{font-size:clamp(1.6rem,7vw,2.4rem)}.ct-hero-btns{flex-direction:column}.ct-hero-btns .ct-btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.ct-hero-card{animation:none}}

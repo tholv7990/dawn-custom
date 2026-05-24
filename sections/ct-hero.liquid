@@ -1,0 +1,109 @@
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top | times: 0.75 | round: 0 }}px;padding-bottom:{{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px}
+  @media screen and (min-width:750px){.section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top }}px;padding-bottom:{{ section.settings.padding_bottom }}px}}
+{%- endstyle -%}
+
+<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="ct-hero" data-reveal>
+    <div class="ct-hero-inner">
+      <div class="ct-hero-text">
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="ct-eyebrow"><span class="ct-eyebrow__dot"></span>{{ section.settings.eyebrow }}</div>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="ct-hero-h1">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="ct-hero-sub">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="ct-hero-pills">
+            {%- for block in section.blocks -%}
+              <span class="ct-hero-pill" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        <div class="ct-hero-btns">
+          {%- if section.settings.button_label != blank -%}
+            <a class="ct-btn ct-btn--primary ct-btn--lg" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
+          {%- endif -%}
+          {%- if section.settings.button_label_2 != blank -%}
+            <a class="ct-btn ct-btn--outlined" href="{{ section.settings.button_link_2 | default: '#' }}">{{ section.settings.button_label_2 }}</a>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.show_rating -%}
+          <div class="ct-rating-row" style="margin-top:20px">
+            <span class="ct-stars">★★★★★</span>
+            <span class="ct-rating-count">{{ section.settings.rating_text }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+      <div class="ct-hero-visual">
+        <div class="ct-hero-visual__glow" aria-hidden="true"></div>
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'eager', class: 'ct-hero-visual__img', alt: section.settings.heading | default: '' }}
+        {%- else -%}
+          <div class="ct-hero-card">
+            {%- if section.settings.card_emoji != blank -%}<div class="ct-hero-card__emoji">{{ section.settings.card_emoji }}</div>{%- endif -%}
+            <div class="ct-hero-card__name">{{ section.settings.card_title }}</div>
+            {%- if section.settings.card_price != blank -%}<div class="ct-hero-card__price">{{ section.settings.card_price }}</div>{%- endif -%}
+            <div class="ct-hero-card__tags">
+              {%- if section.settings.card_tag_1 != blank -%}<span class="ct-hero-card__tag ct-hero-card__tag--rating">{{ section.settings.card_tag_1 }}</span>{%- endif -%}
+              {%- if section.settings.card_tag_2 != blank -%}<span class="ct-hero-card__tag ct-hero-card__tag--ship">{{ section.settings.card_tag_2 }}</span>{%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CT Hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New for 2025 — Pro Series" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Hero headline — emotional hook</p>", "info": "Wrap a word in <em> for the green accent." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "One sentence that explains what the product does and who it's for. 17–20 words max." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Shop now →" },
+    { "type": "url", "id": "button_link", "label": "Primary button link" },
+    { "type": "text", "id": "button_label_2", "label": "Secondary button label", "default": "See how it works" },
+    { "type": "url", "id": "button_link_2", "label": "Secondary button link" },
+    { "type": "header", "content": "Rating" },
+    { "type": "checkbox", "id": "show_rating", "label": "Show rating row", "default": true },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.9 · 10,000+ customers" },
+    { "type": "header", "content": "Visual" },
+    { "type": "image_picker", "id": "image", "label": "Hero image", "info": "If set, replaces the floating card." },
+    { "type": "text", "id": "card_emoji", "label": "Card emoji", "default": "💪" },
+    { "type": "text", "id": "card_title", "label": "Card product name", "default": "Product name" },
+    { "type": "text", "id": "card_price", "label": "Card price", "default": "$149" },
+    { "type": "text", "id": "card_tag_1", "label": "Card tag 1", "default": "★ 4.9" },
+    { "type": "text", "id": "card_tag_2", "label": "Card tag 2", "default": "Ships today" },
+    { "type": "header", "content": "Section" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "blocks": [
+    { "type": "pill", "name": "Feature pill", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Feature" } ] }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "CT Hero",
+      "blocks": [
+        { "type": "pill", "settings": { "text": "Feature 1" } },
+        { "type": "pill", "settings": { "text": "Feature 2" } },
+        { "type": "pill", "settings": { "text": "Free shipping" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
