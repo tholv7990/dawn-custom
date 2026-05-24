@@ -1,0 +1,65 @@
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-stats.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top | times: 0.75 | round: 0 }}px;padding-bottom:{{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px}
+  @media screen and (min-width:750px){.section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top }}px;padding-bottom:{{ section.settings.padding_bottom }}px}}
+{%- endstyle -%}
+
+<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="ct-stats" data-reveal>
+    {%- for block in section.blocks -%}
+      <div class="ct-stat" {{ block.shopify_attributes }}>
+        <div class="ct-stat-num">
+          {%- if block.settings.prefix != blank -%}<span class="ct-stat-unit">{{ block.settings.prefix }}</span>{%- endif -%}
+          {%- if block.settings.countup -%}
+            <span data-countup data-to="{{ block.settings.number | strip }}" data-suffix="">0</span>
+          {%- else -%}
+            {{ block.settings.number }}
+          {%- endif -%}
+          {%- if block.settings.suffix != blank -%}<span class="ct-stat-unit">{{ block.settings.suffix }}</span>{%- endif -%}
+        </div>
+        <div class="ct-stat-label">{{ block.settings.label }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CT Stats",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "prefix", "label": "Prefix (e.g. + or #)" },
+        { "type": "text", "id": "number", "label": "Number", "default": "10000" },
+        { "type": "text", "id": "suffix", "label": "Suffix (e.g. %, ★, K+)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Metric label" },
+        { "type": "checkbox", "id": "countup", "label": "Animate count-up", "default": false, "info": "Only enable for whole numbers (e.g. 10000). Leave off for decimals like 4.9." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "CT Stats",
+      "blocks": [
+        { "type": "stat", "settings": { "prefix": "+", "number": "10000", "suffix": "", "label": "Customers trained", "countup": true } },
+        { "type": "stat", "settings": { "number": "4.9", "suffix": "★", "label": "Average rating" } },
+        { "type": "stat", "settings": { "number": "30", "suffix": "%", "label": "Strength gain", "countup": true } },
+        { "type": "stat", "settings": { "prefix": "#", "number": "1", "label": "Category leader" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
