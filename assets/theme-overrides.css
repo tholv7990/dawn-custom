@@ -57,3 +57,26 @@ img { max-width: 100%; }
 }
 .button.is-success { background: var(--ct-success) !important; }
 @keyframes ct-spin { to { transform: rotate(360deg); } }
+
+/* ---- ct-field: floating-label wrapper (visual only; never replaces Dawn form logic) ---- */
+.ct-field { position: relative; margin-bottom: var(--ct-space-3); }
+.ct-field__input {
+  width: 100%; padding: 20px var(--ct-space-3) 8px;
+  font-family: var(--ct-font-body); font-size: 16px; /* 16px = iOS no-zoom */
+  color: var(--ct-text); background: var(--ct-bg-surface);
+  border: 1.5px solid var(--ct-border); border-radius: var(--ct-r-md);
+  outline: none; appearance: none;
+  transition: border-color var(--ct-dur-base) var(--ct-ease-out);
+}
+.ct-field__input:focus { border-color: var(--ct-accent-strong); box-shadow: var(--ct-focus); }
+.ct-field__label {
+  position: absolute; left: var(--ct-space-3); top: 50%; transform: translateY(-50%);
+  font-size: var(--ct-text-md); color: var(--ct-text-3); pointer-events: none;
+  transition: all var(--ct-dur-base) var(--ct-ease-out);
+}
+.ct-field__input:focus + .ct-field__label,
+.ct-field__input:not(:placeholder-shown) + .ct-field__label {
+  top: 10px; transform: translateY(0) scale(0.78); color: var(--ct-text-3);
+}
+.ct-field.has-error .ct-field__input { border-color: var(--ct-error); }
+.ct-field__error { font-size: var(--ct-text-sm); color: var(--ct-error); margin-top: var(--ct-space-1); }
