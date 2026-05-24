@@ -171,3 +171,14 @@ fieldset.product-form__input input:checked + label.swatch {
   padding: 10px 20px; font-size: var(--ct-text-xs); color: var(--ct-text-3);
   font-family: var(--ct-font-mono);
 }
+
+/* ---- Buy-button trust chips (paired with buy-buttons.liquid edit) ---- */
+.ct-buy-trust {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: var(--ct-space-3);
+}
+.ct-buy-trust__chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 12px; border: 1px solid var(--ct-border-subtle); border-radius: var(--ct-r-md);
+  background: var(--ct-bg-surface); color: var(--ct-text-2);
+  font-size: var(--ct-text-sm); font-weight: var(--ct-fw-medium);
+}
