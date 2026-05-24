@@ -1,0 +1,64 @@
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-faq.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top | times: 0.75 | round: 0 }}px;padding-bottom:{{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px}
+  @media screen and (min-width:750px){.section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top }}px;padding-bottom:{{ section.settings.padding_bottom }}px}}
+{%- endstyle -%}
+
+<div class="page-width ct-faq-wrap section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.heading != blank -%}
+    <div class="ct-section-head" data-reveal>
+      {%- if section.settings.kicker != blank -%}<div class="ct-kicker">{{ section.settings.kicker }}</div>{%- endif -%}
+      <h2 class="ct-section-head__title">{{ section.settings.heading }}</h2>
+    </div>
+  {%- endif -%}
+  <div class="ct-faq" data-accordion>
+    {%- for block in section.blocks -%}
+      <div class="ct-faq-item" {{ block.shopify_attributes }}>
+        <button class="ct-faq-q" type="button" data-accordion-btn aria-expanded="false">
+          {{ block.settings.question }}
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="ct-faq-a"><div class="ct-faq-a__inner rte">{{ block.settings.answer }}</div></div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CT FAQ",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "FAQ" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions, answered" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How does it work?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>A clear, specific answer in 2–3 sentences.</p>" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "CT FAQ",
+      "blocks": [
+        { "type": "item", "settings": { "question": "How does hydraulic resistance work?" } },
+        { "type": "item", "settings": { "question": "What size should I choose?" } },
+        { "type": "item", "settings": { "question": "What is the warranty and return policy?" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
