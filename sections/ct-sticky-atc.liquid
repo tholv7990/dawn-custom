@@ -1,0 +1,50 @@
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-sticky-atc.css' | asset_url | stylesheet_tag }}
+
+<div class="ct-sticky-atc color-{{ section.settings.color_scheme }}" id="ct-sticky-atc-{{ section.id }}" role="region" aria-label="Quick add to cart">
+  <div class="ct-sticky-atc__info">
+    {%- if section.settings.emoji != blank -%}<span class="ct-sticky-atc__emoji" aria-hidden="true">{{ section.settings.emoji }}</span>{%- endif -%}
+    <div class="ct-sticky-atc__text">
+      <div class="ct-sticky-atc__name">{{ section.settings.product_name }}</div>
+      {%- if section.settings.rating_text != blank -%}<div class="ct-sticky-atc__rating">{{ section.settings.rating_text }}</div>{%- endif -%}
+    </div>
+  </div>
+  {%- if section.settings.button_label != blank -%}
+    <a class="ct-btn ct-btn--primary ct-sticky-atc__btn" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var bar = document.getElementById('ct-sticky-atc-{{ section.id }}');
+    if (!bar) return;
+    var hero = document.querySelector('.ct-hero');
+    function show(visible) { bar.classList.toggle('is-visible', visible); }
+    if ('IntersectionObserver' in window && hero) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { show(!e.isIntersecting); });
+      }, { threshold: 0.1 });
+      io.observe(hero);
+    } else {
+      window.addEventListener('scroll', function () { show(window.scrollY > 500); }, { passive: true });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "CT Sticky add-to-cart",
+  "tag": "section",
+  "class": "ct-sticky-atc-section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "emoji", "label": "Emoji / icon", "default": "💪" },
+    { "type": "text", "id": "product_name", "label": "Product name", "default": "GainsSteel® Hydraulic Muscle Trainer" },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "★★★★★ 4.7 · 52 reviews" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "from $149 →" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "presets": [ { "name": "CT Sticky add-to-cart" } ]
+}
+{% endschema %}

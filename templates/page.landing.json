@@ -1,0 +1,146 @@
+{
+  "sections": {
+    "ct_hero": {
+      "type": "ct-hero",
+      "blocks": {
+        "p1": { "type": "pill", "settings": { "text": "Free US Shipping" } },
+        "p2": { "type": "pill", "settings": { "text": "90-Day Returns" } },
+        "p3": { "type": "pill", "settings": { "text": "1-Year Warranty" } },
+        "p4": { "type": "pill", "settings": { "text": "Cancel in 1 Hour" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"],
+      "settings": {
+        "eyebrow": "Complete training system · Live now",
+        "heading": "<p>Your gym closed. <em>Ours didn't.</em></p>",
+        "subheading": "Everything your gym gave you — structure, energy, results — now fits in 5.3 pounds. Trainer, program, music, nutrition, coaching.",
+        "button_label": "Start tonight — from $149 →",
+        "button_link": "shopify://collections/all",
+        "button_label_2": "See the system",
+        "show_rating": true,
+        "rating_text": "4.7 · 52 verified reviews · from $149",
+        "card_emoji": "💪",
+        "card_title": "GainsSteel® Hydraulic Trainer",
+        "card_price": "from $149",
+        "card_tag_1": "★ 4.7",
+        "card_tag_2": "5.3 lb",
+        "color_scheme": "scheme-1",
+        "padding_top": 40,
+        "padding_bottom": 24
+      }
+    },
+    "ct_stats": {
+      "type": "ct-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "12", "label": "Week program", "countup": true } },
+        "s2": { "type": "stat", "settings": { "number": "440", "suffix": "lb", "label": "Max resistance", "countup": true } },
+        "s3": { "type": "stat", "settings": { "number": "5.3", "suffix": "lb", "label": "Total weight", "countup": false } },
+        "s4": { "type": "stat", "settings": { "number": "5", "label": "System pillars", "countup": false } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": { "color_scheme": "scheme-1", "padding_top": 28, "padding_bottom": 28 }
+    },
+    "ct_who": {
+      "type": "ct-use-cases",
+      "blocks": {
+        "u1": { "type": "card", "settings": { "emoji": "🔄", "tag": "Returning", "title": "You used to train.", "desc": "Life got in the way and the gym didn't survive it. Your body remembers what strong felt like — we give it back, in less time, in any room." } },
+        "u2": { "type": "card", "settings": { "emoji": "✈️", "tag": "Traveler", "title": "Hotel gyms are a joke.", "desc": "5.3 lb fits in carry-on. Every hotel room becomes a training room. No lost weeks between trips." } },
+        "u3": { "type": "card", "settings": { "emoji": "🚀", "tag": "Beginner", "title": "Start without the gym.", "desc": "The program starts at zero and tells you exactly what to do each session. No guessing, no wrong moves, no judgment." } }
+      },
+      "block_order": ["u1", "u2", "u3"],
+      "settings": { "kicker": "Who it's for", "heading": "Built for three kinds of people.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+    },
+    "ct_features": {
+      "type": "ct-aplus",
+      "blocks": {
+        "b1": { "type": "banner", "settings": { "emoji": "🔧", "number": "01", "title": "Hydraulic, not spring.", "body": "Double-sealed cylinder, smooth controlled return, zero snap-back. Resistance stays consistent year after year — springs weaken, hydraulics don't.", "specs": "100,000-cycle endurance tested" } },
+        "b2": { "type": "banner", "settings": { "emoji": "🎛️", "number": "02", "title": "15 levels. One knob.", "body": "Stepless adjustment from 22 lb to 440 lb. Ten grip angles for chest, arms, shoulders, back and core. The arm angle never changes — only the load does.", "specs": "22 → 440 lb · stepless" } },
+        "b3": { "type": "banner", "settings": { "emoji": "🧳", "number": "03", "title": "Stores under the couch.", "body": "5.3 lb, ABS body with foam/PU grip, carry-on friendly. The best trainer is the one that's always there.", "specs": "5.3 lb · carry-on friendly" } }
+      },
+      "block_order": ["b1", "b2", "b3"],
+      "settings": { "kicker": "The product", "heading": "One trainer. Six muscle groups. 5.3 pounds.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+    },
+    "ct_when": {
+      "type": "ct-use-cases",
+      "blocks": {
+        "w1": { "type": "card", "settings": { "emoji": "☀️", "tag": "06:14 AM", "title": "Before the kettle clicks.", "desc": "25 minutes — chest, arms, abs — done before the kids' alarm. No setup, no drive, no excuse." } },
+        "w2": { "type": "card", "settings": { "emoji": "🏠", "tag": "02:30 PM", "title": "Between the meetings.", "desc": "20 minutes you'd otherwise spend doomscrolling. Real resistance, back at the desk without the commute." } },
+        "w3": { "type": "card", "settings": { "emoji": "🌍", "tag": "On the road", "title": "In the carry-on.", "desc": "5.3 lb fits most cabin bags. The hotel gym had two treadmills and a broken bench — yours will be better." } }
+      },
+      "block_order": ["w1", "w2", "w3"],
+      "settings": { "kicker": "For the life you have", "heading": "Train where life happens.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+    },
+    "ct_compare": {
+      "type": "ct-compare",
+      "blocks": {
+        "r1": { "type": "row", "settings": { "feature": "Resistance feel", "brand_type": "text", "brand_text": "Smooth, controlled return", "col2_type": "text", "col2_text": "Fast snap-back — injury risk", "col3_type": "text", "col3_text": "Elastic rebound" } },
+        "r2": { "type": "row", "settings": { "feature": "Consistency over time", "brand_type": "check", "col2_type": "cross", "col3_type": "cross" } },
+        "r3": { "type": "row", "settings": { "feature": "Adjustment", "brand_type": "text", "brand_text": "15 levels · 22–440 lb", "col2_type": "text", "col2_text": "Fixed or limited", "col3_type": "text", "col3_text": "Swap bands" } },
+        "r4": { "type": "row", "settings": { "feature": "Training system", "brand_type": "check", "col2_type": "cross", "col3_type": "cross" } },
+        "r5": { "type": "row", "settings": { "feature": "Portability", "brand_type": "text", "brand_text": "5.3 lb · carry-on", "col2_type": "text", "col2_text": "Similar weight", "col3_type": "text", "col3_text": "Light · tangles" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5"],
+      "settings": { "kicker": "Vs. alternatives", "heading": "More controlled than bands. More compact than weights.", "feature_label": "Feature", "brand_label": "GainsSteel Hydraulic", "col2_label": "Spring Twister", "col3_label": "Resistance Bands", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+    },
+    "ct_reviews": {
+      "type": "ct-reviews",
+      "blocks": {
+        "rv1": { "type": "review", "settings": { "rating": 5, "text": "5 months in and still going strong. Started at level 4, already at 8. Resistance is genuinely solid — this is the real thing.", "author": "Samie M.", "meta": "Core Pro · Verified April 2026", "verified": true } },
+        "rv2": { "type": "review", "settings": { "rating": 5, "text": "Tested every level. The higher ones aren't for show — level 13 had me actually struggling. The 440 lb is real.", "author": "D. Taj", "meta": "Basic · Verified March 2026", "verified": true } },
+        "rv3": { "type": "review", "settings": { "rating": 5, "text": "Thought it would end up in the closet. It didn't. Hydraulics feel solid, resistance jumps are real, still using it.", "author": "Rihanna F.", "meta": "Core Pro · Verified February 2026", "verified": true } }
+      },
+      "block_order": ["rv1", "rv2", "rv3"],
+      "settings": { "kicker": "4.7 ★ · 52 verified reviews", "heading": "Real results, real people.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+    },
+    "ct_email": {
+      "type": "ct-email",
+      "settings": {
+        "kicker": "First order offer",
+        "heading": "15% off. No code hunting.",
+        "subheading": "Drop your email and we'll send it directly. One email, no spam.",
+        "placeholder": "Your email address",
+        "button_label": "Get 15% off",
+        "disclaimer": "We don't share your email. Unsubscribe any time. First order only.",
+        "success_title": "Sent ✓",
+        "success_text": "Check your inbox for your 15% off code.",
+        "color_scheme": "scheme-1",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    },
+    "ct_faq": {
+      "type": "ct-faq",
+      "blocks": {
+        "f1": { "type": "item", "settings": { "question": "Is this for beginners or experienced trainers?", "answer": "<p>Both. Beginners start at level 1–3 and the 12-week program guides every session from day one. Experienced trainers start higher and use the program as structure when gym access is limited.</p>" } },
+        "f2": { "type": "item", "settings": { "question": "Is the 440 lb resistance actually real?", "answer": "<p>Yes — it's calibrated to actual weight-equivalent resistance, and verified buyers confirm level 13 is genuinely hard. The sealed hydraulic cylinder doesn't weaken over time.</p>" } },
+        "f3": { "type": "item", "settings": { "question": "What's the difference between The System and The Full Setup?", "answer": "<p>The System ($169) includes the trainer, 12-week program, music, nutrition guide and AB roller. The Full Setup ($199) adds a personal form-check video review, mobility guide and priority support.</p>" } },
+        "f4": { "type": "item", "settings": { "question": "Does it work for travel?", "answer": "<p>It's built for it. 5.3 lb fits most carry-on bags and the program works in any room with space to stand. Hotel gyms are optional — yours isn't.</p>" } },
+        "f5": { "type": "item", "settings": { "question": "What's the return and cancellation policy?", "answer": "<p>90-day return window from delivery. Cancel within 1 hour by emailing support. 1-year warranty on all bundles; support responds within 24 hours, excluding weekends.</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5"],
+      "settings": { "kicker": "Questions", "heading": "Quick answers.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+    },
+    "ct_sticky_atc": {
+      "type": "ct-sticky-atc",
+      "settings": {
+        "emoji": "💪",
+        "product_name": "GainsSteel® Hydraulic Muscle Trainer",
+        "rating_text": "★★★★★ 4.7 · 52 reviews",
+        "button_label": "from $149 →",
+        "button_link": "shopify://collections/all",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "ct_hero",
+    "ct_stats",
+    "ct_who",
+    "ct_features",
+    "ct_when",
+    "ct_compare",
+    "ct_reviews",
+    "ct_email",
+    "ct_faq",
+    "ct_sticky_atc"
+  ]
+}
