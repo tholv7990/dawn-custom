@@ -2,22 +2,14 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
+    "ct_announce": {
+      "type": "ct-announce",
       "blocks": {
-        "announcement-bar-0": {
-          "type": "announcement",
-          "settings": {
-            "text": "Welcome to our store",
-            "text_alignment": "center",
-            "color_scheme": "scheme-1",
-            "link": ""
-          }
-        }
+        "msg-1": { "type": "message", "settings": { "text": "Free shipping on orders over $100 — use code GAINS10", "link": "" } },
+        "msg-2": { "type": "message", "settings": { "text": "30-day money-back guarantee on every order", "link": "" } }
       },
-      "block_order": [
-        "announcement-bar-0"
-      ]
+      "block_order": ["msg-1", "msg-2"],
+      "settings": { "dismissible": true, "rotate_seconds": 4, "color_scheme": "scheme-1" }
     },
     "header": {
       "type": "header",
@@ -37,8 +29,5 @@
       }
     }
   },
-  "order": [
-    "announcement-bar",
-    "header"
-  ]
+  "order": ["ct_announce", "header"]
 }
