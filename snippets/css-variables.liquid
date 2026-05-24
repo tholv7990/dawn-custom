@@ -1,0 +1,78 @@
+{% comment %}
+  snippets/css-variables.liquid — the ONLY file that changes per brand.
+  Emits Minimals --ct-* tokens + @font-face. Rendered inside theme.liquid's
+  reset style block, so it outputs raw CSS only (no style wrapper).
+  Plain-text comments only — never Liquid tags inside CSS comments.
+{% endcomment %}
+{{ settings.font_heading | font_face: font_display: 'swap' }}
+{{ settings.font_body | font_face: font_display: 'swap' }}
+
+:root { color-scheme: only light; }
+html { color-scheme: only light; forced-color-adjust: none; }
+body {
+  background: #F4F6F8 !important;
+  color: #212B36 !important;
+  letter-spacing: normal !important;
+  overflow-x: hidden;
+}
+
+:root {
+  --ct-bg:#F4F6F8; --ct-bg-surface:#F9FAFB; --ct-bg-raised:#FFFFFF;
+  --ct-bg-control:rgba(145,158,171,.08); --ct-bg-control-h:rgba(145,158,171,.16);
+  --ct-bg-overlay:rgba(22,28,36,.80);
+
+  --ct-text:#212B36; --ct-text-2:#637381; --ct-text-3:#919EAB; --ct-text-off:#C4CDD0;
+
+  --ct-border:rgba(145,158,171,.32); --ct-border-strong:rgba(145,158,171,.20);
+  --ct-border-subtle:rgba(145,158,171,.12); --ct-border-faint:rgba(145,158,171,.06);
+
+  --ct-shadow-xs:0 1px 2px rgba(145,158,171,.14);
+  --ct-shadow-sm:0 4px 8px rgba(145,158,171,.16);
+  --ct-shadow-md:0 8px 16px rgba(145,158,171,.18);
+  --ct-shadow-lg:0 16px 32px rgba(145,158,171,.20);
+  --ct-shadow-2xl:0 20px 40px rgba(145,158,171,.24);
+
+  --ct-accent: {{ settings.color_accent | default: '#00A76F' }};
+  --ct-accent-strong: {{ settings.color_accent_hover | default: '#007867' }};
+  --ct-accent-text:#007867; --ct-accent-subtle:#C8FAD6; --ct-accent-border:#5BE49B;
+  --ct-accent-glow:rgba(0,167,111,.16);
+
+  --ct-success:#22C55E; --ct-success-dark:#15803D; --ct-success-light:#D3FCD2;
+  --ct-warning:#FFAB00; --ct-warning-dark:#B76E00; --ct-warning-light:#FFF5CC;
+  --ct-error:#FF5630; --ct-error-dark:#B71D18; --ct-error-light:#FFE9D5;
+
+  --ct-price:#212B36; --ct-price-was:#919EAB; --ct-price-save:#007867;
+  --ct-badge-sale:#B71D18; --ct-badge-new:#00A76F; --ct-badge-best:#B76E00;
+  --ct-stock-in:#007867; --ct-stock-low:#B76E00; --ct-stock-out:#919EAB;
+  --ct-rating:#FFAB00; --ct-touch:48px;
+
+  --ct-r-sm:4px;
+  --ct-r-md: {{ settings.border_radius | default: 8 }}px;
+  --ct-r-lg:12px; --ct-r-xl:16px; --ct-r-pill:9999px;
+
+  --ct-font-heading: '{{ settings.font_heading.family | default: 'Public Sans' }}', system-ui, sans-serif;
+  --ct-font-body: '{{ settings.font_body.family | default: 'Public Sans' }}', system-ui, sans-serif;
+  --ct-font-mono: 'DM Mono', ui-monospace, monospace;
+
+  --ct-text-xs:12px; --ct-text-sm:13px; --ct-text-base:15px; --ct-text-md:16px;
+  --ct-text-lg:20px; --ct-text-xl:26px; --ct-text-2xl:32px; --ct-text-3xl:40px; --ct-text-4xl:48px;
+  --ct-fw-normal:400; --ct-fw-medium:500; --ct-fw-semi:600; --ct-fw-bold:700;
+  --ct-leading-tight:1.15; --ct-leading-base:1.6; --ct-leading-loose:1.78;
+
+  --ct-space-1:4px; --ct-space-2:8px; --ct-space-3:12px; --ct-space-4:20px;
+  --ct-space-5:32px; --ct-space-6:48px; --ct-space-7:80px; --ct-space-8:128px;
+
+  --ct-mw: {{ settings.page_width | default: 1120 }}px; --ct-gutter:24px; --ct-gutter-m:16px;
+  --ct-focus:0 0 0 2px #F4F6F8, 0 0 0 4px #007867;
+
+  --ct-dur-fast:120ms; --ct-dur-base:240ms; --ct-dur-slow:480ms;
+  --ct-ease-out:cubic-bezier(.22,1,.36,1);
+  --ct-ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --ct-ease-in-out:cubic-bezier(.65,0,.35,1);
+
+  --ct-glass: {{ settings.glass_opacity | default: 0.88 }};
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --ct-dur-fast:0ms; --ct-dur-base:0ms; --ct-dur-slow:0ms; }
+}
