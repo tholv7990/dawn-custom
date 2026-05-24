@@ -1,0 +1,15 @@
+/* section-ct-reviews.css — demo .review-* → .ct-review-*; grid → mobile swipe rail */
+.ct-reviews-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ct-review-card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-xl);padding:20px;box-shadow:var(--ct-shadow-sm);min-width:0}
+.ct-review-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.ct-review-verified{font-size:11px;color:var(--ct-accent-text);font-weight:600}
+.ct-review-text{font-size:14px;color:var(--ct-text-2);line-height:1.6;margin-bottom:12px}
+.ct-review-author{display:flex;align-items:center;gap:8px}
+.ct-review-avatar{width:32px;height:32px;border-radius:50%;background:var(--ct-accent-subtle);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ct-accent-text);flex-shrink:0}
+.ct-review-name{font-size:13px;font-weight:600;color:var(--ct-text)}
+.ct-review-date{font-size:11px;color:var(--ct-text-3)}
+@media(max-width:760px){
+  .ct-reviews-track{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .ct-reviews-track::-webkit-scrollbar{display:none}
+  .ct-review-card{flex:0 0 82%;scroll-snap-align:start}
+}
