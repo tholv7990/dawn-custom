@@ -1,0 +1,11 @@
+/* section-ct-trust-bar.css — demo .trust-* → .ct-trust-*; demo --ic* palettes inlined */
+.ct-trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+.ct-trust-chip{background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-lg);padding:12px 14px;display:flex;align-items:flex-start;gap:10px;box-shadow:var(--ct-shadow-xs)}
+.ct-trust-icon{width:36px;height:36px;border-radius:var(--ct-r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ct-trust-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ct-trust-icon--green{background:#c8fad6;color:#007867}
+.ct-trust-icon--blue{background:#d6e4ff;color:#1939b7}
+.ct-trust-icon--purple{background:#efd6ff;color:#7a0ecc}
+.ct-trust-icon--amber{background:#fff5cc;color:#7a4f01}
+.ct-trust-label{font-size:13px;font-weight:700;color:var(--ct-text);line-height:1.2}
+.ct-trust-sub{font-size:12px;color:var(--ct-text-3);margin-top:2px}
