@@ -1,210 +1,169 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "ct_hero": {
+      "type": "ct-hero",
       "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
+        "p1": { "type": "pill", "settings": { "text": "Hydraulic resistance" } },
+        "p2": { "type": "pill", "settings": { "text": "Folds in seconds" } },
+        "p3": { "type": "pill", "settings": { "text": "Free shipping $100+" } }
       },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
+      "block_order": ["p1", "p2", "p3"],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "eyebrow": "New for 2025 — Pro Series",
+        "heading": "<p>Train smarter, <em>not harder</em></p>",
+        "subheading": "Progressive hydraulic resistance that adapts to every rep — built for athletes who want results without a gym.",
+        "button_label": "Shop now →",
+        "button_label_2": "See how it works",
+        "show_rating": true,
+        "rating_text": "4.9 · 10,000+ customers",
+        "card_emoji": "💪",
+        "card_title": "Core Bundle",
+        "card_price": "$149",
+        "card_tag_1": "★ 4.9",
+        "card_tag_2": "Ships today",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 24
       }
     },
-    "rich_text": {
-      "type": "rich-text",
+    "ct_marquee": {
+      "type": "ct-marquee",
       "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
-          }
-        }
+        "m1": { "type": "message", "settings": { "text": "Free shipping on orders $100+" } },
+        "m2": { "type": "message", "settings": { "text": "30-day money-back guarantee" } },
+        "m3": { "type": "message", "settings": { "text": "Over 10,000 customers trained" } },
+        "m4": { "type": "message", "settings": { "text": "Lifetime warranty on all products" } },
+        "m5": { "type": "message", "settings": { "text": "Ships within 24 hours" } }
       },
-      "block_order": [
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
-      }
+      "block_order": ["m1", "m2", "m3", "m4", "m5"],
+      "settings": { "speed": 28, "color_scheme": "scheme-1" }
+    },
+    "ct_trust_bar": {
+      "type": "ct-trust-bar",
+      "blocks": {
+        "c1": { "type": "chip", "settings": { "icon": "check", "icon_color": "green", "label": "30-Day Returns", "sublabel": "No questions" } },
+        "c2": { "type": "chip", "settings": { "icon": "truck", "icon_color": "blue", "label": "Free Shipping", "sublabel": "Orders $100+" } },
+        "c3": { "type": "chip", "settings": { "icon": "shield", "icon_color": "purple", "label": "Lifetime Warranty", "sublabel": "Full coverage" } },
+        "c4": { "type": "chip", "settings": { "icon": "clock", "icon_color": "amber", "label": "Ships in 24h", "sublabel": "Express available" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": { "color_scheme": "scheme-1", "padding_top": 8, "padding_bottom": 20 }
+    },
+    "ct_stats": {
+      "type": "ct-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "prefix": "+", "number": "10000", "suffix": "", "label": "Customers trained", "countup": true } },
+        "s2": { "type": "stat", "settings": { "number": "4.9", "suffix": "★", "label": "Average rating" } },
+        "s3": { "type": "stat", "settings": { "number": "30", "suffix": "%", "label": "Avg strength gain", "countup": true } },
+        "s4": { "type": "stat", "settings": { "prefix": "#", "number": "1", "label": "Category leader" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": { "color_scheme": "scheme-1", "padding_top": 28, "padding_bottom": 28 }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Featured products",
+        "title": "Best sellers",
         "heading_size": "h2",
         "collection": "all",
         "products_to_show": 8,
         "columns_desktop": 4,
         "color_scheme": "scheme-1",
-        "show_view_all": false,
-        "swipe_on_mobile": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "swipe_on_mobile": true,
         "image_ratio": "adapt",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": false,
+        "show_rating": true,
         "columns_mobile": "2",
-        "padding_top": 28,
+        "padding_top": 36,
         "padding_bottom": 36
       }
     },
-    "collage": {
-      "type": "collage",
+    "ct_aplus": {
+      "type": "ct-aplus",
       "blocks": {
-        "collection-0": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "product": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "second_image": false
-          }
-        },
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        }
+        "b1": { "type": "banner", "settings": { "emoji": "💧", "number": "01", "title": "Smooth hydraulic resistance", "body": "Fluid pressure auto-adjusts to your force output — the harder you push, the more it pushes back. No joint pain, no plates to swap.", "specs": "Auto-adjusting, No setup, Joint-safe, Silent" } },
+        "b2": { "type": "banner", "settings": { "emoji": "⚙️", "number": "02", "title": "Aircraft-grade build", "body": "CNC-machined aluminium body with a sealed hydraulic core, rated for a decade of daily use and backed for life.", "specs": "6061 aluminium, Powder-coat, 4.2 kg, 150 kg load" } }
       },
-      "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
-      ],
-      "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
+      "block_order": ["b1", "b2"],
+      "settings": { "kicker": "How it works", "heading": "Built different — here's why", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
     },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "heading_size": "h1",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn": {
-      "type": "multicolumn",
+    "ct_use_cases": {
+      "type": "ct-use-cases",
       "blocks": {
-        "column1": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column2": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column3": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
+        "u1": { "type": "card", "settings": { "emoji": "🏠", "tag": "Home", "title": "The home gym", "desc": "A full resistance workout in one square foot — no rack, no noise, no neighbours complaining." } },
+        "u2": { "type": "card", "settings": { "emoji": "💼", "tag": "Office", "title": "Desk breaks", "desc": "Reset between meetings with a 5-minute set you can do in work clothes." } },
+        "u3": { "type": "card", "settings": { "emoji": "✈️", "tag": "Travel", "title": "On the road", "desc": "Folds into a carry-on so your routine never skips a hotel." } }
       },
-      "block_order": [
-        "column1",
-        "column2",
-        "column3"
-      ],
+      "block_order": ["u1", "u2", "u3"],
+      "settings": { "kicker": "Who it's for", "heading": "One product, every context", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+    },
+    "ct_compare": {
+      "type": "ct-compare",
+      "blocks": {
+        "r1": { "type": "row", "settings": { "feature": "Progressive resistance", "brand_type": "check", "col2_type": "check", "col3_type": "cross" } },
+        "r2": { "type": "row", "settings": { "feature": "No setup required", "brand_type": "check", "col2_type": "cross", "col3_type": "cross" } },
+        "r3": { "type": "row", "settings": { "feature": "Space needed", "brand_type": "text", "brand_text": "1 sq ft", "col2_type": "text", "col2_text": "6 sq ft", "col3_type": "text", "col3_text": "10 sq ft" } },
+        "r4": { "type": "row", "settings": { "feature": "Lifetime warranty", "brand_type": "check", "col2_type": "cross", "col3_type": "cross" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": { "kicker": "Compare", "heading": "Why it wins", "feature_label": "Feature", "brand_label": "Our brand", "col2_label": "Cables", "col3_label": "Free weights", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+    },
+    "ct_ba": {
+      "type": "ct-ba",
+      "settings": { "kicker": "Real results", "heading": "12 weeks, side by side", "before_label": "Week 1", "after_label": "Week 12", "before_tag": "Before", "after_tag": "After", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+    },
+    "ct_reviews": {
+      "type": "ct-reviews",
+      "blocks": {
+        "rv1": { "type": "review", "settings": { "rating": 5, "text": "After 3 months my pull-up count went from 6 to 22. The hydraulic resistance is unlike anything I've used.", "author": "Marcus T.", "meta": "Verified · 2 months ago", "verified": true } },
+        "rv2": { "type": "review", "settings": { "rating": 5, "text": "I was sceptical but this genuinely works. Smooth resistance curve means no joint pain even at high intensity.", "author": "Sarah K.", "meta": "Verified · 1 month ago", "verified": true } },
+        "rv3": { "type": "review", "settings": { "rating": 4, "text": "Build quality is excellent and setup took 10 minutes. Would've given 5 stars but shipping took 4 days.", "author": "James R.", "meta": "Verified · 3 weeks ago", "verified": true } }
+      },
+      "block_order": ["rv1", "rv2", "rv3"],
+      "settings": { "kicker": "Loved by 10,000+", "heading": "What customers say", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+    },
+    "ct_faq": {
+      "type": "ct-faq",
+      "blocks": {
+        "f1": { "type": "item", "settings": { "question": "How does hydraulic resistance work?", "answer": "<p>Fluid pressure creates resistance that adjusts to your force output — the faster and harder you push, the more resistance you feel, giving a smooth, progressive workout with no manual adjustments.</p>" } },
+        "f2": { "type": "item", "settings": { "question": "What size should I choose?", "answer": "<p>One size fits all — resistance is adjustable from 5 to 60 kg on the same unit.</p>" } },
+        "f3": { "type": "item", "settings": { "question": "What is the warranty and return policy?", "answer": "<p>Lifetime warranty on the hydraulic core and a 30-day, no-questions money-back guarantee.</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": { "kicker": "FAQ", "heading": "Questions, answered", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+    },
+    "ct_email": {
+      "type": "ct-email",
       "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "swipe_on_mobile": false,
+        "kicker": "Join 10,000+ athletes",
+        "heading": "Get weekly training tips + exclusive offers",
+        "subheading": "No spam. Unsubscribe any time. Join athletes who train smarter every week.",
+        "placeholder": "Enter your email address",
+        "button_label": "Subscribe →",
+        "disclaimer": "By subscribing you agree to our Privacy Policy. Unsubscribe any time.",
+        "success_title": "You're in!",
+        "success_text": "Check your inbox for a welcome email.",
         "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 44,
+        "padding_bottom": 44
       }
     }
   },
   "order": [
-    "image_banner",
-    "rich_text",
+    "ct_hero",
+    "ct_marquee",
+    "ct_trust_bar",
+    "ct_stats",
     "featured_collection",
-    "collage",
-    "video",
-    "multicolumn"
+    "ct_aplus",
+    "ct_use_cases",
+    "ct_compare",
+    "ct_ba",
+    "ct_reviews",
+    "ct_faq",
+    "ct_email"
   ]
 }
