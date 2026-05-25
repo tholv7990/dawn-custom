@@ -526,7 +526,7 @@
                   {%- if block.settings.show_icons and shop.enabled_payment_types.size > 0 -%}
                     <div class="ct-pay__icons">
                       {%- for type in shop.enabled_payment_types -%}
-                        {{ type | payment_type_svg_tag }}
+                        {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
                       {%- endfor -%}
                     </div>
                   {%- endif -%}

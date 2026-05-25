@@ -136,7 +136,7 @@
                 {%- if shop.enabled_payment_types.size > 0 -%}
                   <div class="ct-cart-pay">
                     {%- for type in shop.enabled_payment_types -%}
-                      {{ type | payment_type_svg_tag }}
+                      {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
                     {%- endfor -%}
                   </div>
                 {%- endif -%}
