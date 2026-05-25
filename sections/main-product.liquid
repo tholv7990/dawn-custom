@@ -505,9 +505,9 @@
                   endif
                 -%}
                 <script src="{{ 'ct-scarcity.js' | asset_url }}" defer="defer"></script>
-                <ct-scarcity id="Scarcity-{{ section.id }}" data-section="{{ section.id }}" {{ block.shopify_attributes }}>
+                <ct-scarcity id="Scarcity-{{ section.id }}" data-section="{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   {%- if ct_show_scarcity -%}
-                    <div class="ct-scarcity" role="status">
+                    <div class="ct-scarcity">
                       <div class="ct-scarcity__top">
                         <span class="ct-scarcity__count">Only {{ ct_var.inventory_quantity }} left in stock</span>
                         {%- if block.settings.selling_fast_label != blank -%}

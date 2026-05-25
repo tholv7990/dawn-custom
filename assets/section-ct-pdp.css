@@ -110,7 +110,7 @@
 .ct-bundle:hover { border-color: var(--ct-accent-border); }
 .ct-bundle__radio:checked + .ct-bundle { border-color: var(--ct-accent); box-shadow: 0 0 0 1px var(--ct-accent), var(--ct-shadow-sm); }
 .ct-bundle__radio:focus-visible + .ct-bundle { box-shadow: var(--ct-focus); }
-.ct-bundle__radio:disabled + .ct-bundle { opacity: 0.5; cursor: not-allowed; }
+.ct-bundle__radio.disabled + .ct-bundle { opacity: 0.5; cursor: not-allowed; }
 .ct-bundle__radio-dot { width: 20px; height: 20px; margin-top: 2px; border: 2px solid var(--ct-text-off); border-radius: 50%; position: relative; }
 .ct-bundle__radio:checked + .ct-bundle .ct-bundle__radio-dot { border-color: var(--ct-accent); }
 .ct-bundle__radio:checked + .ct-bundle .ct-bundle__radio-dot::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--ct-accent); }

@@ -39,13 +39,12 @@
   {%- capture input_name -%}{{ option.name }}-{{ option.position }}{%- endcapture -%}
   <input
     type="radio"
-    class="ct-bundle__radio"
+    class="ct-bundle__radio{% if option_disabled %} disabled{% endif %}"
     id="{{ input_id }}"
     name="{{ input_name | escape }}"
     value="{{ value | escape }}"
     form="{{ product_form_id }}"
     {% if value.selected %}checked{% endif %}
-    {% if option_disabled %}disabled{% endif %}
     data-product-url="{{ value.product_url }}"
     data-option-value-id="{{ value.id }}"
   >
