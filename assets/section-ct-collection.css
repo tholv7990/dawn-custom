@@ -1,0 +1,116 @@
+/* section-ct-collection.css — Minimals skin for Dawn's native collection page.
+   Presentation only; facets.js + Section Rendering API untouched. Loaded by
+   main-collection-banner + main-collection-product-grid. --ct-* tokens are
+   global (theme-overrides.css). Remove this file -> working Dawn collection. */
+
+/* ---- Banner ---- */
+.collection-hero__title { font-family: var(--ct-font-heading); font-weight: var(--ct-fw-bold); font-size: var(--ct-text-3xl); letter-spacing: -0.02em; }
+.collection-hero__description { color: var(--ct-text-2); font-size: var(--ct-text-md); }
+
+/* ---- Vertical layout spacing ---- */
+@media screen and (min-width: 990px) {
+  .facets-vertical.page-width { gap: var(--ct-space-6); }
+  .facets-wrapper { padding-right: var(--ct-space-4); }
+}
+
+/* ---- Filter groups (sidebar) ---- */
+.facets__disclosure-vertical { border-bottom: 1px solid var(--ct-border-subtle); padding: var(--ct-space-3) 0; }
+.facets__disclosure-vertical .facets__summary { display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--ct-text); }
+.facets__disclosure-vertical .facets__summary > div { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: var(--ct-space-2); }
+.facets__summary-label { font-weight: var(--ct-fw-semi); font-size: var(--ct-text-base); }
+.facets__disclosure-vertical .facets__summary svg { width: 16px; height: 16px; color: var(--ct-text-3); transition: transform var(--ct-dur-fast) var(--ct-ease-out); }
+.facets__disclosure-vertical[open] .facets__summary svg { transform: rotate(180deg); }
+.facets__selected { color: var(--ct-text-3); font-size: var(--ct-text-sm); }
+.facets__and-helptext { color: var(--ct-text-3); font-size: var(--ct-text-xs); }
+
+/* ---- Checkbox rows ----
+   NOTE: Dawn renders <input type=checkbox> + square.svg (box) + .svg-wrapper>checkmark
+   + .facet-checkbox__text. We recolor on top of component-facets.css. The exact box
+   recolor is the #1 live-tweak item (verify on theme dev). */
+.facets__list--vertical { display: flex; flex-direction: column; gap: var(--ct-space-2); margin-top: var(--ct-space-3); }
+.facets__list--vertical .facets__item { margin: 0; }
+.facet-checkbox { display: flex; align-items: center; gap: 10px; font-size: var(--ct-text-sm); color: var(--ct-text-2); cursor: pointer; padding: 2px 0; line-height: 1.4; }
+.facet-checkbox.active { color: var(--ct-text); font-weight: var(--ct-fw-semi); }
+.facet-checkbox.disabled { opacity: 0.5; cursor: not-allowed; }
+.facet-checkbox > svg { width: 18px; height: 18px; border-radius: var(--ct-r-sm); color: var(--ct-border); flex-shrink: 0; }
+.facet-checkbox input:checked ~ svg { color: var(--ct-accent); }
+.facet-checkbox .svg-wrapper { color: #fff; }
+.facet-checkbox__text { color: inherit; }
+.facet-checkbox__text-label { color: inherit; }
+.facets__item .facet-checkbox__text { font-size: var(--ct-text-sm); }
+
+/* show more */
+.button-show-more { color: var(--ct-accent-text); font-weight: var(--ct-fw-semi); font-size: var(--ct-text-sm); margin-top: var(--ct-space-2); }
+
+/* price range */
+.facets__price { display: flex; align-items: center; gap: var(--ct-space-2); margin-top: var(--ct-space-3); }
+.facets__price .field__input,
+.facets__price input[type="text"] { border: 1.5px solid var(--ct-border); border-radius: var(--ct-r-md); padding: 8px 10px; font-family: var(--ct-font-body); font-size: var(--ct-text-sm); color: var(--ct-text); }
+.facets__price .field__input:focus { border-color: var(--ct-accent-strong); box-shadow: var(--ct-focus); outline: none; }
+
+/* ---- Sort + count bar ---- */
+.facets-vertical-sort { align-items: center; }
+.facet-filters__label label,
+.facet-filters__label { color: var(--ct-text-2); font-weight: var(--ct-fw-medium); }
+.facet-filters .select { position: relative; }
+.facet-filters__sort,
+.facet-filters .select__select {
+  appearance: none; -webkit-appearance: none;
+  border: 1.5px solid var(--ct-border); border-radius: var(--ct-r-md);
+  padding: 10px 36px 10px 14px; font-family: var(--ct-font-body); font-size: var(--ct-text-sm);
+  color: var(--ct-text); background: var(--ct-bg-raised); cursor: pointer;
+}
+.facet-filters__sort:focus { border-color: var(--ct-accent-strong); box-shadow: var(--ct-focus); outline: none; }
+.facet-filters .select .svg-wrapper { position: absolute; right: var(--ct-space-3); top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--ct-text-3); }
+.product-count__text { color: var(--ct-text-2); font-size: var(--ct-text-sm); }
+
+/* ---- Active filter pills ---- */
+.active-facets { display: flex; flex-wrap: wrap; gap: var(--ct-space-2); align-items: center; }
+.active-facets__button .active-facets__button-inner,
+.active-facets__button-inner.button--tertiary {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--ct-bg-control); border: 1px solid var(--ct-border-subtle);
+  color: var(--ct-text); border-radius: var(--ct-r-pill);
+  padding: 5px 12px; font-size: var(--ct-text-sm); min-height: 0;
+}
+.active-facets__button-inner.button--tertiary:hover { border-color: var(--ct-accent-border); }
+.active-facets__button-inner .svg-wrapper svg { width: 11px; height: 11px; color: var(--ct-text-3); }
+.active-facets__button-remove { color: var(--ct-accent-text); font-weight: var(--ct-fw-semi); font-size: var(--ct-text-sm); }
+
+/* ---- Product grid + states ---- */
+.product-grid { gap: var(--ct-space-4); }
+.collection--empty .title { font-family: var(--ct-font-heading); color: var(--ct-text); }
+
+/* ---- Pagination ---- */
+.pagination__list { display: flex; gap: var(--ct-space-1); justify-content: center; flex-wrap: wrap; }
+.pagination__item {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 38px; height: 38px; padding: 0 8px;
+  border: 1px solid var(--ct-border-subtle); border-radius: var(--ct-r-md);
+  background: var(--ct-bg-raised); color: var(--ct-text-2); font-size: var(--ct-text-sm);
+}
+.pagination__item--current { background: var(--ct-accent); color: #fff; border-color: var(--ct-accent); font-weight: var(--ct-fw-bold); }
+.pagination__item:hover:not(.pagination__item--current) { border-color: var(--ct-accent-border); color: var(--ct-text); }
+
+/* ---- Mobile filter drawer ---- */
+.mobile-facets__open {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1.5px solid var(--ct-border); border-radius: var(--ct-r-pill);
+  padding: 10px 18px; font-weight: var(--ct-fw-semi); font-size: var(--ct-text-sm); color: var(--ct-text);
+  background: var(--ct-bg-raised);
+}
+.mobile-facets__open .svg-wrapper svg { width: 16px; height: 16px; }
+.mobile-facets__inner { background: var(--ct-bg-raised); }
+.mobile-facets__header { border-bottom: 1px solid var(--ct-border-subtle); }
+.mobile-facets__heading { font-family: var(--ct-font-heading); font-weight: var(--ct-fw-bold); color: var(--ct-text); }
+.mobile-facets__count { color: var(--ct-text-3); font-size: var(--ct-text-sm); }
+.mobile-facets__summary { font-weight: var(--ct-fw-semi); color: var(--ct-text); }
+.mobile-facets__label { color: var(--ct-text-2); font-size: var(--ct-text-base); }
+.mobile-facets__label.active { color: var(--ct-text); font-weight: var(--ct-fw-semi); }
+.mobile-facets__footer { border-top: 1px solid var(--ct-border-subtle); gap: var(--ct-space-3); }
+.mobile-facets__footer .button--primary {
+  background: var(--ct-accent); color: #fff; border: 0; border-radius: var(--ct-r-md);
+  font-family: var(--ct-font-body); font-weight: var(--ct-fw-bold); min-height: 48px;
+}
+.mobile-facets__footer .button--primary:hover { background: var(--ct-accent-strong); }
+.mobile-facets__clear { color: var(--ct-accent-text); font-weight: var(--ct-fw-semi); }
