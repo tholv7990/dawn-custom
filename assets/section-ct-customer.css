@@ -1,0 +1,105 @@
+/* section-ct-customer.css — Minimals skin for Dawn's native customer/account pages.
+   Pure presentation over native Shopify customer forms. Loaded by the 7 customer
+   sections alongside ct-sections.css (for .ct-btn). .ct-field lives in
+   theme-overrides.css (global). Remove this file -> working Dawn pages (fail-open). */
+
+/* ---- Shared ---- */
+.customer { color: var(--ct-text); }
+.customer h1 { font-family: var(--ct-font-heading); font-weight: var(--ct-fw-bold); letter-spacing: -0.02em; }
+.customer h2 { font-family: var(--ct-font-heading); font-weight: var(--ct-fw-semi); }
+.customer a:not(.ct-btn) { color: var(--ct-accent-text); text-decoration: underline; text-underline-offset: 2px; }
+.customer a:not(.ct-btn):hover { color: var(--ct-accent-strong); }
+
+/* messages */
+.customer .form__message { display: inline-flex; align-items: center; gap: 6px; font-size: var(--ct-text-sm); color: var(--ct-error); }
+.customer .form__message .svg-wrapper svg { width: 16px; height: 16px; }
+.customer h3.form__message { color: var(--ct-success-dark); font-weight: var(--ct-fw-semi); }
+.customer ul li a { color: var(--ct-error); }
+.ct-field__input[aria-invalid="true"] { border-color: var(--ct-error); }
+
+/* ---- Auth pages: centered card ---- */
+.customer.login,
+.customer.register,
+.customer.reset-password,
+.customer.activate {
+  max-width: 460px;
+  margin-inline: auto;
+  background: var(--ct-bg-raised);
+  border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-xl);
+  box-shadow: var(--ct-shadow-sm);
+  padding: var(--ct-space-6) var(--ct-space-5);
+}
+.customer.login h1,
+.customer.register h1,
+.customer.reset-password h1,
+.customer.activate h1 { font-size: var(--ct-text-2xl); margin: 0 0 var(--ct-space-2); }
+.customer.login > div > p,
+.customer.register p,
+.customer.reset-password p,
+.customer.activate p { color: var(--ct-text-2); margin: 0 0 var(--ct-space-4); }
+.customer .ct-btn { margin-top: var(--ct-space-2); }
+.customer.login a:not(.ct-btn),
+.customer.register a:not(.ct-btn),
+.customer.activate a:not(.ct-btn) { display: inline-block; margin-top: var(--ct-space-3); font-size: var(--ct-text-sm); }
+
+/* login: recover + login headings spacing; guest divider */
+.customer.login h1 + div { margin-bottom: var(--ct-space-5); }
+.customer.login hr { border: 0; border-top: 1px solid var(--ct-border-subtle); margin: var(--ct-space-5) 0; }
+
+/* Shop "sign in with Shop" stays native; spacing only */
+.customer [name="sign-in-with-shop-provider"] { margin-bottom: var(--ct-space-4); }
+.customer [name="sign-in-with-shop-provider"] p { text-align: center; color: var(--ct-text-3); margin: var(--ct-space-3) 0 0; }
+
+/* ---- Native select skin (country / province) ---- */
+.customer .select { position: relative; margin-bottom: var(--ct-space-3); }
+.customer .select select {
+  width: 100%; padding: 14px var(--ct-space-3);
+  font-family: var(--ct-font-body); font-size: 16px;
+  color: var(--ct-text); background: var(--ct-bg-raised);
+  border: 1.5px solid var(--ct-border); border-radius: var(--ct-r-md);
+  appearance: none; -webkit-appearance: none;
+}
+.customer .select select:focus { border-color: var(--ct-accent-strong); box-shadow: var(--ct-focus); outline: none; }
+.customer .select .svg-wrapper { position: absolute; right: var(--ct-space-3); top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--ct-text-3); }
+.customer label[for^="AddressCountry"],
+.customer label[for^="AddressProvince"] { display: block; font-size: var(--ct-text-sm); color: var(--ct-text-2); margin-bottom: var(--ct-space-1); }
+.customer [type="checkbox"] { accent-color: var(--ct-accent); margin-right: var(--ct-space-2); }
+
+/* ---- Account dashboard ---- */
+.customer.account { max-width: var(--ct-mw); margin-inline: auto; }
+.customer.account > div:first-child { display: flex; justify-content: space-between; align-items: center; gap: var(--ct-space-3); margin-bottom: var(--ct-space-5); }
+.customer.account h1 { font-size: var(--ct-text-2xl); margin: 0; }
+.ct-account__body { display: grid; gap: var(--ct-space-5); }
+@media screen and (min-width: 750px) {
+  .ct-account__body { grid-template-columns: 1fr 320px; align-items: start; }
+}
+.ct-account__details {
+  background: var(--ct-bg-raised); border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-lg); padding: var(--ct-space-4);
+}
+.ct-account__details h2 { font-size: var(--ct-text-lg); margin-top: 0; }
+
+/* order-history table */
+.order-history { width: 100%; border-collapse: collapse; }
+.order-history th { text-align: left; font-size: var(--ct-text-sm); color: var(--ct-text-3); font-weight: var(--ct-fw-semi); padding: var(--ct-space-2) var(--ct-space-3); border-bottom: 1px solid var(--ct-border); }
+.order-history td { padding: var(--ct-space-3); border-bottom: 1px solid var(--ct-border-subtle); font-size: var(--ct-text-base); }
+.order-history tbody tr:hover { background: var(--ct-bg-control); }
+
+/* ---- Order detail table ---- */
+.order-details { width: 100%; border-collapse: collapse; }
+.order-details th,
+.order-details td { padding: var(--ct-space-3); border-bottom: 1px solid var(--ct-border-subtle); font-size: var(--ct-text-base); text-align: left; }
+.order-details tfoot td { font-weight: var(--ct-fw-semi); }
+
+/* ---- Addresses ---- */
+.customer.addresses { max-width: var(--ct-mw); margin-inline: auto; }
+.customer.addresses > h1 { font-size: var(--ct-text-2xl); }
+.customer.addresses ul[role="list"] { list-style: none; padding: 0; margin: var(--ct-space-5) 0 0; display: grid; gap: var(--ct-space-4); }
+@media screen and (min-width: 750px) { .customer.addresses ul[role="list"] { grid-template-columns: repeat(2, 1fr); } }
+.customer.addresses li[data-address] {
+  background: var(--ct-bg-raised); border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-lg); padding: var(--ct-space-4);
+}
+.customer.addresses li[data-address] h2 { font-size: var(--ct-text-sm); color: var(--ct-accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 var(--ct-space-2); }
+.customer.addresses [data-address] .ct-btn { margin: var(--ct-space-2) var(--ct-space-2) 0 0; }
