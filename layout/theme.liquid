@@ -385,5 +385,10 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    <ct-back-to-top class="ct-back-to-top">
+      <button type="button" aria-label="Back to top">{{- 'icon-caret.svg' | inline_asset_content -}}</button>
+    </ct-back-to-top>
+    <script src="{{ 'ct-back-to-top.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>

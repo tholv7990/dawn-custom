@@ -114,6 +114,31 @@ img { max-width: 100%; }
 .ct-badge--new { background: var(--ct-badge-new); }
 .ct-badge--sold-out { background: var(--ct-stock-out); }
 
+/* ---- Breadcrumb (snippets/ct-breadcrumb.liquid) ---- */
+.ct-breadcrumb { margin: 0 0 var(--ct-space-3); }
+.ct-breadcrumb__list { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; list-style: none; padding: 0; margin: 0; font-size: var(--ct-text-sm); color: var(--ct-text-3); }
+.ct-breadcrumb__list li { display: inline-flex; align-items: center; gap: 6px; }
+.ct-breadcrumb__list li + li::before { content: "\203A"; color: var(--ct-text-off); }
+.ct-breadcrumb__list a { color: var(--ct-text-3); text-decoration: none; }
+.ct-breadcrumb__list a:hover { color: var(--ct-accent-text); }
+.ct-breadcrumb__list [aria-current="page"] { color: var(--ct-text-2); }
+
+/* ---- Back to top (ct-back-to-top.js) ---- */
+ct-back-to-top {
+  position: fixed; right: 20px; bottom: 20px; z-index: 50;
+  opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity var(--ct-dur-base) var(--ct-ease-out),
+              transform var(--ct-dur-base) var(--ct-ease-out), visibility var(--ct-dur-base);
+}
+ct-back-to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
+ct-back-to-top button {
+  width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--ct-accent); color: #fff; box-shadow: var(--ct-shadow-md);
+  display: flex; align-items: center; justify-content: center;
+}
+ct-back-to-top button:hover { background: var(--ct-accent-strong); }
+ct-back-to-top button svg { width: 18px; height: 18px; transform: rotate(180deg); }
+
 /* ---- Rating stars — Google-style gold fill + light-grey empty.
    Dawn prints ★★★★★ and clips a gradient to the text; the fill width is --percent
    (set by Dawn on .rating-star). We override the gradient so the filled portion is
