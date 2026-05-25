@@ -17,3 +17,18 @@
   .ct-reviews-track::-webkit-scrollbar{display:none}
   .ct-review-card{flex:0 0 82%;scroll-snap-align:start}
 }
+
+/* ---- Carousel mode (ct-carousel.js) ---- */
+.ct-reviews-carousel .ct-reviews-track{display:flex;grid-template-columns:none;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.ct-reviews-carousel .ct-reviews-track::-webkit-scrollbar{display:none}
+.ct-reviews-carousel .ct-review-card{flex:0 0 calc((100% - 32px) / 3);scroll-snap-align:start}
+@media(max-width:760px){.ct-reviews-carousel .ct-review-card{flex:0 0 82%}}
+.ct-reviews-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:22px}
+.ct-carousel-arrow{width:40px;height:40px;border-radius:50%;border:1px solid var(--ct-border);background:var(--ct-bg-raised);color:var(--ct-text-2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .15s,color .15s}
+.ct-carousel-arrow:hover:not(:disabled){border-color:var(--ct-accent-border);color:var(--ct-accent-text)}
+.ct-carousel-arrow:disabled{opacity:.4;cursor:default}
+.ct-carousel-arrow svg{width:16px;height:16px;transform:rotate(90deg)}
+.ct-carousel-arrow--next svg{transform:rotate(-90deg)}
+.ct-reviews-dots{display:flex;align-items:center;gap:6px}
+.ct-carousel-dot{width:7px;height:7px;border-radius:50%;border:0;padding:0;background:var(--ct-border-strong);cursor:pointer;transition:width .2s,background .2s}
+.ct-carousel-dot[aria-current="true"]{width:20px;border-radius:3px;background:var(--ct-accent)}
