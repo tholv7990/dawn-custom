@@ -486,6 +486,41 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+              {%- when 'scarcity' -%}
+                {%- liquid
+                  assign ct_var = product.selected_or_first_available_variant
+                  assign ct_show_scarcity = false
+                  if ct_var.inventory_management == "shopify" and ct_var.inventory_quantity > 0 and ct_var.inventory_quantity <= block.settings.threshold
+                    assign ct_show_scarcity = true
+                  endif
+                  if request.design_mode
+                    assign ct_show_scarcity = true
+                  endif
+                  assign ct_pct = 0
+                  if block.settings.threshold > 0
+                    assign ct_pct = ct_var.inventory_quantity | times: 100.0 | divided_by: block.settings.threshold
+                  endif
+                  if ct_pct > 100
+                    assign ct_pct = 100
+                  endif
+                -%}
+                <script src="{{ 'ct-scarcity.js' | asset_url }}" defer="defer"></script>
+                <ct-scarcity id="Scarcity-{{ section.id }}" data-section="{{ section.id }}" {{ block.shopify_attributes }}>
+                  {%- if ct_show_scarcity -%}
+                    <div class="ct-scarcity" role="status">
+                      <div class="ct-scarcity__top">
+                        <span class="ct-scarcity__count">Only {{ ct_var.inventory_quantity }} left in stock</span>
+                        {%- if block.settings.selling_fast_label != blank -%}
+                          <span class="ct-scarcity__fast">{{ block.settings.selling_fast_label }}</span>
+                        {%- endif -%}
+                      </div>
+                      <div class="ct-scarcity__bar"><i style="width: {{ ct_pct }}%"></i></div>
+                      {%- if block.settings.social_line != blank -%}
+                        <div class="ct-scarcity__social">{{ block.settings.social_line }}</div>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </ct-scarcity>
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -931,6 +966,20 @@
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
         }
+      ]
+    },
+    {
+      "type": "scarcity",
+      "name": "Scarcity bar",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shows only when the selected variant's real stock is at or below the threshold (and inventory is tracked). Hidden when well-stocked — no fake urgency."
+        },
+        { "type": "range", "id": "threshold", "label": "Low-stock threshold", "min": 1, "max": 50, "step": 1, "default": 10 },
+        { "type": "text", "id": "selling_fast_label", "label": "Selling-fast label", "default": "Selling fast" },
+        { "type": "text", "id": "social_line", "label": "Social-proof line (optional)", "info": "Static editorial text. Leave blank to hide. Never a fake live counter." }
       ]
     },
     {
