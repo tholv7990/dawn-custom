@@ -1,0 +1,103 @@
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-product-tabs.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ct-tabs.js' | asset_url }}" defer="defer"></script>
+
+{% render 'ct-section-padding', section: section %}
+
+<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
+  {%- if section.blocks.size > 0 -%}
+    <ct-tabs class="ct-tabs">
+      <div
+        class="ct-tabs__bar"
+        role="tablist"
+        aria-label="{{ section.settings.heading | default: 'Product information' | escape }}"
+      >
+        {%- for block in section.blocks -%}
+          <button
+            type="button"
+            class="ct-tabs__tab{% if forloop.first %} is-active{% endif %}"
+            role="tab"
+            id="CtTab-{{ section.id }}-{{ forloop.index }}"
+            aria-controls="CtPanel-{{ section.id }}-{{ forloop.index }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {{- block.settings.heading -}}
+          </button>
+        {%- endfor -%}
+      </div>
+      {%- for block in section.blocks -%}
+        <div
+          class="ct-tabs__panel{% if forloop.first %} is-active{% endif %}"
+          role="tabpanel"
+          id="CtPanel-{{ section.id }}-{{ forloop.index }}"
+          aria-labelledby="CtTab-{{ section.id }}-{{ forloop.index }}"
+          {% unless forloop.first %}hidden{% endunless %}
+        >
+          <div class="ct-tabs__panel-inner rte">
+            {%- case block.settings.content_source -%}
+              {%- when "description" -%}
+                {{ product.description }}
+              {%- when "page" -%}
+                {{ block.settings.page.content }}
+              {%- else -%}
+                {{ block.settings.content }}
+            {%- endcase -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </ct-tabs>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "CT Product Tabs",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Tab heading", "default": "Tab" },
+        {
+          "type": "select",
+          "id": "content_source",
+          "label": "Content source",
+          "options": [
+            { "value": "richtext", "label": "Custom text" },
+            { "value": "description", "label": "Product description" },
+            { "value": "page", "label": "Page" }
+          ],
+          "default": "richtext"
+        },
+        { "type": "richtext", "id": "content", "label": "Custom text" },
+        { "type": "page", "id": "page", "label": "Page" }
+      ]
+    },
+    { "type": "@app" }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "CT Product Tabs",
+      "blocks": [
+        { "type": "tab", "settings": { "heading": "Description", "content_source": "description" } },
+        { "type": "tab", "settings": { "heading": "Specifications", "content_source": "richtext" } },
+        { "type": "tab", "settings": { "heading": "Shipping & Returns", "content_source": "richtext" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
