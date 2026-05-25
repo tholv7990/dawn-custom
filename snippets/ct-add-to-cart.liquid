@@ -1,0 +1,18 @@
+{%- comment -%}
+  Renders a Dawn product-form add-to-cart button for a specific variant.
+  product-form.js requires: a <form>, a [name=id] input, a submit <button>
+  with a direct child <span>, and a .loading__spinner (loading-spinner snippet).
+  Accepts: product, variant, label, btn_class, form_id, section_id;
+  optional form_class (extra class on <product-form>).
+{%- endcomment -%}
+<product-form class="product-form{% if form_class %} {{ form_class }}{% endif %}" data-hide-errors="true" data-section-id="{{ section_id }}">
+  {%- form 'product', product, id: form_id, class: 'form' -%}
+    <input type="hidden" name="id" value="{{ variant.id }}" class="product-variant-id"{% unless variant.available %} disabled{% endunless %}>
+    <button type="submit" name="add" class="{{ btn_class }}"{% unless variant.available %} disabled{% endunless %}>
+      <span>
+        {%- if variant.available -%}{{ label }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+      </span>
+      {%- render 'loading-spinner' -%}
+    </button>
+  {%- endform -%}
+</product-form>

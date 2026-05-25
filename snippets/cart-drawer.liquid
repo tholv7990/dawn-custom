@@ -521,15 +521,7 @@
                 <div class="ct-cart__upsell-name">{{ ct_upsell_product.title | escape }}</div>
                 <div class="ct-cart__upsell-price">{{ ct_upsell_variant.price | money }}</div>
               </div>
-              <product-form class="product-form ct-cart__upsell-form" data-hide-errors="true" data-section-id="cart-drawer-upsell">
-                {%- form 'product', ct_upsell_product, id: 'ct-upsell-form', class: 'form' -%}
-                  <input type="hidden" name="id" value="{{ ct_upsell_variant.id }}" class="product-variant-id"{% unless ct_upsell_variant.available %} disabled{% endunless %}>
-                  <button type="submit" name="add" class="ct-btn ct-btn--soft ct-btn--sm"{% unless ct_upsell_variant.available %} disabled{% endunless %}>
-                    <span>Add</span>
-                    {%- render 'loading-spinner' -%}
-                  </button>
-                {%- endform -%}
-              </product-form>
+              {% render 'ct-add-to-cart', product: ct_upsell_product, variant: ct_upsell_variant, label: 'Add', btn_class: 'ct-btn ct-btn--soft ct-btn--sm', form_id: 'ct-upsell-form', section_id: 'cart-drawer-upsell', form_class: 'ct-cart__upsell-form' %}
             </div>
           {%- endif -%}
         </div>

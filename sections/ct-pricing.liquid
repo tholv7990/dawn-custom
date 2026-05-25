@@ -57,17 +57,8 @@
 
         {%- if ct_product != blank and variant != blank -%}
           {%- assign form_id = 'ct-plan-' | append: section.id | append: '-' | append: block.id -%}
-          <product-form class="product-form" data-hide-errors="true" data-section-id="{{ section.id }}">
-            {%- form 'product', ct_product, id: form_id, class: 'form' -%}
-              <input type="hidden" name="id" value="{{ variant.id }}" class="product-variant-id"{% unless variant.available %} disabled{% endunless %}>
-              <button type="submit" name="add" class="ct-btn ct-btn--{{ style }} ct-btn--full"{% unless variant.available %} disabled{% endunless %}>
-                <span>
-                  {%- if variant.available -%}{{ block.settings.button_label }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
-                </span>
-                {%- render 'loading-spinner' -%}
-              </button>
-            {%- endform -%}
-          </product-form>
+          {%- assign plan_btn_class = 'ct-btn ct-btn--' | append: style | append: ' ct-btn--full' -%}
+          {% render 'ct-add-to-cart', product: ct_product, variant: variant, label: block.settings.button_label, btn_class: plan_btn_class, form_id: form_id, section_id: section.id %}
         {%- else -%}
           <a class="ct-btn ct-btn--{{ style }} ct-btn--full" href="{{ block.settings.button_link | default: '#' }}">{{ block.settings.button_label }}</a>
         {%- endif -%}
