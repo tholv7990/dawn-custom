@@ -20,7 +20,7 @@ Everything degrades open: with all enhancements off and the skin removed, the pa
 ## Fidelity expectations (recorded honestly)
 
 - **~1:1 with the mockup** (we own markup + CSS): bundle-card picker, scarcity bar, payment badges + secure line, PDP tabs, trust chips, price hierarchy (now / struck-was / save badge), title, descriptor, type/color/spacing (same `--ct-*` tokens).
-- **Close, data/gallery-dependent:** the gallery skins Dawn's native `product-media-gallery` (exact thumb crop depends on real images + `gallery_layout`); the rating `4.8 · 52` shows only when review data exists (seeded for GainsSteel); the "Add to cart · $price" label needs a small enhancement (native button omits price).
+- **Close, data/gallery-dependent:** the gallery skins Dawn's native `product-media-gallery` (exact thumb crop depends on real images + `gallery_layout`); the rating `4.8 · 52` shows only when review data exists (seeded for GainsSteel). The native ATC keeps its "Add to cart" label (the "· $price" suffix from the mockup is **deferred** — appending live price would touch `buy-buttons.liquid`, which we leave native).
 - **Platform-owned, NOT pixel-customizable:** the dynamic-checkout / Shop Pay button (`{{ form | payment_button }}`) — Shopify controls its look. We keep it but do not promise custom styling; merchant may hide it. Payment icons render Shopify's official `payment_type_svg_tag` SVGs.
 - **Constraint:** rich per-card price/diff in the bundle picker is exact only for **single-option** products (the bundle case — one option, N values, each mapping to one variant). For multi-option products the card degrades to name + tagline (no per-card price). Documented, acceptable for bundle PDPs.
 
@@ -90,7 +90,7 @@ Add new `case` branches + schema block definitions. **Markup/schema only — the
   Otherwise renders nothing (well-stocked = hidden; no fake urgency). This mirrors the native `inventory` block's data, presented as a bar.
 - Markup: amber panel with "Only N left" (uses real `inventory_quantity`), a progress bar whose fill = `inventory_quantity / threshold * 100`%, and an optional merchant **social-proof line** (`block.settings.social_line`, static editorial text — clearly merchant-authored, never a fake "live" counter).
 - Schema: `threshold` (range, default 10), `social_line` (text, optional), `selling_fast_label` (text, default "Selling fast"), `color_scheme` not needed (inherits section).
-- The block re-renders correctly on variant change because Dawn re-renders `ProductInfo` HTML via the Section Rendering API on variant change (the block markup is inside `<product-info>`).
+- **Variant-change update:** `product-info.js` only swaps a fixed set of IDs on variant change (`price`, `Inventory`, `Sku`, `Volume`, `Price-Per-Item`) — it does NOT re-render the whole buybox. So the scarcity block is wrapped in a guarded custom element `<ct-scarcity id="Scarcity-{section.id}" data-section="{section.id}">` (new `assets/ct-scarcity.js`, ~18 lines) that `subscribe(PUB_SUB_EVENTS.variantChange, …)`, reads the freshly-fetched section DOM from `event.detail.data.html`, finds `#Scarcity-{sectionId}` in it and copies `innerHTML` into itself — mirroring Dawn's own `updateSourceFromDestination` pattern. Stores the unsubscribe fn and calls it in `disconnectedCallback`. No Dawn JS modified.
 
 #### B3 — Payment-reassurance block (`type: "payment_reassurance"`)
 
@@ -101,9 +101,9 @@ Add new `case` branches + schema block definitions. **Markup/schema only — the
 #### B4 — PDP tabs section: `sections/ct-product-tabs.liquid`
 
 - A **new section** (not a buybox block) added to `templates/product.json` below `main-product`.
-- Desktop: horizontal tab bar + panels. Mobile (`< 750px`): stacked accordion (reuses the existing `data-accordion` P1 hook so no duplicate logic).
-- Tabs are merchant **blocks** (`type: "tab"`): each has `heading` (text), `content` (richtext) and/or `page` (page picker), so tabs are author-driven (Description / Specifications / Reviews / FAQ / Shipping). A reviews-app block can be dropped into a tab via `@app`.
-- Tab switching needs a small new script: `assets/ct-tabs.js`, a guarded custom element `<ct-tabs>` (~25 lines) toggling `aria-selected` / `hidden` and `[role=tab]`/`[role=tabpanel]`. On mobile it does nothing (CSS shows accordion). Follows the project's custom-element guard pattern; loaded only by this section.
+- Desktop: horizontal tab bar + panels. Mobile (`< 750px`): the tab bar scrolls horizontally (`overflow-x:auto`) and the active panel shows below — **no separate accordion DOM** (simpler, no content duplication, matches the approved mockup). The native collapsible-row accordion is removed from the buybox; its content moves into tabs.
+- Tabs are merchant **blocks** (`type: "tab"`): each has `heading` (text) and a `content_source` select — **richtext** (the `content` setting), **product description** (renders `{{ product.description }}`), or **page** (a page picker). So the Description tab can pull the real product description with zero re-authoring. A reviews-app block can be dropped into a tab via `@app`.
+- Tab switching needs a small new script: `assets/ct-tabs.js`, a guarded custom element `<ct-tabs>` (~30 lines) toggling `aria-selected` / `hidden` / `is-active` on `[role=tab]`/`[role=tabpanel]`, with Left/Right/Home/End keyboard support. Follows the project's custom-element guard pattern; loaded only by this section.
 - CSS: `assets/section-ct-product-tabs.css`.
 - Accessibility: proper `role="tablist"/"tab"/"tabpanel"`, `aria-controls`, keyboard arrow support in `ct-tabs.js`.
 
@@ -112,8 +112,9 @@ Add new `case` branches + schema block definitions. **Markup/schema only — the
 ## File map
 
 **New files:**
-- `assets/section-ct-pdp.css` — the PDP skin.
+- `assets/section-ct-pdp.css` — the PDP skin (incl. bundle-card styling).
 - `snippets/ct-bundle-options.liquid` — the `bundle` picker branch (native radios + fat cards).
+- `assets/ct-scarcity.js` — guarded `<ct-scarcity>` element, updates the bar on variant change via pub/sub.
 - `sections/ct-product-tabs.liquid` + `assets/section-ct-product-tabs.css` + `assets/ct-tabs.js` — tabs section.
 
 **Modified (additive only):**
@@ -148,7 +149,7 @@ Metafield **definitions** must exist in the store (created via admin or Admin AP
 
 - Bundle cards: native radios remain the accessible control; labels associated via `for`; selected state conveyed by `:checked` (not color alone — also the ring + radio dot). Unavailable values keep Dawn's `label-unavailable` visually-hidden text.
 - Scarcity: `role="status"` so screen readers announce stock changes (mirrors native inventory block).
-- Tabs: ARIA tab pattern + keyboard arrows; mobile accordion uses `<details>`/`data-accordion`.
+- Tabs: ARIA tab pattern (`role=tablist/tab/tabpanel`, `aria-controls`, `aria-selected`) + keyboard arrows/Home/End; on mobile the tab bar scrolls horizontally.
 - Respects `prefers-reduced-motion` (tokens already zero out durations).
 
 ## Testing / verification
@@ -159,12 +160,12 @@ Metafield **definitions** must exist in the store (created via admin or Admin AP
   2. Add to cart works; cart drawer opens (existing upsell unaffected).
   3. Scarcity bar shows only when a variant's real stock ≤ threshold; hidden otherwise; hidden when inventory not tracked.
   4. Payment icons match the store's enabled payment types.
-  5. Tabs switch on desktop; collapse to accordion on mobile; keyboard accessible.
+  5. Tabs switch on desktop; tab bar scrolls horizontally on mobile; keyboard accessible (arrows / Home / End).
   6. With all enhancements toggled off + skin removed, page is a normal working Dawn PDP (fail-open).
 
 ## Open questions
 
 None — resolved during brainstorming:
 - Bundle copy → **variant metafields with graceful fallback**.
-- Tabs → **new below-buybox section** (desktop tabs / mobile accordion).
+- Tabs → **new below-buybox section** (desktop tabs / mobile horizontally-scrollable tab bar).
 - Reusable theme-grade + all four enhancements; urgency real-inventory only.
