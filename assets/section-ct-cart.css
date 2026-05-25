@@ -4,7 +4,7 @@
 
 /* ---- 2-col layout (scoped, fail-open to stacked) ---- */
 @media screen and (min-width: 990px) {
-  #MainContent:has(cart-items) {
+  #MainContent:has(cart-items:not(.is-empty)) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 360px;
     gap: var(--ct-space-5);
@@ -13,11 +13,11 @@
     margin-inline: auto;
     padding-inline: var(--ct-gutter);
   }
-  #MainContent:has(cart-items) > .shopify-section { min-width: 0; }
-  #MainContent:has(cart-items) > .cart__footer-wrapper { grid-column: 2; grid-row: 1; position: sticky; top: var(--ct-space-4); }
-  #MainContent:has(cart-items) > .shopify-section:not(:first-child):not(.cart__footer-wrapper) { grid-column: 1 / -1; }
-  #MainContent:has(cart-items) > .shopify-section:first-child .page-width,
-  #MainContent:has(cart-items) > .cart__footer-wrapper .page-width { max-width: none; padding-inline: 0; }
+  #MainContent:has(cart-items:not(.is-empty)) > .shopify-section { min-width: 0; }
+  #MainContent:has(cart-items:not(.is-empty)) > .cart__footer-wrapper { grid-column: 2; grid-row: 1; position: sticky; top: var(--ct-space-4); }
+  #MainContent:has(cart-items:not(.is-empty)) > .shopify-section:not(:first-child):not(.cart__footer-wrapper) { grid-column: 1 / -1; }
+  #MainContent:has(cart-items:not(.is-empty)) > .shopify-section:first-child .page-width,
+  #MainContent:has(cart-items:not(.is-empty)) > .cart__footer-wrapper .page-width { max-width: none; padding-inline: 0; }
 }
 
 /* ---- Title + empty state ---- */
