@@ -65,7 +65,7 @@ Params: `chips` (the raw textarea string), optional `class` (default `ct-trust-r
 ct-pricing currently wraps with `style="margin-top:24px"` + `data-reveal`; ct-final-cta has neither. The snippet supports both via `wrap_style` and a `reveal` flag so both call sites stay byte-identical.
 
 ### 4. `snippets/ct-add-to-cart.liquid`
-Params: `product`, `variant`, `label`, `btn_class` (e.g. `ct-btn ct-btn--primary ct-btn--full`), `form_id`, `section_id`. Output = the exact `<product-form>` structure both call sites use today (the `<span>` + `{% render 'loading-spinner' %}` are required by `product-form.js` and live only here now):
+Params: `product`, `variant`, `label`, `btn_class` (e.g. `ct-btn ct-btn--primary ct-btn--full`), `form_id`, `section_id`, optional `form_class` (extra class on the `<product-form>` element — the cart-drawer upsell needs `ct-cart__upsell-form` for its layout CSS, so dropping it would break the upsell button; ct-pricing passes none). Output = the exact `<product-form>` structure both call sites use today (the `<span>` + `{% render 'loading-spinner' %}` are required by `product-form.js` and live only here now):
 ```liquid
 <product-form class="product-form" data-hide-errors="true" data-section-id="{{ section_id }}">
   {%- form 'product', product, id: form_id, class: 'form' -%}
