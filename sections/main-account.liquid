@@ -1,4 +1,6 @@
 {{ 'customer.css' | asset_url | stylesheet_tag }}
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-customer.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -25,8 +27,8 @@
     </a>
   </div>
 
-  <div>
-    <div>
+  <div class="ct-account__body">
+    <div class="ct-account__orders">
       <h2>{{ 'customer.orders.title' | t }}</h2>
 
       {% paginate customer.orders by 20 %}
@@ -138,7 +140,7 @@
       {% endpaginate %}
     </div>
 
-    <div>
+    <div class="ct-account__details">
       <h2>{{ 'customer.account.details' | t }}</h2>
 
       {{ customer.default_address | format_address }}
