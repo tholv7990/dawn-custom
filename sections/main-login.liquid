@@ -1,4 +1,6 @@
 {{ 'customer.css' | asset_url | stylesheet_tag }}
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-customer.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -29,8 +31,9 @@
 
     {%- form 'recover_customer_password' -%}
       {% assign recover_success = form.posted_successfully? %}
-      <div class="field">
+      <div class="ct-field">
         <input
+          class="ct-field__input"
           type="email"
           value=""
           name="email"
@@ -43,9 +46,9 @@
             aria-describedby="RecoverEmail-email-error"
             autofocus
           {% endif %}
-          placeholder="{{ 'customer.login_page.email' | t }}"
+          placeholder=" "
         >
-        <label for="RecoverEmail">
+        <label class="ct-field__label" for="RecoverEmail">
           {{ 'customer.login_page.email' | t }}
         </label>
       </div>
@@ -58,7 +61,7 @@
         </small>
       {%- endif -%}
 
-      <button>
+      <button class="ct-btn ct-btn--primary ct-btn--full">
         {{ 'customer.login_page.submit' | t }}
       </button>
 
@@ -104,8 +107,9 @@
         </section>
       {%- endif -%}
 
-      <div class="field">
+      <div class="ct-field">
         <input
+          class="ct-field__input"
           type="email"
           name="customer[email]"
           id="CustomerEmail"
@@ -115,16 +119,17 @@
           {% if form.errors contains 'form' %}
             aria-invalid="true"
           {% endif %}
-          placeholder="{{ 'customer.login_page.email' | t }}"
+          placeholder=" "
         >
-        <label for="CustomerEmail">
+        <label class="ct-field__label" for="CustomerEmail">
           {{ 'customer.login_page.email' | t }}
         </label>
       </div>
 
       {%- if form.password_needed -%}
-        <div class="field">
+        <div class="ct-field">
           <input
+            class="ct-field__input"
             type="password"
             value=""
             name="customer[password]"
@@ -133,9 +138,9 @@
             {% if form.errors contains 'form' %}
               aria-invalid="true"
             {% endif %}
-            placeholder="{{ 'customer.login_page.password' | t }}"
+            placeholder=" "
           >
-          <label for="CustomerPassword">
+          <label class="ct-field__label" for="CustomerPassword">
             {{ 'customer.login_page.password' | t }}
           </label>
         </div>
@@ -145,7 +150,7 @@
         </a>
       {%- endif -%}
 
-      <button>
+      <button class="ct-btn ct-btn--primary ct-btn--full">
         {{ 'customer.login_page.sign_in' | t }}
       </button>
 
@@ -161,7 +166,7 @@
       <h2>{{ 'customer.login_page.guest_title' | t }}</h2>
 
       {%- form 'guest_login' -%}
-        <button>
+        <button class="ct-btn ct-btn--outlined ct-btn--full">
           {{ 'customer.login_page.guest_continue' | t }}
         </button>
       {%- endform -%}
