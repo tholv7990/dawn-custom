@@ -10,6 +10,7 @@
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
 <style>
   .drawer {
@@ -497,7 +498,41 @@
         here MUST be guarded by `if cart != empty` (as below) to preserve that.
       {%- endcomment -%}
       {%- if cart != empty and settings.cart_drawer_collection != blank -%}
-        <div class="ct-cart__upsell" data-ct-upsell></div>
+        {%- assign ct_upsell_product = blank -%}
+        {%- for ct_p in settings.cart_drawer_collection.products -%}
+          {%- assign ct_in_cart = false -%}
+          {%- for ct_item in cart.items -%}
+            {%- if ct_item.product_id == ct_p.id -%}{%- assign ct_in_cart = true -%}{%- break -%}{%- endif -%}
+          {%- endfor -%}
+          {%- if ct_in_cart == false and ct_p.available -%}
+            {%- assign ct_upsell_product = ct_p -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        <div class="ct-cart__upsell" data-ct-upsell>
+          {%- if ct_upsell_product != blank -%}
+            {%- assign ct_upsell_variant = ct_upsell_product.selected_or_first_available_variant -%}
+            <div class="ct-cart__upsell-head">You might also like</div>
+            <div class="ct-cart__upsell-card">
+              {%- if ct_upsell_product.featured_image != blank -%}
+                <img class="ct-cart__upsell-img" src="{{ ct_upsell_product.featured_image | image_url: width: 120 }}" alt="{{ ct_upsell_product.featured_image.alt | escape }}" width="60" height="60" loading="lazy">
+              {%- endif -%}
+              <div class="ct-cart__upsell-info">
+                <div class="ct-cart__upsell-name">{{ ct_upsell_product.title | escape }}</div>
+                <div class="ct-cart__upsell-price">{{ ct_upsell_variant.price | money }}</div>
+              </div>
+              <product-form class="product-form ct-cart__upsell-form" data-hide-errors="true" data-section-id="cart-drawer-upsell">
+                {%- form 'product', ct_upsell_product, id: 'ct-upsell-form', class: 'form' -%}
+                  <input type="hidden" name="id" value="{{ ct_upsell_variant.id }}" class="product-variant-id"{% unless ct_upsell_variant.available %} disabled{% endunless %}>
+                  <button type="submit" name="add" class="ct-btn ct-btn--soft ct-btn--sm"{% unless ct_upsell_variant.available %} disabled{% endunless %}>
+                    <span>Add</span>
+                    {%- render 'loading-spinner' -%}
+                  </button>
+                {%- endform -%}
+              </product-form>
+            </div>
+          {%- endif -%}
+        </div>
       {%- endif -%}
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}

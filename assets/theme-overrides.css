@@ -180,6 +180,15 @@ fieldset.product-form__input input:checked + label.swatch {
 .ct-cart__bar-track { height: 6px; border-radius: var(--ct-r-pill); background: var(--ct-bg-control); overflow: hidden; }
 .ct-cart__bar-fill { height: 100%; background: var(--ct-accent); border-radius: var(--ct-r-pill); transition: width var(--ct-dur-slow) var(--ct-ease-out); }
 .ct-cart__upsell:empty { display: none; }
+.ct-cart__upsell { padding: 12px 20px; border-top: 1px solid var(--ct-border-subtle); }
+.ct-cart__upsell-head { font-size: var(--ct-text-xs); font-family: var(--ct-font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ct-text-3); margin-bottom: 8px; }
+.ct-cart__upsell-card { display: flex; align-items: center; gap: 12px; background: var(--ct-bg-raised); border: 1px solid var(--ct-border-strong); border-radius: var(--ct-r-lg); padding: 10px; }
+.ct-cart__upsell-img { width: 48px; height: 48px; border-radius: var(--ct-r-md); object-fit: cover; flex-shrink: 0; }
+.ct-cart__upsell-info { min-width: 0; flex: 1; }
+.ct-cart__upsell-name { font-size: var(--ct-text-sm); font-weight: var(--ct-fw-semi); color: var(--ct-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ct-cart__upsell-price { font-size: var(--ct-text-sm); color: var(--ct-text-2); }
+.ct-cart__upsell-form { margin: 0; flex-shrink: 0; }
+.ct-cart__upsell-form .product-form__error-message-wrapper { display: none; }
 .ct-cart__trust {
   display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
   padding: 10px 20px; font-size: var(--ct-text-xs); color: var(--ct-text-3);
