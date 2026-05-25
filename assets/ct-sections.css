@@ -43,3 +43,6 @@
 .ct-trust-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .ct-trust-chip{display:inline-flex;align-items:center;gap:8px;background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-lg);padding:10px 14px;font-size:13px;font-weight:500;color:var(--ct-text-2)}
 .ct-trust-chip::before{content:'✓';color:var(--ct-accent-text);font-weight:700;font-size:12px}
+
+/* ---- Card surface base (bg + border + radius shared by ct-* cards) ---- */
+.ct-card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-xl)}

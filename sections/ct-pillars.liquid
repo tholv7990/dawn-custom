@@ -7,7 +7,7 @@
   {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
   <div class="ct-pillar-grid">
     {%- for block in section.blocks -%}
-      <div class="ct-pillar" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
+      <div class="ct-card ct-pillar" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
         {%- if block.settings.number != blank -%}<div class="ct-pillar__num">{{ block.settings.number }}</div>{%- endif -%}
         {%- if block.settings.icon != blank -%}<div class="ct-pillar__icon">{{ block.settings.icon }}</div>{%- endif -%}
         <div class="ct-pillar__name">{{ block.settings.name }}</div>

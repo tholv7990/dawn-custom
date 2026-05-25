@@ -46,7 +46,7 @@
         {%- if section.settings.image != blank -%}
           {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'eager', class: 'ct-hero-visual__img', alt: section.settings.heading | default: '' }}
         {%- else -%}
-          <div class="ct-hero-card">
+          <div class="ct-card ct-hero-card">
             {%- if section.settings.card_emoji != blank -%}<div class="ct-hero-card__emoji">{{ section.settings.card_emoji }}</div>{%- endif -%}
             <div class="ct-hero-card__name">{{ section.settings.card_title }}</div>
             {%- if section.settings.card_price != blank -%}<div class="ct-hero-card__price">{{ section.settings.card_price }}</div>{%- endif -%}

@@ -10,7 +10,7 @@
   {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
 
   {%- if section.settings.vs_gym != blank -%}
-    <div class="ct-pricing-vs" data-reveal>
+    <div class="ct-card ct-pricing-vs" data-reveal>
       {%- if section.settings.vs_label != blank -%}<span class="ct-pricing-vs__label">{{ section.settings.vs_label }}</span>{%- endif -%}
       <span class="ct-pricing-vs__gym">{{ section.settings.vs_gym }}</span>
       <span class="ct-pricing-vs__sep">vs</span>
@@ -25,7 +25,7 @@
       {%- assign variant = blank -%}
       {%- if ct_product != blank -%}{%- assign variant = ct_product.variants[vidx] -%}{%- endif -%}
       {%- assign style = block.settings.button_style | default: 'primary' -%}
-      <div class="ct-plan{% if block.settings.featured %} ct-plan--featured{% endif %}" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
+      <div class="ct-card ct-plan{% if block.settings.featured %} ct-plan--featured{% endif %}" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
         {%- if block.settings.featured and block.settings.badge != blank -%}<div class="ct-plan__badge">{{ block.settings.badge }}</div>{%- endif -%}
         {%- if block.settings.tag != blank -%}<div class="ct-plan__tag">{{ block.settings.tag }}</div>{%- endif -%}
         <div class="ct-plan__name">{{ block.settings.name }}</div>

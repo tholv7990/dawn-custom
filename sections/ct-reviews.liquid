@@ -16,7 +16,7 @@
   {%- endif -%}
   <div class="ct-reviews-track" data-swipe>
     {%- for block in section.blocks -%}
-      <div class="ct-review-card" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
+      <div class="ct-card ct-review-card" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
         <div class="ct-review-head">
           <span class="ct-stars" aria-label="{{ block.settings.rating }} out of 5">
             {%- assign r = block.settings.rating | at_most: 5 -%}

@@ -4,7 +4,7 @@
 {% render 'ct-section-padding', section: section %}
 
 <div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
-  <div class="ct-stats" data-reveal>
+  <div class="ct-card ct-stats" data-reveal>
     {%- for block in section.blocks -%}
       <div class="ct-stat" {{ block.shopify_attributes }}>
         <div class="ct-stat-num">

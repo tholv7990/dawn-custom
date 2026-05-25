@@ -7,7 +7,7 @@
   {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
   <div class="ct-use-case-grid">
     {%- for block in section.blocks -%}
-      <div class="ct-use-case-card" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
+      <div class="ct-card ct-use-case-card" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
         <div class="ct-use-case-img">
           {%- if block.settings.image != blank -%}
             {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'ct-use-case-img__media', alt: block.settings.title | escape }}

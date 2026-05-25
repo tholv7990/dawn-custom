@@ -13,7 +13,7 @@
 .ct-hero-visual{background:linear-gradient(135deg,var(--ct-accent-subtle) 0%,rgba(200,250,214,.4) 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .ct-hero-visual__glow{position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(0,167,111,.10) 0%,transparent 70%)}
 .ct-hero-visual__img{position:relative;width:100%;height:100%;object-fit:cover}
-.ct-hero-card{position:relative;background:#fff;border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-xl);padding:16px 20px;box-shadow:var(--ct-shadow-lg);width:200px;animation:ct-float 4s ease-in-out infinite;text-align:center}
+.ct-hero-card{position:relative;padding:16px 20px;box-shadow:var(--ct-shadow-lg);width:200px;animation:ct-float 4s ease-in-out infinite;text-align:center}
 .ct-hero-card__emoji{font-size:32px;margin-bottom:8px}
 .ct-hero-card__name{font-size:13px;font-weight:700;color:var(--ct-text)}
 .ct-hero-card__price{font-size:18px;font-weight:800;color:var(--ct-price);margin-top:4px}

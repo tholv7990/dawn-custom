@@ -1,6 +1,6 @@
 /* section-ct-reviews.css — demo .review-* → .ct-review-*; grid → mobile swipe rail */
 .ct-reviews-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.ct-review-card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-xl);padding:20px;box-shadow:var(--ct-shadow-sm);min-width:0}
+.ct-review-card{padding:20px;box-shadow:var(--ct-shadow-sm);min-width:0}
 .ct-review-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
 .ct-review-verified{font-size:11px;color:var(--ct-accent-text);font-weight:600}
 .ct-review-text{font-size:14px;color:var(--ct-text-2);line-height:1.6;margin-bottom:12px}

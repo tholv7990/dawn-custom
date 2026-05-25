@@ -7,7 +7,7 @@
   {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
   <div class="ct-journey-track">
     {%- for block in section.blocks -%}
-      <div class="ct-journey-step" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
+      <div class="ct-card ct-journey-step" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
         <span class="ct-journey-dot"></span>
         {%- if block.settings.week_range != blank -%}<div class="ct-journey-weeks">{{ block.settings.week_range }}</div>{%- endif -%}
         <div class="ct-journey-title">{{ block.settings.title }}</div>

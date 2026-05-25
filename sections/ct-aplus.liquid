@@ -8,7 +8,7 @@
   <div class="ct-aplus-list">
     {%- for block in section.blocks -%}
       {%- assign ct_rev = forloop.index0 | modulo: 2 -%}
-      <div class="ct-aplus-banner{% if ct_rev == 1 %} ct-aplus-banner--reverse{% endif %}" data-reveal {{ block.shopify_attributes }}>
+      <div class="ct-card ct-aplus-banner{% if ct_rev == 1 %} ct-aplus-banner--reverse{% endif %}" data-reveal {{ block.shopify_attributes }}>
         <div class="ct-aplus-img">
           {%- if block.settings.image != blank -%}
             {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'ct-aplus-img__media', alt: block.settings.title | escape }}
