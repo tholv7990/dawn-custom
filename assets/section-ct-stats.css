@@ -7,3 +7,4 @@
 .ct-stat-label{font-size:12px;color:var(--ct-text-3);margin-top:6px;font-weight:500}
 @media(max-width:600px){.ct-stats{grid-template-columns:1fr 1fr}.ct-stat:nth-child(2){border-right:none}.ct-stat:nth-child(3),.ct-stat:nth-child(4){border-top:1px solid var(--ct-border-strong)}.ct-stat:nth-child(4){border-right:none}}
 @media(max-width:360px){.ct-stats{grid-template-columns:1fr}.ct-stat{border-right:none;border-top:1px solid var(--ct-border-strong)}.ct-stat:first-child{border-top:none}}
+.ct-stat-sub{font-size:11px;color:var(--ct-text-off);margin-top:2px}

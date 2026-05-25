@@ -20,6 +20,7 @@
           {%- if block.settings.suffix != blank -%}<span class="ct-stat-unit">{{ block.settings.suffix }}</span>{%- endif -%}
         </div>
         <div class="ct-stat-label">{{ block.settings.label }}</div>
+        {%- if block.settings.sub != blank -%}<div class="ct-stat-sub">{{ block.settings.sub }}</div>{%- endif -%}
       </div>
     {%- endfor -%}
   </div>
@@ -45,6 +46,7 @@
         { "type": "text", "id": "number", "label": "Number", "default": "10000" },
         { "type": "text", "id": "suffix", "label": "Suffix (e.g. %, ★, K+)" },
         { "type": "text", "id": "label", "label": "Label", "default": "Metric label" },
+        { "type": "text", "id": "sub", "label": "Sub-line" },
         { "type": "checkbox", "id": "countup", "label": "Animate count-up", "default": false, "info": "Only enable for whole numbers (e.g. 10000). Leave off for decimals like 4.9." }
       ]
     }

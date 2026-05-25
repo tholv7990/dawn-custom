@@ -10,3 +10,5 @@
 .ct-use-case-desc{font-size:13px;color:var(--ct-text-3);line-height:1.5}
 @media(max-width:600px){.ct-use-case-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:400px){.ct-use-case-grid{grid-template-columns:1fr}}
+.ct-use-case-num{font-family:var(--ct-font-mono);font-size:10px;color:var(--ct-text-3);letter-spacing:.1em;margin-bottom:6px}
+.ct-use-case-cta{font-size:12px;font-weight:700;color:var(--ct-accent-text);font-family:var(--ct-font-mono);letter-spacing:.04em;margin-top:12px}

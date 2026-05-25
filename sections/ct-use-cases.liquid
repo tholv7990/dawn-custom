@@ -25,8 +25,10 @@
           {%- if block.settings.tag != blank -%}<span class="ct-use-case-tag">{{ block.settings.tag }}</span>{%- endif -%}
         </div>
         <div class="ct-use-case-body">
+          {%- if block.settings.number != blank -%}<div class="ct-use-case-num">{{ block.settings.number }}</div>{%- endif -%}
           <div class="ct-use-case-title">{{ block.settings.title }}</div>
           <div class="ct-use-case-desc">{{ block.settings.desc }}</div>
+          {%- if block.settings.cta != blank -%}<div class="ct-use-case-cta">{{ block.settings.cta }}</div>{%- endif -%}
         </div>
       </div>
     {%- endfor -%}
@@ -55,7 +57,9 @@
         { "type": "text", "id": "emoji", "label": "Fallback emoji", "default": "🏠" },
         { "type": "text", "id": "tag", "label": "Tag", "default": "Context" },
         { "type": "text", "id": "title", "label": "Title", "default": "Use case headline" },
-        { "type": "textarea", "id": "desc", "label": "Description", "default": "1–2 sentence description of this buyer's context and how the product fits their life." }
+        { "type": "textarea", "id": "desc", "label": "Description", "default": "1–2 sentence description of this buyer's context and how the product fits their life." },
+        { "type": "text", "id": "number", "label": "Number label (e.g. No. 01 · Morning)" },
+        { "type": "text", "id": "cta", "label": "CTA line" }
       ]
     }
   ],

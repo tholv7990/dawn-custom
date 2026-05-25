@@ -28,6 +28,7 @@
           {%- if block.settings.number != blank -%}<div class="ct-aplus-num">{{ block.settings.number }}</div>{%- endif -%}
           <h3 class="ct-aplus-title">{{ block.settings.title }}</h3>
           <p class="ct-aplus-body">{{ block.settings.body }}</p>
+          {%- if block.settings.tag != blank -%}<span class="ct-aplus-tag">{{ block.settings.tag }}</span>{%- endif -%}
           {%- assign specs = block.settings.specs | split: ',' -%}
           {%- if specs.size > 0 and block.settings.specs != blank -%}
             <div class="ct-aplus-specs">
@@ -63,6 +64,7 @@
         { "type": "text", "id": "number", "label": "Number badge", "default": "01" },
         { "type": "text", "id": "title", "label": "Title", "default": "Feature — short benefit headline" },
         { "type": "textarea", "id": "body", "label": "Body", "default": "2–3 sentences explaining the mechanism, benefit, and proof. Plain language, no jargon." },
+        { "type": "text", "id": "tag", "label": "Tag pill (single highlight)" },
         { "type": "text", "id": "specs", "label": "Specs (comma-separated)", "default": "Spec 1, Spec 2, Spec 3, Spec 4" }
       ]
     }

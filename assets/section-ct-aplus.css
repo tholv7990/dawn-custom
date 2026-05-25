@@ -10,4 +10,5 @@
 .ct-aplus-body{font-size:15px;color:var(--ct-text-2);line-height:1.7;margin-bottom:14px}
 .ct-aplus-specs{display:flex;flex-wrap:wrap;gap:6px}
 .ct-aplus-spec{background:var(--ct-bg);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-md);padding:4px 10px;font-size:12px;font-weight:500;color:var(--ct-text-2)}
+.ct-aplus-tag{display:inline-flex;align-items:center;gap:6px;background:var(--ct-accent-subtle);border:1px solid var(--ct-accent-border);border-radius:var(--ct-r-pill);padding:4px 12px;font-family:var(--ct-font-mono);font-size:11px;color:var(--ct-accent-text);font-weight:500;margin-bottom:10px}
 @media(max-width:700px){.ct-aplus-banner,.ct-aplus-banner--reverse{grid-template-columns:1fr;direction:ltr;gap:20px}}
