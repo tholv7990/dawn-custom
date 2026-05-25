@@ -15,6 +15,10 @@ if (!customElements.get('ct-carousel')) {
         if (this.nextBtn) this.nextBtn.addEventListener('click', () => { this.stopAuto(); this.step(1); });
         this.dots.forEach((dot, i) => dot.addEventListener('click', () => { this.stopAuto(); this.goTo(i); }));
         this.track.addEventListener('scroll', () => this.sync(), { passive: true });
+        this.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') { this.stopAuto(); this.step(-1); e.preventDefault(); }
+          else if (e.key === 'ArrowRight') { this.stopAuto(); this.step(1); e.preventDefault(); }
+        });
 
         this.sync();
         if (this.autoplayMs > 0 && !this.reduced) {
@@ -22,6 +26,7 @@ if (!customElements.get('ct-carousel')) {
           this.addEventListener('mouseenter', () => this.stopAuto());
           this.addEventListener('mouseleave', () => this.startAuto());
           this.addEventListener('focusin', () => this.stopAuto());
+          this.addEventListener('focusout', (e) => { if (!this.contains(e.relatedTarget)) this.startAuto(); });
         }
       }
 

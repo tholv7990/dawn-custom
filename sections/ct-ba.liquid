@@ -20,7 +20,7 @@
         <span class="ct-ba-ph ct-ba-ph--after">{{ section.settings.after_label }}</span>
       {%- endif -%}
     </div>
-    <div class="ct-ba-handle" aria-hidden="true"></div>
+    <div class="ct-ba-handle" role="slider" tabindex="0" aria-label="{{ section.settings.heading | default: 'Before and after comparison' | escape }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></div>
     <span class="ct-ba-label ct-ba-label--before">{{ section.settings.before_tag }}</span>
     <span class="ct-ba-label ct-ba-label--after">{{ section.settings.after_tag }}</span>
   </div>

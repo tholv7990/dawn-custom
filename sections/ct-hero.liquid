@@ -44,7 +44,7 @@
       <div class="ct-hero-visual">
         <div class="ct-hero-visual__glow" aria-hidden="true"></div>
         {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'eager', class: 'ct-hero-visual__img', alt: section.settings.heading | default: '' }}
+          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'eager', class: 'ct-hero-visual__img', alt: section.settings.heading | strip_html | default: '' }}
         {%- else -%}
           <div class="ct-card ct-hero-card">
             {%- if section.settings.card_emoji != blank -%}<div class="ct-hero-card__emoji">{{ section.settings.card_emoji }}</div>{%- endif -%}
@@ -78,7 +78,7 @@
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New for 2025 — Pro Series" },
-    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Hero headline — emotional hook</p>", "info": "Wrap a word in <em> for the green accent." },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Hero headline — emotional hook", "info": "Wrap a word in <em> for the green accent." },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "One sentence that explains what the product does and who it's for. 17–20 words max." },
     { "type": "text", "id": "h1_subtitle", "label": "Heading subtitle (second line)" },
     { "type": "header", "content": "Floating badge" },

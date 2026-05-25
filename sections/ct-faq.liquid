@@ -8,11 +8,11 @@
   <div class="ct-faq" data-accordion>
     {%- for block in section.blocks -%}
       <div class="ct-faq-item" {{ block.shopify_attributes }}>
-        <button class="ct-faq-q" type="button" data-accordion-btn aria-expanded="false">
+        <button class="ct-faq-q" type="button" data-accordion-btn aria-expanded="false" aria-controls="ct-faq-a-{{ block.id }}">
           {{ block.settings.question }}
-          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        <div class="ct-faq-a"><div class="ct-faq-a__inner rte">{{ block.settings.answer }}</div></div>
+        <div class="ct-faq-a" id="ct-faq-a-{{ block.id }}"><div class="ct-faq-a__inner rte">{{ block.settings.answer }}</div></div>
       </div>
     {%- endfor -%}
   </div>

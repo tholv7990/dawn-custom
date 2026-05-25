@@ -7,7 +7,7 @@
   <div class="ct-trust-grid" data-reveal>
     {%- for block in section.blocks -%}
       <div class="ct-trust-chip" {{ block.shopify_attributes }}>
-        <div class="ct-trust-icon ct-trust-icon--{{ block.settings.icon_color }}">
+        <div class="ct-trust-icon ct-trust-icon--{{ block.settings.icon_color }}" aria-hidden="true">
           {%- case block.settings.icon -%}
             {%- when 'check' -%}<svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
             {%- when 'truck' -%}<svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>

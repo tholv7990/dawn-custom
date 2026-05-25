@@ -11,7 +11,7 @@
       "block_order": ["p1", "p2", "p3", "p4"],
       "settings": {
         "eyebrow": "Complete training system · Live now",
-        "heading": "<p>Your gym closed.</p>",
+        "heading": "Your gym closed.",
         "h1_subtitle": "Ours didn't.",
         "subheading": "Everything your gym gave you — structure, energy, results — now fits in 5.3 pounds. Trainer, program, music, nutrition, coaching.",
         "button_label": "Start tonight — from $149 →",
@@ -158,7 +158,7 @@
     },
     "ct_final_cta": {
       "type": "ct-final-cta",
-      "settings": { "eyebrow": "Ready", "heading": "<p>Your living room is ready. Are you?</p>", "subheading": "12 weeks from now, you'll either have started — or you'll still be thinking about it.", "button_label": "Start tonight — from $149 →", "button_link": "shopify://collections/all", "button_label_2": "View full product details", "button_link_2": "", "show_trust": true, "trust_chips": "Free US Shipping\n90-Day Returns\n4.7 · 52 Reviews", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+      "settings": { "eyebrow": "Ready", "heading": "Your living room is ready. Are you?", "subheading": "12 weeks from now, you'll either have started — or you'll still be thinking about it.", "button_label": "Start tonight — from $149 →", "button_link": "shopify://collections/all", "button_label_2": "View full product details", "button_link_2": "", "show_trust": true, "trust_chips": "Free US Shipping\n90-Day Returns\n4.7 · 52 Reviews", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
     "ct_sticky_atc": {
       "type": "ct-sticky-atc",
