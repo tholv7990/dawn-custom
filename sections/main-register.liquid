@@ -1,4 +1,6 @@
 {{ 'customer.css' | asset_url | stylesheet_tag }}
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-customer.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -41,8 +43,9 @@
         {%- endfor -%}
       </ul>
     {%- endif -%}
-    <div class="field">
+    <div class="ct-field">
       <input
+        class="ct-field__input"
         type="text"
         name="customer[first_name]"
         id="RegisterForm-FirstName"
@@ -50,14 +53,15 @@
           value="{{ form.first_name }}"
         {% endif %}
         autocomplete="given-name"
-        placeholder="{{ 'customer.register.first_name' | t }}"
+        placeholder=" "
       >
-      <label for="RegisterForm-FirstName">
+      <label class="ct-field__label" for="RegisterForm-FirstName">
         {{ 'customer.register.first_name' | t }}
       </label>
     </div>
-    <div class="field">
+    <div class="ct-field">
       <input
+        class="ct-field__input"
         type="text"
         name="customer[last_name]"
         id="RegisterForm-LastName"
@@ -65,14 +69,15 @@
           value="{{ form.last_name }}"
         {% endif %}
         autocomplete="family-name"
-        placeholder="{{ 'customer.register.last_name' | t }}"
+        placeholder=" "
       >
-      <label for="RegisterForm-LastName">
+      <label class="ct-field__label" for="RegisterForm-LastName">
         {{ 'customer.register.last_name' | t }}
       </label>
     </div>
-    <div class="field">
+    <div class="ct-field">
       <input
+        class="ct-field__input"
         type="email"
         name="customer[email]"
         id="RegisterForm-email"
@@ -87,9 +92,9 @@
           aria-invalid="true"
           aria-describedby="RegisterForm-email-error"
         {% endif %}
-        placeholder="{{ 'customer.register.email' | t }}"
+        placeholder=" "
       >
-      <label for="RegisterForm-email">
+      <label class="ct-field__label" for="RegisterForm-email">
         {{ 'customer.register.email' | t }}
       </label>
     </div>
@@ -102,8 +107,9 @@
         {{ form.errors.messages.email }}.
       </span>
     {%- endif -%}
-    <div class="field">
+    <div class="ct-field">
       <input
+        class="ct-field__input"
         type="password"
         name="customer[password]"
         id="RegisterForm-password"
@@ -112,9 +118,9 @@
           aria-invalid="true"
           aria-describedby="RegisterForm-password-error"
         {% endif %}
-        placeholder="{{ 'customer.register.password' | t }}"
+        placeholder=" "
       >
-      <label for="RegisterForm-password">
+      <label class="ct-field__label" for="RegisterForm-password">
         {{ 'customer.register.password' | t }}
       </label>
     </div>
@@ -127,7 +133,7 @@
         {{ form.errors.messages.password }}.
       </span>
     {%- endif -%}
-    <button>
+    <button class="ct-btn ct-btn--primary ct-btn--full">
       {{ 'customer.register.submit' | t }}
     </button>
   {%- endform -%}
