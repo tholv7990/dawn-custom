@@ -52,6 +52,16 @@
             picker_type: picker_type
           %}
         </fieldset>
+      {%- elsif picker_type == 'bundle' -%}
+        <fieldset class="js product-form__input product-form__input--bundle ct-bundle-set">
+          <legend class="form__label ct-bundle-set__legend">{{ option.name }}</legend>
+          {% render 'ct-bundle-options',
+            product: product,
+            option: option,
+            block: block,
+            picker_type: picker_type
+          %}
+        </fieldset>
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">
           <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
