@@ -11,7 +11,8 @@
       "block_order": ["p1", "p2", "p3", "p4"],
       "settings": {
         "eyebrow": "Complete training system · Live now",
-        "heading": "<p>Your gym closed. <em>Ours didn't.</em></p>",
+        "heading": "<p>Your gym closed.</p>",
+        "h1_subtitle": "Ours didn't.",
         "subheading": "Everything your gym gave you — structure, energy, results — now fits in 5.3 pounds. Trainer, program, music, nutrition, coaching.",
         "button_label": "Start tonight — from $149 →",
         "button_link": "shopify://collections/all",
@@ -23,6 +24,9 @@
         "card_price": "from $149",
         "card_tag_1": "★ 4.7",
         "card_tag_2": "5.3 lb",
+        "float_icon": "⚖️",
+        "float_label": "Total weight",
+        "float_value": "5.3 lb — carry-on friendly",
         "color_scheme": "scheme-1",
         "padding_top": 40,
         "padding_bottom": 24
@@ -31,10 +35,10 @@
     "ct_stats": {
       "type": "ct-stats",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "number": "12", "label": "Week program", "countup": true } },
-        "s2": { "type": "stat", "settings": { "number": "440", "suffix": "lb", "label": "Max resistance", "countup": true } },
-        "s3": { "type": "stat", "settings": { "number": "5.3", "suffix": "lb", "label": "Total weight", "countup": false } },
-        "s4": { "type": "stat", "settings": { "number": "5", "label": "System pillars", "countup": false } }
+        "s1": { "type": "stat", "settings": { "number": "12", "label": "Week program", "countup": true, "sub": "Session by session" } },
+        "s2": { "type": "stat", "settings": { "number": "440", "suffix": "lb", "label": "Max resistance", "countup": true, "sub": "Hydraulic, not spring" } },
+        "s3": { "type": "stat", "settings": { "number": "5.3", "suffix": "lb", "label": "Total weight", "countup": false, "sub": "Carry-on friendly" } },
+        "s4": { "type": "stat", "settings": { "number": "5", "label": "System pillars", "countup": false, "sub": "Trainer + program + more" } }
       },
       "block_order": ["s1", "s2", "s3", "s4"],
       "settings": { "color_scheme": "scheme-1", "padding_top": 28, "padding_bottom": 28 }
@@ -42,9 +46,9 @@
     "ct_who": {
       "type": "ct-use-cases",
       "blocks": {
-        "u1": { "type": "card", "settings": { "emoji": "🔄", "tag": "Returning", "title": "You used to train.", "desc": "Life got in the way and the gym didn't survive it. Your body remembers what strong felt like — we give it back, in less time, in any room." } },
-        "u2": { "type": "card", "settings": { "emoji": "✈️", "tag": "Traveler", "title": "Hotel gyms are a joke.", "desc": "5.3 lb fits in carry-on. Every hotel room becomes a training room. No lost weeks between trips." } },
-        "u3": { "type": "card", "settings": { "emoji": "🚀", "tag": "Beginner", "title": "Start without the gym.", "desc": "The program starts at zero and tells you exactly what to do each session. No guessing, no wrong moves, no judgment." } }
+        "u1": { "type": "card", "settings": { "emoji": "🔄", "tag": "Returning", "title": "You used to train.", "desc": "Life got in the way and the gym didn't survive it. Your body remembers what strong felt like — we give it back, in less time, in any room.", "cta": "Core Pro is your system →" } },
+        "u2": { "type": "card", "settings": { "emoji": "✈️", "tag": "Traveler", "title": "Hotel gyms are a joke.", "desc": "5.3 lb fits in carry-on. Every hotel room becomes a training room. No lost weeks between trips.", "cta": "Basic is your system →" } },
+        "u3": { "type": "card", "settings": { "emoji": "🚀", "tag": "Beginner", "title": "Start without the gym.", "desc": "The program starts at zero and tells you exactly what to do each session. No guessing, no wrong moves, no judgment.", "cta": "Core Pro is your system →" } }
       },
       "block_order": ["u1", "u2", "u3"],
       "settings": { "kicker": "Who it's for", "heading": "Built for three kinds of people.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
@@ -52,9 +56,9 @@
     "ct_features": {
       "type": "ct-aplus",
       "blocks": {
-        "b1": { "type": "banner", "settings": { "emoji": "🔧", "number": "01", "title": "Hydraulic, not spring.", "body": "Double-sealed cylinder, smooth controlled return, zero snap-back. Resistance stays consistent year after year — springs weaken, hydraulics don't.", "specs": "100,000-cycle endurance tested" } },
-        "b2": { "type": "banner", "settings": { "emoji": "🎛️", "number": "02", "title": "15 levels. One knob.", "body": "Stepless adjustment from 22 lb to 440 lb. Ten grip angles for chest, arms, shoulders, back and core. The arm angle never changes — only the load does.", "specs": "22 → 440 lb · stepless" } },
-        "b3": { "type": "banner", "settings": { "emoji": "🧳", "number": "03", "title": "Stores under the couch.", "body": "5.3 lb, ABS body with foam/PU grip, carry-on friendly. The best trainer is the one that's always there.", "specs": "5.3 lb · carry-on friendly" } }
+        "b1": { "type": "banner", "settings": { "emoji": "🔧", "number": "01", "title": "Hydraulic, not spring.", "body": "Double-sealed cylinder, smooth controlled return, zero snap-back. Resistance stays consistent year after year — springs weaken, hydraulics don't.", "tag": "100,000-cycle endurance tested", "specs": "" } },
+        "b2": { "type": "banner", "settings": { "emoji": "🎛️", "number": "02", "title": "15 levels. One knob.", "body": "Stepless adjustment from 22 lb to 440 lb. Ten grip angles for chest, arms, shoulders, back and core. The arm angle never changes — only the load does.", "tag": "22 → 440 lb · stepless", "specs": "" } },
+        "b3": { "type": "banner", "settings": { "emoji": "🧳", "number": "03", "title": "Stores under the couch.", "body": "5.3 lb, ABS body with foam/PU grip, carry-on friendly. The best trainer is the one that's always there.", "tag": "5.3 lb · carry-on friendly", "specs": "" } }
       },
       "block_order": ["b1", "b2", "b3"],
       "settings": { "kicker": "The product", "heading": "One trainer. Six muscle groups. 5.3 pounds.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
@@ -62,9 +66,9 @@
     "ct_when": {
       "type": "ct-use-cases",
       "blocks": {
-        "w1": { "type": "card", "settings": { "emoji": "☀️", "tag": "06:14 AM", "title": "Before the kettle clicks.", "desc": "25 minutes — chest, arms, abs — done before the kids' alarm. No setup, no drive, no excuse." } },
-        "w2": { "type": "card", "settings": { "emoji": "🏠", "tag": "02:30 PM", "title": "Between the meetings.", "desc": "20 minutes you'd otherwise spend doomscrolling. Real resistance, back at the desk without the commute." } },
-        "w3": { "type": "card", "settings": { "emoji": "🌍", "tag": "On the road", "title": "In the carry-on.", "desc": "5.3 lb fits most cabin bags. The hotel gym had two treadmills and a broken bench — yours will be better." } }
+        "w1": { "type": "card", "settings": { "emoji": "☀️", "tag": "06:14 AM", "title": "Before the kettle clicks.", "desc": "25 minutes — chest, arms, abs — done before the kids' alarm. No setup, no drive, no excuse.", "number": "No. 01 · Morning" } },
+        "w2": { "type": "card", "settings": { "emoji": "🏠", "tag": "02:30 PM", "title": "Between the meetings.", "desc": "20 minutes you'd otherwise spend doomscrolling. Real resistance, back at the desk without the commute.", "number": "No. 02 · Afternoon" } },
+        "w3": { "type": "card", "settings": { "emoji": "🌍", "tag": "On the road", "title": "In the carry-on.", "desc": "5.3 lb fits most cabin bags. The hotel gym had two treadmills and a broken bench — yours will be better.", "number": "No. 03 · Travel" } }
       },
       "block_order": ["w1", "w2", "w3"],
       "settings": { "kicker": "For the life you have", "heading": "Train where life happens.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
@@ -89,7 +93,7 @@
         "rv3": { "type": "review", "settings": { "rating": 5, "text": "Thought it would end up in the closet. It didn't. Hydraulics feel solid, resistance jumps are real, still using it.", "author": "Rihanna F.", "meta": "Core Pro · Verified February 2026", "verified": true } }
       },
       "block_order": ["rv1", "rv2", "rv3"],
-      "settings": { "kicker": "4.7 ★ · 52 verified reviews", "heading": "Real results, real people.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+      "settings": { "kicker": "Reviews", "rating_number": "4.7", "rating_count": "52 verified reviews", "heading": "Real results, real people.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
     },
     "ct_email": {
       "type": "ct-email",
