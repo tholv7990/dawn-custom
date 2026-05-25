@@ -119,6 +119,43 @@
       "block_order": ["f1", "f2", "f3", "f4", "f5"],
       "settings": { "kicker": "Questions", "heading": "Quick answers.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
     },
+    "ct_pillars": {
+      "type": "ct-pillars",
+      "blocks": {
+        "p1": { "type": "pillar", "settings": { "number": "01 / 05", "icon": "💪", "name": "The Trainer", "desc": "22 to 440 lb. Hydraulic. Zero snap-back. 5.3 pounds. Fits under the couch.", "quote": "\"Level 13 had me actually struggling.\" — D. Taj" } },
+        "p2": { "type": "pillar", "settings": { "number": "02 / 05", "icon": "📋", "name": "The Program", "desc": "12 weeks. Session by session. No guessing. Works for beginners and veterans.", "quote": "Structure is what the gym gave you." } },
+        "p3": { "type": "pillar", "settings": { "number": "03 / 05", "icon": "🎵", "name": "The Music", "desc": "Curated playlists built for intensity. Silence kills momentum.", "quote": "Atmosphere on demand." } },
+        "p4": { "type": "pillar", "settings": { "number": "04 / 05", "icon": "🥗", "name": "The Nutrition", "desc": "Protein targets. Meal timing. No diet culture. Eat to perform, not to punish.", "quote": "Fuel the system, not the guilt." } },
+        "p5": { "type": "pillar", "settings": { "number": "05 / 05", "icon": "🎯", "name": "The Coaching", "desc": "Submit your form. Get real feedback. Training wrong is worse than not training.", "quote": "A coach in your pocket." } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5"],
+      "settings": { "kicker": "The GainsSteel system", "heading": "We didn't build equipment. We built a system.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+    },
+    "ct_journey": {
+      "type": "ct-journey",
+      "blocks": {
+        "j1": { "type": "step", "settings": { "week_range": "Week 1–2", "title": "Foundation.", "desc": "You learn the system. The program tells you exactly what to do. Form gets corrected before bad habits form.", "badge": "First results incoming" } },
+        "j2": { "type": "step", "settings": { "week_range": "Week 3–5", "title": "Build.", "desc": "You feel it working. Levels go up. You stop questioning — you know it is.", "badge": "Visible changes begin" } },
+        "j3": { "type": "step", "settings": { "week_range": "Week 6–9", "title": "Push.", "desc": "Past the point where most quit. Still going. People start asking questions.", "badge": "Others start noticing" } },
+        "j4": { "type": "step", "settings": { "week_range": "Week 10–12", "title": "Transform.", "desc": "You don't need motivation anymore. It's just what you do. Week 13 is up to you.", "badge": "The body you wanted" } }
+      },
+      "block_order": ["j1", "j2", "j3", "j4"],
+      "settings": { "kicker": "The 12-week journey", "heading": "Week 1, you start. Week 12, you won't recognize yourself.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+    },
+    "ct_pricing": {
+      "type": "ct-pricing",
+      "blocks": {
+        "pl1": { "type": "plan", "settings": { "featured": false, "tag": "Basic", "name": "The Trainer", "tagline": "\"I have my own plan.\"", "variant_position": 1, "price_note": "One-time · ships in 24h", "features": "GainsSteel® Hydraulic Trainer\nHex tool + setup card\n1-year warranty · Free US shipping\n- 12-week program\n- Training music\n- Nutrition guide\n- Form-check coaching", "button_label": "Choose The Trainer →", "button_style": "outlined", "price_fallback": "$149", "note": "Add the full system for +$20." } },
+        "pl2": { "type": "plan", "settings": { "featured": true, "badge": "7 in 10 choose this", "tag": "Core Pro", "name": "The System", "tagline": "\"I need structure or I won't stick with it.\"", "variant_position": 2, "price_diff": "+$20", "price_note": "One-time · ships in 24h", "features": "GainsSteel® Hydraulic Trainer\nAB roller wheels (detachable)\n12-week progressive program\nTraining music playlists\nNutrition guide\nEmail support · 1-year warranty\nPersonal form-check coaching", "button_label": "Choose The System →", "button_style": "primary", "price_fallback": "$169" } },
+        "pl3": { "type": "plan", "settings": { "featured": false, "tag": "Pro Bundle", "name": "The Full Setup", "tagline": "\"I want zero guesswork.\"", "variant_position": 3, "price_diff": "+$30", "price_note": "One-time · ships in 24h", "features": "Everything in The System\nPersonal form-check video review\nMobility + recovery guide\nPriority email support\n1-year warranty · Free US shipping", "button_label": "Choose Full Setup →", "button_style": "soft", "price_fallback": "$199", "note": "Form-check alone is worth +$30 if starting fresh." } }
+      },
+      "block_order": ["pl1", "pl2", "pl3"],
+      "settings": { "kicker": "Pick your system", "heading": "One system. Three ways in.", "vs_label": "Compare:", "vs_gym": "Gym: $50/month", "vs_brand": "GainsSteel: one time · any room", "show_trust": true, "trust_chips": "Free US Shipping\n90-Day Returns\n1-Year Warranty\nCancel within 1 Hour", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+    },
+    "ct_final_cta": {
+      "type": "ct-final-cta",
+      "settings": { "eyebrow": "Ready", "heading": "<p>Your living room is ready. Are you?</p>", "subheading": "12 weeks from now, you'll either have started — or you'll still be thinking about it.", "button_label": "Start tonight — from $149 →", "button_link": "shopify://collections/all", "button_label_2": "View full product details", "button_link_2": "", "show_trust": true, "trust_chips": "Free US Shipping\n90-Day Returns\n4.7 · 52 Reviews", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+    },
     "ct_sticky_atc": {
       "type": "ct-sticky-atc",
       "settings": {
@@ -137,10 +174,14 @@
     "ct_who",
     "ct_features",
     "ct_when",
+    "ct_pillars",
+    "ct_journey",
     "ct_compare",
     "ct_reviews",
+    "ct_pricing",
     "ct_email",
     "ct_faq",
+    "ct_final_cta",
     "ct_sticky_atc"
   ]
 }
