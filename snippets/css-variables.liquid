@@ -56,6 +56,12 @@ body {
   --ct-font-body: 'Public Sans', system-ui, sans-serif;
   --ct-font-mono: 'DM Mono', ui-monospace, monospace;
 
+  /* Force the whole theme (Dawn-native + ct-* sections) onto Public Sans.
+     Dawn's font_picker can't select Public Sans, so type_*_font stays Assistant;
+     this snippet renders after theme.liquid's :root font block, so it wins. */
+  --font-heading-family: 'Public Sans', system-ui, sans-serif;
+  --font-body-family: 'Public Sans', system-ui, sans-serif;
+
   --ct-text-xs:12px; --ct-text-sm:13px; --ct-text-base:15px; --ct-text-md:16px;
   --ct-text-lg:20px; --ct-text-xl:26px; --ct-text-2xl:32px; --ct-text-3xl:40px; --ct-text-4xl:48px;
   --ct-fw-normal:400; --ct-fw-medium:500; --ct-fw-semi:600; --ct-fw-bold:700;

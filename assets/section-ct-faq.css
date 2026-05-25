@@ -1,6 +1,5 @@
 /* section-ct-faq.css — demo .faq-* → .ct-faq-*; open state keyed off aria-expanded
    (ct-accordion.js controls .ct-faq-a max-height, so padding lives on __inner). */
-.ct-faq-wrap{max-width:760px}
 .ct-faq-item{background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-lg);overflow:hidden;margin-bottom:6px;transition:border-color .15s}
 .ct-faq-item:has([aria-expanded="true"]){border-color:var(--ct-accent-border)}
 .ct-faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:16px 20px;cursor:pointer;font-size:15px;font-weight:600;color:var(--ct-text);background:none;border:none;text-align:left;font-family:var(--ct-font-body)}
