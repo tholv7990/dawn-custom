@@ -30,11 +30,14 @@
     (function () {
       var bar = document.getElementById('ct-announce-{{ section.id }}');
       if (!bar) return;
+      // Clear any interval left by a prior render of this section (Theme Editor re-injects the same id) so timers don't accumulate.
+      var key = 'ctAnnounceTimer{{ section.id }}';
+      if (window[key]) { clearInterval(window[key]); window[key] = null; }
       try { if (sessionStorage.getItem('ct-announce-dismissed') === '1') { bar.style.display = 'none'; return; } } catch (e) {}
       var msgs = bar.querySelectorAll('.ct-announce__msg'), i = 0;
       var reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
       if (msgs.length > 1 && !reduced) {
-        setInterval(function () {
+        window[key] = setInterval(function () {
           msgs[i].classList.remove('is-active');
           i = (i + 1) % msgs.length;
           msgs[i].classList.add('is-active');
@@ -44,6 +47,7 @@
       if (x) x.addEventListener('click', function () {
         try { sessionStorage.setItem('ct-announce-dismissed', '1'); } catch (e) {}
         bar.style.display = 'none';
+        if (window[key]) { clearInterval(window[key]); window[key] = null; }
       });
     })();
   </script>

@@ -15,8 +15,10 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
-    {%- comment -%} Minimals brand fonts (Public Sans + DM Mono) self-hosted via @font-face in snippets/css-variables.liquid — no third-party render-blocking request {%- endcomment -%}
+    {%- comment -%} Minimals brand fonts (Public Sans + DM Mono) self-hosted via @font-face in snippets/css-variables.liquid — no third-party render-blocking request. DM Mono intentionally NOT preloaded (secondary UI text; font-display:swap is the correct LCP tradeoff). {%- endcomment -%}
+    {% comment %}theme-check-disable AssetPreload{% endcomment %}
     <link rel="preload" as="font" type="font/woff2" href="{{ 'public-sans.woff2' | asset_url }}" crossorigin>
+    {% comment %}theme-check-enable AssetPreload{% endcomment %}
 
     <title>
       {{ page_title }}
@@ -279,16 +281,7 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
-    {%- unless settings.type_body_font.system? -%}
-      {% comment %}theme-check-disable AssetPreload{% endcomment %}
-      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
-      {% comment %}theme-check-enable AssetPreload{% endcomment %}
-    {%- endunless -%}
-    {%- unless settings.type_header_font.system? -%}
-      {% comment %}theme-check-disable AssetPreload{% endcomment %}
-      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
-      {% comment %}theme-check-enable AssetPreload{% endcomment %}
-    {%- endunless -%}
+    {%- comment -%} Dawn's Assistant body/header font preloads removed: the theme overrides --font-*-family to self-hosted Public Sans (snippets/css-variables.liquid), so the Shopify-CDN Assistant fonts are never rendered and must not be fetched. The @font-face declarations above stay (lazy — never fetched unless matched). {%- endcomment -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}

@@ -5,10 +5,16 @@ if (!customElements.get('ct-tabs')) {
       connectedCallback() {
         this.tabs = Array.from(this.querySelectorAll('[role="tab"]'));
         this.panels = Array.from(this.querySelectorAll('[role="tabpanel"]'));
+        this.controller = new AbortController();
+        const { signal } = this.controller;
         this.tabs.forEach((tab, index) => {
-          tab.addEventListener('click', () => this.select(index));
-          tab.addEventListener('keydown', (event) => this.onKeydown(event, index));
+          tab.addEventListener('click', () => this.select(index), { signal });
+          tab.addEventListener('keydown', (event) => this.onKeydown(event, index), { signal });
         });
+      }
+
+      disconnectedCallback() {
+        if (this.controller) this.controller.abort();
       }
 
       select(index) {
