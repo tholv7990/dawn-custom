@@ -1,0 +1,140 @@
+/* section-ct-pdp.css — Minimals skin over Dawn's native PDP.
+   Pure presentation: no markup or JS depends on these rules, so the page
+   stays a working Dawn PDP if this file is removed. All PDP component
+   styling (bundle cards, scarcity, payment row) also lives here. */
+
+/* ---- Gallery ---- */
+.product__media-wrapper .media,
+.product__media-wrapper .product__media {
+  border-radius: var(--ct-r-xl);
+  overflow: hidden;
+}
+.product__media-wrapper .thumbnail {
+  border-radius: var(--ct-r-md);
+  border: 1px solid var(--ct-border-subtle);
+}
+.product__media-wrapper .thumbnail.thumbnail--selected,
+.product__media-wrapper .thumbnail[aria-current] {
+  border: 2px solid var(--ct-accent);
+}
+
+/* ---- Vendor / title / descriptor ---- */
+.product__info-container .product__text.caption-with-letter-spacing {
+  color: var(--ct-accent-text);
+  font-weight: var(--ct-fw-bold);
+  letter-spacing: 0.1em;
+}
+.product__info-container .product__title h1,
+.product__info-container .product__title > h2 {
+  font-family: var(--ct-font-heading);
+  font-weight: var(--ct-fw-bold);
+  letter-spacing: -0.02em;
+  line-height: var(--ct-leading-tight);
+}
+.product__info-container .product__text.subtitle {
+  color: var(--ct-text-2);
+  font-size: var(--ct-text-md);
+}
+
+/* ---- Price hierarchy ---- */
+.product__info-container .price .price-item--regular,
+.product__info-container .price .price-item--sale {
+  color: var(--ct-price);
+  font-weight: var(--ct-fw-bold);
+}
+.product__info-container .price s,
+.product__info-container .price .price-item--last,
+.product__info-container .price__compare .price-item {
+  color: var(--ct-price-was);
+}
+.product__info-container .price .badge,
+.product__info-container .price__badge-sale {
+  background: var(--ct-badge-sale);
+  color: #fff;
+  border: 0;
+  border-radius: var(--ct-r-pill);
+  font-weight: var(--ct-fw-bold);
+}
+
+/* ---- Rating row ---- */
+.product__info-container .rating-star { --color-rating-star: var(--ct-rating); }
+.product__info-container .rating-count { color: var(--ct-text-2); }
+
+/* ---- Native ATC -> Minimals primary pill (skin by selector; markup untouched) ---- */
+.product__info-container .product-form__submit {
+  border-radius: var(--ct-r-md);
+  font-family: var(--ct-font-body);
+  font-weight: var(--ct-fw-bold);
+  font-size: var(--ct-text-md);
+  min-height: 56px;
+  box-shadow: var(--ct-shadow-sm);
+  transition: background var(--ct-dur-fast) var(--ct-ease-out), transform var(--ct-dur-fast);
+}
+.product__info-container .product-form__submit.button--primary { background: var(--ct-accent); color: #fff; }
+.product__info-container .product-form__submit.button--primary:hover:not([disabled]) { background: var(--ct-accent-strong); }
+.product__info-container .product-form__submit:active:not([disabled]) { transform: translateY(1px); }
+/* Dynamic-checkout / Shop Pay button stays Shopify-native — spacing only. */
+.product__info-container .shopify-payment-button { margin-top: var(--ct-space-2); }
+
+/* ---- Quantity ---- */
+.product__info-container .quantity { border: 1.5px solid var(--ct-border); border-radius: var(--ct-r-md); }
+.product__info-container .quantity__button { color: var(--ct-text-2); }
+
+/* ---- Trust chips (already built) spacing ---- */
+.product__info-container .ct-buy-trust { margin-top: var(--ct-space-3); }
+
+/* ---- Any native collapsible rows still in the buybox ---- */
+.product__info-container .product__accordion .accordion__title {
+  font-family: var(--ct-font-heading);
+  font-weight: var(--ct-fw-semi);
+}
+
+/* ============ Bundle-card variant picker (skin over native radios) ============ */
+.product-form__input--bundle { border: 0; margin: 0 0 var(--ct-space-2); padding: 0; }
+.ct-bundle-set__legend { font-weight: var(--ct-fw-semi); font-size: var(--ct-text-base); margin-bottom: var(--ct-space-3); }
+.ct-bundle__radio { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.ct-bundle {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: var(--ct-space-3);
+  align-items: start;
+  border: 1.5px solid var(--ct-border);
+  border-radius: var(--ct-r-lg);
+  background: var(--ct-bg-raised);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: border-color var(--ct-dur-fast) var(--ct-ease-out), box-shadow var(--ct-dur-fast);
+}
+.ct-bundle:hover { border-color: var(--ct-accent-border); }
+.ct-bundle__radio:checked + .ct-bundle { border-color: var(--ct-accent); box-shadow: 0 0 0 1px var(--ct-accent), var(--ct-shadow-sm); }
+.ct-bundle__radio:focus-visible + .ct-bundle { box-shadow: var(--ct-focus); }
+.ct-bundle__radio:disabled + .ct-bundle { opacity: 0.5; cursor: not-allowed; }
+.ct-bundle__radio-dot { width: 20px; height: 20px; margin-top: 2px; border: 2px solid var(--ct-text-off); border-radius: 50%; position: relative; }
+.ct-bundle__radio:checked + .ct-bundle .ct-bundle__radio-dot { border-color: var(--ct-accent); }
+.ct-bundle__radio:checked + .ct-bundle .ct-bundle__radio-dot::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--ct-accent); }
+.ct-bundle__body { display: flex; flex-direction: column; gap: 2px; }
+.ct-bundle__name { font-weight: var(--ct-fw-bold); font-size: var(--ct-text-base); }
+.ct-bundle__tag { font-size: var(--ct-text-sm); color: var(--ct-text-2); font-style: italic; }
+.ct-bundle__inc { font-size: var(--ct-text-sm); color: var(--ct-text-2); margin-top: 4px; }
+.ct-bundle__inc::before { content: "\2713"; color: var(--ct-accent); font-weight: var(--ct-fw-bold); margin-right: 6px; }
+.ct-bundle__price { text-align: right; white-space: nowrap; }
+.ct-bundle__price-now { display: block; font-weight: var(--ct-fw-bold); font-size: var(--ct-text-md); }
+.ct-bundle__price-diff { font-size: var(--ct-text-xs); color: var(--ct-text-3); }
+.ct-bundle__ribbon { position: absolute; top: -10px; right: 14px; background: var(--ct-badge-best); color: #fff; font-size: var(--ct-text-xs); font-weight: var(--ct-fw-bold); padding: 3px 9px; border-radius: var(--ct-r-pill); }
+
+/* ============ Scarcity bar ============ */
+ct-scarcity { display: block; }
+.ct-scarcity { background: var(--ct-warning-light); border: 1px solid #ffe2a8; border-radius: var(--ct-r-md); padding: 10px 14px; margin: var(--ct-space-3) 0; }
+.ct-scarcity__top { display: flex; justify-content: space-between; gap: var(--ct-space-2); font-size: var(--ct-text-sm); font-weight: var(--ct-fw-semi); color: var(--ct-warning-dark); }
+.ct-scarcity__bar { height: 6px; background: #fce3ae; border-radius: var(--ct-r-pill); margin-top: 8px; overflow: hidden; }
+.ct-scarcity__bar i { display: block; height: 100%; background: var(--ct-warning); border-radius: var(--ct-r-pill); }
+.ct-scarcity__social { font-size: var(--ct-text-xs); color: var(--ct-warning-dark); opacity: 0.85; margin-top: 6px; }
+
+/* ============ Payment reassurance ============ */
+.ct-pay { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: var(--ct-space-3); }
+.ct-pay__icons { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
+.ct-pay__icons svg { height: 24px; width: auto; }
+.ct-pay__secure { display: inline-flex; align-items: center; gap: 6px; font-size: var(--ct-text-sm); color: var(--ct-text-2); }
+.ct-pay__secure svg { width: 14px; height: 14px; }
