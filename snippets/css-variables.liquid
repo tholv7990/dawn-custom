@@ -4,7 +4,28 @@
   reset style block, so it outputs raw CSS only (no style wrapper).
   Plain-text comments only — never Liquid tags inside CSS comments.
 {% endcomment %}
-{%- comment -%} Brand fonts (Public Sans + DM Mono) load via Google Fonts link in theme.liquid {%- endcomment -%}
+{%- comment -%} Brand fonts self-hosted (woff2 in assets/) — no render-blocking Google Fonts request {%- endcomment -%}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url({{ 'public-sans.woff2' | asset_url }}) format('woff2');
+}
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url({{ 'dm-mono-400.woff2' | asset_url }}) format('woff2');
+}
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url({{ 'dm-mono-500.woff2' | asset_url }}) format('woff2');
+}
 
 :root { color-scheme: only light; }
 html { color-scheme: only light; forced-color-adjust: none; }

@@ -15,10 +15,8 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
-    {%- comment -%} Minimals brand fonts (design system is locked to Public Sans + DM Mono) {%- endcomment -%}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    {%- comment -%} Minimals brand fonts (Public Sans + DM Mono) self-hosted via @font-face in snippets/css-variables.liquid — no third-party render-blocking request {%- endcomment -%}
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'public-sans.woff2' | asset_url }}" crossorigin>
 
     <title>
       {{ page_title }}
