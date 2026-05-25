@@ -1,0 +1,11 @@
+/* section-ct-pillars.css — demo .system/.pillar → .ct-pillar* (tokens → --ct-*) */
+.ct-pillar-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.ct-pillar{background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-xl);padding:20px 16px;text-align:center;box-shadow:var(--ct-shadow-xs);transition:box-shadow .2s,transform .2s}
+.ct-pillar:hover{box-shadow:var(--ct-shadow-md);transform:translateY(-2px)}
+.ct-pillar__num{font-family:var(--ct-font-mono);font-size:10px;color:var(--ct-text-off);letter-spacing:.1em;margin-bottom:12px}
+.ct-pillar__icon{font-size:32px;margin-bottom:10px}
+.ct-pillar__name{font-size:13px;font-weight:700;color:var(--ct-text);margin-bottom:6px}
+.ct-pillar__desc{font-size:11px;color:var(--ct-text-3);line-height:1.5}
+.ct-pillar__quote{font-size:11px;font-style:italic;color:var(--ct-accent-text);margin-top:8px;line-height:1.4}
+@media(max-width:760px){.ct-pillar-grid{grid-template-columns:1fr 1fr}.ct-pillar-grid>*:last-child{grid-column:span 2}}
+@media(max-width:400px){.ct-pillar-grid{grid-template-columns:1fr}.ct-pillar-grid>*:last-child{grid-column:span 1}}

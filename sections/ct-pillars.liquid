@@ -1,0 +1,67 @@
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-pillars.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top | times: 0.75 | round: 0 }}px;padding-bottom:{{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px}
+  @media screen and (min-width:750px){.section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top }}px;padding-bottom:{{ section.settings.padding_bottom }}px}}
+{%- endstyle -%}
+
+<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.heading != blank -%}
+    <div class="ct-section-head" data-reveal>
+      {%- if section.settings.kicker != blank -%}<div class="ct-kicker">{{ section.settings.kicker }}</div>{%- endif -%}
+      <h2 class="ct-section-head__title">{{ section.settings.heading }}</h2>
+    </div>
+  {%- endif -%}
+  <div class="ct-pillar-grid">
+    {%- for block in section.blocks -%}
+      <div class="ct-pillar" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
+        {%- if block.settings.number != blank -%}<div class="ct-pillar__num">{{ block.settings.number }}</div>{%- endif -%}
+        {%- if block.settings.icon != blank -%}<div class="ct-pillar__icon">{{ block.settings.icon }}</div>{%- endif -%}
+        <div class="ct-pillar__name">{{ block.settings.name }}</div>
+        {%- if block.settings.desc != blank -%}<p class="ct-pillar__desc">{{ block.settings.desc }}</p>{%- endif -%}
+        {%- if block.settings.quote != blank -%}<div class="ct-pillar__quote">{{ block.settings.quote }}</div>{%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CT Pillars",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The system" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "We didn't build equipment. We built a system." },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "01 / 05" },
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "💪" },
+        { "type": "text", "id": "name", "label": "Name", "default": "The Trainer" },
+        { "type": "textarea", "id": "desc", "label": "Description", "default": "Short description of this pillar." },
+        { "type": "text", "id": "quote", "label": "Quote (italic)", "default": "A short supporting quote." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "CT Pillars",
+      "blocks": [
+        { "type": "pillar", "settings": { "number": "01 / 03", "icon": "💪", "name": "Pillar one" } },
+        { "type": "pillar", "settings": { "number": "02 / 03", "icon": "📋", "name": "Pillar two" } },
+        { "type": "pillar", "settings": { "number": "03 / 03", "icon": "🎯", "name": "Pillar three" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
