@@ -2,6 +2,8 @@
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-cart.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -124,6 +126,21 @@
                   {{ content_for_additional_checkout_buttons }}
                 </div>
               {%- endif -%}
+
+              <div class="ct-cart-reassurance">
+                <div class="ct-trust-row">
+                  <span class="ct-trust-chip">Free returns</span>
+                  <span class="ct-trust-chip">SSL secure checkout</span>
+                  <span class="ct-trust-chip">1-year warranty</span>
+                </div>
+                {%- if shop.enabled_payment_types.size > 0 -%}
+                  <div class="ct-cart-pay">
+                    {%- for type in shop.enabled_payment_types -%}
+                      {{ type | payment_type_svg_tag }}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </div>
           {%- endcase -%}
         {% endfor %}
 
