@@ -1,0 +1,61 @@
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-final-cta.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top | times: 0.75 | round: 0 }}px;padding-bottom:{{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px}
+  @media screen and (min-width:750px){.section-{{ section.id }}-padding{padding-top:{{ section.settings.padding_top }}px;padding-bottom:{{ section.settings.padding_bottom }}px}}
+{%- endstyle -%}
+
+<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="ct-final-cta" data-reveal>
+    <div class="ct-final-cta__inner">
+      {%- if section.settings.eyebrow != blank -%}<div class="ct-final-cta__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="ct-final-cta__title">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p class="ct-final-cta__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+      <div class="ct-final-cta__btns">
+        {%- if section.settings.button_label != blank -%}
+          <a class="ct-btn ct-btn--primary ct-btn--lg" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.button_label_2 != blank -%}
+          <a class="ct-btn ct-btn--outlined" href="{{ section.settings.button_link_2 | default: '#' }}">{{ section.settings.button_label_2 }}</a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.show_trust and section.settings.trust_chips != blank -%}
+        <div class="ct-trust-row">
+          {%- assign chips = section.settings.trust_chips | newline_to_br | split: '<br />' -%}
+          {%- for chip in chips -%}
+            {%- assign chip_text = chip | strip_newlines | strip -%}
+            {%- if chip_text != blank -%}<span class="ct-trust-chip">{{ chip_text }}</span>{%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CT Final CTA",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ready" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Your living room is ready. Are you?</p>" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "12 weeks from now, you'll either have started — or you'll still be thinking about it." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Start tonight →" },
+    { "type": "url", "id": "button_link", "label": "Primary button link" },
+    { "type": "text", "id": "button_label_2", "label": "Secondary button label", "default": "View full details" },
+    { "type": "url", "id": "button_link_2", "label": "Secondary button link" },
+    { "type": "header", "content": "Trust chips" },
+    { "type": "checkbox", "id": "show_trust", "label": "Show trust chips", "default": true },
+    { "type": "textarea", "id": "trust_chips", "label": "Trust chips (one per line)", "default": "Free US Shipping\n90-Day Returns\n4.7 · 52 Reviews" },
+    { "type": "header", "content": "Section" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [{ "name": "CT Final CTA" }]
+}
+{% endschema %}
