@@ -521,6 +521,25 @@
                     </div>
                   {%- endif -%}
                 </ct-scarcity>
+              {%- when 'payment_reassurance' -%}
+                <div class="ct-pay" {{ block.shopify_attributes }}>
+                  {%- if block.settings.show_icons and shop.enabled_payment_types.size > 0 -%}
+                    <div class="ct-pay__icons">
+                      {%- for type in shop.enabled_payment_types -%}
+                        {{ type | payment_type_svg_tag }}
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.secure_line != blank -%}
+                    <div class="ct-pay__secure">
+                      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="5" y="11" width="14" height="9" rx="2"></rect>
+                        <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
+                      </svg>
+                      {{ block.settings.secure_line }}
+                    </div>
+                  {%- endif -%}
+                </div>
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -980,6 +999,15 @@
         { "type": "range", "id": "threshold", "label": "Low-stock threshold", "min": 1, "max": 50, "step": 1, "default": 10 },
         { "type": "text", "id": "selling_fast_label", "label": "Selling-fast label", "default": "Selling fast" },
         { "type": "text", "id": "social_line", "label": "Social-proof line (optional)", "info": "Static editorial text. Leave blank to hide. Never a fake live counter." }
+      ]
+    },
+    {
+      "type": "payment_reassurance",
+      "name": "Payment reassurance",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_icons", "label": "Show payment icons", "default": true },
+        { "type": "text", "id": "secure_line", "label": "Secure-checkout line", "default": "Secure checkout · SSL encrypted" }
       ]
     },
     {
