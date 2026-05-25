@@ -1,4 +1,6 @@
 {{ 'customer.css' | asset_url | stylesheet_tag }}
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-customer.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -45,19 +47,20 @@
       </ul>
     {%- endif -%}
 
-    <div class="field">
+    <div class="ct-field">
       <input
+        class="ct-field__input"
         type="password"
         name="customer[password]"
         id="password"
         autocomplete="new-password"
-        placeholder="{{ 'customer.activate_account.password' | t }}"
+        placeholder=" "
         {% if form.errors contains 'password' %}
           aria-invalid="true"
           aria-describedby="password-error"
         {% endif %}
       >
-      <label for="password">
+      <label class="ct-field__label" for="password">
         {{ 'customer.activate_account.password' | t }}
       </label>
       {%- if form.errors contains 'password' -%}
@@ -71,19 +74,20 @@
       {%- endif -%}
     </div>
 
-    <div class="field">
+    <div class="ct-field">
       <input
+        class="ct-field__input"
         type="password"
         name="customer[password_confirmation]"
         id="password_confirmation"
         autocomplete="new-password"
-        placeholder="{{ 'customer.activate_account.password_confirm' | t }}"
+        placeholder=" "
         {% if form.errors contains 'password' %}
           aria-invalid="true"
           aria-describedby="password_confirmation-error"
         {% endif %}
       >
-      <label for="password_confirmation">
+      <label class="ct-field__label" for="password_confirmation">
         {{ 'customer.activate_account.password_confirm' | t }}
       </label>
       {%- if form.errors contains 'password_confirmation' -%}
@@ -97,10 +101,10 @@
       {%- endif -%}
     </div>
 
-    <button>
+    <button class="ct-btn ct-btn--primary ct-btn--full">
       {{ 'customer.activate_account.submit' | t }}
     </button>
-    <button name="decline">
+    <button class="ct-btn ct-btn--outlined ct-btn--full" name="decline">
       {{ 'customer.activate_account.cancel' | t }}
     </button>
   {%- endform -%}
