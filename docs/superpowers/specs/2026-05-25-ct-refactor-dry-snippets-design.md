@@ -79,6 +79,12 @@ Params: `product`, `variant`, `label`, `btn_class` (e.g. `ct-btn ct-btn--primary
 ```
 Consumed by `ct-pricing.liquid` (the `if ct_product != blank and variant != blank` branch — the fallback `<a>` link stays inline) and the cart-drawer upsell block. The cart-drawer call uses `btn_class: 'ct-btn ct-btn--soft ct-btn--sm'`, `label: 'Add'`, `form_id: 'ct-upsell-form'`, `section_id: 'cart-drawer-upsell'`.
 
+**⚠️ HIGHEST-RISK EXTRACTION — extra safeguards (user-flagged: "don't break the Shopify form"):**
+- **`product-form.js` contract, must be preserved exactly:** the `<product-form>` element MUST contain — a `<form>` (from `{% form 'product' %}`); a `[name="id"]` input (`this.variantIdInput`); a `[type="submit"]` button (`this.submitButton`) with a **direct child `<span>`** (`submitButton.querySelector('span')` → `submitButtonText`); and a `.loading__spinner` element (via `{% render 'loading-spinner' %}`). Missing any of these throws in the constructor or `onSubmitHandler`.
+- **Equivalence check, both call sites:** the snippet's rendered output must be byte-identical (ignoring inert inter-tag whitespace) to each current inline block. Confirm via `git diff` reasoning before committing. Note the upsell's original `<span>Add</span>` becomes `<span>{% if available %}Add{% else %}…sold_out…{% endif %}</span>` — since the upsell only ever shows an available product (filtered by `ct_p.available`), this renders identically; documented, not a behavior change.
+- **Sequencing:** this extraction is the **LAST task, in its own isolated commit**, so it can be reverted without disturbing the safe extractions.
+- **Mandatory live gate:** unlike the others, theme-check cannot prove this works — the add-to-cart must be exercised live (`shopify theme dev`: a pricing card add + a cart-drawer-upsell add both open the drawer and add the right variant) before it is considered done. The user may choose to keep this extraction unmerged/local until that live check passes; the other extractions do not depend on it.
+
 ### 5. `.ct-card` base in `assets/ct-sections.css`
 Add exactly the three universally-identical properties:
 ```css
