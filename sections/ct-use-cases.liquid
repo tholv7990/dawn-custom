@@ -4,12 +4,7 @@
 {% render 'ct-section-padding', section: section %}
 
 <div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
-  {%- if section.settings.heading != blank -%}
-    <div class="ct-section-head" data-reveal>
-      {%- if section.settings.kicker != blank -%}<div class="ct-kicker">{{ section.settings.kicker }}</div>{%- endif -%}
-      <h2 class="ct-section-head__title">{{ section.settings.heading }}</h2>
-    </div>
-  {%- endif -%}
+  {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
   <div class="ct-use-case-grid">
     {%- for block in section.blocks -%}
       <div class="ct-use-case-card" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>

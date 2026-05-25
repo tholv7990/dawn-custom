@@ -1,0 +1,10 @@
+{%- comment -%}
+  Renders the centered section head (kicker + title).
+  Accepts: kicker (string), heading (string).
+{%- endcomment -%}
+{%- if heading != blank -%}
+  <div class="ct-section-head" data-reveal>
+    {%- if kicker != blank -%}<div class="ct-kicker">{{ kicker }}</div>{%- endif -%}
+    <h2 class="ct-section-head__title">{{ heading }}</h2>
+  </div>
+{%- endif -%}
