@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="only light">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GainsSteel® — Your gym closed. Ours didn't.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── LIGHT MODE LOCKS ──────────────────────────────── */
+:root{color-scheme:only light}
+html{color-scheme:only light;forced-color-adjust:none;background:#F4F6F8!important;color:#212B36!important;font-size:16px;overflow-x:hidden;scroll-behavior:smooth}
+body{background:#F4F6F8!important;color:#212B36!important;font-family:'Public Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;margin:0;overflow-x:hidden}
+
+/* ── TOKENS ────────────────────────────────────────── */
+:root{
+  --bg-base:#F4F6F8;--bg-layer:#F9FAFB;--bg-elevated:#fff;
+  --bg-control:rgba(145,158,171,.08);--bg-ctrl-h:rgba(145,158,171,.16);
+  --bg-overlay:rgba(22,28,36,.80);
+  --tx1:#212B36;--tx2:#637381;--tx3:#919EAB;--tx4:#C4CDD0;
+  --str1:rgba(145,158,171,.32);--str2:rgba(145,158,171,.20);
+  --str3:rgba(145,158,171,.12);--str4:rgba(145,158,171,.06);
+  --sh4:0 4px 8px rgba(145,158,171,.16);
+  --sh8:0 8px 16px rgba(145,158,171,.18);
+  --sh16:0 16px 32px rgba(145,158,171,.20);
+  --sh28:0 20px 40px rgba(145,158,171,.24);
+  --brand:#00A76F;--brand-rest:#007867;--brand-fg:#007867;
+  --brand-bg2:#C8FAD6;--brand-str:#5BE49B;
+  --warn-bg:#FFF5CC;--warn-str:#FFD666;--warn:#B76E00;
+  --err-bg:#FFE9D5;--err:#B71D18;
+  --r-s:4px;--r-m:8px;--r-l:12px;--r-xl:16px;--r-pill:9999px;
+  --focus:0 0 0 2px #F4F6F8,0 0 0 4px #007867;
+  --font:'Public Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+  --mw:1100px;--px:24px;
+}
+
+/* ── RESET / BASE ──────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font);cursor:pointer;border:none;outline:none}
+button:focus-visible,a:focus-visible{box-shadow:var(--focus);outline:none;border-radius:var(--r-m)}
+
+/* ── UTILITY ───────────────────────────────────────── */
+.wrap{max-width:var(--mw);margin:0 auto;padding:0 var(--px)}
+.mono{font-family:var(--mono)}
+.reveal{opacity:0;transform:translateY(24px);transition:.55s cubic-bezier(.22,1,.36,1)}
+.reveal.vis{opacity:1;transform:none}
+.reveal-grid>*{opacity:0;transform:translateY(20px);transition:.5s cubic-bezier(.22,1,.36,1)}
+.reveal-grid.vis>*:nth-child(1){opacity:1;transform:none;transition-delay:0ms}
+.reveal-grid.vis>*:nth-child(2){opacity:1;transform:none;transition-delay:80ms}
+.reveal-grid.vis>*:nth-child(3){opacity:1;transform:none;transition-delay:160ms}
+.reveal-grid.vis>*:nth-child(4){opacity:1;transform:none;transition-delay:240ms}
+.reveal-grid.vis>*:nth-child(5){opacity:1;transform:none;transition-delay:320ms}
+
+/* ── BUTTONS ───────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;border-radius:var(--r-pill);font-size:15px;font-weight:700;transition:background .15s,box-shadow .15s,transform .12s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--brand-rest);color:#fff;box-shadow:var(--sh4)}
+.btn-primary:hover{background:var(--brand);box-shadow:var(--sh8);transform:translateY(-1px)}
+.btn-outlined{background:transparent;color:var(--tx1);border:1px solid var(--str1)}
+.btn-outlined:hover{background:var(--bg-control);border-color:var(--str1)}
+.btn-soft{background:var(--brand-bg2);color:var(--brand-fg)}
+.btn-soft:hover{background:#b7f5cc}
+.btn-lg{height:56px;padding:0 32px;font-size:16px}
+.btn-sm{height:36px;padding:0 14px;font-size:13px}
+.btn-full{width:100%}
+
+/* ── ANNOUNCE BAR ──────────────────────────────────── */
+.announce{background:var(--brand-bg2);color:var(--brand-fg);font-size:13px;font-weight:500;text-align:center;padding:9px 48px 9px 24px;border-bottom:1px solid var(--brand-str);display:flex;align-items:center;justify-content:center;gap:8px;position:relative}
+.announce-dot{width:6px;height:6px;border-radius:50%;background:var(--brand);animation:pulse-dot 2s ease-in-out infinite;flex-shrink:0}
+.announce a{font-weight:700;text-decoration:underline;text-underline-offset:2px}
+.announce-dismiss{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:28px;height:28px;background:none;border:none;cursor:pointer;color:var(--brand-fg);opacity:.6;display:flex;align-items:center;justify-content:center}
+.announce-dismiss:hover{opacity:1}
+.announce-dismiss svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
+
+/* ── HEADER ────────────────────────────────────────── */
+.header{background:rgba(244,246,248,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--str3);position:sticky;top:0;z-index:100;transition:box-shadow .2s}
+.header.scrolled{box-shadow:var(--sh8)}
+.header-inner{display:flex;align-items:center;height:64px;gap:0}
+.header-brand{font-size:18px;font-weight:800;color:var(--tx1);letter-spacing:-.02em;flex-shrink:0}
+.header-brand span{color:var(--brand-fg)}
+.header-nav{display:flex;align-items:center;gap:2px;margin:0 auto}
+.header-nav a{font-size:13px;font-weight:500;color:var(--tx2);padding:6px 12px;border-radius:var(--r-pill);transition:background .12s,color .12s}
+.header-nav a:hover{background:var(--bg-control);color:var(--tx1)}
+.header-cta{margin-left:auto;flex-shrink:0}
+@media(max-width:720px){.header-nav{display:none}.header-cta .btn{height:38px;padding:0 16px;font-size:13px}}
+
+/* ── HERO ──────────────────────────────────────────── */
+.hero{padding:72px var(--px) 64px;overflow:hidden}
+.hero-inner{display:grid;grid-template-columns:minmax(0,58fr) minmax(0,42fr);gap:48px;align-items:center;max-width:var(--mw);margin:0 auto}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--brand-bg2);border:1px solid var(--brand-str);border-radius:var(--r-pill);padding:5px 14px;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--brand-fg);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--brand);animation:pulse-dot 2s ease-in-out infinite;flex-shrink:0}
+.hero-h1{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;color:var(--tx1);letter-spacing:-.035em;line-height:1.05;margin-bottom:8px}
+.hero-h1-sub{font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:700;color:var(--tx2);letter-spacing:-.02em;line-height:1.2;margin-bottom:16px}
+.hero-desc{font-size:16px;color:var(--tx2);line-height:1.7;max-width:480px;margin-bottom:24px}
+.hero-desc strong{color:var(--tx1)}
+.hero-rating{display:flex;align-items:center;gap:8px;margin-bottom:28px}
+.hero-stars{color:#FFAB00;font-size:14px;letter-spacing:-1px}
+.hero-rating-text{font-size:13px;color:var(--tx3)}
+.hero-rating-text strong{color:var(--tx2);font-weight:600}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px}
+.hero-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:var(--bg-elevated);border:1px solid var(--str2);border-radius:var(--r-pill);font-size:12px;color:var(--tx2);font-weight:500}
+.hero-pill svg{width:12px;height:12px;stroke:var(--brand-fg);fill:none;stroke-width:2.5;stroke-linecap:round}
+/* Hero visual card */
+.hero-visual{position:relative}
+.hero-card{background:var(--bg-elevated);border:1px solid var(--str2);border-radius:var(--r-xl);box-shadow:var(--sh28);overflow:hidden}
+.hero-card-img{height:320px;background:linear-gradient(145deg,var(--brand-bg2) 0%,rgba(200,250,214,.4) 50%,#e8f4ff 100%);display:flex;align-items:center;justify-content:center;font-size:100px;position:relative}
+.hero-card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(255,255,255,.3))}
+.hero-card-body{padding:18px 20px}
+.hero-card-name{font-size:14px;font-weight:700;color:var(--tx1);margin-bottom:4px}
+.hero-card-meta{font-size:12px;color:var(--tx3);display:flex;align-items:center;gap:8px}
+.hero-card-price{margin-left:auto;font-size:18px;font-weight:800;color:var(--tx1)}
+/* Floating badge */
+.hero-float{position:absolute;bottom:-16px;right:-16px;background:var(--bg-elevated);border:1px solid var(--brand-str);border-radius:var(--r-xl);padding:12px 16px;box-shadow:var(--sh16);display:flex;align-items:center;gap:10px;min-width:180px}
+.hero-float-icon{width:36px;height:36px;border-radius:var(--r-m);background:var(--brand-bg2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.hero-float-label{font-size:11px;color:var(--tx3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em}
+.hero-float-val{font-size:14px;font-weight:700;color:var(--brand-fg)}
+@media(max-width:860px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .hero-h1{font-size:clamp(2rem,7vw,3rem)}
+}
+
+/* ── STATS STRIP ───────────────────────────────────── */
+.stats{padding:0 var(--px) 64px}
+.stats-inner{max-width:var(--mw);margin:0 auto}
+.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--str2);border-radius:var(--r-xl);overflow:hidden;background:var(--bg-elevated);box-shadow:var(--sh4)}
+.stat{padding:24px 20px;border-right:1px solid var(--str2);text-align:center}
+.stat:last-child{border-right:none}
+.stat-num{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--tx1);letter-spacing:-.04em;line-height:1}
+.stat-num span{color:var(--brand-fg)}
+.stat-label{font-size:12px;color:var(--tx3);margin-top:4px;font-family:var(--mono);letter-spacing:.04em}
+.stat-sub{font-size:11px;color:var(--tx4);margin-top:2px}
+@media(max-width:600px){.stats-grid{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:none}.stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--str2)}}
+
+/* ── WHO IT'S FOR ──────────────────────────────────── */
+.who{padding:64px var(--px);background:var(--bg-elevated);border-top:1px solid var(--str3);border-bottom:1px solid var(--str3)}
+.who-inner{max-width:var(--mw);margin:0 auto}
+.section-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand-fg);margin-bottom:10px}
+.section-h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:var(--tx1);letter-spacing:-.025em;line-height:1.1;margin-bottom:32px}
+.who-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.who-card{background:var(--bg-base);border:1px solid var(--str2);border-radius:var(--r-xl);padding:24px;transition:box-shadow .2s,transform .2s,border-color .2s}
+.who-card:hover{box-shadow:var(--sh16);transform:translateY(-2px);border-color:var(--str1)}
+.who-card-icon{width:44px;height:44px;border-radius:var(--r-l);background:var(--brand-bg2);border:1px solid var(--brand-str);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.who-card-title{font-size:15px;font-weight:700;color:var(--tx1);margin-bottom:8px}
+.who-card-body{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:14px}
+.who-card-cta{font-size:12px;font-weight:700;color:var(--brand-fg);font-family:var(--mono);letter-spacing:.04em;display:flex;align-items:center;gap:4px}
+@media(max-width:600px){.who-grid{grid-template-columns:1fr}}
+
+/* ── PRODUCT FEATURES ──────────────────────────────── */
+.product{padding:64px var(--px)}
+.product-inner{max-width:var(--mw);margin:0 auto}
+.aplus-list{display:flex;flex-direction:column;gap:0}
+.aplus-item{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:48px 0;border-bottom:1px solid var(--str3)}
+.aplus-item:last-child{border-bottom:none}
+.aplus-item.reverse{direction:rtl}
+.aplus-item.reverse>*{direction:ltr}
+.aplus-visual{background:var(--bg-elevated);border:1px solid var(--str2);border-radius:var(--r-xl);height:260px;display:flex;align-items:center;justify-content:center;font-size:80px;box-shadow:var(--sh8)}
+.aplus-num{font-family:var(--mono);font-size:10px;color:var(--brand-fg);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.aplus-h3{font-size:clamp(1.2rem,2.5vw,1.5rem);font-weight:800;color:var(--tx1);letter-spacing:-.02em;margin-bottom:10px}
+.aplus-body{font-size:14px;color:var(--tx2);line-height:1.7;margin-bottom:14px}
+.aplus-tag{display:inline-flex;align-items:center;gap:6px;background:var(--brand-bg2);border:1px solid var(--brand-str);border-radius:var(--r-pill);padding:4px 12px;font-family:var(--mono);font-size:11px;color:var(--brand-fg);font-weight:500}
+@media(max-width:700px){.aplus-item,.aplus-item.reverse{grid-template-columns:1fr;direction:ltr}.aplus-visual{height:180px}}
+
+/* ── USE CASES ─────────────────────────────────────── */
+.usecases{padding:64px var(--px);background:var(--bg-elevated);border-top:1px solid var(--str3);border-bottom:1px solid var(--str3)}
+.usecases-inner{max-width:var(--mw);margin:0 auto}
+.uc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.uc-card{background:var(--bg-base);border:1px solid var(--str2);border-radius:var(--r-xl);overflow:hidden;transition:box-shadow .2s,transform .2s}
+.uc-card:hover{box-shadow:var(--sh16);transform:translateY(-2px)}
+.uc-card-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:64px;position:relative}
+.uc-card-img.morning{background:linear-gradient(135deg,#fff8e6 0%,#fff3cd 100%)}
+.uc-card-img.afternoon{background:linear-gradient(135deg,#e8f4ff 0%,#cce5ff 100%)}
+.uc-card-img.travel{background:linear-gradient(135deg,var(--brand-bg2) 0%,rgba(200,250,214,.5) 100%)}
+.uc-card-time{position:absolute;top:12px;left:12px;font-family:var(--mono);font-size:10px;color:var(--tx3);background:rgba(255,255,255,.8);border-radius:var(--r-s);padding:2px 6px}
+.uc-card-body{padding:18px}
+.uc-card-num{font-family:var(--mono);font-size:10px;color:var(--tx3);letter-spacing:.1em;margin-bottom:6px}
+.uc-card-title{font-size:14px;font-weight:700;color:var(--tx1);margin-bottom:6px}
+.uc-card-desc{font-size:13px;color:var(--tx2);line-height:1.6}
+@media(max-width:600px){.uc-grid{grid-template-columns:1fr}}
+
+/* ── SYSTEM PILLARS ────────────────────────────────── */
+.system{padding:64px var(--px)}
+.system-inner{max-width:var(--mw);margin:0 auto}
+.system-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.pillar{background:var(--bg-elevated);border:1px solid var(--str2);border-radius:var(--r-xl);padding:20px 16px;text-align:center;transition:box-shadow .2s,transform .2s,border-color .2s}
+.pillar:hover{box-shadow:var(--sh8);transform:translateY(-2px)}
+.pillar-num{font-family:var(--mono);font-size:10px;color:var(--tx4);letter-spacing:.1em;margin-bottom:12px}
+.pillar-icon{font-size:32px;margin-bottom:10px}
+.pillar-name{font-size:13px;font-weight:700;color:var(--tx1);margin-bottom:6px}
+.pillar-desc{font-size:11px;color:var(--tx3);line-height:1.5}
+.pillar-quote{font-size:11px;font-style:italic;color:var(--brand-fg);margin-top:8px;line-height:1.4}
+@media(max-width:760px){.system-grid{grid-template-columns:1fr 1fr}.system-grid>*:last-child{grid-column:span 2}}
+@media(max-width:400px){.system-grid{grid-template-columns:1fr}.system-grid>*:last-child{grid-column:span 1}}
+
+/* ── 12-WEEK TIMELINE ──────────────────────────────── */
+.journey{padding:64px var(--px);background:var(--bg-elevated);border-top:1px solid var(--str3);border-bottom:1px solid var(--str3)}
+.journey-inner{max-width:var(--mw);margin:0 auto}
+.journey-track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;position:relative}
+.journey-track::before{content:'';position:absolute;top:28px;left:28px;right:28px;height:2px;background:linear-gradient(90deg,var(--brand-str),var(--brand-str) 100%);z-index:0}
+.journey-step{background:var(--bg-base);border:1px solid var(--str2);border-radius:var(--r-xl);padding:20px 16px;position:relative;z-index:1;transition:box-shadow .2s,transform .2s}
+.journey-step:hover{box-shadow:var(--sh8);transform:translateY(-2px)}
+.journey-dot{width:14px;height:14px;border-radius:50%;background:var(--brand-rest);border:3px solid var(--bg-elevated);box-shadow:0 0 0 2px var(--brand-str);margin:0 auto 14px;display:block}
+.journey-weeks{font-family:var(--mono);font-size:10px;color:var(--brand-fg);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.journey-title{font-size:14px;font-weight:800;color:var(--tx1);margin-bottom:6px}
+.journey-desc{font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:8px}
+.journey-badge{display:inline-flex;padding:3px 8px;background:var(--brand-bg2);border-radius:var(--r-pill);font-size:10px;color:var(--brand-fg);font-weight:600;font-family:var(--mono)}
+@media(max-width:640px){.journey-track{grid-template-columns:1fr 1fr}.journey-track::before{display:none}}
+@media(max-width:380px){.journey-track{grid-template-columns:1fr}}
+
+/* ── COMPARE TABLE ─────────────────────────────────── */
+.compare{padding:64px var(--px)}
+.compare-inner{max-width:var(--mw);margin:0 auto}
+.compare-table-wrap{background:var(--bg-elevated);border:1px solid var(--str2);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh4)}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{padding:14px 20px;text-align:left;background:var(--bg-layer);border-bottom:2px solid var(--str2);font-size:12px;font-family:var(--mono);color:var(--tx3);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.compare-table th.ours{background:var(--brand-bg2);color:var(--brand-fg);border-bottom-color:var(--brand-str)}
+.compare-table td{padding:13px 20px;border-bottom:1px solid var(--str3);color:var(--tx2)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td.ours{background:rgba(200,250,214,.12);color:var(--tx1);font-weight:600}
+.compare-table td.check{color:var(--brand-fg);font-weight:700}
+.compare-table td.cross{color:var(--tx4)}
+.compare-table td:first-child{color:var(--tx1);font-weight:500}
+
+/* ── REVIEWS ───────────────────────────────────────── */
+.reviews{padding:64px var(--px);background:var(--bg-elevated);border-top:1px solid var(--str3);border-bottom:1px solid var(--str3)}
+.reviews-inner{max-width:var(--mw);margin:0 auto}
+.reviews-rating-row{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+.reviews-big-num{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;color:var(--tx1);letter-spacing:-.04em;line-height:1}
+.reviews-stars-col{display:flex;flex-direction:column;gap:4px}
+.reviews-stars{color:#FFAB00;font-size:20px;letter-spacing:-1px}
+.reviews-count{font-size:13px;color:var(--tx3)}
+.rev-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rev-card{background:var(--bg-base);border:1px solid var(--str2);border-radius:var(--r-xl);padding:20px;transition:box-shadow .2s,transform .2s}
+.rev-card:hover{box-shadow:var(--sh8);transform:translateY(-2px)}
+.rev-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.rev-stars{color:#FFAB00;font-size:13px;letter-spacing:-1px}
+.rev-verified{font-family:var(--mono);font-size:10px;color:var(--brand-fg);background:var(--brand-bg2);padding:2px 7px;border-radius:var(--r-pill)}
+.rev-text{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:14px;font-style:italic}
+.rev-author{display:flex;align-items:center;gap:8px}
+.rev-avatar{width:28px;height:28px;border-radius:50%;background:var(--brand-rest);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rev-name{font-size:13px;font-weight:600;color:var(--tx1)}
+.rev-meta{font-size:11px;color:var(--tx3)}
+@media(max-width:640px){.rev-grid{grid-template-columns:1fr}}
+
+/* ── PRICING ───────────────────────────────────────── */
+.pricing{padding:64px var(--px)}
+.pricing-inner{max-width:var(--mw);margin:0 auto}
+.pricing-vs{display:flex;align-items:center;gap:16px;margin-bottom:32px;padding:14px 20px;background:var(--bg-elevated);border:1px solid var(--str2);border-radius:var(--r-xl);box-shadow:var(--sh4)}
+.pricing-vs-label{font-size:13px;color:var(--tx3)}
+.pricing-vs-gym{font-size:15px;font-weight:700;color:var(--tx2);text-decoration:line-through}
+.pricing-vs-sep{color:var(--tx4);font-size:20px}
+.pricing-vs-gs{font-size:15px;font-weight:700;color:var(--brand-fg)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.plan{background:var(--bg-elevated);border:1px solid var(--str2);border-radius:var(--r-xl);padding:28px;box-shadow:var(--sh4);position:relative;transition:box-shadow .2s,transform .2s}
+.plan:hover{box-shadow:var(--sh16);transform:translateY(-2px)}
+.plan.featured{border-color:var(--brand-str);border-width:2px;box-shadow:0 0 0 4px rgba(0,167,111,.08),var(--sh16)}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--brand-rest);color:#fff;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;padding:4px 14px;border-radius:var(--r-pill);white-space:nowrap}
+.plan-tag{font-family:var(--mono);font-size:10px;color:var(--tx3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.plan-name{font-size:18px;font-weight:800;color:var(--tx1);margin-bottom:4px}
+.plan-tagline{font-size:13px;color:var(--tx2);font-style:italic;margin-bottom:16px}
+.plan-price-row{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}
+.plan-price{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:var(--tx1);letter-spacing:-.04em;line-height:1}
+.plan-price-diff{font-size:13px;color:var(--brand-fg);font-weight:600}
+.plan-price-note{font-size:12px;color:var(--tx3);margin-bottom:20px;font-family:var(--mono)}
+.plan-features{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.plan-feature{font-size:13px;color:var(--tx2);display:flex;align-items:baseline;gap:8px}
+.plan-feature::before{content:'✓';color:var(--brand-fg);font-weight:700;flex-shrink:0;font-size:12px}
+.plan-feature.dim::before{content:'–';color:var(--tx4)}
+.plan-feature.dim{color:var(--tx4)}
+.plan-note{font-size:12px;color:var(--brand-fg);text-align:center;margin-top:12px;font-family:var(--mono)}
+@media(max-width:720px){.pricing-grid{grid-template-columns:1fr}.plan.featured{margin-top:16px}}
+
+/* ── TRUST CHIPS ───────────────────────────────────── */
+.trust-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.trust-chip{display:flex;align-items:center;gap:8px;background:var(--bg-elevated);border:1px solid var(--str2);border-radius:var(--r-l);padding:10px 14px;font-size:13px;font-weight:500;color:var(--tx2)}
+.trust-chip svg{width:16px;height:16px;stroke:var(--brand-fg);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+
+/* ── EMAIL CAPTURE ─────────────────────────────────── */
+.email-cap{padding:64px var(--px);background:var(--bg-elevated);border-top:1px solid var(--str3)}
+.email-cap-inner{max-width:540px;margin:0 auto;text-align:center}
+.email-cap-h2{font-size:clamp(1.4rem,3vw,1.8rem);font-weight:800;color:var(--tx1);letter-spacing:-.025em;margin-bottom:8px}
+.email-cap-sub{font-size:14px;color:var(--tx3);margin-bottom:24px;line-height:1.6}
+.email-form{display:flex;gap:8px;margin-bottom:10px}
+.email-input{flex:1;height:48px;padding:0 16px;background:var(--bg-control);border:1px solid transparent;border-radius:var(--r-m);font-family:var(--font);font-size:15px;color:var(--tx1);outline:none;transition:border-color .15s,background .15s;min-width:0}
+.email-input:focus{background:var(--bg-elevated);border-color:var(--brand-fg);box-shadow:var(--focus)}
+.email-input::placeholder{color:var(--tx3)}
+.email-legal{font-size:11px;color:var(--tx4);line-height:1.5}
+@media(max-width:480px){.email-form{flex-direction:column}}
+
+/* ── FAQ ───────────────────────────────────────────── */
+.faq{padding:64px var(--px)}
+.faq-inner{max-width:680px;margin:0 auto}
+.faq-list{display:flex;flex-direction:column;gap:6px}
+.faq-item{background:var(--bg-elevated);border:1px solid var(--str2);border-radius:var(--r-l);overflow:hidden;transition:border-color .15s}
+.faq-item.open{border-color:var(--brand-str)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;font-size:14px;font-weight:600;color:var(--tx1);cursor:pointer;user-select:none}
+.faq-q svg{width:16px;height:16px;stroke:var(--tx3);fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0;transition:transform .25s cubic-bezier(.22,1,.36,1)}
+.faq-item.open .faq-q svg{transform:rotate(180deg);stroke:var(--brand-fg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+.faq-item.open .faq-a{max-height:400px}
+.faq-a-inner{padding:0 18px 16px;font-size:13px;color:var(--tx2);line-height:1.7}
+
+/* ── FINAL CTA ─────────────────────────────────────── */
+.final-cta{padding:80px var(--px);background:linear-gradient(135deg,var(--brand-bg2) 0%,rgba(200,250,214,.3) 60%,var(--bg-base) 100%);border-top:1px solid var(--brand-str)}
+.final-cta-inner{max-width:620px;margin:0 auto;text-align:center}
+.final-cta-h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:var(--tx1);letter-spacing:-.03em;line-height:1.07;margin-bottom:10px}
+.final-cta-sub{font-size:15px;color:var(--tx2);margin-bottom:32px;line-height:1.65}
+
+/* ── FOOTER ────────────────────────────────────────── */
+.footer{background:var(--tx1);color:rgba(255,255,255,.7);padding:48px var(--px) 28px}
+.footer-inner{max-width:var(--mw);margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
+.footer-brand{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:8px}
+.footer-brand span{color:var(--brand-str)}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6;max-width:240px;margin-bottom:16px}
+.footer-email{font-size:13px;color:rgba(255,255,255,.5)}
+.footer-col-title{font-size:11px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.55);transition:color .12s}
+.footer-links a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-legal{font-size:12px;color:rgba(255,255,255,.35)}
+.footer-pay-icons{display:flex;gap:6px;flex-wrap:wrap}
+.footer-pay{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:4px 8px;font-size:10px;font-family:var(--mono);color:rgba(255,255,255,.5);letter-spacing:.04em}
+@media(max-width:720px){.footer-grid{grid-template-columns:1fr 1fr}.footer-grid>*:first-child{grid-column:span 2}}
+@media(max-width:400px){.footer-grid{grid-template-columns:1fr}.footer-grid>*:first-child{grid-column:span 1}}
+
+/* ── ANIMATIONS ────────────────────────────────────── */
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes count-up{from{opacity:0}to{opacity:1}}
+
+/* ── HERO STAGGER ──────────────────────────────────── */
+.hero-stagger>*{opacity:0;animation:fadeUp .6s cubic-bezier(.22,1,.36,1) forwards}
+.hero-stagger>*:nth-child(1){animation-delay:.05s}
+.hero-stagger>*:nth-child(2){animation-delay:.15s}
+.hero-stagger>*:nth-child(3){animation-delay:.25s}
+.hero-stagger>*:nth-child(4){animation-delay:.35s}
+.hero-stagger>*:nth-child(5){animation-delay:.45s}
+.hero-stagger>*:nth-child(6){animation-delay:.55s}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCE BAR -->
+<div class="announce" id="announce">
+  <span class="announce-dot"></span>
+  🎁 First order: <strong>15% off</strong> — no code needed. <a href="#pricing">Claim →</a>
+  &nbsp;·&nbsp; ★ 4.7 · 52 verified reviews
+  <button class="announce-dismiss" onclick="this.parentElement.style.display='none'" aria-label="Dismiss">
+    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="wrap header-inner">
+    <a href="#" class="header-brand">Gains<span>Steel</span></a>
+    <nav class="header-nav">
+      <a href="#system">System</a>
+      <a href="#journey">12 Weeks</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div class="header-cta">
+      <a href="#pricing" class="btn btn-primary">Start Tonight →</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-stagger">
+      <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Complete training system · Live now</div>
+      <h1 class="hero-h1">Your gym closed.</h1>
+      <div class="hero-h1-sub">Ours didn't.</div>
+      <p class="hero-desc">Everything your gym gave you — <strong>structure, energy, results</strong> — now fits in 5.3 pounds. Trainer. Program. Music. Nutrition. Coaching.</p>
+      <div class="hero-rating">
+        <span class="hero-stars">★★★★★</span>
+        <span class="hero-rating-text"><strong>4.7</strong> · 52 verified reviews · from $149</span>
+      </div>
+      <div class="hero-btns">
+        <a href="#pricing" class="btn btn-primary btn-lg">Start Tonight — from $149 →</a>
+        <a href="#system" class="btn btn-outlined">See the system</a>
+      </div>
+      <div class="hero-pills">
+        <span class="hero-pill"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Free US Shipping</span>
+        <span class="hero-pill"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>90-Day Returns</span>
+        <span class="hero-pill"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1-Year Warranty</span>
+        <span class="hero-pill"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Cancel in 1 Hour</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card" style="animation:float 5s ease-in-out infinite">
+        <div class="hero-card-img">💪</div>
+        <div class="hero-card-body">
+          <div class="hero-card-name">GainsSteel® Hydraulic Muscle Trainer</div>
+          <div class="hero-card-meta">
+            <span style="color:#FFAB00">★★★★★</span>
+            <span>4.7 · 52 verified buyers</span>
+            <span class="hero-card-price">from $149</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-float">
+        <div class="hero-float-icon">⚖️</div>
+        <div>
+          <div class="hero-float-label">Total weight</div>
+          <div class="hero-float-val">5.3 lb — carry-on friendly</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stats-grid reveal-grid">
+      <div class="stat">
+        <div class="stat-num"><span class="count-up" data-target="12">12</span></div>
+        <div class="stat-label">Week program</div>
+        <div class="stat-sub">Session by session</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span class="count-up" data-target="440">440</span><span style="font-size:1rem;color:var(--tx3)">lb</span></div>
+        <div class="stat-label">Max resistance</div>
+        <div class="stat-sub">Hydraulic, not spring</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5.3<span style="font-size:1rem;color:var(--tx3)">lb</span></div>
+        <div class="stat-label">Total weight</div>
+        <div class="stat-sub">Carry-on friendly</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5</div>
+        <div class="stat-label">System pillars</div>
+        <div class="stat-sub">Trainer + program + more</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="who">
+  <div class="who-inner">
+    <div class="section-eyebrow">Who it's for</div>
+    <h2 class="section-h2">Built for three kinds of people.</h2>
+    <div class="who-grid reveal-grid">
+      <div class="who-card">
+        <div class="who-card-icon">🔄</div>
+        <div class="who-card-title">You used to train.</div>
+        <p class="who-card-body">Life got in the way. The gym didn't survive it. Your body remembers what strong felt like. We're giving it back — in less time, in any room.</p>
+        <div class="who-card-cta">Core Pro is your system →</div>
+      </div>
+      <div class="who-card">
+        <div class="who-card-icon">✈️</div>
+        <div class="who-card-title">You travel. Hotel gyms are a joke.</div>
+        <p class="who-card-body">5.3 lb fits in carry-on. Every hotel room becomes a training room. No lost weeks, no lost momentum between trips.</p>
+        <div class="who-card-cta">Basic is your system →</div>
+      </div>
+      <div class="who-card">
+        <div class="who-card-icon">🚀</div>
+        <div class="who-card-title">You want to start — without the gym.</div>
+        <p class="who-card-body">The program starts at zero and tells you exactly what to do every session. No guessing. No wrong moves. No judgment.</p>
+        <div class="who-card-cta">Core Pro is your system →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT FEATURES -->
+<section class="product" id="system">
+  <div class="product-inner">
+    <div class="section-eyebrow">The product</div>
+    <h2 class="section-h2">One trainer. Six muscle groups.<br>5.3 pounds.</h2>
+    <div class="aplus-list">
+      <div class="aplus-item reveal">
+        <div class="aplus-visual">🔧</div>
+        <div>
+          <div class="aplus-num">01 / 03</div>
+          <h3 class="aplus-h3">Hydraulic, not spring.</h3>
+          <p class="aplus-body">Double-sealed cylinder. Smooth controlled return. Zero snap-back. Resistance stays consistent year after year — springs weaken, hydraulics don't.</p>
+          <span class="aplus-tag">100,000-cycle endurance tested</span>
+        </div>
+      </div>
+      <div class="aplus-item reverse reveal">
+        <div class="aplus-visual">🎛️</div>
+        <div>
+          <div class="aplus-num">02 / 03</div>
+          <h3 class="aplus-h3">15 levels. One knob.</h3>
+          <p class="aplus-body">Stepless adjustment from 22 lb to 440 lb. Ten grip angles for chest, arms, shoulders, back, and core. Arm angle never changes — only the load does.</p>
+          <span class="aplus-tag">22 → 440 lb · stepless</span>
+        </div>
+      </div>
+      <div class="aplus-item reveal">
+        <div class="aplus-visual">🧳</div>
+        <div>
+          <div class="aplus-num">03 / 03</div>
+          <h3 class="aplus-h3">Stores under the couch.</h3>
+          <p class="aplus-body">5.3 lb. ABS body, foam/PU grip. Carry-on friendly. The best trainer is the one that's always there.</p>
+          <span class="aplus-tag">5.3 lb · carry-on friendly</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="usecases">
+  <div class="usecases-inner">
+    <div class="section-eyebrow">For the life you have</div>
+    <h2 class="section-h2">Train where life happens.</h2>
+    <div class="uc-grid reveal-grid">
+      <div class="uc-card">
+        <div class="uc-card-img morning">
+          ☀️
+          <div class="uc-card-time">06:14 AM</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-card-num">No. 01 · Morning</div>
+          <div class="uc-card-title">Before the kettle clicks.</div>
+          <p class="uc-card-desc">25 minutes. Chest, arms, abs. Done before the kids' alarm. No setup. No drive. No excuse.</p>
+        </div>
+      </div>
+      <div class="uc-card">
+        <div class="uc-card-img afternoon">
+          🏠
+          <div class="uc-card-time">02:30 PM</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-card-num">No. 02 · Afternoon</div>
+          <div class="uc-card-title">Between the meetings.</div>
+          <p class="uc-card-desc">20 minutes you'd otherwise spend doomscrolling. Real resistance. Back at the desk without the commute.</p>
+        </div>
+      </div>
+      <div class="uc-card">
+        <div class="uc-card-img travel">
+          🌍
+          <div class="uc-card-time">On the road</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-card-num">No. 03 · Travel</div>
+          <div class="uc-card-title">In the carry-on.</div>
+          <p class="uc-card-desc">5.3 lb. Fits in most cabin bags. Hotel gym had two treadmills and a broken bench. Yours will be better.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEM PILLARS -->
+<section class="system" id="system-pillars">
+  <div class="system-inner">
+    <div class="section-eyebrow">The GainsSteel system</div>
+    <h2 class="section-h2">We didn't build equipment.<br>We built a system.</h2>
+    <div class="system-grid reveal-grid">
+      <div class="pillar">
+        <div class="pillar-num">01 / 05</div>
+        <div class="pillar-icon">💪</div>
+        <div class="pillar-name">The Trainer</div>
+        <p class="pillar-desc">22 to 440 lb. Hydraulic. Zero snap-back. 5.3 pounds. Fits under the couch.</p>
+        <div class="pillar-quote">"Level 13 had me actually struggling." — D. Taj</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02 / 05</div>
+        <div class="pillar-icon">📋</div>
+        <div class="pillar-name">The Program</div>
+        <p class="pillar-desc">12 weeks. Session by session. No guessing. Works for beginners and veterans.</p>
+        <div class="pillar-quote">Structure is what the gym gave you.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03 / 05</div>
+        <div class="pillar-icon">🎵</div>
+        <div class="pillar-name">The Music</div>
+        <p class="pillar-desc">Curated playlists built for intensity. Silence kills momentum.</p>
+        <div class="pillar-quote">Atmosphere on demand.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">04 / 05</div>
+        <div class="pillar-icon">🥗</div>
+        <div class="pillar-name">The Nutrition</div>
+        <p class="pillar-desc">Protein targets. Meal timing. No diet culture. Eat to perform, not to punish.</p>
+        <div class="pillar-quote">Fuel the system, not the guilt.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">05 / 05</div>
+        <div class="pillar-icon">🎯</div>
+        <div class="pillar-name">The Coaching</div>
+        <p class="pillar-desc">Submit your form. Get real feedback. Training wrong is worse than not training.</p>
+        <div class="pillar-quote">A coach in your pocket.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12-WEEK JOURNEY -->
+<section class="journey" id="journey">
+  <div class="journey-inner">
+    <div class="section-eyebrow">The 12-week journey</div>
+    <h2 class="section-h2">Week 1, you start.<br>Week 12, you won't recognize yourself.</h2>
+    <div class="journey-track reveal-grid">
+      <div class="journey-step">
+        <span class="journey-dot"></span>
+        <div class="journey-weeks">Week 1–2</div>
+        <div class="journey-title">Foundation.</div>
+        <p class="journey-desc">You learn the system. The program tells you exactly what to do. Form gets corrected before bad habits form.</p>
+        <span class="journey-badge">First results incoming</span>
+      </div>
+      <div class="journey-step">
+        <span class="journey-dot"></span>
+        <div class="journey-weeks">Week 3–5</div>
+        <div class="journey-title">Build.</div>
+        <p class="journey-desc">You feel it working. Levels go up. You stop questioning — you know it is.</p>
+        <span class="journey-badge">Visible changes begin</span>
+      </div>
+      <div class="journey-step">
+        <span class="journey-dot"></span>
+        <div class="journey-weeks">Week 6–9</div>
+        <div class="journey-title">Push.</div>
+        <p class="journey-desc">Past the point where most quit. Still going. People start asking questions.</p>
+        <span class="journey-badge">Others start noticing</span>
+      </div>
+      <div class="journey-step">
+        <span class="journey-dot"></span>
+        <div class="journey-weeks">Week 10–12</div>
+        <div class="journey-title">Transform.</div>
+        <p class="journey-desc">You don't need motivation anymore. It's just what you do. Week 13 is up to you.</p>
+        <span class="journey-badge">The body you wanted</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="compare">
+  <div class="compare-inner">
+    <div class="section-eyebrow">Vs. alternatives</div>
+    <h2 class="section-h2" style="margin-bottom:24px">More controlled than bands.<br>More compact than weights.</h2>
+    <div class="compare-table-wrap reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="ours">GainsSteel® Hydraulic</th>
+            <th>Spring Twister</th>
+            <th>Resistance Bands</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Resistance feel</td><td class="ours">Smooth, controlled return</td><td>Fast snap-back — injury risk</td><td>Elastic rebound</td></tr>
+          <tr><td>Consistency over time</td><td class="ours check">Stable — sealed cylinder</td><td class="cross">Weakens with use</td><td class="cross">Degrades with wear</td></tr>
+          <tr><td>Adjustment</td><td class="ours">15 levels · 22–440 lb</td><td>Fixed or limited</td><td>Swap bands</td></tr>
+          <tr><td>Training system</td><td class="ours check">12-week program (Core Pro+)</td><td class="cross">None</td><td class="cross">None</td></tr>
+          <tr><td>Portability</td><td class="ours">5.3 lb · carry-on</td><td>Similar weight</td><td>Light · tangles</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-inner">
+    <div class="reviews-rating-row reveal">
+      <div class="reviews-big-num">4.7</div>
+      <div class="reviews-stars-col">
+        <div class="reviews-stars">★★★★★</div>
+        <div class="reviews-count">52 verified reviews</div>
+      </div>
+    </div>
+    <div class="rev-grid reveal-grid">
+      <div class="rev-card">
+        <div class="rev-head"><span class="rev-stars">★★★★★</span><span class="rev-verified">✓ Verified</span></div>
+        <p class="rev-text">"5 months in. Still going strong. Started at level 4, already at 8. Resistance is genuinely solid. This is the real thing."</p>
+        <div class="rev-author">
+          <div class="rev-avatar">S</div>
+          <div>
+            <div class="rev-name">Samie M.</div>
+            <div class="rev-meta">Core Pro · Verified April 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-head"><span class="rev-stars">★★★★★</span><span class="rev-verified">✓ Verified</span></div>
+        <p class="rev-text">"Tested every level. The higher ones aren't for show. Level 13 had me actually struggling. The 440lb is real."</p>
+        <div class="rev-author">
+          <div class="rev-avatar">D</div>
+          <div>
+            <div class="rev-name">D. Taj</div>
+            <div class="rev-meta">Basic · Verified March 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-head"><span class="rev-stars">★★★★★</span><span class="rev-verified">✓ Verified</span></div>
+        <p class="rev-text">"Thought it would end up in the closet. It didn't. Hydraulics feel solid, resistance jumps are real. Still using it."</p>
+        <div class="rev-author">
+          <div class="rev-avatar">R</div>
+          <div>
+            <div class="rev-name">Rihanna F.</div>
+            <div class="rev-meta">Core Pro · Verified February 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="section-eyebrow">Pick your system</div>
+    <h2 class="section-h2">One system. Three ways in.</h2>
+    <div class="pricing-vs reveal">
+      <span class="pricing-vs-label">Compare:</span>
+      <span class="pricing-vs-gym">Gym: $50/month</span>
+      <span class="pricing-vs-sep">vs</span>
+      <span class="pricing-vs-gs">GainsSteel: one time · any room</span>
+    </div>
+    <div class="pricing-grid reveal-grid">
+      <!-- Basic -->
+      <div class="plan">
+        <div class="plan-tag">Basic</div>
+        <div class="plan-name">The Trainer</div>
+        <div class="plan-tagline">"I have my own plan."</div>
+        <div class="plan-price-row"><span class="plan-price">$149</span></div>
+        <div class="plan-price-note">One-time · ships in 24h</div>
+        <div class="plan-features">
+          <div class="plan-feature">GainsSteel® Hydraulic Trainer</div>
+          <div class="plan-feature">Hex tool + setup card</div>
+          <div class="plan-feature">1-year warranty · Free US shipping</div>
+          <div class="plan-feature dim">12-week program</div>
+          <div class="plan-feature dim">Training music</div>
+          <div class="plan-feature dim">Nutrition guide</div>
+          <div class="plan-feature dim">Form-check coaching</div>
+        </div>
+        <a href="#" class="btn btn-outlined btn-full">Choose The Trainer →</a>
+        <div class="plan-note">Add the full system for +$20.</div>
+      </div>
+      <!-- Core Pro (featured) -->
+      <div class="plan featured">
+        <div class="plan-badge">7 in 10 choose this</div>
+        <div class="plan-tag">Core Pro</div>
+        <div class="plan-name">The System</div>
+        <div class="plan-tagline">"I need structure or I won't stick with it."</div>
+        <div class="plan-price-row"><span class="plan-price">$169</span><span class="plan-price-diff">+$20</span></div>
+        <div class="plan-price-note">One-time · ships in 24h</div>
+        <div class="plan-features">
+          <div class="plan-feature">GainsSteel® Hydraulic Trainer</div>
+          <div class="plan-feature">AB roller wheels (detachable)</div>
+          <div class="plan-feature">12-week progressive program</div>
+          <div class="plan-feature">Training music playlists</div>
+          <div class="plan-feature">Nutrition guide</div>
+          <div class="plan-feature">Email support · 1-year warranty</div>
+          <div class="plan-feature">Personal form-check coaching</div>
+        </div>
+        <a href="#" class="btn btn-primary btn-full">Choose The System →</a>
+      </div>
+      <!-- Pro Bundle -->
+      <div class="plan">
+        <div class="plan-tag">Pro Bundle</div>
+        <div class="plan-name">The Full Setup</div>
+        <div class="plan-tagline">"I want zero guesswork."</div>
+        <div class="plan-price-row"><span class="plan-price">$199</span><span class="plan-price-diff">+$30</span></div>
+        <div class="plan-price-note">One-time · ships in 24h</div>
+        <div class="plan-features">
+          <div class="plan-feature">Everything in The System</div>
+          <div class="plan-feature">Personal form-check video review</div>
+          <div class="plan-feature">Mobility + recovery guide</div>
+          <div class="plan-feature">Priority email support</div>
+          <div class="plan-feature">1-year warranty · Free US shipping</div>
+        </div>
+        <a href="#" class="btn btn-soft btn-full">Choose Full Setup →</a>
+        <div class="plan-note">Form-check alone is worth +$30 if starting fresh.</div>
+      </div>
+    </div>
+
+    <!-- Trust row -->
+    <div class="trust-row" style="margin-top:24px">
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Free US Shipping
+      </div>
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24"><path d="M9 14l-4-4 4-4M5 10h8a4 4 0 010 8h-1"/></svg>
+        90-Day Returns
+      </div>
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        1-Year Warranty
+      </div>
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Cancel within 1 Hour
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL CAPTURE -->
+<section class="email-cap">
+  <div class="email-cap-inner reveal">
+    <div class="section-eyebrow" style="text-align:center">First order offer</div>
+    <h2 class="email-cap-h2">15% off. No code hunting.</h2>
+    <p class="email-cap-sub">Drop your email. We'll send it directly. One email. No spam.</p>
+    <div class="email-form">
+      <input class="email-input" type="email" placeholder="Your email address">
+      <button class="btn btn-primary" onclick="this.textContent='Sent ✓';this.style.background='#15803D'">Get 15% off</button>
+    </div>
+    <p class="email-legal">We don't share your email. Unsubscribe any time. First order only.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="faq-inner">
+    <div class="section-eyebrow" style="text-align:center">Questions</div>
+    <h2 class="section-h2" style="text-align:center;margin-bottom:24px">Quick answers.</h2>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Is this for beginners or experienced trainers?
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Both. Beginners start at level 1–3. The 12-week program guides every session from day one. Experienced trainers start higher and use the program as structure when gym access is limited.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Is the 440 lb resistance actually real?
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Yes — calibrated to actual weight-equivalent resistance. Verified buyers confirm level 13 is genuinely hard. Sealed hydraulic cylinder doesn't weaken over time.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Difference between The System and The Full Setup?
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">The System ($169) — trainer, 12-week program, music, nutrition, AB roller. The Full Setup ($199) adds personal form-check video review, mobility guide, and priority support. If you're starting fresh, the +$30 is worth it.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Does it work for travel?
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Built for it. 5.3 lb fits in most carry-on bags. Program works in any room with space to stand. Hotel gyms are optional — yours isn't.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Return and cancellation policy?
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">90-day return window from delivery. Cancel within 1 hour — email support@gainssteel.com immediately. 1-year warranty on all bundles. Support responds within 24 hours, excluding weekends.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-inner reveal">
+    <div class="section-eyebrow" style="text-align:center">Ready</div>
+    <h2 class="final-cta-h2">Your living room<br>is ready.<br>Are you?</h2>
+    <p class="final-cta-sub">12 weeks from now, you'll either have started — or you'll still be thinking about it.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px">
+      <a href="#pricing" class="btn btn-primary btn-lg">Start Tonight — from $149 →</a>
+      <a href="#system" class="btn btn-outlined">View full product details</a>
+    </div>
+    <div class="trust-row" style="justify-content:center">
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Free US Shipping
+      </div>
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24"><path d="M9 14l-4-4 4-4M5 10h8a4 4 0 010 8h-1"/></svg>
+        90-Day Returns
+      </div>
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        4.7 · 52 Reviews
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Gains<span>Steel</span></div>
+        <p class="footer-tagline">Not equipment. A complete training system — trainer, program, music, nutrition, coaching. Built for the room you're already in.</p>
+        <div class="footer-email">support@gainssteel.com</div>
+      </div>
+      <div>
+        <div class="footer-col-title">System</div>
+        <div class="footer-links">
+          <a href="#system">How It Works</a>
+          <a href="#journey">12-Week Journey</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#">FAQ</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Support</div>
+        <div class="footer-links">
+          <a href="#">Email Support</a>
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+          <a href="#">Cancellation</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">About Us</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-legal">© 2026 GainsSteel®. All rights reserved.</div>
+      <div class="footer-pay-icons">
+        <span class="footer-pay">VISA</span>
+        <span class="footer-pay">AMEX</span>
+        <span class="footer-pay">Apple Pay</span>
+        <span class="footer-pay">Google Pay</span>
+        <span class="footer-pay">Shop Pay</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY ATC -->
+<div id="sticky-atc" style="position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg-elevated);border-top:1px solid var(--str2);padding:12px var(--px);display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -4px 16px rgba(145,158,171,.16);transform:translateY(100%);transition:transform .35s cubic-bezier(.22,1,.36,1)">
+  <div style="display:flex;align-items:center;gap:10px;min-width:0">
+    <span style="font-size:22px;flex-shrink:0">💪</span>
+    <div style="min-width:0">
+      <div style="font-size:13px;font-weight:700;color:var(--tx1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">GainsSteel® Hydraulic Muscle Trainer</div>
+      <div style="font-size:12px;color:var(--tx3)">★★★★★ 4.7 · 52 reviews</div>
+    </div>
+  </div>
+  <a href="#pricing" class="btn btn-primary" style="flex-shrink:0">from $149 →</a>
+</div>
+
+<script>
+// ── Scroll reveal ──────────────────────────────────────────
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-grid').forEach(el=>io.observe(el));
+
+// ── Header scroll ──────────────────────────────────────────
+const header = document.getElementById('header');
+window.addEventListener('scroll',()=>{
+  header.classList.toggle('scrolled', window.scrollY > 40);
+},{passive:true});
+
+// ── Count-up ───────────────────────────────────────────────
+const countIo = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const target = +el.dataset.target;
+    const duration = 1600;
+    const start = performance.now();
+    const tick = now=>{
+      const p = Math.min((now-start)/duration,1);
+      const ease = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(ease*target);
+      if(p<1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    countIo.unobserve(el);
+  });
+},{threshold:.5});
+document.querySelectorAll('.count-up').forEach(el=>countIo.observe(el));
+
+// ── Sticky ATC ─────────────────────────────────────────────
+const stickyAtc = document.getElementById('sticky-atc');
+const heroSection = document.querySelector('.hero');
+const stickyIo = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    stickyAtc.style.transform = e.isIntersecting ? 'translateY(100%)' : 'translateY(0)';
+  });
+},{threshold:.1});
+stickyIo.observe(heroSection);
+</script>
+</body>
+</html>
