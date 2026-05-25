@@ -51,6 +51,8 @@ One `{{ 'section-ct-pdp.css' | asset_url | stylesheet_tag }}` line added near th
 - `.product-form__input--pill` (native button picker) base styling — but bundle skin lives in Mechanism B's `bundle` branch.
 - `.product__inventory` → restyled inline; full bar is Mechanism B's scarcity block.
 - `.product-form__submit` (native ATC) → `.ct-btn .ct-btn--primary .ct-btn--lg .ct-btn--full` look (background, radius, weight). We restyle by selector — we do NOT change the button's classes in `buy-buttons.liquid` markup, so `product-form.js` (which targets `.product-form__submit`) is untouched.
+
+**Button styling policy (per user instruction):** only the **primary Add-to-cart** button is skinned. The **dynamic-checkout / Shop Pay button** (`{{ form | payment_button }}`) and any other Shopify-rendered buttons are **left fully native — not restyled.** No CSS targets `.shopify-payment-button` beyond layout spacing.
 - `.product__accordion` / `details > summary` → Minimals accordion styling (used by collapsible rows that aren't moved into tabs).
 - Gallery: `.product__media-wrapper`, thumbnail rail → Minimals radii/borders/active ring. Requires the section's `gallery_layout` set to `thumbnail` in the seed template.
 
