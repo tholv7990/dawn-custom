@@ -1,0 +1,12 @@
+{%- comment -%}
+  Renders a trust-chip row from a newline-separated string.
+  Accepts: chips (string, one per line); class (default 'ct-trust-row');
+  wrap_style (optional inline style); reveal (boolean -> data-reveal).
+{%- endcomment -%}
+<div class="{{ class | default: 'ct-trust-row' }}"{% if wrap_style %} style="{{ wrap_style }}"{% endif %}{% if reveal %} data-reveal{% endif %}>
+  {%- assign chip_list = chips | newline_to_br | split: '<br />' -%}
+  {%- for chip_line in chip_list -%}
+    {%- assign chip_text = chip_line | strip_newlines | strip -%}
+    {%- if chip_text != blank -%}<span class="ct-trust-chip">{{ chip_text }}</span>{%- endif -%}
+  {%- endfor -%}
+</div>

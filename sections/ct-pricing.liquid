@@ -78,13 +78,7 @@
   </div>
 
   {%- if section.settings.show_trust and section.settings.trust_chips != blank -%}
-    <div class="ct-trust-row" style="margin-top:24px" data-reveal>
-      {%- assign chips = section.settings.trust_chips | newline_to_br | split: '<br />' -%}
-      {%- for chip in chips -%}
-        {%- assign chip_text = chip | strip_newlines | strip -%}
-        {%- if chip_text != blank -%}<span class="ct-trust-chip">{{ chip_text }}</span>{%- endif -%}
-      {%- endfor -%}
-    </div>
+    {% render 'ct-trust-chips', chips: section.settings.trust_chips, wrap_style: 'margin-top:24px', reveal: true %}
   {%- endif -%}
 </div>
 
