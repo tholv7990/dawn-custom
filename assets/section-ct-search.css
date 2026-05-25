@@ -1,0 +1,46 @@
+/* section-ct-search.css — Minimals skin for the search bar + predictive dropdown.
+   Loaded by header.liquid (header predictive search, site-wide) and main-search.liquid
+   (search page). Results facets/grid/pagination are skinned by section-ct-collection.css.
+   Presentation only; predictive-search.js / main-search.js untouched. --ct-* global. */
+
+/* ---- Search results header ---- */
+.template-search__header h1 { font-family: var(--ct-font-heading); font-weight: var(--ct-fw-bold); letter-spacing: -0.02em; }
+
+/* ---- Search bar (search page + header) ---- */
+.search .field,
+.template-search__search .field {
+  border: 1.5px solid var(--ct-border);
+  border-radius: var(--ct-r-pill);
+  background: var(--ct-bg-raised);
+  overflow: hidden;
+}
+.search .field:focus-within,
+.template-search__search .field:focus-within { border-color: var(--ct-accent-strong); box-shadow: var(--ct-focus); }
+.search__input.field__input { border: 0; background: transparent; box-shadow: none; }
+.search__input.field__input:focus { box-shadow: none; }
+.search__button,
+.reset__button { color: var(--ct-text-2); }
+.search__button:hover { color: var(--ct-accent-text); }
+
+/* ---- Predictive dropdown ---- */
+.predictive-search {
+  background: var(--ct-bg-raised);
+  border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-lg);
+  box-shadow: var(--ct-shadow-lg);
+  overflow: hidden;
+}
+.predictive-search__heading {
+  font-family: var(--ct-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--ct-text-xs);
+  color: var(--ct-text-3);
+  border-bottom: 1px solid var(--ct-border-subtle);
+}
+.predictive-search__list-item { border-radius: var(--ct-r-md); }
+.predictive-search__list-item:hover,
+.predictive-search__list-item[aria-selected='true'] { background: var(--ct-bg-control); }
+.predictive-search__item-heading { color: var(--ct-text); }
+.predictive-search__item-content--centered { color: var(--ct-text-2); }
+.predictive-search .price { color: var(--ct-price); font-weight: var(--ct-fw-semi); }
