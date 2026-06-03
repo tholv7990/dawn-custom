@@ -15,10 +15,17 @@
 .ct-reviews-rating-col .ct-rating-count{font-size:14px;color:var(--ct-text-3)}
 @media(max-width:600px){.ct-reviews-big-num{font-size:44px}}
 @media(max-width:760px){
-  .ct-reviews-track{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .ct-reviews-track{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:12px}
   .ct-reviews-track::-webkit-scrollbar{display:none}
   .ct-review-card{flex:0 0 82%;scroll-snap-align:start}
 }
+
+/* ---- Mobile swipe-dots indicator (grid layout only; hidden on desktop) ---- */
+.ct-reviews-rail{display:block}
+.ct-reviews-rail-dots{display:none;align-items:center;justify-content:center;gap:8px;margin-top:18px}
+.ct-reviews-rail-dot{width:7px;height:7px;border-radius:50%;border:0;padding:0;background:var(--ct-border-strong);cursor:pointer;transition:width .2s ease,background .2s ease}
+.ct-reviews-rail-dot.is-active{width:22px;border-radius:3px;background:var(--ct-accent)}
+@media(max-width:760px){.ct-reviews-rail-dots{display:flex}}
 
 /* ---- Carousel mode (ct-carousel.js) ---- */
 .ct-reviews-carousel .ct-reviews-track{display:flex;grid-template-columns:none;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}

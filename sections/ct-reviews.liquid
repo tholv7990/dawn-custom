@@ -1,6 +1,7 @@
 {{ 'ct-sections.css' | asset_url | stylesheet_tag }}
 {{ 'section-ct-reviews.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'ct-carousel.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'ct-reviews-rail.js' | asset_url }}" defer="defer"></script>
 
 {% render 'ct-section-padding', section: section %}
 
@@ -40,7 +41,16 @@
   {%- endcapture -%}
 
   {%- if section.settings.layout == "grid" -%}
-    <div class="ct-reviews-track" data-swipe>{{ review_cards }}</div>
+    <ct-reviews-rail class="ct-reviews-rail">
+      <div class="ct-reviews-track" data-reviews-rail-track data-swipe>{{ review_cards }}</div>
+      {%- if section.blocks.size > 1 -%}
+        <div class="ct-reviews-rail-dots" role="tablist" aria-label="{{ 'general.slider.name' | t | default: 'Reviews' }}">
+          {%- for block in section.blocks -%}
+            <button type="button" class="ct-reviews-rail-dot{% if forloop.first %} is-active{% endif %}" data-reviews-rail-dot data-index="{{ forloop.index0 }}" aria-label="Review {{ forloop.index }} of {{ section.blocks.size }}"></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </ct-reviews-rail>
   {%- else -%}
     <ct-carousel class="ct-reviews-carousel" role="region" aria-roledescription="carousel" aria-label="{{ section.settings.heading | default: 'Reviews' | escape }}" data-autoplay="{{ section.settings.autoplay_ms }}">
       <div class="ct-reviews-track" data-carousel-track tabindex="0">{{ review_cards }}</div>
