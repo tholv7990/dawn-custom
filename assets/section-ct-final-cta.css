@@ -1,5 +1,8 @@
-/* section-ct-final-cta.css — open vertical-gradient final CTA per landing HTML .final */
-.ct-final-cta{background:linear-gradient(180deg,var(--ct-accent-subtle),var(--ct-bg));border-radius:0;padding:0}
+/* section-ct-final-cta.css — open vertical-gradient final CTA per landing HTML .final
+   Note: gradient bg lives on the section wrapper ([id$="__ct_final"] in
+   theme-overrides.css) so it extends edge-to-edge — placing it on .ct-final-cta
+   here would constrain it to .page-width. */
+.ct-final-cta{background:transparent;border-radius:0;padding:0}
 .ct-final-cta__inner{max-width:680px;margin:0 auto;text-align:center;padding:24px}
 .ct-final-cta__eyebrow{font-family:var(--ct-font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ct-accent-text);margin-bottom:12px}
 .ct-final-cta__title{font-family:var(--ct-font-display);font-size:clamp(30px,5vw,46px);font-weight:600;color:var(--ct-text);letter-spacing:-.01em;line-height:1.06;margin-bottom:14px}

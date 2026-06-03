@@ -36,6 +36,11 @@ h3, .h3 { font-size: var(--ct-text-lg); font-weight: var(--ct-fw-semi); }
   border-bottom: 1px solid var(--ct-border-subtle);
 }
 
+/* ---- Final CTA: full-width vertical lavender → page-bg gradient per landing HTML .final ---- */
+[id$="__ct_final"] {
+  background: linear-gradient(180deg, var(--ct-accent-subtle), var(--ct-bg));
+}
+
 /* ---- CozyClaw wordmark in header (when no logo image uploaded) ---- */
 .ct-brand{font-family:var(--ct-font-display);font-weight:700;letter-spacing:-.01em;color:var(--ct-text)}
 .ct-brand__paw{color:var(--ct-accent-text)}
