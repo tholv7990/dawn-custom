@@ -2,3 +2,8 @@ MatchingTranslations:
   enabled: false
 TemplateLength:
   enabled: false
+OrphanedSnippet:
+  ignore:
+    - snippets/header-dropdown-menu.liquid
+    - snippets/header-mega-menu.liquid
+    - snippets/quick-order-product-row.liquid

@@ -32,6 +32,16 @@ h3, .h3 { font-size: var(--ct-text-lg); font-weight: var(--ct-fw-semi); }
 /* ---- CozyClaw wordmark in header (when no logo image uploaded) ---- */
 .ct-brand{font-family:var(--ct-font-display);font-weight:700;letter-spacing:-.01em;color:var(--ct-text)}
 .ct-brand__paw{color:var(--ct-accent-text)}
+
+/* ---- Header landing nav (anchor links to homepage sections) ---- */
+.ct-landing-nav{display:flex;gap:26px;align-items:center;justify-self:center}
+.ct-landing-nav__link{font-size:15px;font-weight:600;color:var(--ct-text-2);text-decoration:none;transition:color .15s}
+.ct-landing-nav__link:hover{color:var(--ct-accent-text)}
+
+/* ---- Header ATC pill + cart icon ---- */
+.ct-header-actions{display:flex;align-items:center;gap:14px}
+.ct-header-atc{padding:10px 18px;font-size:14px;font-weight:700;height:auto;border-radius:var(--ct-r-pill);min-height:0;line-height:1}
+.ct-header-atc:hover{transform:translateY(-1px)}
 img { max-width: 100%; }
 
 /* ---- Buttons (skins Dawn's .button; never touch .shopify-payment-button) ---- */
