@@ -43,6 +43,3 @@
 .ct-trust-icons{ display:flex; justify-content:space-around; gap:12px; margin-top:24px; padding-top:20px; border-top:1px solid var(--ct-border-subtle) }
 .ct-trust-icon{ display:flex; flex-direction:column; align-items:center; gap:9px; font-size:12px; font-weight:600; color:var(--ct-text-2); text-align:center; max-width:120px }
 .ct-trust-icon__circle{ width:48px; height:48px; border-radius:50%; background:var(--ct-accent-subtle); display:flex; align-items:center; justify-content:center; font-size:22px; line-height:1 }
-
-/* ---- CozyClaw bundle-tier active state (P6 verify) ---- */
-.ct-tier.is-active{border:2px solid var(--ct-accent);background:rgba(109,63,196,.05)}
