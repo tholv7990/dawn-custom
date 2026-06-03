@@ -1,0 +1,45 @@
+/* section-ct-bundle-tiers.css — PDP bundle tier picker (whole-card toggle,
+   no <input>). Plus the running-total line and 3-up trust icons that live
+   inside the same buy box. Tokens: --ct-* from snippets/css-variables.liquid. */
+
+.ct-bundle-tiers{ margin-top:18px }
+.ct-bundle-tiers__divider,
+.ct-addons__divider{ display:flex; align-items:center; gap:14px; text-align:center; font-size:13px; font-weight:700; color:var(--ct-text-2); letter-spacing:.02em; margin:18px 0 12px }
+.ct-bundle-tiers__divider::before,
+.ct-bundle-tiers__divider::after,
+.ct-addons__divider::before,
+.ct-addons__divider::after{ content:""; flex:1; height:1px; background:var(--ct-border-subtle) }
+
+.ct-tier{ position:relative; display:grid; grid-template-columns:1fr auto; gap:14px; padding:16px 18px; border:1.5px solid var(--ct-border-subtle); border-radius:var(--ct-r-lg); background:var(--ct-bg-raised); cursor:pointer; margin-bottom:12px; transition:border-color .15s,box-shadow .15s,background .15s; outline:none }
+.ct-tier:hover{ border-color:var(--ct-accent-border) }
+.ct-tier:focus-visible{ box-shadow:var(--ct-focus) }
+.ct-tier[aria-checked="true"],
+.ct-tier--active{ border-color:var(--ct-accent); box-shadow:0 0 0 1px var(--ct-accent); background:rgba(109,63,196,.05) }
+
+.ct-tier__main{ min-width:0 }
+.ct-tier__name{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-weight:700; font-size:15.5px; color:var(--ct-text); font-family:var(--ct-font-body) }
+.ct-tier__tag{ font-size:10.5px; font-weight:700; color:var(--ct-accent-text); background:var(--ct-accent-subtle); padding:3px 8px; border-radius:var(--ct-r-pill); letter-spacing:.02em }
+.ct-tier__save{ font-size:13px; color:var(--ct-text-2); margin-top:3px }
+.ct-tier__price{ text-align:right; flex-shrink:0; align-self:start }
+.ct-tier__now{ display:block; font-weight:700; color:var(--ct-accent-text); font-size:15px }
+.ct-tier__was{ display:block; font-size:12px; color:var(--ct-price-was); text-decoration:line-through }
+
+.ct-tier__best{ position:absolute; top:-11px; right:14px; background:var(--ct-accent); color:#fff; font-size:10.5px; font-weight:700; padding:4px 11px; border-radius:var(--ct-r-pill); letter-spacing:.02em; pointer-events:none; box-shadow:var(--ct-shadow-sm) }
+
+.ct-tier__options{ display:none; margin-top:13px; gap:9px; grid-column:1 / -1 }
+.ct-tier[aria-checked="true"] .ct-tier__options,
+.ct-tier--active .ct-tier__options{ display:grid }
+.ct-tier__opt-row{ display:flex; align-items:center; gap:10px }
+.ct-tier__opt-thumb{ width:34px; height:34px; border-radius:8px; background:linear-gradient(140deg,var(--ct-accent-subtle),#cbb6ee); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0 }
+.ct-tier__variant{ flex:1; padding:9px 28px 9px 11px; border:1px solid var(--ct-border); border-radius:var(--ct-r-sm); font-family:var(--ct-font-body); font-size:13px; background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='none' stroke='%23645A75' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/></svg>") no-repeat right 10px center; color:var(--ct-text); cursor:pointer; -webkit-appearance:none; appearance:none }
+.ct-tier__variant:focus{ outline:none; border-color:var(--ct-accent); box-shadow:var(--ct-focus) }
+
+/* Running total above the ATC button */
+.ct-running-total{ display:flex; justify-content:space-between; align-items:baseline; margin:18px 0 12px; padding-top:16px; border-top:1px solid var(--ct-border-subtle); font-size:14px; color:var(--ct-text-2) }
+.ct-running-total__label{ font-weight:600 }
+.ct-running-total__val{ font-family:var(--ct-font-display, var(--ct-font-heading)); font-size:24px; color:var(--ct-text); font-weight:700 }
+
+/* 3-up vertical trust icons (under ATC) */
+.ct-trust-icons{ display:flex; justify-content:space-around; gap:12px; margin-top:24px; padding-top:20px; border-top:1px solid var(--ct-border-subtle) }
+.ct-trust-icon{ display:flex; flex-direction:column; align-items:center; gap:9px; font-size:12px; font-weight:600; color:var(--ct-text-2); text-align:center; max-width:120px }
+.ct-trust-icon__circle{ width:48px; height:48px; border-radius:50%; background:var(--ct-accent-subtle); display:flex; align-items:center; justify-content:center; font-size:22px; line-height:1 }

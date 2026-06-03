@@ -1,7 +1,10 @@
 /* ct-addons.js — PDP cross-sell add-ons box.
    Whole-card toggle (no checkbox/radio); on main add-to-cart submit, bundles
    the main product + every pressed add-on into one /cart/add.js POST and
-   hands the response to Dawn's cart-notification / cart-drawer. */
+   hands the response to Dawn's cart-notification / cart-drawer.
+   Coordinates with ct-bundle-tiers.js: if window.ctBundleItems is set, the
+   submit handler uses those items as the "main" items instead of the form's
+   name=id input (lets the tier picker drive what gets added). */
 (function () {
   if (window.ctAddonsLoaded) return;
   window.ctAddonsLoaded = true;
@@ -21,7 +24,6 @@
 
   function bindCard(card) {
     card.addEventListener('click', function (e) {
-      // Ignore clicks that originate on the variant select (or its children).
       if (e.target.closest('.ct-addon__variant')) return;
       toggle(card);
     });
@@ -33,7 +35,6 @@
     });
     var sel = card.querySelector('.ct-addon__variant');
     if (!sel) return;
-    // Clicking the select must NOT toggle the card.
     sel.addEventListener('click', function (e) { e.stopPropagation(); });
     sel.addEventListener('keydown', function (e) { e.stopPropagation(); });
     sel.addEventListener('change', function () {
@@ -66,23 +67,35 @@
     var form = e.target;
     if (!form || form.tagName !== 'FORM') return;
     if (form.getAttribute('data-type') !== 'add-to-cart-form') return;
-    var pressed = pressedAddons();
-    if (pressed.length === 0) return; // No add-ons selected — let Dawn handle.
 
-    // Intercept Dawn's normal flow.
+    var pressed = pressedAddons();
+    var bundleItems = (window.ctBundleItems && window.ctBundleItems.length) ? window.ctBundleItems : null;
+
+    // Nothing to do if neither tier picker nor add-ons are in play — let Dawn's normal flow run.
+    if (pressed.length === 0 && !bundleItems) return;
+
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    var idInput = form.querySelector('[name="id"]');
-    if (!idInput || !idInput.value) return;
     var qtyInput = form.querySelector('[name="quantity"]');
     var mainQty = Number((qtyInput && qtyInput.value) || 1);
 
-    var items = [{ id: Number(idInput.value), quantity: mainQty }];
+    var items = [];
+    if (bundleItems) {
+      bundleItems.forEach(function (it) {
+        items.push({ id: Number(it.id), quantity: Number(it.quantity || 1) });
+      });
+    } else {
+      var idInput = form.querySelector('[name="id"]');
+      if (!idInput || !idInput.value) return;
+      items.push({ id: Number(idInput.value), quantity: mainQty });
+    }
     pressed.forEach(function (card) {
       var vid = Number(card.dataset.variantId);
       if (vid) items.push({ id: vid, quantity: 1 });
     });
+
+    if (items.length === 0) return;
 
     var cartTarget = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
     var sectionsList = '';
@@ -92,19 +105,13 @@
       } catch (err) { sectionsList = ''; }
     }
 
-    var payload = {
-      items: items,
-      sections_url: window.location.pathname
-    };
+    var payload = { items: items, sections_url: window.location.pathname };
     if (sectionsList) payload.sections = sectionsList;
 
     var url = (window.routes && window.routes.cart_add_url) ? window.routes.cart_add_url : '/cart/add.js';
 
     var btn = form.querySelector('[name="add"]');
-    if (btn) {
-      btn.setAttribute('aria-disabled', 'true');
-      btn.classList.add('loading');
-    }
+    if (btn) { btn.setAttribute('aria-disabled', 'true'); btn.classList.add('loading'); }
 
     fetch(url, {
       method: 'POST',
@@ -119,7 +126,6 @@
       .then(function (parsed) {
         if (btn) { btn.removeAttribute('aria-disabled'); btn.classList.remove('loading'); }
         if (parsed && parsed.status) {
-          // Shopify returned an error structure.
           var msg = parsed.description || parsed.message || 'Sorry — could not add to cart.';
           var errWrap = form.parentNode && form.parentNode.querySelector('.product-form__error-message-wrapper');
           var errMsg = errWrap && errWrap.querySelector('.product-form__error-message');
@@ -127,7 +133,6 @@
           else { window.alert(msg); }
           return;
         }
-        // Reset the add-on pressed state.
         pressed.forEach(function (card) { card.setAttribute('aria-pressed', 'false'); });
 
         if (cartTarget && typeof cartTarget.renderContents === 'function') {
@@ -144,7 +149,6 @@
       })
       .catch(function (err) {
         if (btn) { btn.removeAttribute('aria-disabled'); btn.classList.remove('loading'); }
-        // eslint-disable-next-line no-console
         console.error('[ct-addons] /cart/add failed', err);
         window.alert("Sorry — couldn't add to cart. Please try again.");
       });

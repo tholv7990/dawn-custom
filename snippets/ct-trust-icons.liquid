@@ -1,0 +1,19 @@
+{% comment %}
+  3-up vertical trust icons (circle + label), rendered inside the PDP buy box
+  under the ATC button. Accepts: block (with settings icon_1/label_1, icon_2/
+  label_2, icon_3/label_3). Skips slots whose label is blank.
+{% endcomment %}
+<div class="ct-trust-icons" {{ block.shopify_attributes }}>
+  {%- assign slots = '1,2,3' | split: ',' -%}
+  {%- for n in slots -%}
+    {%- assign icon_key = 'icon_' | append: n -%}
+    {%- assign label_key = 'label_' | append: n -%}
+    {%- assign label = block.settings[label_key] -%}
+    {%- if label != blank -%}
+      <div class="ct-trust-icon">
+        <span class="ct-trust-icon__circle" aria-hidden="true">{{ block.settings[icon_key] | default: '✓' }}</span>
+        <span class="ct-trust-icon__label">{{ label }}</span>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

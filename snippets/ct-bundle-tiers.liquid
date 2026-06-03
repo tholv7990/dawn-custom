@@ -1,0 +1,97 @@
+{% comment %}
+  PDP bundle tier picker — whole-card toggle (role=radio + aria-checked,
+  no <input>). Each tier exposes N variant selects when active (N = the
+  tier's qty setting). ct-bundle-tiers.js publishes window.ctBundleItems
+  from the active tier's selected variants; ct-addons.js reads that on
+  submit and POSTs the items array to /cart/add.js. Running total
+  ([data-bundle-total]) reflects active tier + checked add-ons.
+  Accepts: section, product
+{% endcomment %}
+{%- liquid
+  assign tier_blocks = section.blocks | where: 'type', 'ct_tier'
+-%}
+{%- if tier_blocks.size > 0 -%}
+  {{ 'section-ct-bundle-tiers.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'ct-bundle-tiers.js' | asset_url }}" defer></script>
+
+  <div class="ct-bundle-tiers" data-ct-bundle-tiers>
+    {%- if section.settings.tier_divider_text != blank -%}
+      <div class="ct-bundle-tiers__divider">{{ section.settings.tier_divider_text }}</div>
+    {%- endif -%}
+
+    {%- for block in tier_blocks -%}
+      {%- liquid
+        assign qty = block.settings.qty | default: 1 | at_least: 1
+        assign is_featured = block.settings.featured
+        assign tier_uid = section.id | append: '-' | append: forloop.index0
+      -%}
+      <div
+        class="ct-tier{% if is_featured %} ct-tier--featured ct-tier--active{% endif %}"
+        role="radio"
+        aria-checked="{% if is_featured %}true{% else %}false{% endif %}"
+        tabindex="{% if is_featured %}0{% else %}-1{% endif %}"
+        aria-label="{{ block.settings.tier_name | escape }}"
+        data-ct-tier
+        data-qty="{{ qty }}"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.badge != blank -%}
+          <span class="ct-tier__best">{{ block.settings.badge }}</span>
+        {%- endif -%}
+
+        <div class="ct-tier__main">
+          <div class="ct-tier__name">
+            {{ block.settings.tier_name }}
+            {%- if block.settings.tier_tag != blank -%}
+              <span class="ct-tier__tag">{{ block.settings.tier_tag }}</span>
+            {%- endif -%}
+          </div>
+          {%- if block.settings.save_text != blank -%}
+            <div class="ct-tier__save">{{ block.settings.save_text }}</div>
+          {%- endif -%}
+
+          <div class="ct-tier__options" data-tier-options>
+            {%- for i in (1..qty) -%}
+              {%- assign mat_idx = i | minus: 1 -%}
+              <div class="ct-tier__opt-row">
+                <span class="ct-tier__opt-thumb" aria-hidden="true">{{ block.settings.opt_emoji | default: '🐈' }}</span>
+                <label class="visually-hidden" for="ct-tier-opt-{{ tier_uid }}-{{ i }}">
+                  {%- if qty > 1 -%}{{ block.settings.opt_label | default: 'Option' }} for item {{ i }}{%- else -%}{{ block.settings.opt_label | default: 'Option' }}{%- endif -%}
+                </label>
+                <select
+                  id="ct-tier-opt-{{ tier_uid }}-{{ i }}"
+                  class="ct-tier__variant"
+                  data-ct-tier-variant
+                  data-mat-index="{{ mat_idx }}"
+                >
+                  {%- if product != blank -%}
+                    {%- for variant in product.variants -%}
+                      <option
+                        value="{{ variant.id }}"
+                        data-price="{{ variant.price }}"
+                        data-compare="{{ variant.compare_at_price | default: 0 }}"
+                        {% unless variant.available %}disabled{% endunless %}
+                        {% if forloop.first %}selected{% endif %}
+                      >{{ variant.title }}{% unless variant.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}</option>
+                    {%- endfor -%}
+                  {%- else -%}
+                    <option value="">—</option>
+                  {%- endif -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="ct-tier__price">
+          {%- if block.settings.price_now != blank -%}
+            <span class="ct-tier__now">{{ block.settings.price_now }}</span>
+          {%- endif -%}
+          {%- if block.settings.price_was != blank -%}
+            <span class="ct-tier__was">{{ block.settings.price_was }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endif -%}

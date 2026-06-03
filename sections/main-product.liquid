@@ -489,6 +489,20 @@
                 -%}
                 {%- render 'ct-addons', section: section, product: product, product_form_id: product_form_id -%}
               {%- when 'addon' -%}
+              {%- when 'ct_tier' -%}
+                {% comment %}theme-check-disable UndefinedObject{% endcomment %}
+                {%- unless ct_tiers_done -%}
+                  {%- assign ct_tiers_done = true -%}
+                  {%- render 'ct-bundle-tiers', section: section, product: product -%}
+                {%- endunless -%}
+                {% comment %}theme-check-enable UndefinedObject{% endcomment %}
+              {%- when 'ct_running_total' -%}
+                <div class="ct-running-total" data-bundle-total-wrap {{ block.shopify_attributes }}>
+                  <span class="ct-running-total__label">{{ block.settings.label | default: 'Total' }}</span>
+                  <strong class="ct-running-total__val" data-bundle-total>—</strong>
+                </div>
+              {%- when 'ct_trust_icons' -%}
+                {%- render 'ct-trust-icons', block: block -%}
               {%- when 'scarcity' -%}
                 {%- liquid
                   assign ct_var = product.selected_or_first_available_variant
@@ -1002,6 +1016,50 @@
         { "type": "product", "id": "product", "label": "Add-on product" },
         { "type": "text", "id": "badge", "label": "Badge (optional)", "info": "e.g. Best-Selling Combo" },
         { "type": "text", "id": "savings_override", "label": "Savings text override (optional)", "info": "Replaces the auto-calculated Save X line." }
+      ]
+    },
+    {
+      "type": "ct_tier",
+      "name": "Bundle tier",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "A tier card in the bundle picker. The first ct_tier block rendered starts the tier group; subsequent ct_tier blocks join it. Selecting a tier makes its variant picker(s) visible; on add-to-cart, the active tier's variants are added in one POST."
+        },
+        { "type": "text", "id": "tier_name", "label": "Tier name", "default": "Single" },
+        { "type": "text", "id": "tier_tag", "label": "Inline tag (optional)", "info": "e.g. Save 20%" },
+        { "type": "text", "id": "badge", "label": "Top-right ribbon (optional)", "info": "e.g. 💎 Best value · free shipping" },
+        { "type": "checkbox", "id": "featured", "label": "Featured (active by default)", "default": false },
+        { "type": "range", "id": "qty", "label": "Items in this tier", "min": 1, "max": 4, "step": 1, "default": 1, "info": "How many variant selects show on this card (= line items added to cart)." },
+        { "type": "text", "id": "save_text", "label": "Savings line (optional)", "info": "e.g. You save 236.875 VND" },
+        { "type": "text", "id": "price_now", "label": "Tier price (display)", "default": "$35.97" },
+        { "type": "text", "id": "price_was", "label": "Tier was-price (display, optional)", "default": "$44.97" },
+        { "type": "text", "id": "opt_label", "label": "Option label", "default": "Color" },
+        { "type": "text", "id": "opt_emoji", "label": "Option-row icon", "default": "🐈" }
+      ]
+    },
+    {
+      "type": "ct_running_total",
+      "name": "Running total",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Live total = active tier's variants + checked add-ons. Updates as the customer changes selections. Place this block right above buy_buttons." },
+        { "type": "text", "id": "label", "label": "Label", "default": "Total" }
+      ]
+    },
+    {
+      "type": "ct_trust_icons",
+      "name": "Trust icons (3-up)",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Three circular icon + label tiles under the ATC button (matches the PDP design's buy-box bottom strip). Leave a label blank to hide that slot." },
+        { "type": "text", "id": "icon_1", "label": "Icon 1", "default": "🚚" },
+        { "type": "text", "id": "label_1", "label": "Label 1", "default": "Fast shipping" },
+        { "type": "text", "id": "icon_2", "label": "Icon 2", "default": "🔒" },
+        { "type": "text", "id": "label_2", "label": "Label 2", "default": "Secure payments" },
+        { "type": "text", "id": "icon_3", "label": "Icon 3", "default": "💜" },
+        { "type": "text", "id": "label_3", "label": "Label 3", "default": "Support that cares" }
       ]
     },
     {

@@ -10,9 +10,35 @@
           "type": "scarcity",
           "settings": { "threshold": 50, "selling_fast_label": "🔥 2,175 sales", "social_line": "In stock — ships in 3–7 business days" }
         },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": { "picker_type": "bundle" }
+        "tier-single": {
+          "type": "ct_tier",
+          "settings": {
+            "tier_name": "Single Cozy Spot",
+            "tier_tag": "Save 20%",
+            "badge": "",
+            "featured": false,
+            "qty": 1,
+            "save_text": "You save $9.00",
+            "price_now": "$35.97",
+            "price_was": "$44.97",
+            "opt_label": "Color",
+            "opt_emoji": "🐈"
+          }
+        },
+        "tier-double": {
+          "type": "ct_tier",
+          "settings": {
+            "tier_name": "Double Comfort",
+            "tier_tag": "Save 36%",
+            "badge": "💎 Best value · free shipping",
+            "featured": true,
+            "qty": 2,
+            "save_text": "You save $32.00",
+            "price_now": "$57.94",
+            "price_was": "$89.94",
+            "opt_label": "Color",
+            "opt_emoji": "🐈"
+          }
         },
         "addon-1": {
           "type": "addon",
@@ -22,6 +48,10 @@
           "type": "addon",
           "settings": { "badge": "🏆 Best-selling combo" }
         },
+        "running-total": {
+          "type": "ct_running_total",
+          "settings": { "label": "Total" }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": { "show_dynamic_checkout": true, "show_gift_card_recipient": true }
@@ -29,6 +59,14 @@
         "payment_reassurance": {
           "type": "payment_reassurance",
           "settings": { "show_icons": true, "secure_line": "🔒 Secure checkout · Visa · Amex · Apple Pay · Shop Pay" }
+        },
+        "trust-icons": {
+          "type": "ct_trust_icons",
+          "settings": {
+            "icon_1": "🚚", "label_1": "Fast shipping",
+            "icon_2": "🔒", "label_2": "Secure payments",
+            "icon_3": "💜", "label_3": "Support that cares"
+          }
         }
       },
       "block_order": [
@@ -36,11 +74,14 @@
         "rating",
         "price",
         "scarcity",
-        "variant_picker",
+        "tier-single",
+        "tier-double",
         "addon-1",
         "addon-2",
+        "running-total",
         "buy_buttons",
-        "payment_reassurance"
+        "payment_reassurance",
+        "trust-icons"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -51,7 +92,9 @@
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
-        "padding_bottom": 12
+        "padding_bottom": 12,
+        "tier_divider_text": "The more they lounge, the cozier their space — Bundle & Save",
+        "addon_divider_text": "⭐ Limited-time add-on discount ⭐"
       }
     },
     "ct_trust_bar": {
@@ -89,18 +132,9 @@
     "ct-product-tabs": {
       "type": "ct-product-tabs",
       "blocks": {
-        "tab-description": {
-          "type": "tab",
-          "settings": { "heading": "Description", "content_source": "description" }
-        },
-        "tab-specs": {
-          "type": "tab",
-          "settings": { "heading": "Specifications", "content_source": "richtext", "content": "<p><strong>Size:</strong> 31.5 × 35.43 in</p><p><strong>Material:</strong> Polyester plush, PP cotton fill</p><p><strong>Backing:</strong> Non-slip</p><p><strong>Care:</strong> Machine wash, cold & gentle</p><p><strong>Package includes:</strong> 1 × CozyClaw Lounge Mat</p>" }
-        },
-        "tab-shipping": {
-          "type": "tab",
-          "settings": { "heading": "Shipping & Returns", "content_source": "richtext", "content": "<p>Orders are prepared and dispatched within 3–7 business days (Mon–Fri).</p><p>Domestic delivery in 5–15 business days; international 7–20 business days.</p><p>Risk-free 7-day money-back guarantee. Email <a href=\"mailto:support@cozyclaw.com\">support@cozyclaw.com</a> and we'll make it right.</p>" }
-        }
+        "tab-description": { "type": "tab", "settings": { "heading": "Description", "content_source": "description" } },
+        "tab-specs": { "type": "tab", "settings": { "heading": "Specifications", "content_source": "richtext", "content": "<p><strong>Size:</strong> 31.5 × 35.43 in</p><p><strong>Material:</strong> Polyester plush, PP cotton fill</p><p><strong>Backing:</strong> Non-slip</p><p><strong>Care:</strong> Machine wash, cold & gentle</p><p><strong>Package includes:</strong> 1 × CozyClaw Lounge Mat</p>" } },
+        "tab-shipping": { "type": "tab", "settings": { "heading": "Shipping & Returns", "content_source": "richtext", "content": "<p>Orders are prepared and dispatched within 3–7 business days (Mon–Fri).</p><p>Domestic delivery in 5–15 business days; international 7–20 business days.</p><p>Risk-free 7-day money-back guarantee. Email <a href=\"mailto:support@cozyclaw.com\">support@cozyclaw.com</a> and we'll make it right.</p>" } }
       },
       "block_order": ["tab-description", "tab-specs", "tab-shipping"],
       "settings": { "color_scheme": "scheme-1", "padding_top": 28, "padding_bottom": 28 }
