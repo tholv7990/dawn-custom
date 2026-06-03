@@ -12,3 +12,15 @@
 @media(max-width:400px){.ct-use-case-grid{grid-template-columns:1fr}}
 .ct-use-case-num{font-family:var(--ct-font-mono);font-size:10px;color:var(--ct-text-3);letter-spacing:.1em;margin-bottom:6px}
 .ct-use-case-cta{font-size:12px;font-weight:700;color:var(--ct-accent-text);font-family:var(--ct-font-mono);letter-spacing:.04em;margin-top:12px}
+
+/* ---- Pillars layout (CozyClaw landing/PDP Why-choose) ---- */
+.ct-use-case-grid[data-layout="pillars"]{grid-template-columns:repeat(2,1fr);gap:18px}
+.ct-use-case-grid[data-layout="pillars"] .ct-use-case-card{display:flex;flex-direction:row;gap:18px;align-items:flex-start;padding:28px;background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);box-shadow:var(--ct-shadow-xs);overflow:visible}
+.ct-use-case-grid[data-layout="pillars"] .ct-use-case-img{flex:0 0 54px;width:54px;height:54px;aspect-ratio:auto;border-radius:var(--ct-r-md);background:var(--ct-accent-subtle);font-size:26px}
+.ct-use-case-grid[data-layout="pillars"] .ct-use-case-tag,
+.ct-use-case-grid[data-layout="pillars"] .ct-use-case-num,
+.ct-use-case-grid[data-layout="pillars"] .ct-use-case-cta{display:none}
+.ct-use-case-grid[data-layout="pillars"] .ct-use-case-body{padding:0;flex:1}
+.ct-use-case-grid[data-layout="pillars"] .ct-use-case-title{font-size:17px;margin-bottom:6px}
+.ct-use-case-grid[data-layout="pillars"] .ct-use-case-desc{font-size:14.5px;color:var(--ct-text-2);line-height:1.55}
+@media(max-width:720px){.ct-use-case-grid[data-layout="pillars"]{grid-template-columns:1fr}}
