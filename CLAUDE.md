@@ -6,6 +6,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a fork of [Shopify Dawn](https://github.com/Shopify/dawn), Shopify's reference Online Store 2.0 theme. There is **no build step, no bundler, and no `package.json`** — files in `assets/` are served as-is. HTML is rendered server-side with Liquid; JavaScript is added only as progressive enhancement.
 
+## Design rule — follow the reference 100%, never add extras
+
+The CozyClaw design files in `files/` are the **single source of visual truth**:
+
+- `files/cozyclaw-design-system.md` — tokens + component library + compliance
+- `files/cozyclaw-landing.html` — landing/homepage reference (CozyClaw is a single-product store, so the homepage `templates/index.json` mirrors this design — not a separate merchandising layout)
+- `files/cozyclaw-pdp.html` — product page reference
+- `files/cozyclaw-landing-spec.md` + `files/cozyclaw-pdp-spec.md` — written specs that win over the HTML when they conflict
+
+**Hard rules:**
+
+1. **Never add sections that aren't in the reference design.** No "best sellers" rail, no FAQ accordion, no stats grid, no compare table, no before/after, no newsletter signup on the homepage unless the reference HTML has them. If the design doesn't show it, it doesn't ship.
+2. **Section order matches the reference top-to-bottom.** When porting a reference page to a JSON template, the `"order": [...]` array reproduces the reference section sequence exactly.
+3. **Copy comes from the reference.** Headings, eyebrows, body text, button labels — match the reference HTML verbatim unless the spec file overrides them. Don't invent new marketing copy.
+4. **When in doubt, audit.** Before adding any section to a template, find it in the reference HTML. If it's not there, ask before adding.
+5. **Visual properties (colors, fonts, spacing) come from `--ct-*` tokens.** The tokens live in `snippets/css-variables.liquid` and are read from `settings.color_accent` / `settings.color_accent_hover` / `settings.border_radius`. Both `config/settings_schema.json` defaults AND `config/settings_data.json` saved values must agree with the brand — Shopify hands the schema default to Liquid as a populated value, so `{{ settings.x | default: 'fallback' }}` does NOT fire if the schema default is stale. **Both files must be kept in sync** when the brand changes.
+
+Past failure that drove this rule: an earlier session built the homepage as a Minimals-style merchandising layout (best-sellers + stats + compare + BA + FAQ + email) that bore no resemblance to the CozyClaw landing reference — and the brand-swap was incomplete because the `settings_schema.json` `color_accent` default still said `#00A76F` (Minimals green) while `css-variables.liquid` carried a `| default: '#6D3FC4'` filter that never fired. The whole storefront rendered green CTAs over a lavender canvas. Don't repeat either mistake.
+
 ## Commands
 
 All development goes through the [Shopify CLI](https://shopify.dev/docs/themes/tools/cli) (run from the theme root):
