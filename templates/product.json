@@ -149,6 +149,17 @@
       "block_order": ["s1", "s2", "s3"],
       "settings": { "kicker": "Shipping & guarantee", "heading": "Clear, honest delivery", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
+    "ct_trust_bar_2": {
+      "type": "ct-trust-bar",
+      "blocks": {
+        "c1": { "type": "chip", "settings": { "icon": "truck", "icon_color": "purple", "label": "Fast shipping", "sublabel": "" } },
+        "c2": { "type": "chip", "settings": { "icon": "clock", "icon_color": "amber", "label": "Support that cares", "sublabel": "" } },
+        "c3": { "type": "chip", "settings": { "icon": "shield", "icon_color": "green", "label": "7-day money-back", "sublabel": "" } },
+        "c4": { "type": "chip", "settings": { "icon": "shield", "icon_color": "blue", "label": "Secured checkout", "sublabel": "" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": { "color_scheme": "scheme-1", "padding_top": 16, "padding_bottom": 16 }
+    },
     "ct_reviews": {
       "type": "ct-reviews",
       "blocks": {
@@ -209,6 +220,7 @@
     "ct_why",
     "ct-product-tabs",
     "ct_shipping",
+    "ct_trust_bar_2",
     "ct_reviews",
     "ct_final",
     "related-products",
