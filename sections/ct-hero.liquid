@@ -56,18 +56,27 @@
         {%- endif -%}
       </div>
       <div class="ct-hero-visual">
-        <div class="ct-hero-visual__glow" aria-hidden="true"></div>
         {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'eager', class: 'ct-hero-visual__img', alt: section.settings.heading | strip_html | default: '' }}
-        {%- else -%}
-          <div class="ct-card ct-hero-card">
-            {%- if section.settings.card_emoji != blank -%}<div class="ct-hero-card__emoji">{{ section.settings.card_emoji }}</div>{%- endif -%}
-            <div class="ct-hero-card__name">{{ section.settings.card_title }}</div>
-            {%- if section.settings.card_price != blank -%}<div class="ct-hero-card__price">{{ section.settings.card_price }}</div>{%- endif -%}
-            <div class="ct-hero-card__tags">
-              {%- if section.settings.card_tag_1 != blank -%}<span class="ct-hero-card__tag ct-hero-card__tag--rating">{{ section.settings.card_tag_1 }}</span>{%- endif -%}
-              {%- if section.settings.card_tag_2 != blank -%}<span class="ct-hero-card__tag ct-hero-card__tag--ship">{{ section.settings.card_tag_2 }}</span>{%- endif -%}
-            </div>
+          <div class="ct-hero-product-card">
+            {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'eager', class: 'ct-hero-product-card__img', alt: section.settings.heading | strip_html | default: '' }}
+          </div>
+        {%- elsif section.settings.card_emoji != blank -%}
+          <div class="ct-hero-product-card">
+            <div class="ct-hero-product-card__emoji" aria-hidden="true">{{ section.settings.card_emoji }}</div>
+          </div>
+        {%- endif -%}
+        {%- assign thumb_blocks = section.blocks | where: 'type', 'thumb' -%}
+        {%- if thumb_blocks.size > 0 -%}
+          <div class="ct-hero-gallery">
+            {%- for block in thumb_blocks -%}
+              <div class="ct-hero-thumb{% if block.settings.is_primary %} ct-hero-thumb--primary{% endif %}" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'ct-hero-thumb__img', alt: '' }}
+                {%- else -%}
+                  <span aria-hidden="true">{{ block.settings.emoji | default: '🐈' }}</span>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
           </div>
         {%- endif -%}
         {%- if section.settings.float_value != blank -%}
@@ -126,9 +135,14 @@
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
   ],
   "blocks": [
-    { "type": "pill", "name": "Feature pill", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Feature" } ] }
+    { "type": "pill", "name": "Feature pill", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Feature" } ] },
+    { "type": "thumb", "name": "Hero gallery thumb", "settings": [
+      { "type": "text", "id": "emoji", "label": "Emoji (fallback)", "default": "🐈" },
+      { "type": "image_picker", "id": "image", "label": "Thumb image (optional)" },
+      { "type": "checkbox", "id": "is_primary", "label": "Primary thumb (accent border)", "default": false }
+    ] }
   ],
-  "max_blocks": 5,
+  "max_blocks": 10,
   "presets": [
     {
       "name": "CT Hero",
