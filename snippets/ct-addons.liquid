@@ -1,0 +1,98 @@
+{% comment %}
+  Cross-sell add-ons box on the PDP. Renders all section blocks of type 'addon'
+  as selectable cards (whole-card toggle, no checkbox / no radio). On main
+  add-to-cart submit, ct-addons.js bundles the main variant + every pressed
+  add-on into one /cart/add.js call. "Save X" comes from each add-on variant's
+  compare_at_price; can be overridden per block via savings_override.
+  Accepts: section, product, product_form_id
+{% endcomment %}
+{%- liquid
+  assign addon_blocks = section.blocks | where: 'type', 'addon'
+-%}
+{%- if addon_blocks.size > 0 -%}
+  {{ 'section-ct-addons.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'ct-addons.js' | asset_url }}" defer="defer"></script>
+
+  <div class="ct-addons" data-ct-addons data-product-form-id="{{ product_form_id }}">
+    <div class="ct-addons__head">
+      <span class="ct-addons__star" aria-hidden="true">⭐</span>
+      <span class="ct-addons__title">Limited-time add-on discount</span>
+      <span class="ct-addons__star" aria-hidden="true">⭐</span>
+    </div>
+    <ul class="ct-addons__list" role="list">
+      {%- for block in addon_blocks -%}
+        {%- assign p = block.settings.product -%}
+        {%- if p == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign v = p.selected_or_first_available_variant -%}
+        {%- if v == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign multi_variant = false -%}
+        {%- if p.variants.size > 1 -%}{%- assign multi_variant = true -%}{%- endif -%}
+        {%- assign has_compare = false -%}
+        {%- if v.compare_at_price > v.price -%}{%- assign has_compare = true -%}{%- endif -%}
+        {%- assign savings = 0 -%}
+        {%- if has_compare -%}{%- assign savings = v.compare_at_price | minus: v.price -%}{%- endif -%}
+        <li class="ct-addons__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.badge != blank -%}
+            <span class="ct-addon__badge">{{ block.settings.badge }}</span>
+          {%- endif -%}
+          <div
+            class="ct-addon"
+            role="button"
+            tabindex="0"
+            aria-pressed="false"
+            aria-label="Add {{ p.title | escape }} to your order"
+            data-ct-addon
+            data-variant-id="{{ v.id }}"
+            data-product-handle="{{ p.handle }}"
+          >
+            <span class="ct-addon__media">
+              {%- if p.featured_image -%}
+                {{ p.featured_image | image_url: width: 96 | image_tag: loading: 'lazy', class: 'ct-addon__img', alt: p.title | escape }}
+              {%- else -%}
+                <span class="ct-addon__img ct-addon__img--ph" aria-hidden="true">📦</span>
+              {%- endif -%}
+            </span>
+            <span class="ct-addon__body">
+              <span class="ct-addon__title">{{ p.title }}</span>
+              {%- if block.settings.savings_override != blank -%}
+                <span class="ct-addon__savings">{{ block.settings.savings_override }}</span>
+              {%- elsif has_compare -%}
+                <span class="ct-addon__savings">Save <strong data-addon-save>{{ savings | money }}</strong>!</span>
+              {%- else -%}
+                <span class="ct-addon__savings" data-addon-save-wrap hidden></span>
+              {%- endif -%}
+              {%- if multi_variant -%}
+                {%- assign option_name = p.options.first | default: 'Option' -%}
+                <label class="visually-hidden" for="ct-addon-var-{{ block.id }}">{{ option_name | escape }} for {{ p.title | escape }}</label>
+                <select
+                  id="ct-addon-var-{{ block.id }}"
+                  class="ct-addon__variant"
+                  data-ct-addon-variant
+                >
+                  {%- for variant in p.variants -%}
+                    <option
+                      value="{{ variant.id }}"
+                      data-price="{{ variant.price }}"
+                      data-compare="{{ variant.compare_at_price | default: 0 }}"
+                      {% unless variant.available %}disabled{% endunless %}
+                      {% if variant.id == v.id %}selected{% endif %}
+                    >{{ variant.title }}{% unless variant.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}</option>
+                  {%- endfor -%}
+                </select>
+              {%- endif -%}
+            </span>
+            <span class="ct-addon__price">
+              <span class="ct-addon__price-now" data-addon-now>{{ v.price | money }}</span>
+              {%- if has_compare -%}
+                <span class="ct-addon__price-was" data-addon-was>{{ v.compare_at_price | money }}</span>
+              {%- else -%}
+                <span class="ct-addon__price-was" data-addon-was hidden></span>
+              {%- endif -%}
+            </span>
+            <span class="ct-addon__pill" data-addon-pill aria-hidden="true"></span>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
