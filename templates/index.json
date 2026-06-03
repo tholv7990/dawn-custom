@@ -13,6 +13,7 @@
       },
       "block_order": ["p1", "p2", "p3", "t1", "t2", "t3", "t4"],
       "settings": {
+        "anchor_id": "buy",
         "sale_badge": "🔥 2,175 sold",
         "eyebrow": "",
         "heading": "CozyClaw Mat",
@@ -25,7 +26,7 @@
         "price_save_label": "Save 20%",
         "availability_text": "In stock — ready to ship in 3–7 business days",
         "button_label": "Add to Cart →",
-        "button_link": "shopify://collections/all",
+        "button_link": "#buy",
         "button_label_2": "See why cats love it",
         "button_link_2": "#why",
         "card_emoji": "🐈",
@@ -40,13 +41,13 @@
     "ct_trust_bar": {
       "type": "ct-trust-bar",
       "blocks": {
-        "c1": { "type": "chip", "settings": { "icon": "truck", "icon_color": "purple", "label": "Fast Shipping", "sublabel": "Ships in 3–7 days" } },
-        "c2": { "type": "chip", "settings": { "icon": "shield", "icon_color": "green", "label": "7-Day Money-Back Guarantee", "sublabel": "Risk-free" } },
-        "c3": { "type": "chip", "settings": { "icon": "shield", "icon_color": "blue", "label": "Secured Payments", "sublabel": "SSL encrypted" } },
-        "c4": { "type": "chip", "settings": { "icon": "clock", "icon_color": "amber", "label": "Support That Cares", "sublabel": "Real humans" } }
+        "c1": { "type": "chip", "settings": { "icon": "truck", "label": "Fast Shipping" } },
+        "c2": { "type": "chip", "settings": { "icon": "shield-money", "label": "7-Day Money-Back Guarantee" } },
+        "c3": { "type": "chip", "settings": { "icon": "lock", "label": "Secured Payments" } },
+        "c4": { "type": "chip", "settings": { "icon": "chat", "label": "Support That Cares" } }
       },
       "block_order": ["c1", "c2", "c3", "c4"],
-      "settings": { "color_scheme": "scheme-1", "padding_top": 16, "padding_bottom": 16 }
+      "settings": { "color_scheme": "scheme-1" }
     },
     "ct_value": {
       "type": "ct-hero-split",
@@ -55,7 +56,7 @@
         "heading": "The more they lounge, the cozier their space.",
         "body": "<p>Cats love soft places to nap — but sofas collect fur, scratches, and mess. CozyClaw turns the spot they already love into a warm, fluffy lounging zone, while quietly protecting your furniture underneath. Designed with plush comfort and a supportive edge, it creates the perfect space for kneading, lounging, and deep naps.</p>",
         "button_label": "Shop the CozyClaw Mat →",
-        "button_link": "shopify://collections/all",
+        "button_link": "#bundle",
         "emoji": "😻",
         "image_position": "left",
         "color_scheme": "scheme-1",
@@ -72,7 +73,7 @@
         "u4": { "type": "card", "settings": { "emoji": "🧼", "tag": "Easy clean", "title": "Durable & easy to clean", "desc": "Strong stitching and high-density plush resist shedding and fading. Fully machine washable for easy everyday care." } }
       },
       "block_order": ["u1", "u2", "u3", "u4"],
-      "settings": { "kicker": "Why choose us", "heading": "Your cat will love you even more.", "layout": "pillars", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+      "settings": { "anchor_id": "why", "kicker": "Why choose us", "heading": "Your cat will love you even more.", "layout": "pillars", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
     "ct_bundle": {
       "type": "ct-pricing",
@@ -82,56 +83,48 @@
           "settings": {
             "featured": true,
             "badge": "This product",
+            "flag_style": "accent",
             "emoji": "🐈",
-            "tag": "CozyClaw",
             "name": "CozyClaw Mat",
-            "tagline": "\"Soft enough to nap, smart enough to protect.\"",
-            "price_note": "Was $44.97 · save 20%",
-            "save_text": "Save 20%",
-            "features": "Ultra-soft A-grade plush\nSupportive pillow edge\nNon-slip backing\nMachine washable\n31.5 × 35.43 in",
-            "button_label": "Add CozyClaw Mat →",
-            "button_style": "primary",
-            "price_fallback": "$35.97"
+            "price_fallback": "$35.97",
+            "price_was": "$44.97",
+            "save_text": "Save 20%"
           }
         },
         "plan2": {
           "type": "plan",
           "settings": {
-            "tag": "Add-on",
             "badge": "💰 Biggest savings today",
+            "flag_style": "urgency",
             "emoji": "🦴",
             "name": "ChompClean Toy",
-            "tagline": "\"For the kitty who needs a chew.\"",
-            "price_note": "Was $26.97 · pairs with mat",
-            "save_text": "Save $12.98",
-            "features": "Dental-safe chew material\nCleans teeth while they play\n- Bundles with Mat (free combo shipping)",
-            "button_label": "Add ChompClean →",
-            "button_style": "outlined",
-            "price_fallback": "$13.99"
+            "price_fallback": "$13.99",
+            "price_was": "$26.97",
+            "save_text": "Save $12.98"
           }
         },
         "plan3": {
           "type": "plan",
           "settings": {
-            "tag": "Add-on",
             "badge": "🏆 Best-selling combo",
+            "flag_style": "accent",
             "emoji": "🧤",
             "name": "Easy Hair Removing Glove",
-            "tagline": "\"Cuddle time meets cleanup.\"",
-            "price_note": "Was $13.97 · pairs with mat",
-            "save_text": "Save $5.98",
-            "features": "Silicone fingertips\nGentle on coat, fierce on fur\n- Bundles with Mat (free combo shipping)",
-            "button_label": "Add Glove →",
-            "button_style": "soft",
-            "price_fallback": "$7.99"
+            "price_fallback": "$7.99",
+            "price_was": "$13.97",
+            "save_text": "Save $5.98"
           }
         }
       },
       "block_order": ["plan1", "plan2", "plan3"],
       "settings": {
+        "layout": "bundle",
+        "anchor_id": "bundle",
         "kicker": "⭐ Limited-time add-on discount",
         "heading": "Bundle & save.",
-        "show_trust": false,
+        "subheading": "Add a favorite at checkout and save more — the more they lounge, the cozier their space.",
+        "bottom_button_label": "Add Bundle to Cart →",
+        "bottom_button_link": "#buy",
         "color_scheme": "scheme-1",
         "padding_top": 56,
         "padding_bottom": 56
@@ -140,42 +133,44 @@
     "ct_details": {
       "type": "ct-aplus",
       "blocks": {
-        "b1": { "type": "banner", "settings": { "emoji": "📏", "number": "01", "title": "Size", "body": "31.5 × 35.43 inches — generous coverage for sofas and large cushions. Folds compact for storage between deep-clean days.", "tag": "Generous coverage", "specs": "" } },
-        "b2": { "type": "banner", "settings": { "emoji": "🧶", "number": "02", "title": "Material", "body": "Polyester plush exterior with PP cotton fill — soft, warm, and resilient. Resists shedding and keeps its shape after washes.", "tag": "Soft, warm, resilient", "specs": "" } },
-        "b3": { "type": "banner", "settings": { "emoji": "📦", "number": "03", "title": "Package includes", "body": "1 × CozyClaw Mat, ready to lay down and lounge on right away. No assembly, no setup, just smooth it onto your sofa.", "tag": "Ready out of the box", "specs": "" } }
+        "b1": { "type": "banner", "settings": { "title": "Size", "body": "31.5 × 35.43 inches — generous coverage for sofas and large cushions" } },
+        "b2": { "type": "banner", "settings": { "title": "Material", "body": "Polyester plush exterior with PP cotton fill — soft, warm, and resilient" } },
+        "b3": { "type": "banner", "settings": { "title": "Package includes", "body": "1 × CozyClaw Mat, ready to lay down and lounge on right away" } }
       },
       "block_order": ["b1", "b2", "b3"],
-      "settings": { "kicker": "The details", "heading": "Made to be lived on.", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+      "settings": { "layout": "spec-grid", "anchor_id": "details", "kicker": "The details", "heading": "Made to be lived on.", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
     "ct_marquee": {
       "type": "ct-marquee",
       "blocks": {
-        "m1": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } },
-        "m2": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } },
-        "m3": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } },
-        "m4": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } }
+        "m1": { "type": "message", "settings": { "text": "LOVED BY THOUSANDS OF KITTIES" } },
+        "m2": { "type": "message", "settings": { "text": "LOVED BY THOUSANDS OF KITTIES" } },
+        "m3": { "type": "message", "settings": { "text": "LOVED BY THOUSANDS OF KITTIES" } },
+        "m4": { "type": "message", "settings": { "text": "LOVED BY THOUSANDS OF KITTIES" } },
+        "m5": { "type": "message", "settings": { "text": "LOVED BY THOUSANDS OF KITTIES" } },
+        "m6": { "type": "message", "settings": { "text": "LOVED BY THOUSANDS OF KITTIES" } }
       },
-      "block_order": ["m1", "m2", "m3", "m4"],
+      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6"],
       "settings": { "speed": 22, "color_scheme": "scheme-1" }
     },
     "ct_reviews": {
       "type": "ct-reviews",
       "blocks": {
-        "rv1": { "type": "review", "settings": { "rating": 5, "text": "Cat approved! My boy claimed it within 5 minutes and hasn't moved since.", "author": "Jackie", "meta": "Verified buyer", "verified": true } },
+        "rv1": { "type": "review", "settings": { "rating": 5, "text": "Cat approved!", "author": "Jackie", "meta": "Verified buyer", "verified": true } },
         "rv2": { "type": "review", "settings": { "rating": 5, "text": "So good my cat practically never leaves it. Haven't washed it yet — will update if there are any issues, but so far it's perfect.", "author": "Zinnias", "meta": "Verified buyer", "verified": true } },
         "rv3": { "type": "review", "settings": { "rating": 5, "text": "My cats cuddle on it almost every night and it's helped reduce cat hair on the rest of the sofa. Working well to satisfy their kneading obsession.", "author": "rlungtha", "meta": "Verified buyer", "verified": true } }
       },
       "block_order": ["rv1", "rv2", "rv3"],
-      "settings": { "kicker": "", "heading": "What cat parents say.", "rating_number": "4.9", "rating_count": "92% 5-star · based on 13 reviews · Join our 15,000+ happy customers", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+      "settings": { "anchor_id": "reviews", "kicker": "", "heading": "", "rating_number": "4.9", "rating_count": "92% 5-star · based on 13 reviews · Join our 15,000+ happy customers", "layout": "grid", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
     "ct_promise": {
       "type": "ct-aplus",
       "blocks": {
-        "pr1": { "type": "banner", "settings": { "emoji": "🚚", "number": "01", "title": "Shipping", "body": "Orders are processed Monday–Friday in 3–7 business days. US delivery 5–15 business days; international 7–20 business days, worldwide. Every order tracked.", "tag": "Tracked · Worldwide", "specs": "" } },
-        "pr2": { "type": "banner", "settings": { "emoji": "🛡️", "number": "02", "title": "Risk-free 7-day guarantee", "body": "We back every CozyClaw Lounge Mat with an ironclad 7-day guarantee. If you're not satisfied for any reason, email support@cozyclaw.com and our team will make it right.", "tag": "7 days · No questions", "specs": "" } }
+        "pr1": { "type": "banner", "settings": { "emoji": "🚚", "title": "Shipping", "body": "Orders are processed Monday–Friday in 3–7 business days. US delivery takes 5–15 business days; international 7–20 business days, depending on your location. Every order is tracked for your peace of mind — and we ship worldwide." } },
+        "pr2": { "type": "banner", "settings": { "emoji": "🛡️", "title": "Risk-free 7-day guarantee", "body": "We back every CozyClaw Mat with an ironclad 7-day guarantee. If you're not satisfied for any reason, email support@cozyclaw.com and our team will make it right right away." } }
       },
       "block_order": ["pr1", "pr2"],
-      "settings": { "kicker": "Promise to you", "heading": "We take care of you, too.", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+      "settings": { "layout": "assure-grid", "kicker": "", "heading": "", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
     "ct_final": {
       "type": "ct-final-cta",
@@ -184,7 +179,7 @@
         "heading": "Give your cat the spot they'll never want to leave.",
         "subheading": "",
         "button_label": "Add to Cart →",
-        "button_link": "shopify://collections/all",
+        "button_link": "#buy",
         "button_label_2": "",
         "show_trust": true,
         "trust_style": "pills",
@@ -200,8 +195,8 @@
         "emoji": "🐈",
         "product_name": "CozyClaw Mat",
         "rating_text": "★★★★★ 92% 5-star · 13 reviews",
-        "button_label": "Add to Cart — $35.97 →",
-        "button_link": "shopify://collections/all",
+        "button_label": "Add to Cart →",
+        "button_link": "#buy",
         "color_scheme": "scheme-1"
       }
     }

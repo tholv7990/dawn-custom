@@ -26,6 +26,22 @@
 .ct-plan .product-form__error-message-wrapper{display:none}
 @media(max-width:720px){.ct-plan-grid{grid-template-columns:1fr}.ct-plan--featured{margin-top:16px}}
 
-/* ---- CozyClaw bundle additions ---- */
+/* ---- CozyClaw plan additions (plans layout) ---- */
 .ct-plan__emoji{font-size:54px;line-height:1;margin-bottom:10px;text-align:center}
 .ct-plan__save{display:inline-block;font-size:12px;font-weight:700;color:var(--ct-urgency);margin-top:-8px;margin-bottom:12px}
+
+/* ---- CozyClaw bundle layout (compact centered cards + bottom CTA, per landing HTML) ---- */
+.ct-pricing__sub{text-align:center;color:var(--ct-text-2);font-size:15px;margin:-12px auto 28px;max-width:38em}
+.ct-bundle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+@media(max-width:780px){.ct-bundle-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto}}
+.ct-bundle-card{position:relative;background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);padding:22px;box-shadow:var(--ct-shadow-xs);text-align:center}
+.ct-bundle-card--best{border:2px solid var(--ct-accent)}
+.ct-bundle-flag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:11.5px;font-weight:700;color:#fff;background:var(--ct-accent);padding:5px 13px;border-radius:var(--ct-r-pill);white-space:nowrap}
+.ct-bundle-flag--urgency{background:var(--ct-urgency)}
+.ct-bundle-emoji{font-size:54px;line-height:1;margin-bottom:10px}
+.ct-bundle-name{font-weight:700;font-size:16px;color:var(--ct-text)}
+.ct-bundle-prices{margin:10px 0 4px;display:flex;gap:8px;justify-content:center;align-items:baseline}
+.ct-bundle-now{font-weight:800;font-size:20px;color:var(--ct-accent-text)}
+.ct-bundle-was{color:var(--ct-price-was);text-decoration:line-through;font-size:14px}
+.ct-bundle-save{font-size:12px;font-weight:700;color:var(--ct-urgency)}
+.ct-bundle-bottom{display:flex;justify-content:center;margin-top:32px}

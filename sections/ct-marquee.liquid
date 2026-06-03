@@ -6,7 +6,7 @@
     <div class="ct-marquee-track">
       {%- for i in (1..2) -%}
         {%- for block in section.blocks -%}
-          <span class="ct-marquee-item" {{ block.shopify_attributes }}>{{ block.settings.text }}<span class="ct-marquee-sep"></span></span>
+          <span class="ct-marquee-item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
         {%- endfor -%}
       {%- endfor -%}
     </div>

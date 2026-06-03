@@ -12,3 +12,18 @@
 .ct-aplus-spec{background:var(--ct-bg);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-md);padding:4px 10px;font-size:12px;font-weight:500;color:var(--ct-text-2)}
 .ct-aplus-tag{display:inline-flex;align-items:center;gap:6px;background:var(--ct-accent-subtle);border:1px solid var(--ct-accent-border);border-radius:var(--ct-r-pill);padding:4px 12px;font-family:var(--ct-font-mono);font-size:11px;color:var(--ct-accent-text);font-weight:500;margin-bottom:10px}
 @media(max-width:700px){.ct-aplus-banner,.ct-aplus-banner--reverse{grid-template-columns:1fr;direction:ltr;gap:20px}}
+
+/* ---- Spec grid (3 compact k/v cards per landing HTML .spec-grid) ---- */
+.ct-spec-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:720px){.ct-spec-grid{grid-template-columns:1fr}}
+.ct-spec-card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);padding:24px}
+.ct-spec-card__k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ct-accent-text);margin-bottom:8px}
+.ct-spec-card__v{font-size:16px;color:var(--ct-text);line-height:1.45}
+
+/* ---- Assurance grid (2 cards per landing HTML .assure-grid) ---- */
+.ct-assure-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:720px){.ct-assure-grid{grid-template-columns:1fr}}
+.ct-assure-card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);padding:28px}
+.ct-assure-card__title{font-family:var(--ct-font-display);font-size:21px;font-weight:600;color:var(--ct-text);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.ct-assure-card__body{color:var(--ct-text-2);font-size:14.5px;line-height:1.6}
+.ct-assure-card__body a{color:var(--ct-accent-text);font-weight:600}

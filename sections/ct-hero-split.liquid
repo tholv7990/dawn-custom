@@ -17,7 +17,7 @@
       {%- if section.settings.heading != blank -%}<h2 class="ct-split__title">{{ section.settings.heading }}</h2>{%- endif -%}
       {%- if section.settings.body != blank -%}<div class="ct-split__text rte">{{ section.settings.body }}</div>{%- endif -%}
       {%- if section.settings.button_label != blank -%}
-        <a class="ct-btn ct-btn--soft ct-split__btn" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
+        <a class="ct-btn ct-btn--primary ct-split__btn" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
       {%- endif -%}
     </div>
   </div>

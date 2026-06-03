@@ -3,43 +3,81 @@
 
 {% render 'ct-section-padding', section: section %}
 
-<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+{%- assign layout = section.settings.layout | default: 'banners' -%}
+{%- assign section_id = section.settings.anchor_id | default: section.id -%}
+
+<div id="{{ section_id }}" class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
-  <div class="ct-aplus-list">
-    {%- for block in section.blocks -%}
-      {%- assign ct_rev = forloop.index0 | modulo: 2 -%}
-      <div class="ct-card ct-aplus-banner{% if ct_rev == 1 %} ct-aplus-banner--reverse{% endif %}" data-reveal {{ block.shopify_attributes }}>
-        <div class="ct-aplus-img">
-          {%- if block.settings.image != blank -%}
-            {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'ct-aplus-img__media', alt: block.settings.title | escape }}
-          {%- else -%}
-            <span>{{ block.settings.emoji | default: '💧' }}</span>
-          {%- endif -%}
+
+  {%- if layout == 'spec-grid' -%}
+    {%- comment -%} Compact 3-up spec grid per landing HTML .spec-grid {%- endcomment -%}
+    <div class="ct-spec-grid" data-reveal>
+      {%- for block in section.blocks -%}
+        <div class="ct-spec-card" {{ block.shopify_attributes }}>
+          <div class="ct-spec-card__k">{{ block.settings.title }}</div>
+          <div class="ct-spec-card__v">{{ block.settings.body }}</div>
         </div>
-        <div>
-          {%- if block.settings.number != blank -%}<div class="ct-aplus-num">{{ block.settings.number }}</div>{%- endif -%}
-          <h3 class="ct-aplus-title">{{ block.settings.title }}</h3>
-          <p class="ct-aplus-body">{{ block.settings.body }}</p>
-          {%- if block.settings.tag != blank -%}<span class="ct-aplus-tag">{{ block.settings.tag }}</span>{%- endif -%}
-          {%- assign specs = block.settings.specs | split: ',' -%}
-          {%- if specs.size > 0 and block.settings.specs != blank -%}
-            <div class="ct-aplus-specs">
-              {%- for spec in specs -%}<span class="ct-aplus-spec">{{ spec | strip }}</span>{%- endfor -%}
-            </div>
-          {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  {%- elsif layout == 'assure-grid' -%}
+    {%- comment -%} 2-up assurance cards per landing HTML .assure-grid {%- endcomment -%}
+    <div class="ct-assure-grid" data-reveal>
+      {%- for block in section.blocks -%}
+        <div class="ct-assure-card" {{ block.shopify_attributes }}>
+          <h3 class="ct-assure-card__title">
+            {%- if block.settings.emoji != blank -%}<span aria-hidden="true">{{ block.settings.emoji }}</span> {% endif -%}
+            {{ block.settings.title }}
+          </h3>
+          <p class="ct-assure-card__body">{{ block.settings.body }}</p>
         </div>
-      </div>
-    {%- endfor -%}
-  </div>
+      {%- endfor -%}
+    </div>
+
+  {%- else -%}
+    {%- comment -%} Default banners layout (horizontal cards w/ image + text) {%- endcomment -%}
+    <div class="ct-aplus-list">
+      {%- for block in section.blocks -%}
+        {%- assign ct_rev = forloop.index0 | modulo: 2 -%}
+        <div class="ct-card ct-aplus-banner{% if ct_rev == 1 %} ct-aplus-banner--reverse{% endif %}" data-reveal {{ block.shopify_attributes }}>
+          <div class="ct-aplus-img">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'ct-aplus-img__media', alt: block.settings.title | escape }}
+            {%- else -%}
+              <span>{{ block.settings.emoji | default: '💧' }}</span>
+            {%- endif -%}
+          </div>
+          <div>
+            {%- if block.settings.number != blank -%}<div class="ct-aplus-num">{{ block.settings.number }}</div>{%- endif -%}
+            <h3 class="ct-aplus-title">{{ block.settings.title }}</h3>
+            <p class="ct-aplus-body">{{ block.settings.body }}</p>
+            {%- if block.settings.tag != blank -%}<span class="ct-aplus-tag">{{ block.settings.tag }}</span>{%- endif -%}
+            {%- assign specs = block.settings.specs | split: ',' -%}
+            {%- if specs.size > 0 and block.settings.specs != blank -%}
+              <div class="ct-aplus-specs">
+                {%- for spec in specs -%}<span class="ct-aplus-spec">{{ spec | strip }}</span>{%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
 {
-  "name": "CT A+ banners",
+  "name": "CT A+ banners / specs / assurance",
   "tag": "section",
   "class": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
+    { "type": "select", "id": "layout", "label": "Layout", "options": [
+      { "value": "banners", "label": "Banners (horizontal image + text)" },
+      { "value": "spec-grid", "label": "Spec grid (3 compact k/v cards)" },
+      { "value": "assure-grid", "label": "Assurance grid (2 cards w/ h3 + body)" }
+    ], "default": "banners" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id (e.g. \"details\")", "info": "Renders id=\"\" on the section wrapper so nav links like #details scroll here." },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "How it works" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Built different — here's why" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
@@ -49,15 +87,15 @@
   "blocks": [
     {
       "type": "banner",
-      "name": "Feature banner",
+      "name": "Item",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "emoji", "label": "Fallback emoji", "default": "💧" },
-        { "type": "text", "id": "number", "label": "Number badge", "default": "01" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Feature — short benefit headline" },
-        { "type": "textarea", "id": "body", "label": "Body", "default": "2–3 sentences explaining the mechanism, benefit, and proof. Plain language, no jargon." },
-        { "type": "text", "id": "tag", "label": "Tag pill (single highlight)" },
-        { "type": "text", "id": "specs", "label": "Specs (comma-separated)", "default": "Spec 1, Spec 2, Spec 3, Spec 4" }
+        { "type": "image_picker", "id": "image", "label": "Image (banners layout)" },
+        { "type": "text", "id": "emoji", "label": "Emoji (banners + assure-grid)", "default": "💧" },
+        { "type": "text", "id": "number", "label": "Number badge (banners layout)", "default": "01" },
+        { "type": "text", "id": "title", "label": "Title / spec key", "default": "Feature — short headline" },
+        { "type": "textarea", "id": "body", "label": "Body / spec value", "default": "2–3 sentences explaining the benefit." },
+        { "type": "text", "id": "tag", "label": "Tag pill (banners layout)" },
+        { "type": "text", "id": "specs", "label": "Specs (comma-separated, banners layout)", "default": "Spec 1, Spec 2" }
       ]
     }
   ],
@@ -66,8 +104,8 @@
     {
       "name": "CT A+ banners",
       "blocks": [
-        { "type": "banner", "settings": { "emoji": "💧", "number": "01", "title": "Feature 01 — short benefit headline" } },
-        { "type": "banner", "settings": { "emoji": "⚙️", "number": "02", "title": "Feature 02 — material / build quality" } }
+        { "type": "banner", "settings": { "emoji": "💧", "number": "01", "title": "Feature 01" } },
+        { "type": "banner", "settings": { "emoji": "⚙️", "number": "02", "title": "Feature 02" } }
       ]
     }
   ]

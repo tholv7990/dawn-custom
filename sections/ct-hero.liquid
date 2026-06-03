@@ -3,7 +3,9 @@
 
 {% render 'ct-section-padding', section: section %}
 
-<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+{%- assign section_id = section.settings.anchor_id | default: section.id -%}
+
+<div id="{{ section_id }}" class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="ct-hero" data-reveal>
     <div class="ct-hero-inner">
       <div class="ct-hero-text">
@@ -101,6 +103,7 @@
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
     { "type": "text", "id": "sale_badge", "label": "Sale badge (urgency-red pill)", "info": "e.g. 🔥 2,175 sold. Renders above h1. Leave blank to hide." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id (e.g. \"buy\")" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New for 2025 — Pro Series" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Hero headline — emotional hook", "info": "Wrap a word in <em> for the green accent." },
     { "type": "text", "id": "h1_subtitle", "label": "Heading subtitle (second line)" },

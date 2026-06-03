@@ -1,8 +1,8 @@
-/* section-ct-marquee.css — demo .ct-marquee* (tokens → --ct-*) */
-.ct-marquee{background:var(--ct-bg-surface);border-top:1px solid var(--ct-border-subtle);border-bottom:1px solid var(--ct-border-subtle);overflow:hidden;height:40px;display:flex;align-items:center}
-.ct-marquee-track{display:flex;animation:ct-marquee-scroll var(--ct-marquee-speed,28s) linear infinite;white-space:nowrap}
+/* section-ct-marquee.css — purple bg + white Fraunces 20px scrolling marquee (per landing HTML .marquee) */
+.ct-marquee{background:var(--ct-accent);color:#fff;overflow:hidden;padding:16px 0}
+.ct-marquee-track{display:flex;gap:40px;white-space:nowrap;width:max-content;animation:ct-marquee-scroll var(--ct-marquee-speed,22s) linear infinite;font-family:var(--ct-font-display);font-weight:600;font-size:20px;letter-spacing:.02em}
 .ct-marquee-track:hover{animation-play-state:paused}
-.ct-marquee-item{display:flex;align-items:center;gap:12px;padding:0 24px;font-size:13px;color:var(--ct-text-2);font-weight:500}
-.ct-marquee-sep{width:5px;height:5px;border-radius:50%;background:var(--ct-accent-text);flex-shrink:0}
+.ct-marquee-item{display:inline-flex;align-items:center;gap:14px}
+.ct-marquee-item::after{content:"🐾";font-family:initial}
 @keyframes ct-marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.ct-marquee-track{animation:none}}
