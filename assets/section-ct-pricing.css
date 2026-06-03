@@ -1,9 +1,4 @@
 /* section-ct-pricing.css — demo .pricing/.plan → .ct-pricing/.ct-plan (tokens → --ct-*) */
-.ct-pricing-vs{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:28px;padding:14px 20px;box-shadow:var(--ct-shadow-sm)}
-.ct-pricing-vs__label{font-size:13px;color:var(--ct-text-3)}
-.ct-pricing-vs__gym{font-size:15px;font-weight:700;color:var(--ct-text-2);text-decoration:line-through}
-.ct-pricing-vs__sep{color:var(--ct-text-off);font-size:20px}
-.ct-pricing-vs__brand{font-size:15px;font-weight:700;color:var(--ct-accent-text)}
 .ct-plan-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .ct-plan{padding:28px;box-shadow:var(--ct-shadow-sm);position:relative;transition:box-shadow .2s,transform .2s}
 .ct-plan:hover{box-shadow:var(--ct-shadow-lg);transform:translateY(-2px)}
