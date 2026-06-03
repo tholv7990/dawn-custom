@@ -23,7 +23,7 @@
 .ct-eyebrow__dot{width:6px;height:6px;border-radius:50%;background:var(--ct-accent);animation:ct-pulse 2s ease-in-out infinite}
 .ct-kicker{font-family:var(--ct-font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ct-accent-text);margin-bottom:10px}
 .ct-section-head{text-align:center;max-width:640px;margin:0 auto 32px}
-.ct-section-head__title{font-size:clamp(24px,3vw,35px);font-weight:800;color:var(--ct-text);letter-spacing:-.025em;line-height:1.15;margin-bottom:10px}
+.ct-section-head__title{font-family:var(--ct-font-display);font-size:clamp(28px,4.6vw,44px);font-weight:600;color:var(--ct-text);letter-spacing:-.01em;line-height:1.08;margin-bottom:10px}
 .ct-section-head__sub{font-size:15px;color:var(--ct-text-2);line-height:1.65}
 
 /* ---- Rating row (demo .rating-row/.stars/.rating-count) ---- */
