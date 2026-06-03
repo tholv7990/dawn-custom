@@ -5,73 +5,100 @@
 {% render 'ct-section-padding', section: section %}
 
 {%- assign ct_product = section.settings.product -%}
+{%- assign layout = section.settings.layout | default: 'plans' -%}
+{%- assign section_id = section.settings.anchor_id | default: section.id -%}
 
-<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+<div id="{{ section_id }}" class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
-
-  {%- if section.settings.vs_gym != blank -%}
-    <div class="ct-card ct-pricing-vs" data-reveal>
-      {%- if section.settings.vs_label != blank -%}<span class="ct-pricing-vs__label">{{ section.settings.vs_label }}</span>{%- endif -%}
-      <span class="ct-pricing-vs__gym">{{ section.settings.vs_gym }}</span>
-      <span class="ct-pricing-vs__sep">vs</span>
-      <span class="ct-pricing-vs__brand">{{ section.settings.vs_brand }}</span>
-    </div>
+  {%- if section.settings.subheading != blank -%}
+    <p class="ct-pricing__sub" data-reveal>{{ section.settings.subheading }}</p>
   {%- endif -%}
 
-  <div class="ct-plan-grid">
-    {%- for block in section.blocks -%}
-      {%- assign vnum = block.settings.variant_position | default: forloop.index -%}
-      {%- assign vidx = vnum | minus: 1 -%}
-      {%- assign variant = blank -%}
-      {%- if ct_product != blank -%}{%- assign variant = ct_product.variants[vidx] -%}{%- endif -%}
-      {%- assign style = block.settings.button_style | default: 'primary' -%}
-      <div class="ct-card ct-plan{% if block.settings.featured %} ct-plan--featured{% endif %}" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
-        {%- if block.settings.featured and block.settings.badge != blank -%}<div class="ct-plan__badge">{{ block.settings.badge }}</div>{%- endif -%}
-        {%- if block.settings.tag != blank -%}<div class="ct-plan__tag">{{ block.settings.tag }}</div>{%- endif -%}
-        {%- if block.settings.emoji != blank -%}<div class="ct-plan__emoji" aria-hidden="true">{{ block.settings.emoji }}</div>{%- endif -%}
-        <div class="ct-plan__name">{{ block.settings.name }}</div>
-        {%- if block.settings.tagline != blank -%}<div class="ct-plan__tagline">{{ block.settings.tagline }}</div>{%- endif -%}
-        <div class="ct-plan__price-row">
-          <span class="ct-plan__price">
-            {%- if variant != blank -%}{{ variant.price | money }}{%- else -%}{{ block.settings.price_fallback }}{%- endif -%}
-          </span>
-          {%- if block.settings.price_diff != blank -%}<span class="ct-plan__price-diff">{{ block.settings.price_diff }}</span>{%- endif -%}
+  {%- if layout == 'bundle' -%}
+    {%- comment -%} Compact bundle cards per cozyclaw-landing.html .bundle-grid {%- endcomment -%}
+    <div class="ct-bundle-grid" data-reveal>
+      {%- for block in section.blocks -%}
+        {%- assign flag_class = '' -%}
+        {%- if block.settings.flag_style == 'urgency' -%}{%- assign flag_class = ' ct-bundle-flag--urgency' -%}{%- endif -%}
+        <div class="ct-bundle-card{% if block.settings.featured %} ct-bundle-card--best{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.badge != blank -%}
+            <span class="ct-bundle-flag{{ flag_class }}">{{ block.settings.badge }}</span>
+          {%- endif -%}
+          {%- if block.settings.emoji != blank -%}
+            <div class="ct-bundle-emoji" aria-hidden="true">{{ block.settings.emoji }}</div>
+          {%- endif -%}
+          <div class="ct-bundle-name">{{ block.settings.name }}</div>
+          <div class="ct-bundle-prices">
+            <span class="ct-bundle-now">{{ block.settings.price_fallback }}</span>
+            {%- if block.settings.price_was != blank -%}<span class="ct-bundle-was">{{ block.settings.price_was }}</span>{%- endif -%}
+          </div>
+          {%- if block.settings.save_text != blank -%}<div class="ct-bundle-save">{{ block.settings.save_text }}</div>{%- endif -%}
         </div>
-        {%- if block.settings.price_note != blank -%}<div class="ct-plan__price-note">{{ block.settings.price_note }}</div>{%- endif -%}
-        {%- if block.settings.save_text != blank -%}<div class="ct-plan__save">{{ block.settings.save_text }}</div>{%- endif -%}
-
-        {%- if block.settings.features != blank -%}
-          <ul class="ct-plan__features">
-            {%- assign feats = block.settings.features | newline_to_br | split: '<br />' -%}
-            {%- for feat in feats -%}
-              {%- assign feat_text = feat | strip_newlines | strip -%}
-              {%- if feat_text != blank -%}
-                {%- assign marker = feat_text | slice: 0 -%}
-                {%- if marker == '-' or marker == '~' -%}
-                  <li class="ct-plan__feature ct-plan__feature--dim">{{ feat_text | remove_first: marker | strip }}</li>
-                {%- else -%}
-                  <li class="ct-plan__feature">{{ feat_text }}</li>
-                {%- endif -%}
-              {%- endif -%}
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
-
-        {%- if ct_product != blank and variant != blank -%}
-          {%- assign form_id = 'ct-plan-' | append: section.id | append: '-' | append: block.id -%}
-          {%- assign plan_btn_class = 'ct-btn ct-btn--' | append: style | append: ' ct-btn--full' -%}
-          {% render 'ct-add-to-cart', product: ct_product, variant: variant, label: block.settings.button_label, btn_class: plan_btn_class, form_id: form_id, section_id: section.id %}
-        {%- else -%}
-          <a class="ct-btn ct-btn--{{ style }} ct-btn--full" href="{{ block.settings.button_link | default: '#' }}">{{ block.settings.button_label }}</a>
-        {%- endif -%}
-
-        {%- if block.settings.note != blank -%}<div class="ct-plan__note">{{ block.settings.note }}</div>{%- endif -%}
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.bottom_button_label != blank -%}
+      <div class="ct-bundle-bottom" data-reveal>
+        <a class="ct-btn ct-btn--primary ct-btn--lg" href="{{ section.settings.bottom_button_link | default: '#' }}">{{ section.settings.bottom_button_label }}</a>
       </div>
-    {%- endfor -%}
-  </div>
+    {%- endif -%}
 
-  {%- if section.settings.show_trust and section.settings.trust_chips != blank -%}
-    {% render 'ct-trust-chips', chips: section.settings.trust_chips, wrap_style: 'margin-top:24px', reveal: true %}
+  {%- else -%}
+    {%- comment -%} Original plans layout (variant-driven product picker) {%- endcomment -%}
+    <div class="ct-plan-grid">
+      {%- for block in section.blocks -%}
+        {%- assign vnum = block.settings.variant_position | default: forloop.index -%}
+        {%- assign vidx = vnum | minus: 1 -%}
+        {%- assign variant = blank -%}
+        {%- if ct_product != blank -%}{%- assign variant = ct_product.variants[vidx] -%}{%- endif -%}
+        {%- assign style = block.settings.button_style | default: 'primary' -%}
+        <div class="ct-card ct-plan{% if block.settings.featured %} ct-plan--featured{% endif %}" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.featured and block.settings.badge != blank -%}<div class="ct-plan__badge">{{ block.settings.badge }}</div>{%- endif -%}
+          {%- if block.settings.tag != blank -%}<div class="ct-plan__tag">{{ block.settings.tag }}</div>{%- endif -%}
+          {%- if block.settings.emoji != blank -%}<div class="ct-plan__emoji" aria-hidden="true">{{ block.settings.emoji }}</div>{%- endif -%}
+          <div class="ct-plan__name">{{ block.settings.name }}</div>
+          {%- if block.settings.tagline != blank -%}<div class="ct-plan__tagline">{{ block.settings.tagline }}</div>{%- endif -%}
+          <div class="ct-plan__price-row">
+            <span class="ct-plan__price">
+              {%- if variant != blank -%}{{ variant.price | money }}{%- else -%}{{ block.settings.price_fallback }}{%- endif -%}
+            </span>
+            {%- if block.settings.price_diff != blank -%}<span class="ct-plan__price-diff">{{ block.settings.price_diff }}</span>{%- endif -%}
+          </div>
+          {%- if block.settings.price_note != blank -%}<div class="ct-plan__price-note">{{ block.settings.price_note }}</div>{%- endif -%}
+          {%- if block.settings.save_text != blank -%}<div class="ct-plan__save">{{ block.settings.save_text }}</div>{%- endif -%}
+
+          {%- if block.settings.features != blank -%}
+            <ul class="ct-plan__features">
+              {%- assign feats = block.settings.features | newline_to_br | split: '<br />' -%}
+              {%- for feat in feats -%}
+                {%- assign feat_text = feat | strip_newlines | strip -%}
+                {%- if feat_text != blank -%}
+                  {%- assign marker = feat_text | slice: 0 -%}
+                  {%- if marker == '-' or marker == '~' -%}
+                    <li class="ct-plan__feature ct-plan__feature--dim">{{ feat_text | remove_first: marker | strip }}</li>
+                  {%- else -%}
+                    <li class="ct-plan__feature">{{ feat_text }}</li>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {%- if ct_product != blank and variant != blank -%}
+            {%- assign form_id = 'ct-plan-' | append: section.id | append: '-' | append: block.id -%}
+            {%- assign plan_btn_class = 'ct-btn ct-btn--' | append: style | append: ' ct-btn--full' -%}
+            {% render 'ct-add-to-cart', product: ct_product, variant: variant, label: block.settings.button_label, btn_class: plan_btn_class, form_id: form_id, section_id: section.id %}
+          {%- else -%}
+            <a class="ct-btn ct-btn--{{ style }} ct-btn--full" href="{{ block.settings.button_link | default: '#' }}">{{ block.settings.button_label }}</a>
+          {%- endif -%}
+
+          {%- if block.settings.note != blank -%}<div class="ct-plan__note">{{ block.settings.note }}</div>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_trust and section.settings.trust_chips != blank -%}
+      {% render 'ct-trust-chips', chips: section.settings.trust_chips, wrap_style: 'margin-top:24px', reveal: true %}
+    {%- endif -%}
   {%- endif -%}
 </div>
 
@@ -82,16 +109,18 @@
   "class": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
+    { "type": "select", "id": "layout", "label": "Layout", "options": [ { "value": "plans", "label": "Plans (full cards)" }, { "value": "bundle", "label": "Bundle (compact)" } ], "default": "plans" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id (e.g. \"bundle\")" },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Pick your system" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "One system. Three ways in." },
-    { "type": "product", "id": "product", "label": "Product", "info": "Each plan card binds to one variant of this product (by position)." },
-    { "type": "header", "content": "Compare strip" },
-    { "type": "text", "id": "vs_label", "label": "Compare label", "default": "Compare:" },
-    { "type": "text", "id": "vs_gym", "label": "Struck comparison", "default": "Gym: $50/month" },
-    { "type": "text", "id": "vs_brand", "label": "Brand comparison", "default": "CozyClaw: one time · forever cozy" },
-    { "type": "header", "content": "Trust chips" },
-    { "type": "checkbox", "id": "show_trust", "label": "Show trust chips", "default": true },
-    { "type": "textarea", "id": "trust_chips", "label": "Trust chips (one per line)", "default": "Free US Shipping\n90-Day Returns\n1-Year Warranty\nCancel within 1 Hour" },
+    { "type": "textarea", "id": "subheading", "label": "Sub-heading (bundle layout)" },
+    { "type": "product", "id": "product", "label": "Product (plans layout)" },
+    { "type": "header", "content": "Bundle bottom CTA" },
+    { "type": "text", "id": "bottom_button_label", "label": "Bottom CTA label", "default": "Add Bundle to Cart →" },
+    { "type": "url", "id": "bottom_button_link", "label": "Bottom CTA link" },
+    { "type": "header", "content": "Trust chips (plans)" },
+    { "type": "checkbox", "id": "show_trust", "label": "Show trust chips", "default": false },
+    { "type": "textarea", "id": "trust_chips", "label": "Trust chips (one per line)" },
     { "type": "header", "content": "Section" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
@@ -100,24 +129,26 @@
   "blocks": [
     {
       "type": "plan",
-      "name": "Plan",
+      "name": "Plan / bundle card",
       "settings": [
-        { "type": "checkbox", "id": "featured", "label": "Featured", "default": false },
-        { "type": "text", "id": "badge", "label": "Featured badge", "default": "7 in 10 choose this" },
-        { "type": "text", "id": "tag", "label": "Tag", "default": "Basic" },
-        { "type": "text", "id": "emoji", "label": "Emoji (above name)" },
-        { "type": "text", "id": "name", "label": "Name", "default": "The Plan" },
-        { "type": "text", "id": "tagline", "label": "Tagline (italic)", "default": "\"Who it's for.\"" },
-        { "type": "number", "id": "variant_position", "label": "Variant number", "info": "1 = first variant of the product. Defaults to card order." },
-        { "type": "text", "id": "price_diff", "label": "Price diff" },
-        { "type": "text", "id": "price_note", "label": "Price note", "default": "One-time · ships in 24h" },
-        { "type": "text", "id": "save_text", "label": "Save chip text (e.g. \"Save 20%\")" },
-        { "type": "textarea", "id": "features", "label": "Features (one per line; prefix - or ~ to dim a row)", "default": "Feature one\nFeature two\n- Dimmed feature" },
-        { "type": "text", "id": "button_label", "label": "Button label", "default": "Choose this →" },
-        { "type": "select", "id": "button_style", "label": "Button style", "options": [ { "value": "primary", "label": "Primary" }, { "value": "outlined", "label": "Outlined" }, { "value": "soft", "label": "Soft" } ], "default": "primary" },
-        { "type": "url", "id": "button_link", "label": "Button link (fallback when no product)" },
-        { "type": "text", "id": "price_fallback", "label": "Fallback price", "default": "$149" },
-        { "type": "text", "id": "note", "label": "Note under button" }
+        { "type": "checkbox", "id": "featured", "label": "Featured (accent border)", "default": false },
+        { "type": "text", "id": "badge", "label": "Flag / badge (top pill)" },
+        { "type": "select", "id": "flag_style", "label": "Flag color (bundle layout)", "options": [ { "value": "accent", "label": "Accent (purple)" }, { "value": "urgency", "label": "Urgency (red)" } ], "default": "accent" },
+        { "type": "text", "id": "tag", "label": "Tag (plans layout)" },
+        { "type": "text", "id": "emoji", "label": "Emoji" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Product Name" },
+        { "type": "text", "id": "tagline", "label": "Tagline (italic, plans)" },
+        { "type": "number", "id": "variant_position", "label": "Variant number (plans)" },
+        { "type": "text", "id": "price_diff", "label": "Price diff (plans)" },
+        { "type": "text", "id": "price_note", "label": "Price note (plans)" },
+        { "type": "text", "id": "save_text", "label": "Save chip" },
+        { "type": "textarea", "id": "features", "label": "Features (plans, one per line)" },
+        { "type": "text", "id": "button_label", "label": "Per-card button (plans)" },
+        { "type": "select", "id": "button_style", "label": "Button style (plans)", "options": [ { "value": "primary", "label": "Primary" }, { "value": "outlined", "label": "Outlined" }, { "value": "soft", "label": "Soft" } ], "default": "primary" },
+        { "type": "url", "id": "button_link", "label": "Button link (plans)" },
+        { "type": "text", "id": "price_fallback", "label": "Now price", "default": "$35.97" },
+        { "type": "text", "id": "price_was", "label": "Was price (struck, bundle)" },
+        { "type": "text", "id": "note", "label": "Note under button (plans)" }
       ]
     }
   ],
@@ -126,9 +157,7 @@
     {
       "name": "CT Pricing",
       "blocks": [
-        { "type": "plan", "settings": { "tag": "Basic", "name": "The Trainer", "button_style": "outlined", "price_fallback": "$149" } },
-        { "type": "plan", "settings": { "featured": true, "tag": "Core Pro", "name": "The System", "button_style": "primary", "price_fallback": "$169" } },
-        { "type": "plan", "settings": { "tag": "Pro Bundle", "name": "The Full Setup", "button_style": "soft", "price_fallback": "$199" } }
+        { "type": "plan", "settings": { "tag": "Basic", "name": "The Plan", "button_style": "outlined", "price_fallback": "$35.97" } }
       ]
     }
   ]
