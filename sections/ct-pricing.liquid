@@ -15,11 +15,31 @@
   {%- endif -%}
 
   {%- if layout == 'bundle' -%}
-    {%- comment -%} Compact bundle cards per cozyclaw-landing.html .bundle-grid {%- endcomment -%}
+    {%- comment -%} Compact bundle cards per cozyclaw-landing.html .bundle-grid.
+        Each block can pick its own product (block.settings.block_product); when
+        set, name + prices + save chip auto-bind to live Shopify data. Hardcoded
+        text settings act as fallbacks when no product is picked. {%- endcomment -%}
     <div class="ct-bundle-grid" data-reveal>
       {%- for block in section.blocks -%}
         {%- assign flag_class = '' -%}
         {%- if block.settings.flag_style == 'urgency' -%}{%- assign flag_class = ' ct-bundle-flag--urgency' -%}{%- endif -%}
+        {%- assign bp = block.settings.block_product -%}
+        {%- assign bundle_name = block.settings.name -%}
+        {%- if bp != blank and bp.title != blank -%}{%- assign bundle_name = bp.title -%}{%- endif -%}
+        {%- assign bundle_now = block.settings.price_fallback -%}
+        {%- assign bundle_was = block.settings.price_was -%}
+        {%- assign bundle_save = block.settings.save_text -%}
+        {%- if bp != blank -%}
+          {%- assign bundle_now = bp.price | money -%}
+          {%- if bp.compare_at_price > bp.price -%}
+            {%- assign bundle_was = bp.compare_at_price | money -%}
+            {%- assign save_diff = bp.compare_at_price | minus: bp.price -%}
+            {%- assign bundle_save = save_diff | money | prepend: 'Save ' -%}
+          {%- else -%}
+            {%- assign bundle_was = blank -%}
+            {%- assign bundle_save = blank -%}
+          {%- endif -%}
+        {%- endif -%}
         <div class="ct-bundle-card{% if block.settings.featured %} ct-bundle-card--best{% endif %}" {{ block.shopify_attributes }}>
           {%- if block.settings.badge != blank -%}
             <span class="ct-bundle-flag{{ flag_class }}">{{ block.settings.badge }}</span>
@@ -27,12 +47,12 @@
           {%- if block.settings.emoji != blank -%}
             <div class="ct-bundle-emoji" aria-hidden="true">{{ block.settings.emoji }}</div>
           {%- endif -%}
-          <div class="ct-bundle-name">{{ block.settings.name }}</div>
+          <div class="ct-bundle-name">{{ bundle_name }}</div>
           <div class="ct-bundle-prices">
-            <span class="ct-bundle-now">{{ block.settings.price_fallback }}</span>
-            {%- if block.settings.price_was != blank -%}<span class="ct-bundle-was">{{ block.settings.price_was }}</span>{%- endif -%}
+            <span class="ct-bundle-now">{{ bundle_now }}</span>
+            {%- if bundle_was != blank -%}<span class="ct-bundle-was">{{ bundle_was }}</span>{%- endif -%}
           </div>
-          {%- if block.settings.save_text != blank -%}<div class="ct-bundle-save">{{ block.settings.save_text }}</div>{%- endif -%}
+          {%- if bundle_save != blank -%}<div class="ct-bundle-save">{{ bundle_save }}</div>{%- endif -%}
         </div>
       {%- endfor -%}
     </div>

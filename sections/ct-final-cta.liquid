@@ -3,17 +3,34 @@
 
 {% render 'ct-section-padding', section: section %}
 
+{%- comment -%} Live product binding: see ct-hero.liquid header for the pattern. {%- endcomment -%}
+{%- assign final_product = section.settings.product -%}
+{%- assign final_price_now = section.settings.price_now -%}
+{%- assign final_price_was = section.settings.price_was -%}
+{%- assign final_price_save = section.settings.price_save_label -%}
+{%- if final_product != blank -%}
+  {%- assign final_price_now = final_product.price | money -%}
+  {%- if final_product.compare_at_price > final_product.price -%}
+    {%- assign final_price_was = final_product.compare_at_price | money -%}
+    {%- assign final_save_pct = final_product.compare_at_price | minus: final_product.price | times: 100 | divided_by: final_product.compare_at_price -%}
+    {%- assign final_price_save = final_save_pct | append: '%' | prepend: 'Save ' -%}
+  {%- else -%}
+    {%- assign final_price_was = blank -%}
+    {%- assign final_price_save = blank -%}
+  {%- endif -%}
+{%- endif -%}
+
 <div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="ct-final-cta" data-reveal>
     <div class="ct-final-cta__inner">
       {%- if section.settings.eyebrow != blank -%}<div class="ct-final-cta__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
       {%- if section.settings.heading != blank -%}<h2 class="ct-final-cta__title">{{ section.settings.heading }}</h2>{%- endif -%}
       {%- if section.settings.subheading != blank -%}<p class="ct-final-cta__sub">{{ section.settings.subheading }}</p>{%- endif -%}
-      {%- if section.settings.price_now != blank -%}
+      {%- if final_price_now != blank -%}
         <div class="ct-final-cta__price-row">
-          <span class="ct-final-cta__price-now">{{ section.settings.price_now }}</span>
-          {%- if section.settings.price_was != blank -%}<span class="ct-final-cta__price-was">{{ section.settings.price_was }}</span>{%- endif -%}
-          {%- if section.settings.price_save_label != blank -%}<span class="ct-final-cta__price-save">{{ section.settings.price_save_label }}</span>{%- endif -%}
+          <span class="ct-final-cta__price-now">{{ final_price_now }}</span>
+          {%- if final_price_was != blank -%}<span class="ct-final-cta__price-was">{{ final_price_was }}</span>{%- endif -%}
+          {%- if final_price_save != blank -%}<span class="ct-final-cta__price-save">{{ final_price_save }}</span>{%- endif -%}
         </div>
       {%- endif -%}
       <div class="ct-final-cta__btns">

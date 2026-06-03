@@ -5,6 +5,34 @@
 
 {%- assign section_id = section.settings.anchor_id | default: section.id -%}
 
+{%- comment -%}
+  Live product binding: when section.settings.product is picked, the price
+  row and availability auto-bind to Shopify product data (price, compare_at,
+  computed save %, in-stock from variant.available). Hardcoded text settings
+  fall back through when no product is picked. heading also defaults to
+  product.title when a product is picked and the editor has not overridden
+  the heading.
+{%- endcomment -%}
+{%- assign hero_product = section.settings.product -%}
+{%- assign hero_heading = section.settings.heading -%}
+{%- assign hero_price_now = section.settings.price_now -%}
+{%- assign hero_price_was = section.settings.price_was -%}
+{%- assign hero_price_save = section.settings.price_save_label -%}
+{%- assign hero_avail = section.settings.availability_text -%}
+{%- if hero_product != blank -%}
+  {%- if hero_heading == blank -%}{%- assign hero_heading = hero_product.title -%}{%- endif -%}
+  {%- assign hero_price_now = hero_product.price | money -%}
+  {%- if hero_product.compare_at_price > hero_product.price -%}
+    {%- assign hero_price_was = hero_product.compare_at_price | money -%}
+    {%- assign save_pct = hero_product.compare_at_price | minus: hero_product.price | times: 100 | divided_by: hero_product.compare_at_price -%}
+    {%- assign hero_price_save = save_pct | append: '%' | prepend: 'Save ' -%}
+  {%- else -%}
+    {%- assign hero_price_was = blank -%}
+    {%- assign hero_price_save = blank -%}
+  {%- endif -%}
+  {%- if hero_product.available == false -%}{%- assign hero_avail = 'Sold out' -%}{%- endif -%}
+{%- endif -%}
+
 <div id="{{ section_id }}" class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="ct-hero" data-reveal>
     <div class="ct-hero-inner">
@@ -15,8 +43,8 @@
         {%- if section.settings.eyebrow != blank -%}
           <div class="ct-eyebrow"><span class="ct-eyebrow__dot"></span>{{ section.settings.eyebrow }}</div>
         {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h1 class="ct-hero-h1">{{ section.settings.heading }}</h1>
+        {%- if hero_heading != blank -%}
+          <h1 class="ct-hero-h1">{{ hero_heading }}</h1>
         {%- endif -%}
         {%- if section.settings.h1_subtitle != blank -%}
           <div class="ct-hero-h1-sub">{{ section.settings.h1_subtitle }}</div>
@@ -30,15 +58,15 @@
             <span class="ct-rating-count">{{ section.settings.rating_text }}</span>
           </div>
         {%- endif -%}
-        {%- if section.settings.price_now != blank -%}
+        {%- if hero_price_now != blank -%}
           <div class="ct-hero-price-row">
-            <span class="ct-hero-price-now">{{ section.settings.price_now }}</span>
-            {%- if section.settings.price_was != blank -%}<span class="ct-hero-price-was">{{ section.settings.price_was }}</span>{%- endif -%}
-            {%- if section.settings.price_save_label != blank -%}<span class="ct-hero-price-save">{{ section.settings.price_save_label }}</span>{%- endif -%}
+            <span class="ct-hero-price-now">{{ hero_price_now }}</span>
+            {%- if hero_price_was != blank -%}<span class="ct-hero-price-was">{{ hero_price_was }}</span>{%- endif -%}
+            {%- if hero_price_save != blank -%}<span class="ct-hero-price-save">{{ hero_price_save }}</span>{%- endif -%}
           </div>
         {%- endif -%}
-        {%- if section.settings.availability_text != blank -%}
-          <div class="ct-hero-avail"><span class="ct-hero-avail__dot" aria-hidden="true"></span>{{ section.settings.availability_text }}</div>
+        {%- if hero_avail != blank -%}
+          <div class="ct-hero-avail"><span class="ct-hero-avail__dot" aria-hidden="true"></span>{{ hero_avail }}</div>
         {%- endif -%}
         <div class="ct-hero-btns">
           {%- if section.settings.button_label != blank -%}
