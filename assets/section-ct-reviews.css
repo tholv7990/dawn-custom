@@ -8,10 +8,12 @@
 .ct-review-avatar{width:32px;height:32px;border-radius:50%;background:var(--ct-accent-subtle);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ct-accent-text);flex-shrink:0}
 .ct-review-name{font-size:13px;font-weight:600;color:var(--ct-text)}
 .ct-review-date{font-size:11px;color:var(--ct-text-3)}
-.ct-reviews-rating-row{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:28px}
-.ct-reviews-big-num{font-size:clamp(2.5rem,5vw,3.4rem);font-weight:800;color:var(--ct-text);letter-spacing:-.04em;line-height:1}
-.ct-reviews-rating-col{display:flex;flex-direction:column;gap:2px}
-.ct-reviews-rating-row .ct-stars{font-size:18px}
+.ct-reviews-rating-row{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;margin-bottom:36px;text-align:center}
+.ct-reviews-big-num{font-family:var(--ct-font-display);font-size:56px;font-weight:700;color:var(--ct-text);letter-spacing:-.02em;line-height:1}
+.ct-reviews-rating-col{display:flex;flex-direction:column;align-items:center;gap:4px}
+.ct-reviews-rating-row .ct-stars{font-size:22px}
+.ct-reviews-rating-col .ct-rating-count{font-size:14px;color:var(--ct-text-3)}
+@media(max-width:600px){.ct-reviews-big-num{font-size:44px}}
 @media(max-width:760px){
   .ct-reviews-track{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .ct-reviews-track::-webkit-scrollbar{display:none}
