@@ -9,6 +9,13 @@
       {%- if section.settings.eyebrow != blank -%}<div class="ct-final-cta__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
       {%- if section.settings.heading != blank -%}<h2 class="ct-final-cta__title">{{ section.settings.heading }}</h2>{%- endif -%}
       {%- if section.settings.subheading != blank -%}<p class="ct-final-cta__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+      {%- if section.settings.price_now != blank -%}
+        <div class="ct-final-cta__price-row">
+          <span class="ct-final-cta__price-now">{{ section.settings.price_now }}</span>
+          {%- if section.settings.price_was != blank -%}<span class="ct-final-cta__price-was">{{ section.settings.price_was }}</span>{%- endif -%}
+          {%- if section.settings.price_save_label != blank -%}<span class="ct-final-cta__price-save">{{ section.settings.price_save_label }}</span>{%- endif -%}
+        </div>
+      {%- endif -%}
       <div class="ct-final-cta__btns">
         {%- if section.settings.button_label != blank -%}
           <a class="ct-btn ct-btn--primary ct-btn--lg" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
@@ -46,6 +53,10 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ready" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Your living room is ready. Are you?" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "12 weeks from now, you'll either have started — or you'll still be thinking about it." },
+    { "type": "header", "content": "Price row (optional)" },
+    { "type": "text", "id": "price_now", "label": "Current price (e.g. $35.97)" },
+    { "type": "text", "id": "price_was", "label": "Compare-at price (struck)" },
+    { "type": "text", "id": "price_save_label", "label": "Save chip (e.g. Save 20%)" },
     { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Start tonight →" },
     { "type": "url", "id": "button_link", "label": "Primary button link" },
