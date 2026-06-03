@@ -6,7 +6,12 @@
     {%- if section.settings.emoji != blank -%}<span class="ct-sticky-atc__emoji" aria-hidden="true">{{ section.settings.emoji }}</span>{%- endif -%}
     <div class="ct-sticky-atc__text">
       <div class="ct-sticky-atc__name">{{ section.settings.product_name }}</div>
-      {%- if section.settings.rating_text != blank -%}<div class="ct-sticky-atc__rating">{{ section.settings.rating_text }}</div>{%- endif -%}
+      {%- if section.settings.rating_text != blank -%}
+        <div class="ct-sticky-atc__rating">
+          <span class="ct-stars" aria-hidden="true">★★★★★</span>
+          <span>{{ section.settings.rating_text }}</span>
+        </div>
+      {%- endif -%}
     </div>
   </div>
   {%- if section.settings.button_label != blank -%}

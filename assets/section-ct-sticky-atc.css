@@ -7,6 +7,7 @@
 .ct-sticky-atc__emoji{font-size:22px;flex-shrink:0;line-height:1}
 .ct-sticky-atc__text{min-width:0}
 .ct-sticky-atc__name{font-size:13px;font-weight:700;color:var(--ct-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ct-sticky-atc__rating{font-size:12px;color:var(--ct-text-3)}
+.ct-sticky-atc__rating{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ct-text-3)}
+.ct-sticky-atc__rating .ct-stars{color:var(--ct-rating);font-size:12px;letter-spacing:1px}
 .ct-sticky-atc__btn{flex-shrink:0}
 @media(prefers-reduced-motion:reduce){.ct-sticky-atc{transition:none}}

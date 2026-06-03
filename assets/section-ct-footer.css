@@ -1,91 +1,22 @@
-/* section-ct-footer.css — CozyClaw light footer skin over Dawn's native footer.
-   Lavender canvas with dark warm text + purple accent links. Mirrors the
-   footer treatment in cozyclaw-pdp.html / cozyclaw-landing.html. Payment
-   icons stay Dawn-native (payment_type_svg_tag full-color). Presentation
-   only; newsletter form, social-icons, localization, policies untouched. */
+/* section-ct-footer.css — CozyClaw 4-col footer per cozyclaw-landing.html .footer */
+.ct-footer{background:var(--ct-bg-surface);border-top:1px solid var(--ct-border-subtle);padding:56px 0 28px}
+.ct-footer__grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
+@media(max-width:720px){.ct-footer__grid{grid-template-columns:1fr 1fr;gap:24px}}
 
-/* ---- Flip light (element+class beats .color-scheme-N) ---- */
-footer.footer {
-  --color-background: 252, 250, 254; /* #FCFAFE — lavender surface */
-  --color-foreground: 42, 36, 51;    /* #2A2433 — warm dark text */
-  background-color: rgb(var(--color-background));
-  color: var(--ct-text-2);
-  border-top: 1px solid var(--ct-border-subtle);
-  margin-top: 0;
-}
-footer.footer.gradient { background: rgb(var(--color-background)); }
+/* Brand column */
+.ct-footer__brand-col{display:flex;flex-direction:column}
+.ct-footer__brand{font-family:var(--ct-font-display);font-size:22px;font-weight:700;color:var(--ct-text);letter-spacing:-.01em;text-decoration:none;margin-bottom:10px}
+.ct-footer__paw{color:var(--ct-accent-text)}
+.ct-footer__tag{color:var(--ct-text-2);font-size:14px;line-height:1.6;margin:0 0 10px;max-width:30em}
+.ct-footer__mail{font-family:var(--ct-font-mono);font-size:13.5px;color:var(--ct-accent-text);text-decoration:none}
 
-/* ---- Column headings (mono, uppercase) ---- */
-.footer-block__heading {
-  font-family: var(--ct-font-mono);
-  font-size: var(--ct-text-xs);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ct-text);
-}
+/* Link columns */
+.ct-footer__col{display:flex;flex-direction:column}
+.ct-footer__h4{font-size:14px;font-weight:700;color:var(--ct-text);margin:0 0 12px;font-family:var(--ct-font-body)}
+.ct-footer__col a{display:block;font-size:14px;color:var(--ct-text-2);margin-bottom:9px;text-decoration:none;transition:color .15s}
+.ct-footer__col a:hover{color:var(--ct-accent-text)}
 
-/* ---- Brand block ---- */
-.footer-block__brand-info .rte {
-  color: var(--ct-text-2);
-  font-size: var(--ct-text-sm);
-}
-
-/* ---- Link lists ---- */
-.footer-block__details-content .list-menu__item--link,
-.footer-block__details-content a {
-  color: var(--ct-text-2);
-  font-size: var(--ct-text-sm);
-}
-.footer-block__details-content .list-menu__item--link:hover,
-.footer-block__details-content a:hover { color: var(--ct-accent-text); }
-
-/* ---- Newsletter form (light) ---- */
-.footer-block__newsletter .field {
-  border: 1px solid var(--ct-border-subtle);
-  border-radius: var(--ct-r-md);
-  background: rgba(255, 255, 255, 0.7);
-  overflow: hidden;
-}
-.footer-block__newsletter .field__input {
-  background: transparent;
-  border: 0;
-  color: var(--ct-text);
-  box-shadow: none;
-}
-.footer-block__newsletter .field__input::placeholder { color: var(--ct-text-3); }
-.footer-block__newsletter .field__label { color: var(--ct-text-3); }
-.footer-block__newsletter .newsletter-form__button { color: var(--ct-accent-text); }
-.footer-block__newsletter .newsletter-form__button:hover { color: var(--ct-accent); }
-.footer-block__newsletter .newsletter-form__message { color: var(--ct-text-2); }
-
-/* ---- Social icons ---- */
-.footer__list-social .list-social__link { color: var(--ct-text-2); }
-.footer__list-social .list-social__link:hover { color: var(--ct-accent-text); }
-
-/* ---- Bottom bar ---- */
-.footer__content-bottom {
-  border-top: 1px solid var(--ct-border-subtle);
-  margin-top: var(--ct-space-5);
-}
-.footer__content-bottom-wrapper { padding-top: var(--ct-space-4); }
-.footer__copyright,
-.copyright__content {
-  color: var(--ct-text-3);
-  font-size: var(--ct-text-xs);
-}
-.footer__copyright a,
-.policies a { color: var(--ct-text-3); }
-.footer__copyright a:hover,
-.policies a:hover { color: var(--ct-accent-text); }
-
-/* ---- Localization selectors ---- */
-.footer__localization .localization-form__select,
-.footer__localization .disclosure__button {
-  color: var(--ct-text-2);
-  border-color: var(--ct-border-subtle);
-}
-.footer__localization .caption-large { color: var(--ct-text-3); }
-
-/* ---- Payment icons: keep Dawn native full-color; spacing only ---- */
-.footer__payment { margin-top: var(--ct-space-2); }
+/* Bottom bar */
+.ct-footer__bottom{padding-top:20px;border-top:1px solid var(--ct-border-subtle);font-size:12.5px;color:var(--ct-text-3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center}
+.ct-footer__pay{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ct-footer__pay-icon{height:22px;width:auto;display:inline-block}
