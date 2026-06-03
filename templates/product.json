@@ -3,51 +3,44 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "settings": { "text": "{{ product.vendor }}", "text_style": "uppercase" }
-        },
         "title": { "type": "title" },
-        "caption": {
-          "type": "text",
-          "settings": { "text": "{{ product.metafields.descriptors.subtitle.value }}", "text_style": "subtitle" }
-        },
         "rating": { "type": "rating" },
         "price": { "type": "price" },
+        "scarcity": {
+          "type": "scarcity",
+          "settings": { "threshold": 50, "selling_fast_label": "🔥 2,175 sales", "social_line": "In stock — ships in 3–7 business days" }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": { "picker_type": "bundle" }
         },
-        "scarcity": {
-          "type": "scarcity",
-          "settings": { "threshold": 10, "selling_fast_label": "Selling fast", "social_line": "" }
+        "addon-1": {
+          "type": "addon",
+          "settings": { "badge": "💰 Biggest savings today" }
         },
-        "quantity_selector": { "type": "quantity_selector" },
+        "addon-2": {
+          "type": "addon",
+          "settings": { "badge": "🏆 Best-selling combo" }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": { "show_dynamic_checkout": true, "show_gift_card_recipient": true }
         },
         "payment_reassurance": {
           "type": "payment_reassurance",
-          "settings": { "show_icons": true, "secure_line": "Secure checkout · SSL encrypted" }
-        },
-        "share": {
-          "type": "share",
-          "settings": { "share_label": "Share" }
+          "settings": { "show_icons": true, "secure_line": "🔒 Secure checkout · Visa · Amex · Apple Pay · Shop Pay" }
         }
       },
       "block_order": [
-        "vendor",
         "title",
-        "caption",
         "rating",
         "price",
-        "variant_picker",
         "scarcity",
-        "quantity_selector",
+        "variant_picker",
+        "addon-1",
+        "addon-2",
         "buy_buttons",
-        "payment_reassurance",
-        "share"
+        "payment_reassurance"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -61,6 +54,38 @@
         "padding_bottom": 12
       }
     },
+    "ct_trust_bar": {
+      "type": "ct-trust-bar",
+      "blocks": {
+        "c1": { "type": "chip", "settings": { "icon": "truck", "icon_color": "purple", "label": "Fast shipping", "sublabel": "Ships in 3–7 days" } },
+        "c2": { "type": "chip", "settings": { "icon": "shield", "icon_color": "green", "label": "Money-back guaranteed", "sublabel": "7-day window" } },
+        "c3": { "type": "chip", "settings": { "icon": "shield", "icon_color": "blue", "label": "Secured payments", "sublabel": "256-bit SSL" } }
+      },
+      "block_order": ["c1", "c2", "c3"],
+      "settings": { "color_scheme": "scheme-1", "padding_top": 16, "padding_bottom": 16 }
+    },
+    "ct_marquee": {
+      "type": "ct-marquee",
+      "blocks": {
+        "m1": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } },
+        "m2": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } },
+        "m3": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } },
+        "m4": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4"],
+      "settings": { "speed": 24, "color_scheme": "scheme-1" }
+    },
+    "ct_why": {
+      "type": "ct-use-cases",
+      "blocks": {
+        "u1": { "type": "card", "settings": { "emoji": "☁️", "tag": "Plush", "title": "Ultra-soft plush comfort", "desc": "Made with dense, A-grade plush that stays soft wash after wash, giving your cat a warm, sink-in spot they'll choose over the bare sofa." } },
+        "u2": { "type": "card", "settings": { "emoji": "🛏️", "tag": "Pillow", "title": "Supportive pillow design", "desc": "A raised, cushioned edge cradles the head and neck, turning any cushion or windowsill into a proper bed for deeper, comfier naps." } },
+        "u3": { "type": "card", "settings": { "emoji": "🛡️", "tag": "Protect", "title": "Sofa protection & non-slip base", "desc": "Shields couches from fur and scratches, while the anti-slip backing keeps the mat firmly in place even when your cat lands at full speed." } },
+        "u4": { "type": "card", "settings": { "emoji": "🧺", "tag": "Clean", "title": "Durable & easy to clean", "desc": "Strong stitching stands up to daily lounging, and the whole mat is machine washable — fresh again in minutes, no special care needed." } }
+      },
+      "block_order": ["u1", "u2", "u3", "u4"],
+      "settings": { "kicker": "Why choose CozyClaw", "heading": "Built for cats, made to protect your couch", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+    },
     "ct-product-tabs": {
       "type": "ct-product-tabs",
       "blocks": {
@@ -70,92 +95,49 @@
         },
         "tab-specs": {
           "type": "tab",
-          "settings": { "heading": "Specifications", "content_source": "richtext", "content": "<p>Add specifications here.</p>" }
+          "settings": { "heading": "Specifications", "content_source": "richtext", "content": "<p><strong>Size:</strong> 31.5 × 35.43 in</p><p><strong>Material:</strong> Polyester plush, PP cotton fill</p><p><strong>Backing:</strong> Non-slip</p><p><strong>Care:</strong> Machine wash, cold & gentle</p><p><strong>Package includes:</strong> 1 × CozyClaw Lounge Mat</p>" }
         },
         "tab-shipping": {
           "type": "tab",
-          "settings": { "heading": "Shipping & Returns", "content_source": "richtext", "content": "<p>Free US shipping, ships in 24h. 90-day returns.</p>" }
+          "settings": { "heading": "Shipping & Returns", "content_source": "richtext", "content": "<p>Orders are prepared and dispatched within 3–7 business days (Mon–Fri).</p><p>Domestic delivery in 5–15 business days; international 7–20 business days.</p><p>Risk-free 7-day money-back guarantee. Email <a href=\"mailto:support@cozyclaw.com\">support@cozyclaw.com</a> and we'll make it right.</p>" }
         }
       },
       "block_order": ["tab-description", "tab-specs", "tab-shipping"],
       "settings": { "color_scheme": "scheme-1", "padding_top": 28, "padding_bottom": 28 }
     },
-    "image-with-text": {
-      "type": "image-with-text",
+    "ct_shipping": {
+      "type": "ct-use-cases",
       "blocks": {
-        "image-with-text-0": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image with text",
-            "heading_size": "h1"
-          }
-        },
-        "image-with-text-1": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "text_style": "body"
-          }
-        }
+        "s1": { "type": "card", "settings": { "emoji": "📦", "tag": "Processing", "title": "3–7 business days", "desc": "Orders are prepared and dispatched within 3–7 business days, Monday–Friday." } },
+        "s2": { "type": "card", "settings": { "emoji": "🚚", "tag": "Domestic", "title": "5–15 business days", "desc": "Delivered within 5–15 business days after processing." } },
+        "s3": { "type": "card", "settings": { "emoji": "🌍", "tag": "International", "title": "7–20 business days", "desc": "Ships worldwide, typically arriving in 7–20 business days." } }
       },
-      "block_order": [
-        "image-with-text-0",
-        "image-with-text-1"
-      ],
-      "settings": {
-        "height": "small",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "content_layout": "no-overlap",
-        "color_scheme": "scheme-2",
-        "mobile_content_alignment": "left",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
+      "block_order": ["s1", "s2", "s3"],
+      "settings": { "kicker": "Shipping & guarantee", "heading": "Clear, honest delivery", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
-    "multicolumn": {
-      "type": "multicolumn",
+    "ct_reviews": {
+      "type": "ct-reviews",
       "blocks": {
-        "column-0": {
-          "type": "column",
-          "settings": {
-            "title": "Free Shipping",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column-1": {
-          "type": "column",
-          "settings": {
-            "title": "Hassle-Free Exchanges",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
+        "rv1": { "type": "review", "settings": { "rating": 5, "text": "My cat claimed it the second I put it down and hasn't moved since. The couch underneath finally stays clean.", "author": "Jackie", "meta": "Verified buyer", "verified": true } },
+        "rv2": { "type": "review", "settings": { "rating": 5, "text": "Soft, well-made, and washes up like new. I ordered a second one for the armchair.", "author": "Zinnias", "meta": "Verified buyer", "verified": true } },
+        "rv3": { "type": "review", "settings": { "rating": 4, "text": "Great mat and my cat loves it. It arrived tightly vacuum-sealed and took about a day to fully fluff back out — worth the short wait.", "author": "rlungtha", "meta": "Verified buyer", "verified": true } }
       },
-      "block_order": [
-        "column-0",
-        "column-1"
-      ],
+      "block_order": ["rv1", "rv2", "rv3"],
+      "settings": { "kicker": "4.6 ★ · 92% 5-star · 13 verified reviews", "heading": "Real cat parents, real results", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+    },
+    "ct_final": {
+      "type": "ct-final-cta",
       "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "columns_desktop": 2,
-        "column_alignment": "left",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "swipe_on_mobile": false,
+        "eyebrow": "Give them their new favorite spot",
+        "heading": "CozyClaw Lounge Mat",
+        "subheading": "In stock — ships in 3–7 business days. 7-day money-back guarantee.",
+        "button_label": "Choose your bundle →",
+        "button_label_2": "",
+        "show_trust": true,
+        "trust_chips": "Free shipping over $50\n7-day money-back\nSecure checkout\n92% 5-star · 13 reviews",
         "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 56,
+        "padding_bottom": 56
       }
     },
     "related-products": {
@@ -168,18 +150,22 @@
         "image_ratio": "square",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": false,
+        "show_rating": true,
         "columns_mobile": "2",
         "padding_top": 36,
-        "padding_bottom": 28
+        "padding_bottom": 36
       }
     }
   },
   "order": [
     "main",
+    "ct_trust_bar",
+    "ct_marquee",
+    "ct_why",
     "ct-product-tabs",
-    "image-with-text",
-    "multicolumn",
+    "ct_shipping",
+    "ct_reviews",
+    "ct_final",
     "related-products"
   ]
 }
