@@ -5,10 +5,9 @@
     "ct_announce": {
       "type": "ct-announce",
       "blocks": {
-        "msg-1": { "type": "message", "settings": { "text": "🚚 Free shipping on orders over $50", "link": "" } },
-        "msg-2": { "type": "message", "settings": { "text": "★★★★★ 92% 5-star · Loved by 15,000+ cat parents", "link": "" } }
+        "msg-1": { "type": "message", "settings": { "text": "🚚 Free shipping on orders over $50 · ★★★★★ 92% 5-star · Loved by 15,000+ cat parents", "link": "" } }
       },
-      "block_order": ["msg-1", "msg-2"],
+      "block_order": ["msg-1"],
       "settings": { "dismissible": true, "rotate_seconds": 4, "color_scheme": "scheme-1" }
     },
     "header": {
