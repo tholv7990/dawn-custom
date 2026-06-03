@@ -3,24 +3,30 @@
     "ct_hero": {
       "type": "ct-hero",
       "blocks": {
-        "p1": { "type": "pill", "settings": { "text": "Hydraulic resistance" } },
-        "p2": { "type": "pill", "settings": { "text": "Folds in seconds" } },
-        "p3": { "type": "pill", "settings": { "text": "Free shipping $100+" } }
+        "p1": { "type": "pill", "settings": { "text": "Plush A-grade comfort" } },
+        "p2": { "type": "pill", "settings": { "text": "Non-slip backing" } },
+        "p3": { "type": "pill", "settings": { "text": "Machine washable" } },
+        "p4": { "type": "pill", "settings": { "text": "7-day money-back" } }
       },
-      "block_order": ["p1", "p2", "p3"],
+      "block_order": ["p1", "p2", "p3", "p4"],
       "settings": {
-        "eyebrow": "New for 2025 — Pro Series",
-        "heading": "Train smarter, <em>not harder</em>",
-        "subheading": "Progressive hydraulic resistance that adapts to every rep — built for athletes who want results without a gym.",
-        "button_label": "Shop now →",
-        "button_label_2": "See how it works",
+        "eyebrow": "The cozy upgrade for sofa-loving cats",
+        "heading": "CozyClaw",
+        "h1_subtitle": "Protect your sofa without fighting your cat.",
+        "subheading": "Plush 2-in-1 mats designed for the spot your cat already loves — soft enough to nap on, beautiful enough to leave out when guests come over.",
+        "button_label": "Shop CozyClaw Mat →",
+        "button_link": "shopify://collections/all",
+        "button_label_2": "Why it works",
         "show_rating": true,
-        "rating_text": "4.9 · 10,000+ customers",
-        "card_emoji": "💪",
-        "card_title": "Core Bundle",
-        "card_price": "$149",
+        "rating_text": "4.9 · 92% 5-star · 15,000+ cat parents",
+        "card_emoji": "🐈",
+        "card_title": "CozyClaw Mat",
+        "card_price": "from $35.97",
         "card_tag_1": "★ 4.9",
-        "card_tag_2": "Ships today",
+        "card_tag_2": "Ships 3–7 days",
+        "float_icon": "📏",
+        "float_label": "Generous size",
+        "float_value": "31.5 × 35.43 in",
         "color_scheme": "scheme-1",
         "padding_top": 36,
         "padding_bottom": 24
@@ -29,22 +35,22 @@
     "ct_marquee": {
       "type": "ct-marquee",
       "blocks": {
-        "m1": { "type": "message", "settings": { "text": "Free shipping on orders $100+" } },
-        "m2": { "type": "message", "settings": { "text": "30-day money-back guarantee" } },
-        "m3": { "type": "message", "settings": { "text": "Over 10,000 customers trained" } },
-        "m4": { "type": "message", "settings": { "text": "Lifetime warranty on all products" } },
-        "m5": { "type": "message", "settings": { "text": "Ships within 24 hours" } }
+        "m1": { "type": "message", "settings": { "text": "LOVED BY THOUSANDS OF KITTIES 🐾" } },
+        "m2": { "type": "message", "settings": { "text": "92% 5-STAR · 15,000+ HAPPY CATS" } },
+        "m3": { "type": "message", "settings": { "text": "MACHINE WASHABLE · NON-SLIP BACKING" } },
+        "m4": { "type": "message", "settings": { "text": "FREE SHIPPING OVER $50" } },
+        "m5": { "type": "message", "settings": { "text": "RISK-FREE 7-DAY GUARANTEE" } }
       },
       "block_order": ["m1", "m2", "m3", "m4", "m5"],
-      "settings": { "speed": 28, "color_scheme": "scheme-1" }
+      "settings": { "speed": 22, "color_scheme": "scheme-1" }
     },
     "ct_trust_bar": {
       "type": "ct-trust-bar",
       "blocks": {
-        "c1": { "type": "chip", "settings": { "icon": "check", "icon_color": "green", "label": "30-Day Returns", "sublabel": "No questions" } },
-        "c2": { "type": "chip", "settings": { "icon": "truck", "icon_color": "blue", "label": "Free Shipping", "sublabel": "Orders $100+" } },
-        "c3": { "type": "chip", "settings": { "icon": "shield", "icon_color": "purple", "label": "Lifetime Warranty", "sublabel": "Full coverage" } },
-        "c4": { "type": "chip", "settings": { "icon": "clock", "icon_color": "amber", "label": "Ships in 24h", "sublabel": "Express available" } }
+        "c1": { "type": "chip", "settings": { "icon": "truck", "icon_color": "purple", "label": "Free Shipping", "sublabel": "Orders over $50" } },
+        "c2": { "type": "chip", "settings": { "icon": "shield", "icon_color": "green", "label": "7-Day Money-Back", "sublabel": "Risk-free" } },
+        "c3": { "type": "chip", "settings": { "icon": "shield", "icon_color": "blue", "label": "Secured Payments", "sublabel": "256-bit SSL" } },
+        "c4": { "type": "chip", "settings": { "icon": "clock", "icon_color": "amber", "label": "Ships in 3–7 days", "sublabel": "Tracked worldwide" } }
       },
       "block_order": ["c1", "c2", "c3", "c4"],
       "settings": { "color_scheme": "scheme-1", "padding_top": 8, "padding_bottom": 20 }
@@ -52,10 +58,10 @@
     "ct_stats": {
       "type": "ct-stats",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "prefix": "+", "number": "10000", "suffix": "", "label": "Customers trained", "countup": true } },
-        "s2": { "type": "stat", "settings": { "number": "4.9", "suffix": "★", "label": "Average rating" } },
-        "s3": { "type": "stat", "settings": { "number": "30", "suffix": "%", "label": "Avg strength gain", "countup": true } },
-        "s4": { "type": "stat", "settings": { "prefix": "#", "number": "1", "label": "Category leader" } }
+        "s1": { "type": "stat", "settings": { "prefix": "+", "number": "15000", "suffix": "", "label": "Cat parents trust us", "countup": true } },
+        "s2": { "type": "stat", "settings": { "number": "4.9", "suffix": "★", "label": "Average rating", "countup": false } },
+        "s3": { "type": "stat", "settings": { "number": "92", "suffix": "%", "label": "5-star reviews", "countup": true } },
+        "s4": { "type": "stat", "settings": { "number": "7", "suffix": "-day", "label": "Money-back guarantee", "countup": false } }
       },
       "block_order": ["s1", "s2", "s3", "s4"],
       "settings": { "color_scheme": "scheme-1", "padding_top": 28, "padding_bottom": 28 }
@@ -84,68 +90,68 @@
     "ct_aplus": {
       "type": "ct-aplus",
       "blocks": {
-        "b1": { "type": "banner", "settings": { "emoji": "💧", "number": "01", "title": "Smooth hydraulic resistance", "body": "Fluid pressure auto-adjusts to your force output — the harder you push, the more it pushes back. No joint pain, no plates to swap.", "specs": "Auto-adjusting, No setup, Joint-safe, Silent" } },
-        "b2": { "type": "banner", "settings": { "emoji": "⚙️", "number": "02", "title": "Aircraft-grade build", "body": "CNC-machined aluminium body with a sealed hydraulic core, rated for a decade of daily use and backed for life.", "specs": "6061 aluminium, Powder-coat, 4.2 kg, 150 kg load" } }
+        "b1": { "type": "banner", "settings": { "emoji": "🧸", "number": "01", "title": "Plush that feels like a hug", "body": "Dense A-grade plush exterior with a supportive cushioned edge — soft enough for deep naps, sturdy enough for kneading and lounging.", "tag": "Ultra-soft · supportive edge", "specs": "" } },
+        "b2": { "type": "banner", "settings": { "emoji": "🧼", "number": "02", "title": "Built to last — and easy to clean", "body": "Strong stitching resists shedding and fading. Anti-slip backing keeps the mat in place. Machine washable, so every day stays cozy.", "tag": "Durable · washable · non-slip", "specs": "" } }
       },
       "block_order": ["b1", "b2"],
-      "settings": { "kicker": "How it works", "heading": "Built different — here's why", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+      "settings": { "kicker": "How it works", "heading": "Plush comfort that quietly protects your sofa.", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
     },
     "ct_use_cases": {
       "type": "ct-use-cases",
       "blocks": {
-        "u1": { "type": "card", "settings": { "emoji": "🏠", "tag": "Home", "title": "The home gym", "desc": "A full resistance workout in one square foot — no rack, no noise, no neighbours complaining." } },
-        "u2": { "type": "card", "settings": { "emoji": "💼", "tag": "Office", "title": "Desk breaks", "desc": "Reset between meetings with a 5-minute set you can do in work clothes." } },
-        "u3": { "type": "card", "settings": { "emoji": "✈️", "tag": "Travel", "title": "On the road", "desc": "Folds into a carry-on so your routine never skips a hotel." } }
+        "u1": { "type": "card", "settings": { "emoji": "🌅", "tag": "Morning", "title": "Before the kettle clicks.", "desc": "Sunny window naps without the fur on your sofa. Soft enough that even early risers settle in for an extra hour." } },
+        "u2": { "type": "card", "settings": { "emoji": "🏠", "tag": "Afternoon", "title": "Between meetings.", "desc": "Lounge spot in the living room — your cat naps while you focus, and the sofa stays clean for guests." } },
+        "u3": { "type": "card", "settings": { "emoji": "🌙", "tag": "Evening", "title": "Deep sleep mode.", "desc": "A familiar warm spot for nighttime cuddles. The supportive edge keeps heads cradled all the way to morning." } }
       },
       "block_order": ["u1", "u2", "u3"],
-      "settings": { "kicker": "Who it's for", "heading": "One product, every context", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+      "settings": { "kicker": "For every kind of nap", "heading": "One mat, every favorite spot.", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
     },
     "ct_compare": {
       "type": "ct-compare",
       "blocks": {
-        "r1": { "type": "row", "settings": { "feature": "Progressive resistance", "brand_type": "check", "col2_type": "check", "col3_type": "cross" } },
-        "r2": { "type": "row", "settings": { "feature": "No setup required", "brand_type": "check", "col2_type": "cross", "col3_type": "cross" } },
-        "r3": { "type": "row", "settings": { "feature": "Space needed", "brand_type": "text", "brand_text": "1 sq ft", "col2_type": "text", "col2_text": "6 sq ft", "col3_type": "text", "col3_text": "10 sq ft" } },
-        "r4": { "type": "row", "settings": { "feature": "Lifetime warranty", "brand_type": "check", "col2_type": "cross", "col3_type": "cross" } }
+        "r1": { "type": "row", "settings": { "feature": "Plush comfort", "brand_type": "check", "col2_type": "cross", "col3_type": "check" } },
+        "r2": { "type": "row", "settings": { "feature": "Sofa protection", "brand_type": "check", "col2_type": "check", "col3_type": "cross" } },
+        "r3": { "type": "row", "settings": { "feature": "Non-slip backing", "brand_type": "check", "col2_type": "cross", "col3_type": "check" } },
+        "r4": { "type": "row", "settings": { "feature": "Machine washable", "brand_type": "check", "col2_type": "check", "col3_type": "dash" } }
       },
       "block_order": ["r1", "r2", "r3", "r4"],
-      "settings": { "kicker": "Compare", "heading": "Why it wins", "feature_label": "Feature", "brand_label": "Our brand", "col2_label": "Cables", "col3_label": "Free weights", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+      "settings": { "kicker": "Compare", "heading": "Why CozyClaw wins.", "feature_label": "Feature", "brand_label": "CozyClaw Mat", "col2_label": "Plain blanket", "col3_label": "Standalone cat bed", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
     },
     "ct_ba": {
       "type": "ct-ba",
-      "settings": { "kicker": "Real results", "heading": "12 weeks, side by side", "before_label": "Week 1", "after_label": "Week 12", "before_tag": "Before", "after_tag": "After", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+      "settings": { "kicker": "See the difference", "heading": "Cat-hair chaos. Cozy calm.", "before_label": "Without CozyClaw", "after_label": "With CozyClaw", "before_tag": "Before", "after_tag": "After", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
     },
     "ct_reviews": {
       "type": "ct-reviews",
       "blocks": {
-        "rv1": { "type": "review", "settings": { "rating": 5, "text": "After 3 months my pull-up count went from 6 to 22. The hydraulic resistance is unlike anything I've used.", "author": "Marcus T.", "meta": "Verified · 2 months ago", "verified": true } },
-        "rv2": { "type": "review", "settings": { "rating": 5, "text": "I was sceptical but this genuinely works. Smooth resistance curve means no joint pain even at high intensity.", "author": "Sarah K.", "meta": "Verified · 1 month ago", "verified": true } },
-        "rv3": { "type": "review", "settings": { "rating": 4, "text": "Build quality is excellent and setup took 10 minutes. Would've given 5 stars but shipping took 4 days.", "author": "James R.", "meta": "Verified · 3 weeks ago", "verified": true } }
+        "rv1": { "type": "review", "settings": { "rating": 5, "text": "Cat approved! My boy claimed it within 5 minutes and hasn't moved since.", "author": "Jackie", "meta": "Verified buyer", "verified": true } },
+        "rv2": { "type": "review", "settings": { "rating": 5, "text": "So good my cat practically never leaves it. Haven't washed it yet — will update if there are any issues, but so far it's perfect.", "author": "Zinnias", "meta": "Verified buyer", "verified": true } },
+        "rv3": { "type": "review", "settings": { "rating": 5, "text": "My cats cuddle on it almost every night and it's helped reduce cat hair on the rest of the sofa. Working well to satisfy their kneading obsession.", "author": "rlungtha", "meta": "Verified buyer", "verified": true } }
       },
       "block_order": ["rv1", "rv2", "rv3"],
-      "settings": { "kicker": "Loved by 10,000+", "heading": "What customers say", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+      "settings": { "kicker": "Loved by 15,000+ cat parents", "heading": "What customers say.", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
     },
     "ct_faq": {
       "type": "ct-faq",
       "blocks": {
-        "f1": { "type": "item", "settings": { "question": "How does hydraulic resistance work?", "answer": "<p>Fluid pressure creates resistance that adjusts to your force output — the faster and harder you push, the more resistance you feel, giving a smooth, progressive workout with no manual adjustments.</p>" } },
-        "f2": { "type": "item", "settings": { "question": "What size should I choose?", "answer": "<p>One size fits all — resistance is adjustable from 5 to 60 kg on the same unit.</p>" } },
-        "f3": { "type": "item", "settings": { "question": "What is the warranty and return policy?", "answer": "<p>Lifetime warranty on the hydraulic core and a 30-day, no-questions money-back guarantee.</p>" } }
+        "f1": { "type": "item", "settings": { "question": "What size is the CozyClaw Mat?", "answer": "<p>31.5 × 35.43 inches — generous coverage for sofas and large cushions. One size fits most lounging spots.</p>" } },
+        "f2": { "type": "item", "settings": { "question": "Is it safe for my cat?", "answer": "<p>Yes — non-toxic polyester plush with PP cotton fill. Soft on paws, gentle on coats, and the anti-slip backing keeps the mat secure so there's no slipping while they lounge.</p>" } },
+        "f3": { "type": "item", "settings": { "question": "How do I clean it?", "answer": "<p>Fully machine washable. Cold cycle, gentle detergent, low-heat tumble dry — and it comes back ready for the next nap.</p>" } }
       },
       "block_order": ["f1", "f2", "f3"],
-      "settings": { "kicker": "FAQ", "heading": "Questions, answered", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
+      "settings": { "kicker": "FAQ", "heading": "Questions, answered.", "color_scheme": "scheme-1", "padding_top": 36, "padding_bottom": 36 }
     },
     "ct_email": {
       "type": "ct-email",
       "settings": {
-        "kicker": "Join 10,000+ athletes",
-        "heading": "Get weekly training tips + exclusive offers",
-        "subheading": "No spam. Unsubscribe any time. Join athletes who train smarter every week.",
-        "placeholder": "Enter your email address",
+        "kicker": "Join 15,000+ cat parents",
+        "heading": "Cozy tips, every week.",
+        "subheading": "Soft napping spots, sofa-saving hacks, cat behavior tips. One email. No spam.",
+        "placeholder": "Your email address",
         "button_label": "Subscribe →",
         "disclaimer": "By subscribing you agree to our Privacy Policy. Unsubscribe any time.",
         "success_title": "You're in!",
-        "success_text": "Check your inbox for a welcome email.",
+        "success_text": "Welcome to the CozyClaw club.",
         "color_scheme": "scheme-1",
         "padding_top": 44,
         "padding_bottom": 44
