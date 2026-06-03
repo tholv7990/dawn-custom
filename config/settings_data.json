@@ -3,6 +3,9 @@
   "presets": {
     "Default": {
       "logo_width": 90,
+      "color_accent": "#6D3FC4",
+      "color_accent_hover": "#552C9E",
+      "border_radius": 12,
       "color_schemes": {
         "scheme-1": {
           "settings": {

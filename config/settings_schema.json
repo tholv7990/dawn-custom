@@ -1453,13 +1453,13 @@
     ]
   },
   {
-    "name": "Minimals brand",
+    "name": "CozyClaw brand",
     "settings": [
       { "type": "header", "content": "Brand colours" },
-      { "type": "color", "id": "color_accent", "label": "Accent", "default": "#00A76F" },
-      { "type": "color", "id": "color_accent_hover", "label": "Accent (hover/strong)", "default": "#007867" },
+      { "type": "color", "id": "color_accent", "label": "Accent", "default": "#6D3FC4" },
+      { "type": "color", "id": "color_accent_hover", "label": "Accent (hover/strong)", "default": "#552C9E" },
       { "type": "header", "content": "Shape & layout" },
-      { "type": "range", "id": "border_radius", "label": "Corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 8 },
+      { "type": "range", "id": "border_radius", "label": "Corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 12 },
       { "type": "range", "id": "glass_opacity", "label": "Sticky header glass opacity", "min": 0, "max": 1, "step": 0.1, "default": 0.9 },
       { "type": "header", "content": "Commerce" },
       { "type": "range", "id": "free_shipping_threshold", "label": "Free shipping threshold", "min": 0, "max": 500, "step": 5, "unit": "$", "default": 50, "info": "Order subtotal (store currency) to unlock free shipping. Shopify caps a range max below 10000, so this is in dollars and converted to cents in Liquid." }

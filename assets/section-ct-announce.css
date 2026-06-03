@@ -1,12 +1,12 @@
-/* section-ct-announce.css — demo .announce → .ct-announce (spec §5) */
-.ct-announce{background:var(--ct-accent-subtle);color:var(--ct-accent-text);border-bottom:1px solid var(--ct-accent-border);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 16px;font-size:13px;font-weight:500}
+/* section-ct-announce.css — dark-purple bar with white text (CozyClaw spec) */
+.ct-announce{background:var(--ct-accent);color:#fff;border-bottom:none;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 16px;font-size:13.5px;font-weight:600}
 .ct-announce__viewport{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;min-width:0}
 .ct-announce__msg{display:none;align-items:center;gap:8px}
 .ct-announce__msg.is-active{display:inline-flex}
 .ct-announce__link{color:inherit;text-decoration:underline;text-underline-offset:2px}
-.ct-announce__dot{width:6px;height:6px;border-radius:50%;background:var(--ct-accent);animation:ct-pulse 2s ease-in-out infinite;flex-shrink:0}
+.ct-announce__dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.7);animation:ct-pulse 2s ease-in-out infinite;flex-shrink:0}
 .ct-announce__dismiss,.ct-announce__spacer{width:28px;height:28px;flex-shrink:0}
-.ct-announce__dismiss{background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ct-accent-text);opacity:.6;transition:opacity .12s}
+.ct-announce__dismiss{background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;opacity:.7;transition:opacity .12s}
 .ct-announce__dismiss:hover{opacity:1}
 .ct-announce__dismiss svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
 @media(prefers-reduced-motion:reduce){.ct-announce__dot{animation:none}}
