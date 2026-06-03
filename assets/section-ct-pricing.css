@@ -28,4 +28,4 @@
 
 /* ---- CozyClaw bundle additions ---- */
 .ct-plan__emoji{font-size:54px;line-height:1;margin-bottom:10px;text-align:center}
-.ct-plan__save{display:inline-block;font-size:12px;font-weight:700;color:var(--ct-urgency);margin-bottom:16px}
+.ct-plan__save{display:inline-block;font-size:12px;font-weight:700;color:var(--ct-urgency);margin-top:-8px;margin-bottom:12px}
