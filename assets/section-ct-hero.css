@@ -1,7 +1,7 @@
-/* section-ct-hero.css — demo .ct-hero* (already ct-prefixed); tokens → --ct-* */
-.ct-hero{background:var(--ct-bg-raised);border-radius:var(--ct-r-xl);border:1px solid var(--ct-border-strong);box-shadow:var(--ct-shadow-md)}
-.ct-hero-inner{display:grid;grid-template-columns:minmax(0,55fr) minmax(0,45fr);min-height:480px}
-.ct-hero-text{padding:56px 48px 56px 56px;display:flex;flex-direction:column;justify-content:center}
+/* section-ct-hero.css — open hero (no card border/shadow), subtle accent gradient bg per landing HTML .hero */
+.ct-hero{background:radial-gradient(120% 100% at 88% -5%, var(--ct-accent-subtle) 0%, transparent 55%);border:0;border-radius:0;box-shadow:none}
+.ct-hero-inner{display:grid;grid-template-columns:minmax(0,55fr) minmax(0,45fr);min-height:480px;gap:clamp(28px,5vw,56px)}
+.ct-hero-text{padding:24px 0;display:flex;flex-direction:column;justify-content:center}
 .ct-hero-h1{font-family:var(--ct-font-display);font-size:clamp(2.5rem,6.4vw,3.875rem);font-weight:600;color:var(--ct-text);letter-spacing:-.02em;line-height:1.02;margin-bottom:8px}
 .ct-hero-h1 em{color:var(--ct-accent-text);font-style:normal}
 .ct-hero-h1 p{margin:0}
@@ -12,8 +12,8 @@
 .ct-hero-btns{display:flex;gap:10px;flex-wrap:wrap}
 .ct-hero-visual{position:relative;display:flex;flex-direction:column;justify-content:center;padding:0;background:transparent;overflow:visible}
 @keyframes ct-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@media(max-width:860px){.ct-hero-inner{grid-template-columns:1fr}.ct-hero-visual{min-height:280px}.ct-hero-text{padding:40px 32px}}
-@media(max-width:480px){.ct-hero-text{padding:28px 20px}.ct-hero-h1{font-size:clamp(1.6rem,7vw,2.4rem)}.ct-hero-btns{flex-direction:column}.ct-hero-btns .ct-btn{width:100%}}
+@media(max-width:860px){.ct-hero-inner{grid-template-columns:1fr;min-height:auto}.ct-hero-visual{min-height:280px}.ct-hero-text{padding:16px 0}}
+@media(max-width:480px){.ct-hero-text{padding:8px 0}.ct-hero-h1{font-size:clamp(1.6rem,7vw,2.4rem)}.ct-hero-btns{flex-direction:column}.ct-hero-btns .ct-btn{width:100%}}
 /* Tier-1: h1 subtitle + floating badge */
 .ct-hero-h1-sub{font-family:var(--ct-font-display);font-size:clamp(1.25rem,2.6vw,1.625rem);font-weight:500;font-style:italic;color:var(--ct-accent-text);letter-spacing:-.02em;line-height:1.2;margin-top:6px;margin-bottom:16px}
 .ct-hero-float{position:absolute;bottom:-18px;left:-16px;background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-md);padding:12px 16px;box-shadow:var(--ct-shadow-lg);display:flex;align-items:center;gap:10px;max-width:230px;animation:ct-float 5s ease-in-out infinite}

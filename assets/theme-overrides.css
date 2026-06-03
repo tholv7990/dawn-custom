@@ -29,6 +29,13 @@ h3, .h3 { font-size: var(--ct-text-lg); font-weight: var(--ct-fw-semi); }
 .gradient { background: var(--ct-bg); }
 .page-width { max-width: var(--ct-mw); }
 
+/* ---- Section band separators (subtle alt-bg + border lines per landing HTML .value / .bundle) ---- */
+[id$="__ct_value"], [id$="__ct_bundle"], [id$="__ct_promise"] {
+  background: var(--ct-bg-surface);
+  border-top: 1px solid var(--ct-border-subtle);
+  border-bottom: 1px solid var(--ct-border-subtle);
+}
+
 /* ---- CozyClaw wordmark in header (when no logo image uploaded) ---- */
 .ct-brand{font-family:var(--ct-font-display);font-weight:700;letter-spacing:-.01em;color:var(--ct-text)}
 .ct-brand__paw{color:var(--ct-accent-text)}
