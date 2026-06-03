@@ -28,6 +28,7 @@
       <div class="ct-card ct-plan{% if block.settings.featured %} ct-plan--featured{% endif %}" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
         {%- if block.settings.featured and block.settings.badge != blank -%}<div class="ct-plan__badge">{{ block.settings.badge }}</div>{%- endif -%}
         {%- if block.settings.tag != blank -%}<div class="ct-plan__tag">{{ block.settings.tag }}</div>{%- endif -%}
+        {%- if block.settings.emoji != blank -%}<div class="ct-plan__emoji" aria-hidden="true">{{ block.settings.emoji }}</div>{%- endif -%}
         <div class="ct-plan__name">{{ block.settings.name }}</div>
         {%- if block.settings.tagline != blank -%}<div class="ct-plan__tagline">{{ block.settings.tagline }}</div>{%- endif -%}
         <div class="ct-plan__price-row">
@@ -37,6 +38,7 @@
           {%- if block.settings.price_diff != blank -%}<span class="ct-plan__price-diff">{{ block.settings.price_diff }}</span>{%- endif -%}
         </div>
         {%- if block.settings.price_note != blank -%}<div class="ct-plan__price-note">{{ block.settings.price_note }}</div>{%- endif -%}
+        {%- if block.settings.save_text != blank -%}<div class="ct-plan__save">{{ block.settings.save_text }}</div>{%- endif -%}
 
         {%- if block.settings.features != blank -%}
           <ul class="ct-plan__features">
@@ -101,6 +103,8 @@
       "name": "Plan",
       "settings": [
         { "type": "checkbox", "id": "featured", "label": "Featured", "default": false },
+        { "type": "text", "id": "emoji", "label": "Emoji (above name)" },
+        { "type": "text", "id": "save_text", "label": "Save chip text (e.g. \"Save 20%\")" },
         { "type": "text", "id": "badge", "label": "Featured badge", "default": "7 in 10 choose this" },
         { "type": "text", "id": "tag", "label": "Tag", "default": "Basic" },
         { "type": "text", "id": "name", "label": "Name", "default": "The Plan" },
