@@ -7,8 +7,8 @@
 .ct-hero-h1 p{margin:0}
 .ct-hero-sub{font-size:17px;color:var(--ct-text-2);line-height:1.72;margin-bottom:28px;max-width:440px}
 .ct-hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
-.ct-hero-pill{display:flex;align-items:center;gap:6px;background:var(--ct-bg);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-pill);padding:5px 12px;font-size:13px;color:var(--ct-text-2)}
-.ct-hero-pill::before{content:'•';color:var(--ct-accent-text);font-size:10px}
+.ct-hero-pill{display:inline-flex;align-items:center;gap:6px;background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-pill);padding:7px 13px;font-size:12.5px;font-weight:600;color:var(--ct-text-2)}
+.ct-hero-pill svg{width:13px;height:13px;stroke:var(--ct-accent);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .ct-hero-btns{display:flex;gap:10px;flex-wrap:wrap}
 .ct-hero-visual{background:radial-gradient(120% 100% at 88% -5%, var(--ct-accent-subtle) 0%, transparent 55%), linear-gradient(135deg, #FCFAFE 0%, #FFFFFF 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .ct-hero-visual__glow{position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(109,63,196,.10) 0%,transparent 70%)}
@@ -31,3 +31,15 @@
 .ct-hero-float__icon{width:36px;height:36px;border-radius:var(--ct-r-md);background:var(--ct-accent-subtle);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .ct-hero-float__label{font-size:11px;color:var(--ct-text-3);font-family:var(--ct-font-mono);text-transform:uppercase;letter-spacing:.08em}
 .ct-hero-float__val{font-size:13px;font-weight:700;color:var(--ct-accent-text)}
+
+/* ---- CozyClaw buy-box primitives (sale-badge, rating row, price row, availability) ---- */
+.ct-hero-sale-badge{display:inline-flex;align-items:center;gap:7px;background:var(--ct-urgency);color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.04em;padding:7px 14px;border-radius:var(--ct-r-pill);margin-bottom:18px;box-shadow:0 6px 16px rgba(217,67,58,.25)}
+.ct-hero-rating{margin:0 0 22px}
+.ct-hero-rating .ct-stars{font-size:14px}
+.ct-hero-rating .ct-rating-count{font-size:14px;color:var(--ct-text-2)}
+.ct-hero-price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.ct-hero-price-now{font-family:var(--ct-font-display);font-size:38px;font-weight:700;color:var(--ct-text);line-height:1}
+.ct-hero-price-was{font-size:20px;color:var(--ct-price-was);text-decoration:line-through}
+.ct-hero-price-save{font-size:13px;font-weight:700;color:#fff;background:var(--ct-urgency);padding:4px 10px;border-radius:var(--ct-r-pill)}
+.ct-hero-avail{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--ct-success);margin-bottom:18px}
+.ct-hero-avail__dot{width:8px;height:8px;border-radius:50%;background:var(--ct-success)}

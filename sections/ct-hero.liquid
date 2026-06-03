@@ -7,6 +7,9 @@
   <div class="ct-hero" data-reveal>
     <div class="ct-hero-inner">
       <div class="ct-hero-text">
+        {%- if section.settings.sale_badge != blank -%}
+          <span class="ct-hero-sale-badge">{{ section.settings.sale_badge }}</span>
+        {%- endif -%}
         {%- if section.settings.eyebrow != blank -%}
           <div class="ct-eyebrow"><span class="ct-eyebrow__dot"></span>{{ section.settings.eyebrow }}</div>
         {%- endif -%}
@@ -19,12 +22,21 @@
         {%- if section.settings.subheading != blank -%}
           <p class="ct-hero-sub">{{ section.settings.subheading }}</p>
         {%- endif -%}
-        {%- if section.blocks.size > 0 -%}
-          <div class="ct-hero-pills">
-            {%- for block in section.blocks -%}
-              <span class="ct-hero-pill" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
-            {%- endfor -%}
+        {%- if section.settings.show_rating -%}
+          <div class="ct-rating-row ct-hero-rating">
+            <span class="ct-stars">★★★★★</span>
+            <span class="ct-rating-count">{{ section.settings.rating_text }}</span>
           </div>
+        {%- endif -%}
+        {%- if section.settings.price_now != blank -%}
+          <div class="ct-hero-price-row">
+            <span class="ct-hero-price-now">{{ section.settings.price_now }}</span>
+            {%- if section.settings.price_was != blank -%}<span class="ct-hero-price-was">{{ section.settings.price_was }}</span>{%- endif -%}
+            {%- if section.settings.price_save_label != blank -%}<span class="ct-hero-price-save">{{ section.settings.price_save_label }}</span>{%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.availability_text != blank -%}
+          <div class="ct-hero-avail"><span class="ct-hero-avail__dot" aria-hidden="true"></span>{{ section.settings.availability_text }}</div>
         {%- endif -%}
         <div class="ct-hero-btns">
           {%- if section.settings.button_label != blank -%}
@@ -34,10 +46,13 @@
             <a class="ct-btn ct-btn--outlined" href="{{ section.settings.button_link_2 | default: '#' }}">{{ section.settings.button_label_2 }}</a>
           {%- endif -%}
         </div>
-        {%- if section.settings.show_rating -%}
-          <div class="ct-rating-row" style="margin-top:20px">
-            <span class="ct-stars">★★★★★</span>
-            <span class="ct-rating-count">{{ section.settings.rating_text }}</span>
+        {%- if section.blocks.size > 0 -%}
+          <div class="ct-hero-pills">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'pill' -%}
+                <span class="ct-hero-pill" {{ block.shopify_attributes }}><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ block.settings.text }}</span>
+              {%- endif -%}
+            {%- endfor -%}
           </div>
         {%- endif -%}
       </div>
@@ -77,10 +92,16 @@
   "class": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
+    { "type": "text", "id": "sale_badge", "label": "Sale badge (urgency-red pill)", "info": "e.g. 🔥 2,175 sold. Renders above h1. Leave blank to hide." },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New for 2025 — Pro Series" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Hero headline — emotional hook", "info": "Wrap a word in <em> for the green accent." },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "One sentence that explains what the product does and who it's for. 17–20 words max." },
     { "type": "text", "id": "h1_subtitle", "label": "Heading subtitle (second line)" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "One sentence that explains what the product does and who it's for. 17–20 words max." },
+    { "type": "header", "content": "Price + availability" },
+    { "type": "text", "id": "price_now", "label": "Current price (e.g. $35.97)" },
+    { "type": "text", "id": "price_was", "label": "Compare-at price (struck)" },
+    { "type": "text", "id": "price_save_label", "label": "Save chip (e.g. Save 20%)" },
+    { "type": "text", "id": "availability_text", "label": "Availability line", "info": "e.g. In stock — ships in 3–7 business days. Leave blank to hide." },
     { "type": "header", "content": "Floating badge" },
     { "type": "text", "id": "float_icon", "label": "Badge icon (emoji)", "default": "⚖️" },
     { "type": "text", "id": "float_label", "label": "Badge label" },
