@@ -1,10 +1,11 @@
 {% comment %}
   snippets/css-variables.liquid — the ONLY file that changes per brand.
-  Emits Minimals --ct-* tokens + @font-face. Rendered inside theme.liquid's
-  reset style block, so it outputs raw CSS only (no style wrapper).
-  Plain-text comments only — never Liquid tags inside CSS comments.
+  Emits CozyClaw --ct-* tokens + @font-face for self-hosted Public Sans + DM Mono.
+  Fraunces (display serif) loads from Google Fonts in layout/theme.liquid.
+  Rendered inside theme.liquid's reset style block, so it outputs raw CSS only
+  (no style wrapper). Plain-text comments only — never Liquid tags inside CSS comments.
 {% endcomment %}
-{%- comment -%} Brand fonts self-hosted (woff2 in assets/) — no render-blocking Google Fonts request {%- endcomment -%}
+{%- comment -%} Body & mono fonts self-hosted (woff2 in assets/); display serif from Google Fonts {%- endcomment -%}
 @font-face {
   font-family: 'Public Sans';
   font-style: normal;
@@ -30,57 +31,68 @@
 :root { color-scheme: only light; }
 html { color-scheme: only light; forced-color-adjust: none; }
 body {
-  background: #F4F6F8 !important;
-  color: #212B36 !important;
+  background: #FAF8FD !important;
+  color: #2A2433 !important;
   letter-spacing: normal !important;
   overflow-x: hidden;
 }
 
 :root {
-  --ct-bg:#F4F6F8; --ct-bg-surface:#F9FAFB; --ct-bg-raised:#FFFFFF;
-  --ct-bg-control:rgba(145,158,171,.08); --ct-bg-control-h:rgba(145,158,171,.16);
-  --ct-bg-overlay:rgba(22,28,36,.80);
+  /* Warm lavender canvas */
+  --ct-bg:#FAF8FD; --ct-bg-surface:#FCFAFE; --ct-bg-raised:#FFFFFF;
+  --ct-bg-control:rgba(120,100,160,.08); --ct-bg-control-h:rgba(120,100,160,.16);
+  --ct-bg-overlay:rgba(42,36,51,.80);
 
-  --ct-text:#212B36; --ct-text-2:#637381; --ct-text-3:#919EAB; --ct-text-off:#C4CDD0;
+  /* Warm text */
+  --ct-text:#2A2433; --ct-text-2:#645A75; --ct-text-3:#938AA6; --ct-text-off:#BCB2CC;
 
-  --ct-border:rgba(145,158,171,.32); --ct-border-strong:rgba(145,158,171,.20);
-  --ct-border-subtle:rgba(145,158,171,.12); --ct-border-faint:rgba(145,158,171,.06);
+  /* Purple-tinted borders */
+  --ct-border:rgba(120,100,160,.30); --ct-border-strong:rgba(120,100,160,.20);
+  --ct-border-subtle:rgba(120,100,160,.14); --ct-border-faint:rgba(120,100,160,.07);
 
-  --ct-shadow-xs:0 1px 2px rgba(145,158,171,.14);
-  --ct-shadow-sm:0 4px 8px rgba(145,158,171,.16);
-  --ct-shadow-md:0 8px 16px rgba(145,158,171,.18);
-  --ct-shadow-lg:0 16px 32px rgba(145,158,171,.20);
-  --ct-shadow-2xl:0 20px 40px rgba(145,158,171,.24);
+  /* Warm shadows */
+  --ct-shadow-xs:0 1px 2px rgba(80,60,120,.12);
+  --ct-shadow-sm:0 4px 10px rgba(80,60,120,.12);
+  --ct-shadow-md:0 8px 20px rgba(80,60,120,.14);
+  --ct-shadow-lg:0 16px 36px rgba(80,60,120,.16);
+  --ct-shadow-2xl:0 26px 56px rgba(80,60,120,.20);
 
-  --ct-accent: {{ settings.color_accent | default: '#00A76F' }};
-  --ct-accent-strong: {{ settings.color_accent_hover | default: '#007867' }};
+  /* Accent — CozyClaw purple */
+  --ct-accent: {{ settings.color_accent | default: '#6D3FC4' }};
+  --ct-accent-strong: {{ settings.color_accent_hover | default: '#552C9E' }};
   {%- comment -%} RGB triples for Dawn's --color-* vars, which use rgb()/rgba() (hex would break them) {%- endcomment -%}
   --ct-accent-rgb: {{ settings.color_accent.red }},{{ settings.color_accent.green }},{{ settings.color_accent.blue }};
   --ct-accent-strong-rgb: {{ settings.color_accent_hover.red }},{{ settings.color_accent_hover.green }},{{ settings.color_accent_hover.blue }};
-  --ct-accent-text:#007867; --ct-accent-subtle:#C8FAD6; --ct-accent-border:#5BE49B;
-  --ct-accent-glow:rgba(0,167,111,.16);
+  --ct-accent-text:#532C9C; --ct-accent-subtle:#EFE7FB; --ct-accent-border:#C9B2EE;
+  --ct-accent-glow:rgba(109,63,196,.24);
 
-  --ct-success:#22C55E; --ct-success-dark:#15803D; --ct-success-light:#D3FCD2;
-  --ct-warning:#FFAB00; --ct-warning-dark:#B76E00; --ct-warning-light:#FFF5CC;
-  --ct-error:#FF5630; --ct-error-dark:#B71D18; --ct-error-light:#FFE9D5;
+  /* Status */
+  --ct-urgency:#D9433A;
+  --ct-success:#5B9A6B; --ct-success-dark:#3F7B4D; --ct-success-light:#DAF0E0;
+  --ct-warning:#E8A93C; --ct-warning-dark:#A6791C; --ct-warning-light:#FBF1D9;
+  --ct-error:#D9433A; --ct-error-dark:#A82E26; --ct-error-light:#FCE0DD;
 
-  --ct-price:#212B36; --ct-price-was:#919EAB; --ct-price-save:#007867;
-  --ct-badge-sale:#B71D18; --ct-badge-new:#00A76F; --ct-badge-best:#B76E00;
-  --ct-stock-in:#007867; --ct-stock-low:#B76E00; --ct-stock-out:#919EAB;
-  --ct-rating:#FBBC04; --ct-rating-empty:#DADCE0; --ct-touch:48px;
+  /* Commerce */
+  --ct-price:#2A2433; --ct-price-was:#9E94AE; --ct-price-save:#532C9C;
+  --ct-badge-sale:#D9433A; --ct-badge-new:#6D3FC4; --ct-badge-best:#E8A93C;
+  --ct-stock-in:#5B9A6B; --ct-stock-low:#E8A93C; --ct-stock-out:#938AA6;
+  --ct-rating:#E8A93C; --ct-rating-empty:#E5DDF2; --ct-touch:48px;
 
-  --ct-r-sm:4px;
-  --ct-r-md: {{ settings.border_radius | default: 8 }}px;
-  --ct-r-lg:12px; --ct-r-xl:16px; --ct-r-pill:9999px;
+  /* Radius — soft & cozy */
+  --ct-r-sm:6px;
+  --ct-r-md: {{ settings.border_radius | default: 12 }}px;
+  --ct-r-lg:18px; --ct-r-xl:24px; --ct-r-pill:9999px;
 
-  --ct-font-heading: 'Public Sans', system-ui, sans-serif;
+  /* Type — Fraunces display serif, Public Sans body, DM Mono kickers */
+  --ct-font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --ct-font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
   --ct-font-body: 'Public Sans', system-ui, sans-serif;
   --ct-font-mono: 'DM Mono', ui-monospace, monospace;
 
-  /* Force the whole theme (Dawn-native + ct-* sections) onto Public Sans.
-     Dawn's font_picker can't select Public Sans, so type_*_font stays Assistant;
-     this snippet renders after theme.liquid's :root font block, so it wins. */
-  --font-heading-family: 'Public Sans', system-ui, sans-serif;
+  /* Force the whole theme (Dawn-native + ct-* sections) onto CozyClaw typefaces.
+     Dawn's font_picker can't select Fraunces/Public Sans, so type_*_font stays
+     Assistant; this snippet renders after theme.liquid's :root font block, so it wins. */
+  --font-heading-family: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-body-family: 'Public Sans', system-ui, sans-serif;
 
   --ct-text-xs:12px; --ct-text-sm:13px; --ct-text-base:15px; --ct-text-md:16px;
@@ -92,7 +104,7 @@ body {
   --ct-space-5:32px; --ct-space-6:48px; --ct-space-7:80px; --ct-space-8:128px;
 
   --ct-mw: {{ settings.page_width | default: 1120 }}px; --ct-gutter:24px; --ct-gutter-m:16px;
-  --ct-focus:0 0 0 2px #F4F6F8, 0 0 0 4px #007867;
+  --ct-focus:0 0 0 2px #FAF8FD, 0 0 0 4px #532C9C;
 
   --ct-dur-fast:120ms; --ct-dur-base:240ms; --ct-dur-slow:480ms;
   --ct-ease-out:cubic-bezier(.22,1,.36,1);

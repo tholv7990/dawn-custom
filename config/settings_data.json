@@ -6,13 +6,13 @@
       "color_schemes": {
         "scheme-1": {
           "settings": {
-            "background": "#F4F6F8",
+            "background": "#FAF8FD",
             "background_gradient": "",
-            "text": "#121212",
-            "button": "#121212",
+            "text": "#2A2433",
+            "button": "#6D3FC4",
             "button_label": "#FFFFFF",
-            "secondary_button_label": "#121212",
-            "shadow": "#121212"
+            "secondary_button_label": "#2A2433",
+            "shadow": "#2A2433"
           }
         },
         "scheme-2": {

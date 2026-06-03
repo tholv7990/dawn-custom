@@ -20,6 +20,13 @@
     <link rel="preload" as="font" type="font/woff2" href="{{ 'public-sans.woff2' | asset_url }}" crossorigin>
     {% comment %}theme-check-enable AssetPreload{% endcomment %}
 
+    {%- comment -%} CozyClaw display serif (Fraunces) via Google Fonts. Intentional external load — wrap with theme-check-disable RemoteAsset so it doesn't churn the offense count. {%- endcomment -%}
+    {% comment %}theme-check-disable RemoteAsset{% endcomment %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap">
+    {% comment %}theme-check-enable RemoteAsset{% endcomment %}
+
     <title>
       {{ page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="130" viewBox="0 0 380 130" role="img">
+<title>CozyClaw Lounge Mat logo</title>
+<desc>A sleeping cat face on a rounded purple tile beside the CozyClaw wordmark and the descriptor Plush Lounge Mat.</desc>
+<style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&amp;display=swap');.wm{font-family:'Fraunces',Georgia,'Times New Roman',serif}.tg{font-family:'Public Sans',system-ui,Arial,sans-serif}</style>
+<g transform="translate(12,18)">
+<rect x="0" y="0" width="96" height="96" rx="24" fill="#6D3FC4"/>
+<path d="M27 41 L23 14 L48 33 Z" fill="#F6F1FC"/>
+<path d="M69 41 L73 14 L48 33 Z" fill="#F6F1FC"/>
+<circle cx="48" cy="58" r="27" fill="#F6F1FC"/>
+<path d="M31 37 L28 20 L42 33 Z" fill="#6D3FC4"/>
+<path d="M65 37 L68 20 L54 33 Z" fill="#6D3FC4"/>
+<path d="M35 55 q5 5 10 0" fill="none" stroke="#6D3FC4" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M51 55 q5 5 10 0" fill="none" stroke="#6D3FC4" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M44.5 62 L51.5 62 L48 66.5 Z" fill="#6D3FC4"/>
+<path d="M48 66.5 q-4 4 -8 2" fill="none" stroke="#6D3FC4" stroke-width="2" stroke-linecap="round"/>
+<path d="M48 66.5 q4 4 8 2" fill="none" stroke="#6D3FC4" stroke-width="2" stroke-linecap="round"/>
+</g>
+<text x="128" y="76" class="wm" font-size="46" font-weight="600" fill="#532C9C">CozyClaw</text>
+<text x="129" y="102" class="tg" font-size="15" fill="#7A6E9E">Plush Lounge Mat</text>
+</svg>
