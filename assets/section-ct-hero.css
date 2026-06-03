@@ -1,5 +1,5 @@
 /* section-ct-hero.css — demo .ct-hero* (already ct-prefixed); tokens → --ct-* */
-.ct-hero{background:var(--ct-bg-raised);border-radius:var(--ct-r-xl);overflow:hidden;border:1px solid var(--ct-border-strong);box-shadow:var(--ct-shadow-md)}
+.ct-hero{background:var(--ct-bg-raised);border-radius:var(--ct-r-xl);border:1px solid var(--ct-border-strong);box-shadow:var(--ct-shadow-md)}
 .ct-hero-inner{display:grid;grid-template-columns:minmax(0,55fr) minmax(0,45fr);min-height:480px}
 .ct-hero-text{padding:56px 48px 56px 56px;display:flex;flex-direction:column;justify-content:center}
 .ct-hero-h1{font-family:var(--ct-font-display);font-size:clamp(2.5rem,6.4vw,3.875rem);font-weight:600;color:var(--ct-text);letter-spacing:-.02em;line-height:1.02;margin-bottom:8px}
