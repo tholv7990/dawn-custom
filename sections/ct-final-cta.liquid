@@ -18,7 +18,19 @@
         {%- endif -%}
       </div>
       {%- if section.settings.show_trust and section.settings.trust_chips != blank -%}
-        {% render 'ct-trust-chips', chips: section.settings.trust_chips %}
+        {%- if section.settings.trust_style == 'pills' -%}
+          <div class="ct-final-cta__pills">
+            {%- assign trust_lines = section.settings.trust_chips | newline_to_br | split: '<br />' -%}
+            {%- for line in trust_lines -%}
+              {%- assign line_text = line | strip_newlines | strip -%}
+              {%- if line_text != blank -%}
+                <span class="ct-final-cta__pill"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ line_text }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          {% render 'ct-trust-chips', chips: section.settings.trust_chips %}
+        {%- endif -%}
       {%- endif -%}
     </div>
   </div>
@@ -41,6 +53,7 @@
     { "type": "url", "id": "button_link_2", "label": "Secondary button link" },
     { "type": "header", "content": "Trust chips" },
     { "type": "checkbox", "id": "show_trust", "label": "Show trust chips", "default": true },
+    { "type": "select", "id": "trust_style", "label": "Trust row style", "options": [ { "value": "chips", "label": "Chips (checkmark prefix)" }, { "value": "pills", "label": "Pills (check svg)" } ], "default": "chips" },
     { "type": "textarea", "id": "trust_chips", "label": "Trust chips (one per line)", "default": "Free US Shipping\n90-Day Returns\n4.7 · 52 Reviews" },
     { "type": "header", "content": "Section" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },

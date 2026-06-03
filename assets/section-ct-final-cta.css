@@ -6,3 +6,8 @@
 .ct-final-cta__sub{font-size:15px;color:var(--ct-text-2);margin-bottom:28px;line-height:1.65}
 .ct-final-cta__btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
 @media(max-width:600px){.ct-final-cta{padding:40px 20px}}
+
+/* ---- Pills trust-style (CozyClaw landing) ---- */
+.ct-final-cta__pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.ct-final-cta__pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--ct-text-2);background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);padding:7px 13px;border-radius:var(--ct-r-pill)}
+.ct-final-cta__pill svg{width:13px;height:13px;stroke:var(--ct-accent);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
