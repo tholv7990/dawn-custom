@@ -3,170 +3,146 @@
     "ct_hero": {
       "type": "ct-hero",
       "blocks": {
-        "p1": { "type": "pill", "settings": { "text": "Free US Shipping" } },
-        "p2": { "type": "pill", "settings": { "text": "90-Day Returns" } },
-        "p3": { "type": "pill", "settings": { "text": "1-Year Warranty" } },
-        "p4": { "type": "pill", "settings": { "text": "Cancel in 1 Hour" } }
+        "p1": { "type": "pill", "settings": { "text": "Free shipping over $50" } },
+        "p2": { "type": "pill", "settings": { "text": "7-day money-back" } },
+        "p3": { "type": "pill", "settings": { "text": "Secure checkout" } },
+        "p4": { "type": "pill", "settings": { "text": "Loved by 15,000+ cat parents" } }
       },
       "block_order": ["p1", "p2", "p3", "p4"],
       "settings": {
-        "eyebrow": "Complete training system · Live now",
-        "heading": "Your gym closed.",
-        "h1_subtitle": "Ours didn't.",
-        "subheading": "Everything your gym gave you — structure, energy, results — now fits in 5.3 pounds. Trainer, program, music, nutrition, coaching.",
-        "button_label": "Start tonight — from $149 →",
+        "eyebrow": "🔥 2,175 sold",
+        "heading": "CozyClaw Mat",
+        "h1_subtitle": "Protect your sofa without fighting your cat.",
+        "subheading": "A plush 2-in-1 sofa cover and cat bed. Place it where your cat already hangs out — soft enough to nap on, beautiful enough to leave out when guests come over.",
+        "button_label": "Add to Cart →",
         "button_link": "shopify://collections/all",
-        "button_label_2": "See the system",
+        "button_label_2": "See why cats love it",
         "show_rating": true,
-        "rating_text": "4.7 · 52 verified reviews · from $149",
-        "card_emoji": "💪",
-        "card_title": "GainsSteel® Hydraulic Trainer",
-        "card_price": "from $149",
-        "card_tag_1": "★ 4.7",
-        "card_tag_2": "5.3 lb",
-        "float_icon": "⚖️",
-        "float_label": "Total weight",
-        "float_value": "5.3 lb — carry-on friendly",
+        "rating_text": "92% 5-star · 13 verified reviews",
+        "card_emoji": "🐈",
+        "card_title": "CozyClaw Mat",
+        "card_price": "$35.97",
+        "card_tag_1": "★ 4.9",
+        "card_tag_2": "In stock",
+        "float_icon": "📏",
+        "float_label": "Generous size",
+        "float_value": "31.5 × 35.43 in",
         "color_scheme": "scheme-1",
         "padding_top": 40,
         "padding_bottom": 24
       }
     },
-    "ct_stats": {
-      "type": "ct-stats",
+    "ct_trust_bar": {
+      "type": "ct-trust-bar",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "number": "12", "label": "Week program", "countup": true, "sub": "Session by session" } },
-        "s2": { "type": "stat", "settings": { "number": "440", "suffix": "lb", "label": "Max resistance", "countup": true, "sub": "Hydraulic, not spring" } },
-        "s3": { "type": "stat", "settings": { "number": "5.3", "suffix": "lb", "label": "Total weight", "countup": false, "sub": "Carry-on friendly" } },
-        "s4": { "type": "stat", "settings": { "number": "5", "label": "System pillars", "countup": false, "sub": "Trainer + program + more" } }
+        "c1": { "type": "chip", "settings": { "icon": "truck", "icon_color": "purple", "label": "Fast Shipping", "sublabel": "Ships in 3–7 days" } },
+        "c2": { "type": "chip", "settings": { "icon": "shield", "icon_color": "green", "label": "7-Day Money-Back", "sublabel": "Risk-free" } },
+        "c3": { "type": "chip", "settings": { "icon": "shield", "icon_color": "blue", "label": "Secured Payments", "sublabel": "256-bit SSL" } },
+        "c4": { "type": "chip", "settings": { "icon": "clock", "icon_color": "amber", "label": "Support That Cares", "sublabel": "Real humans" } }
       },
-      "block_order": ["s1", "s2", "s3", "s4"],
-      "settings": { "color_scheme": "scheme-1", "padding_top": 28, "padding_bottom": 28 }
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": { "color_scheme": "scheme-1", "padding_top": 16, "padding_bottom": 16 }
     },
-    "ct_who": {
-      "type": "ct-use-cases",
-      "blocks": {
-        "u1": { "type": "card", "settings": { "emoji": "🔄", "tag": "Returning", "title": "You used to train.", "desc": "Life got in the way and the gym didn't survive it. Your body remembers what strong felt like — we give it back, in less time, in any room.", "cta": "Core Pro is your system →" } },
-        "u2": { "type": "card", "settings": { "emoji": "✈️", "tag": "Traveler", "title": "Hotel gyms are a joke.", "desc": "5.3 lb fits in carry-on. Every hotel room becomes a training room. No lost weeks between trips.", "cta": "Basic is your system →" } },
-        "u3": { "type": "card", "settings": { "emoji": "🚀", "tag": "Beginner", "title": "Start without the gym.", "desc": "The program starts at zero and tells you exactly what to do each session. No guessing, no wrong moves, no judgment.", "cta": "Core Pro is your system →" } }
-      },
-      "block_order": ["u1", "u2", "u3"],
-      "settings": { "kicker": "Who it's for", "heading": "Built for three kinds of people.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
-    },
-    "ct_features": {
-      "type": "ct-aplus",
-      "blocks": {
-        "b1": { "type": "banner", "settings": { "emoji": "🔧", "number": "01", "title": "Hydraulic, not spring.", "body": "Double-sealed cylinder, smooth controlled return, zero snap-back. Resistance stays consistent year after year — springs weaken, hydraulics don't.", "tag": "100,000-cycle endurance tested", "specs": "" } },
-        "b2": { "type": "banner", "settings": { "emoji": "🎛️", "number": "02", "title": "15 levels. One knob.", "body": "Stepless adjustment from 22 lb to 440 lb. Ten grip angles for chest, arms, shoulders, back and core. The arm angle never changes — only the load does.", "tag": "22 → 440 lb · stepless", "specs": "" } },
-        "b3": { "type": "banner", "settings": { "emoji": "🧳", "number": "03", "title": "Stores under the couch.", "body": "5.3 lb, ABS body with foam/PU grip, carry-on friendly. The best trainer is the one that's always there.", "tag": "5.3 lb · carry-on friendly", "specs": "" } }
-      },
-      "block_order": ["b1", "b2", "b3"],
-      "settings": { "kicker": "The product", "heading": "One trainer. Six muscle groups. 5.3 pounds.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
-    },
-    "ct_when": {
-      "type": "ct-use-cases",
-      "blocks": {
-        "w1": { "type": "card", "settings": { "emoji": "☀️", "tag": "06:14 AM", "title": "Before the kettle clicks.", "desc": "25 minutes — chest, arms, abs — done before the kids' alarm. No setup, no drive, no excuse.", "number": "No. 01 · Morning" } },
-        "w2": { "type": "card", "settings": { "emoji": "🏠", "tag": "02:30 PM", "title": "Between the meetings.", "desc": "20 minutes you'd otherwise spend doomscrolling. Real resistance, back at the desk without the commute.", "number": "No. 02 · Afternoon" } },
-        "w3": { "type": "card", "settings": { "emoji": "🌍", "tag": "On the road", "title": "In the carry-on.", "desc": "5.3 lb fits most cabin bags. The hotel gym had two treadmills and a broken bench — yours will be better.", "number": "No. 03 · Travel" } }
-      },
-      "block_order": ["w1", "w2", "w3"],
-      "settings": { "kicker": "For the life you have", "heading": "Train where life happens.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
-    },
-    "ct_compare": {
-      "type": "ct-compare",
-      "blocks": {
-        "r1": { "type": "row", "settings": { "feature": "Resistance feel", "brand_type": "text", "brand_text": "Smooth, controlled return", "col2_type": "text", "col2_text": "Fast snap-back — injury risk", "col3_type": "text", "col3_text": "Elastic rebound" } },
-        "r2": { "type": "row", "settings": { "feature": "Consistency over time", "brand_type": "check", "col2_type": "cross", "col3_type": "cross" } },
-        "r3": { "type": "row", "settings": { "feature": "Adjustment", "brand_type": "text", "brand_text": "15 levels · 22–440 lb", "col2_type": "text", "col2_text": "Fixed or limited", "col3_type": "text", "col3_text": "Swap bands" } },
-        "r4": { "type": "row", "settings": { "feature": "Training system", "brand_type": "check", "col2_type": "cross", "col3_type": "cross" } },
-        "r5": { "type": "row", "settings": { "feature": "Portability", "brand_type": "text", "brand_text": "5.3 lb · carry-on", "col2_type": "text", "col2_text": "Similar weight", "col3_type": "text", "col3_text": "Light · tangles" } }
-      },
-      "block_order": ["r1", "r2", "r3", "r4", "r5"],
-      "settings": { "kicker": "Vs. alternatives", "heading": "More controlled than bands. More compact than weights.", "feature_label": "Feature", "brand_label": "GainsSteel Hydraulic", "col2_label": "Spring Twister", "col3_label": "Resistance Bands", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
-    },
-    "ct_reviews": {
-      "type": "ct-reviews",
-      "blocks": {
-        "rv1": { "type": "review", "settings": { "rating": 5, "text": "5 months in and still going strong. Started at level 4, already at 8. Resistance is genuinely solid — this is the real thing.", "author": "Samie M.", "meta": "Core Pro · Verified April 2026", "verified": true } },
-        "rv2": { "type": "review", "settings": { "rating": 5, "text": "Tested every level. The higher ones aren't for show — level 13 had me actually struggling. The 440 lb is real.", "author": "D. Taj", "meta": "Basic · Verified March 2026", "verified": true } },
-        "rv3": { "type": "review", "settings": { "rating": 5, "text": "Thought it would end up in the closet. It didn't. Hydraulics feel solid, resistance jumps are real, still using it.", "author": "Rihanna F.", "meta": "Core Pro · Verified February 2026", "verified": true } }
-      },
-      "block_order": ["rv1", "rv2", "rv3"],
-      "settings": { "kicker": "Reviews", "rating_number": "4.7", "rating_count": "52 verified reviews", "heading": "Real results, real people.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
-    },
-    "ct_email": {
-      "type": "ct-email",
+    "ct_value": {
+      "type": "ct-hero-split",
       "settings": {
-        "kicker": "First order offer",
-        "heading": "15% off. No code hunting.",
-        "subheading": "Drop your email and we'll send it directly. One email, no spam.",
-        "placeholder": "Your email address",
-        "button_label": "Get 15% off",
-        "disclaimer": "We don't share your email. Unsubscribe any time. First order only.",
-        "success_title": "Sent ✓",
-        "success_text": "Check your inbox for your 15% off code.",
+        "kicker": "The cozy upgrade",
+        "heading": "The more they lounge, the cozier their space.",
+        "body": "<p>Cats love soft places to nap — but sofas collect fur, scratches, and mess. CozyClaw turns the spot they already love into a warm, fluffy lounging zone, while quietly protecting your furniture underneath. Designed with plush comfort and a supportive edge, it creates the perfect space for kneading, lounging, and deep naps.</p>",
+        "button_label": "Shop the CozyClaw Mat →",
+        "button_link": "shopify://collections/all",
+        "emoji": "😻",
+        "image_position": "left",
         "color_scheme": "scheme-1",
-        "padding_top": 44,
-        "padding_bottom": 44
+        "padding_top": 56,
+        "padding_bottom": 56
       }
     },
-    "ct_faq": {
-      "type": "ct-faq",
+    "ct_why": {
+      "type": "ct-use-cases",
       "blocks": {
-        "f1": { "type": "item", "settings": { "question": "Is this for beginners or experienced trainers?", "answer": "<p>Both. Beginners start at level 1–3 and the 12-week program guides every session from day one. Experienced trainers start higher and use the program as structure when gym access is limited.</p>" } },
-        "f2": { "type": "item", "settings": { "question": "Is the 440 lb resistance actually real?", "answer": "<p>Yes — it's calibrated to actual weight-equivalent resistance, and verified buyers confirm level 13 is genuinely hard. The sealed hydraulic cylinder doesn't weaken over time.</p>" } },
-        "f3": { "type": "item", "settings": { "question": "What's the difference between The System and The Full Setup?", "answer": "<p>The System ($169) includes the trainer, 12-week program, music, nutrition guide and AB roller. The Full Setup ($199) adds a personal form-check video review, mobility guide and priority support.</p>" } },
-        "f4": { "type": "item", "settings": { "question": "Does it work for travel?", "answer": "<p>It's built for it. 5.3 lb fits most carry-on bags and the program works in any room with space to stand. Hotel gyms are optional — yours isn't.</p>" } },
-        "f5": { "type": "item", "settings": { "question": "What's the return and cancellation policy?", "answer": "<p>90-day return window from delivery. Cancel within 1 hour by emailing support. 1-year warranty on all bundles; support responds within 24 hours, excluding weekends.</p>" } }
+        "u1": { "type": "card", "settings": { "emoji": "🧸", "tag": "Plush", "title": "Ultra-soft plush comfort", "desc": "Made with dense A-grade plush that feels incredibly soft and gentle, creating a warm, soothing resting spot your cat will gravitate to." } },
+        "u2": { "type": "card", "settings": { "emoji": "🛏️", "tag": "Pillow design", "title": "Supportive pillow design", "desc": "A raised, cushioned edge supports the head and neck — helping cats feel secure and relaxed while they nap or lounge." } },
+        "u3": { "type": "card", "settings": { "emoji": "🛋️", "tag": "Protection", "title": "Sofa protection & non-slip base", "desc": "Protects sofas from scratches, fur, spills, and daily wear, while the anti-slip backing keeps the cover securely in place." } },
+        "u4": { "type": "card", "settings": { "emoji": "🧼", "tag": "Easy clean", "title": "Durable & easy to clean", "desc": "Strong stitching and high-density plush resist shedding and fading. Fully machine washable for easy everyday care." } }
       },
-      "block_order": ["f1", "f2", "f3", "f4", "f5"],
-      "settings": { "kicker": "Questions", "heading": "Quick answers.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
-    },
-    "ct_pillars": {
-      "type": "ct-pillars",
-      "blocks": {
-        "p1": { "type": "pillar", "settings": { "number": "01 / 05", "icon": "💪", "name": "The Trainer", "desc": "22 to 440 lb. Hydraulic. Zero snap-back. 5.3 pounds. Fits under the couch.", "quote": "\"Level 13 had me actually struggling.\" — D. Taj" } },
-        "p2": { "type": "pillar", "settings": { "number": "02 / 05", "icon": "📋", "name": "The Program", "desc": "12 weeks. Session by session. No guessing. Works for beginners and veterans.", "quote": "Structure is what the gym gave you." } },
-        "p3": { "type": "pillar", "settings": { "number": "03 / 05", "icon": "🎵", "name": "The Music", "desc": "Curated playlists built for intensity. Silence kills momentum.", "quote": "Atmosphere on demand." } },
-        "p4": { "type": "pillar", "settings": { "number": "04 / 05", "icon": "🥗", "name": "The Nutrition", "desc": "Protein targets. Meal timing. No diet culture. Eat to perform, not to punish.", "quote": "Fuel the system, not the guilt." } },
-        "p5": { "type": "pillar", "settings": { "number": "05 / 05", "icon": "🎯", "name": "The Coaching", "desc": "Submit your form. Get real feedback. Training wrong is worse than not training.", "quote": "A coach in your pocket." } }
-      },
-      "block_order": ["p1", "p2", "p3", "p4", "p5"],
-      "settings": { "kicker": "The GainsSteel system", "heading": "We didn't build equipment. We built a system.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
-    },
-    "ct_journey": {
-      "type": "ct-journey",
-      "blocks": {
-        "j1": { "type": "step", "settings": { "week_range": "Week 1–2", "title": "Foundation.", "desc": "You learn the system. The program tells you exactly what to do. Form gets corrected before bad habits form.", "badge": "First results incoming" } },
-        "j2": { "type": "step", "settings": { "week_range": "Week 3–5", "title": "Build.", "desc": "You feel it working. Levels go up. You stop questioning — you know it is.", "badge": "Visible changes begin" } },
-        "j3": { "type": "step", "settings": { "week_range": "Week 6–9", "title": "Push.", "desc": "Past the point where most quit. Still going. People start asking questions.", "badge": "Others start noticing" } },
-        "j4": { "type": "step", "settings": { "week_range": "Week 10–12", "title": "Transform.", "desc": "You don't need motivation anymore. It's just what you do. Week 13 is up to you.", "badge": "The body you wanted" } }
-      },
-      "block_order": ["j1", "j2", "j3", "j4"],
-      "settings": { "kicker": "The 12-week journey", "heading": "Week 1, you start. Week 12, you won't recognize yourself.", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+      "block_order": ["u1", "u2", "u3", "u4"],
+      "settings": { "kicker": "Why choose us", "heading": "Your cat will love you even more.", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
     "ct_pricing": {
       "type": "ct-pricing",
       "blocks": {
-        "pl1": { "type": "plan", "settings": { "featured": false, "tag": "Basic", "name": "The Trainer", "tagline": "\"I have my own plan.\"", "variant_position": 1, "price_note": "One-time · ships in 24h", "features": "GainsSteel® Hydraulic Trainer\nHex tool + setup card\n1-year warranty · Free US shipping\n- 12-week program\n- Training music\n- Nutrition guide\n- Form-check coaching", "button_label": "Choose The Trainer →", "button_style": "outlined", "price_fallback": "$149", "note": "Add the full system for +$20." } },
-        "pl2": { "type": "plan", "settings": { "featured": true, "badge": "7 in 10 choose this", "tag": "Core Pro", "name": "The System", "tagline": "\"I need structure or I won't stick with it.\"", "variant_position": 2, "price_diff": "+$20", "price_note": "One-time · ships in 24h", "features": "GainsSteel® Hydraulic Trainer\nAB roller wheels (detachable)\n12-week progressive program\nTraining music playlists\nNutrition guide\nEmail support · 1-year warranty\nPersonal form-check coaching", "button_label": "Choose The System →", "button_style": "primary", "price_fallback": "$169" } },
-        "pl3": { "type": "plan", "settings": { "featured": false, "tag": "Pro Bundle", "name": "The Full Setup", "tagline": "\"I want zero guesswork.\"", "variant_position": 3, "price_diff": "+$30", "price_note": "One-time · ships in 24h", "features": "Everything in The System\nPersonal form-check video review\nMobility + recovery guide\nPriority email support\n1-year warranty · Free US shipping", "button_label": "Choose Full Setup →", "button_style": "soft", "price_fallback": "$199", "note": "Form-check alone is worth +$30 if starting fresh." } }
+        "plan1": { "type": "plan", "settings": { "featured": true, "badge": "This product", "tag": "CozyClaw", "name": "CozyClaw Mat", "tagline": "\"Soft enough to nap, smart enough to protect.\"", "price_note": "One-time · ships in 3–7 days", "features": "Ultra-soft A-grade plush\nSupportive pillow edge\nNon-slip backing\nMachine washable\n31.5 × 35.43 in coverage", "button_label": "Choose CozyClaw Mat →", "button_style": "primary", "price_fallback": "$35.97" } },
+        "plan2": { "type": "plan", "settings": { "tag": "Add-on", "badge": "💰 Biggest savings today", "name": "ChompClean Toy", "tagline": "\"For the kitty who needs a chew.\"", "price_note": "One-time · ships with mat", "features": "Dental-safe chew material\nCleans teeth while they play\n- Bundles with Mat (free combo shipping)", "button_label": "Add ChompClean →", "button_style": "outlined", "price_fallback": "$13.99" } },
+        "plan3": { "type": "plan", "settings": { "tag": "Add-on", "badge": "🏆 Best-selling combo", "name": "Easy Hair Removing Glove", "tagline": "\"Cuddle time meets cleanup.\"", "price_note": "One-time · ships with mat", "features": "Silicone fingertips\nGentle on coat, fierce on fur\n- Bundles with Mat (free combo shipping)", "button_label": "Add Glove →", "button_style": "soft", "price_fallback": "$7.99" } }
       },
-      "block_order": ["pl1", "pl2", "pl3"],
-      "settings": { "kicker": "Pick your system", "heading": "One system. Three ways in.", "vs_label": "Compare:", "vs_gym": "Gym: $50/month", "vs_brand": "GainsSteel: one time · any room", "show_trust": true, "trust_chips": "Free US Shipping\n90-Day Returns\n1-Year Warranty\nCancel within 1 Hour", "color_scheme": "scheme-1", "padding_top": 44, "padding_bottom": 44 }
+      "block_order": ["plan1", "plan2", "plan3"],
+      "settings": { "kicker": "⭐ Limited-time add-on discount", "heading": "Bundle & save.", "show_trust": true, "trust_chips": "Free US Shipping\n7-Day Money-Back\nSecure Checkout\nLoved by Real Cat Parents", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
-    "ct_final_cta": {
+    "ct_details": {
+      "type": "ct-aplus",
+      "blocks": {
+        "b1": { "type": "banner", "settings": { "emoji": "📏", "number": "01", "title": "Size", "body": "31.5 × 35.43 inches — generous coverage for sofas and large cushions. Folds compact for storage between deep-clean days.", "tag": "Generous coverage", "specs": "" } },
+        "b2": { "type": "banner", "settings": { "emoji": "🧶", "number": "02", "title": "Material", "body": "Polyester plush exterior with PP cotton fill — soft, warm, and resilient. Resists shedding and keeps its shape after washes.", "tag": "Soft, warm, resilient", "specs": "" } },
+        "b3": { "type": "banner", "settings": { "emoji": "📦", "number": "03", "title": "Package includes", "body": "1 × CozyClaw Mat, ready to lay down and lounge on right away. No assembly. No setup. Just smooth it onto your sofa.", "tag": "Ready out of the box", "specs": "" } }
+      },
+      "block_order": ["b1", "b2", "b3"],
+      "settings": { "kicker": "The details", "heading": "Made to be lived on.", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+    },
+    "ct_marquee": {
+      "type": "ct-marquee",
+      "blocks": {
+        "m1": { "type": "message", "settings": { "text": "LOVED BY THOUSANDS OF KITTIES 🐾" } },
+        "m2": { "type": "message", "settings": { "text": "92% 5-STAR · 15,000+ HAPPY CATS" } },
+        "m3": { "type": "message", "settings": { "text": "MADE FOR NAPS · BUILT FOR PROTECTION" } },
+        "m4": { "type": "message", "settings": { "text": "MACHINE WASHABLE · NON-SLIP BACKING" } },
+        "m5": { "type": "message", "settings": { "text": "RISK-FREE 7-DAY GUARANTEE" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5"],
+      "settings": { "speed": 22, "color_scheme": "scheme-1" }
+    },
+    "ct_reviews": {
+      "type": "ct-reviews",
+      "blocks": {
+        "rv1": { "type": "review", "settings": { "rating": 5, "text": "Cat approved!", "author": "Jackie", "meta": "Verified buyer", "verified": true } },
+        "rv2": { "type": "review", "settings": { "rating": 5, "text": "So good my cat practically never leaves it. Haven't washed it yet — will update if there are any issues, but so far it's perfect.", "author": "Zinnias", "meta": "Verified buyer", "verified": true } },
+        "rv3": { "type": "review", "settings": { "rating": 5, "text": "My cats cuddle on it almost every night and it's helped reduce cat hair on the rest of the sofa. Working well to satisfy their kneading obsession.", "author": "rlungtha", "meta": "Verified buyer", "verified": true } }
+      },
+      "block_order": ["rv1", "rv2", "rv3"],
+      "settings": { "kicker": "4.9 ★ · 92% 5-star · 13 reviews", "heading": "What cat parents say.", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+    },
+    "ct_promise": {
+      "type": "ct-aplus",
+      "blocks": {
+        "pr1": { "type": "banner", "settings": { "emoji": "🚚", "number": "01", "title": "Shipping", "body": "Orders are processed Monday–Friday in 3–7 business days. US delivery 5–15 business days; international 7–20 business days. Every order is tracked for your peace of mind — and we ship worldwide.", "tag": "Tracked · Worldwide", "specs": "" } },
+        "pr2": { "type": "banner", "settings": { "emoji": "🛡️", "number": "02", "title": "Risk-free 7-day guarantee", "body": "We back every CozyClaw Mat with an ironclad 7-day guarantee. If you're not satisfied for any reason, email support@cozyclaw.com and our team will make it right right away.", "tag": "7 days · No questions", "specs": "" } }
+      },
+      "block_order": ["pr1", "pr2"],
+      "settings": { "kicker": "Promise to you", "heading": "We take care of you, too.", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+    },
+    "ct_final": {
       "type": "ct-final-cta",
-      "settings": { "eyebrow": "Ready", "heading": "Your living room is ready. Are you?", "subheading": "12 weeks from now, you'll either have started — or you'll still be thinking about it.", "button_label": "Start tonight — from $149 →", "button_link": "shopify://collections/all", "button_label_2": "View full product details", "button_link_2": "", "show_trust": true, "trust_chips": "Free US Shipping\n90-Day Returns\n4.7 · 52 Reviews", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+      "settings": {
+        "eyebrow": "Ready to make their day cozier?",
+        "heading": "Give your cat the spot they'll never want to leave.",
+        "subheading": "$35.97 today. Free US shipping over $50. 7-day money-back guarantee.",
+        "button_label": "Add to Cart →",
+        "button_link": "shopify://collections/all",
+        "button_label_2": "See the bundle",
+        "show_trust": true,
+        "trust_chips": "Free shipping over $50\n7-day money-back\nSecure checkout\n92% 5-star · 13 reviews",
+        "color_scheme": "scheme-1",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
     },
     "ct_sticky_atc": {
       "type": "ct-sticky-atc",
       "settings": {
-        "emoji": "💪",
-        "product_name": "GainsSteel® Hydraulic Muscle Trainer",
-        "rating_text": "★★★★★ 4.7 · 52 reviews",
-        "button_label": "from $149 →",
+        "emoji": "🐈",
+        "product_name": "CozyClaw Mat",
+        "rating_text": "★★★★★ 92% 5-star · 13 reviews",
+        "button_label": "Add to Cart — $35.97 →",
         "button_link": "shopify://collections/all",
         "color_scheme": "scheme-1"
       }
@@ -174,18 +150,15 @@
   },
   "order": [
     "ct_hero",
-    "ct_stats",
-    "ct_who",
-    "ct_features",
-    "ct_when",
-    "ct_pillars",
-    "ct_journey",
-    "ct_compare",
-    "ct_reviews",
+    "ct_trust_bar",
+    "ct_value",
+    "ct_why",
     "ct_pricing",
-    "ct_email",
-    "ct_faq",
-    "ct_final_cta",
+    "ct_details",
+    "ct_marquee",
+    "ct_reviews",
+    "ct_promise",
+    "ct_final",
     "ct_sticky_atc"
   ]
 }
