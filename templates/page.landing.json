@@ -5,30 +5,36 @@
       "blocks": {
         "p1": { "type": "pill", "settings": { "text": "Free shipping over $50" } },
         "p2": { "type": "pill", "settings": { "text": "7-day money-back" } },
-        "p3": { "type": "pill", "settings": { "text": "Secure checkout" } }
+        "p3": { "type": "pill", "settings": { "text": "Secure checkout" } },
+        "t1": { "type": "thumb", "settings": { "emoji": "🐈", "is_primary": true } },
+        "t2": { "type": "thumb", "settings": { "emoji": "😻" } },
+        "t3": { "type": "thumb", "settings": { "emoji": "🛋️" } },
+        "t4": { "type": "thumb", "settings": { "emoji": "🐾" } }
       },
-      "block_order": ["p1", "p2", "p3"],
+      "block_order": ["p1", "p2", "p3", "t1", "t2", "t3", "t4"],
       "settings": {
-        "eyebrow": "🔥 2,175 sold",
-        "heading": "CozyClaw Mat",
+        "sale_badge": "🔥 2,175 sold",
+        "eyebrow": "",
+        "heading": "CozyClaw Lounge Mat",
         "h1_subtitle": "Protect your sofa without fighting your cat.",
         "subheading": "A plush 2-in-1 sofa cover and cat bed. Place it where your cat already hangs out — soft enough to nap on, beautiful enough to leave out when guests come over.",
-        "button_label": "Add to Cart — from $35.97 →",
+        "show_rating": true,
+        "rating_text": "92% 5-star · 13 verified reviews",
+        "price_now": "$35.97",
+        "price_was": "$44.97",
+        "price_save_label": "Save 20%",
+        "availability_text": "In stock — ready to ship in 3–7 business days",
+        "button_label": "Add to Cart →",
         "button_link": "shopify://collections/all",
         "button_label_2": "See why cats love it",
-        "show_rating": true,
-        "rating_text": "4.7 · 92% 5-star · 13 verified reviews",
+        "button_link_2": "#why",
         "card_emoji": "🐈",
-        "card_title": "CozyClaw Mat",
-        "card_price": "$35.97",
-        "card_tag_1": "★ 4.7",
-        "card_tag_2": "In stock",
         "float_icon": "📏",
         "float_label": "Generous size",
         "float_value": "31.5 × 35.43 in",
         "color_scheme": "scheme-1",
         "padding_top": 40,
-        "padding_bottom": 24
+        "padding_bottom": 40
       }
     },
     "ct_trust_bar": {
@@ -66,7 +72,7 @@
         "u4": { "type": "card", "settings": { "emoji": "🧼", "tag": "Easy clean", "title": "Durable & easy to clean", "desc": "Strong stitching and high-density plush resist shedding and fading. Fully machine washable for easy everyday care." } }
       },
       "block_order": ["u1", "u2", "u3", "u4"],
-      "settings": { "kicker": "Why choose us", "heading": "Your cat will love you even more.", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+      "settings": { "kicker": "Why choose us", "heading": "Your cat will love you even more.", "layout": "pillars", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
     "ct_bundle": {
       "type": "ct-pricing",
@@ -76,10 +82,12 @@
           "settings": {
             "featured": true,
             "badge": "This product",
+            "emoji": "🐈",
             "tag": "CozyClaw",
-            "name": "CozyClaw Mat",
+            "name": "CozyClaw Lounge Mat",
             "tagline": "\"Soft enough to nap, smart enough to protect.\"",
             "price_note": "One-time · ships in 3–7 days",
+            "save_text": "Save 20%",
             "features": "Ultra-soft A-grade plush\nSupportive pillow edge\nNon-slip backing\nMachine washable\n31.5 × 35.43 in",
             "button_label": "Add CozyClaw Mat →",
             "button_style": "primary",
@@ -91,9 +99,11 @@
           "settings": {
             "tag": "Add-on",
             "badge": "💰 Biggest savings today",
+            "emoji": "🦴",
             "name": "ChompClean Toy",
             "tagline": "\"For the kitty who needs a chew.\"",
             "price_note": "Pairs with mat · ships together",
+            "save_text": "Save $12.98",
             "features": "Dental-safe chew material\nCleans teeth while they play\n- Bundles with Mat (free combo shipping)",
             "button_label": "Add ChompClean →",
             "button_style": "outlined",
@@ -105,9 +115,11 @@
           "settings": {
             "tag": "Add-on",
             "badge": "🏆 Best-selling combo",
+            "emoji": "🧤",
             "name": "Easy Hair Removing Glove",
             "tagline": "\"Cuddle time meets cleanup.\"",
             "price_note": "Pairs with mat · ships together",
+            "save_text": "Save $5.98",
             "features": "Silicone fingertips\nGentle on coat, fierce on fur\n- Bundles with Mat (free combo shipping)",
             "button_label": "Add Glove →",
             "button_style": "soft",
@@ -154,7 +166,7 @@
         "rv3": { "type": "review", "settings": { "rating": 5, "text": "My cats cuddle on it almost every night and it's helped reduce cat hair on the rest of the sofa. Working well to satisfy their kneading obsession.", "author": "rlungtha", "meta": "Verified buyer", "verified": true } }
       },
       "block_order": ["rv1", "rv2", "rv3"],
-      "settings": { "kicker": "4.9 ★ · 92% 5-star · 13 reviews", "heading": "What cat parents say.", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+      "settings": { "kicker": "", "heading": "What cat parents say.", "rating_number": "4.9", "rating_count": "92% 5-star · based on 13 reviews · Join our 15,000+ happy customers", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
     "ct_promise": {
       "type": "ct-aplus",
@@ -173,8 +185,9 @@
         "subheading": "$35.97 today. Free shipping over $50. 7-day money-back guarantee.",
         "button_label": "Add to Cart →",
         "button_link": "shopify://collections/all",
-        "button_label_2": "See the bundle",
+        "button_label_2": "",
         "show_trust": true,
+        "trust_style": "pills",
         "trust_chips": "Free shipping over $50\n7-day money-back\nSecure checkout\n92% 5-star · 13 reviews",
         "color_scheme": "scheme-1",
         "padding_top": 56,
@@ -185,7 +198,7 @@
       "type": "ct-sticky-atc",
       "settings": {
         "emoji": "🐈",
-        "product_name": "CozyClaw Mat",
+        "product_name": "CozyClaw Lounge Mat",
         "rating_text": "★★★★★ 92% 5-star · 13 reviews",
         "button_label": "Add to Cart — $35.97 →",
         "button_link": "shopify://collections/all",
