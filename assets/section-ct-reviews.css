@@ -15,7 +15,7 @@
 .ct-reviews-rating-col .ct-rating-count{font-size:14px;color:var(--ct-text-3)}
 @media(max-width:600px){.ct-reviews-big-num{font-size:44px}}
 @media(max-width:760px){
-  .ct-reviews-track{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:12px}
+  .ct-reviews-track{display:flex;grid-template-columns:none;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:12px;touch-action:pan-x;overscroll-behavior-x:contain;overscroll-behavior-y:auto}
   .ct-reviews-track::-webkit-scrollbar{display:none}
   .ct-review-card{flex:0 0 82%;scroll-snap-align:start}
 }
@@ -28,7 +28,7 @@
 @media(max-width:760px){.ct-reviews-rail-dots{display:flex}}
 
 /* ---- Carousel mode (ct-carousel.js) ---- */
-.ct-reviews-carousel .ct-reviews-track{display:flex;grid-template-columns:none;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.ct-reviews-carousel .ct-reviews-track{display:flex;grid-template-columns:none;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain;overscroll-behavior-y:auto}
 .ct-reviews-carousel .ct-reviews-track::-webkit-scrollbar{display:none}
 .ct-reviews-carousel .ct-review-card{flex:0 0 calc((100% - 32px) / 3);scroll-snap-align:start}
 @media(max-width:760px){.ct-reviews-carousel .ct-review-card{flex:0 0 82%}}
