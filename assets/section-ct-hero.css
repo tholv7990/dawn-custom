@@ -58,6 +58,6 @@
 .ct-hero-split__trust-item{display:inline-flex;align-items:center;gap:7px}
 @media(max-width:860px){
   .ct-hero-split{flex-direction:column;min-height:0;max-width:none;overflow:visible}
-  .ct-hero-split__photo{position:static;width:100%;height:auto;-webkit-mask:none;mask:none;order:1}
-  .ct-hero-split__text{padding:40px var(--ct-gutter, 24px);order:2}
+  .ct-hero-split__text{padding:24px var(--ct-gutter, 24px) 12px;order:1}
+  .ct-hero-split__photo{position:static;width:100%;height:auto;-webkit-mask:none;mask:none;order:2}
 }
