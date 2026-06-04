@@ -62,6 +62,86 @@
       </div>
     {%- endif -%}
 
+  {%- elsif layout == 'tier-pair' -%}
+    <section class="ct-tier-pair color-{{ section.settings.color_scheme }}" id="{{ section_id }}">
+      <div class="page-width">
+        {%- if section.settings.kicker != blank or section.settings.heading != blank or section.settings.subheading != blank -%}
+          <div class="ct-sec-head ct-sec-head--center">
+            {%- if section.settings.kicker != blank -%}<span class="ct-eyebrow">{{ section.settings.kicker }}</span>{%- endif -%}
+            {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+            {%- if section.settings.subheading != blank -%}<p class="ct-lead">{{ section.settings.subheading }}</p>{%- endif -%}
+          </div>
+        {%- endif -%}
+        <div class="ct-tier-pair__grid">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'plan' -%}
+              {%- assign tier_p = block.settings.block_product -%}
+              <div class="ct-tier{% if block.settings.featured %} ct-tier--pop{% endif %}" {{ block.shopify_attributes }}>
+                {%- if block.settings.featured and block.settings.badge != blank -%}
+                  <span class="ct-tier-badge">{{ block.settings.badge }}</span>
+                {%- endif -%}
+                <h3 class="ct-tier__name">{{ block.settings.name }}</h3>
+                {%- if block.settings.tagline != blank -%}<span class="ct-tier__sub">{{ block.settings.tagline }}</span>{%- endif -%}
+                {%- if block.settings.image != blank -%}
+                  <img class="ct-tier__img" src="{{ block.settings.image | image_url: width: 600 }}" width="600" height="375" alt="{{ block.settings.image.alt | escape | default: block.settings.name }}" loading="lazy">
+                {%- elsif tier_p != blank and tier_p.featured_image != blank -%}
+                  <img class="ct-tier__img" src="{{ tier_p.featured_image | image_url: width: 600 }}" width="600" height="375" alt="{{ tier_p.title }}" loading="lazy">
+                {%- endif -%}
+                {%- if block.settings.features != blank -%}
+                  <ul class="ct-tier__feat">
+                    {%- assign feat_lines = block.settings.features | newline_to_br | split: '<br />' -%}
+                    {%- for line in feat_lines -%}
+                      {%- assign clean = line | strip | strip_newlines -%}
+                      {%- if clean != blank -%}
+                        {%- assign is_hl = false -%}
+                        {%- if clean contains '**' -%}{%- assign is_hl = true -%}{%- assign clean = clean | replace: '**', '' -%}{%- endif -%}
+                        <li{% if is_hl %} class="ct-tier__feat--hl"{% endif %}>
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>{{ clean }}
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+                <div class="ct-tier__price">
+                  <span class="ct-tier__per">from</span>
+                  <b>{% if tier_p != blank %}{{ tier_p.price_min | money }}{% else %}{{ block.settings.price_fallback }}{% endif %}</b>
+                  {%- if block.settings.featured -%}<span class="ct-tier__ship">ships free</span>{%- endif -%}
+                </div>
+                <a href="{{ block.settings.button_link | default: '#' }}" class="ct-btn ct-btn--{% if block.settings.featured %}primary{% else %}outlined{% endif %} ct-btn--block">{{ block.settings.button_label | default: 'Choose this' }}</a>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- assign has_addons = false -%}
+        {%- for block in section.blocks -%}{%- if block.type == 'addon' -%}{%- assign has_addons = true -%}{%- endif -%}{%- endfor -%}
+        {%- if has_addons -%}
+          <div class="ct-bundle__addons">
+            {%- if section.settings.addons_label != blank -%}
+              <span class="ct-bundle__addons-label">{{ section.settings.addons_label }}</span>
+            {%- endif -%}
+            <div class="ct-bundle__addons-grid">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'addon' -%}
+                  {%- assign ap = block.settings.product -%}
+                  {%- assign aimg = block.settings.image -%}
+                  {%- if aimg == blank and ap != blank -%}{%- assign aimg = ap.featured_image -%}{%- endif -%}
+                  <div class="ct-bundle__addon" {{ block.shopify_attributes }}>
+                    {%- if aimg != blank -%}
+                      <span class="ct-bundle__addon-img"><img src="{{ aimg | image_url: width: 120 }}" width="120" height="120" alt="{{ aimg.alt | escape | default: block.settings.title | default: ap.title }}" loading="lazy"></span>
+                    {%- endif -%}
+                    <div>
+                      <b>{{ block.settings.title | default: ap.title }}</b>
+                      {%- if block.settings.desc != blank -%}<small>{{ block.settings.desc }}</small>{%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </section>
+
   {%- else -%}
     {%- comment -%} Original plans layout (variant-driven product picker) {%- endcomment -%}
     <div class="ct-plan-grid">
@@ -129,7 +209,8 @@
   "class": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
-    { "type": "select", "id": "layout", "label": "Layout", "options": [ { "value": "plans", "label": "Plans (full cards)" }, { "value": "bundle", "label": "Bundle (compact)" } ], "default": "plans" },
+    { "type": "select", "id": "layout", "label": "Layout", "options": [ { "value": "plans", "label": "Plans (full cards)" }, { "value": "bundle", "label": "Bundle (compact)" }, { "value": "tier-pair", "label": "2-tier comparison + addons (homepage)" } ], "default": "plans" },
+    { "type": "text", "id": "addons_label", "label": "Addons strip label (tier-pair only)", "default": "Complete their setup — optional add-ons" },
     { "type": "text", "id": "anchor_id", "label": "Anchor id (e.g. \"bundle\")" },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Pick your system" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "One system. Three ways in." },
@@ -152,6 +233,7 @@
       "name": "Plan / bundle card",
       "settings": [
         { "type": "product", "id": "block_product", "label": "Product (for dynamic source binding, bundle layout)", "info": "Pick the product this card represents so name / price fields can be connected to live Shopify data via the chain-link 'Connect dynamic source' icon. Plans layout uses the section-level Product + variant number instead." },
+        { "type": "image_picker", "id": "image", "label": "Card image", "info": "Overrides the emoji. If left blank, the picked product's featured image is used; if no product is picked, falls back to the emoji." },
         { "type": "checkbox", "id": "featured", "label": "Featured (accent border)", "default": false },
         { "type": "text", "id": "badge", "label": "Flag / badge (top pill)" },
         { "type": "select", "id": "flag_style", "label": "Flag color (bundle layout)", "options": [ { "value": "accent", "label": "Accent (purple)" }, { "value": "urgency", "label": "Urgency (red)" } ], "default": "accent" },
@@ -163,7 +245,7 @@
         { "type": "text", "id": "price_diff", "label": "Price diff (plans)" },
         { "type": "text", "id": "price_note", "label": "Price note (plans)" },
         { "type": "text", "id": "save_text", "label": "Save chip" },
-        { "type": "textarea", "id": "features", "label": "Features (plans, one per line)" },
+        { "type": "textarea", "id": "features", "label": "Features (plans / tier-pair, one per line)", "info": "One per line. Wrap a line in **double asterisks** to render it green-highlighted in tier-pair layout (FREE shipping, etc.)." },
         { "type": "text", "id": "button_label", "label": "Per-card button (plans)" },
         { "type": "select", "id": "button_style", "label": "Button style (plans)", "options": [ { "value": "primary", "label": "Primary" }, { "value": "outlined", "label": "Outlined" }, { "value": "soft", "label": "Soft" } ], "default": "primary" },
         { "type": "url", "id": "button_link", "label": "Button link (plans)" },
@@ -171,9 +253,19 @@
         { "type": "text", "id": "price_was", "label": "Was price (struck, bundle)" },
         { "type": "text", "id": "note", "label": "Note under button (plans)" }
       ]
+    },
+    {
+      "type": "addon",
+      "name": "Add-on (tier-pair layout only)",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Add-on product" },
+        { "type": "image_picker", "id": "image", "label": "Image (overrides product.featured_image)" },
+        { "type": "text", "id": "title", "label": "Title (overrides product.title)" },
+        { "type": "text", "id": "desc",  "label": "One-line description" }
+      ]
     }
   ],
-  "max_blocks": 4,
+  "max_blocks": 8,
   "presets": [
     {
       "name": "CT Pricing",

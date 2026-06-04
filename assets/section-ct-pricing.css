@@ -34,9 +34,40 @@
 .ct-bundle-flag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:11.5px;font-weight:700;color:#fff;background:var(--ct-accent);padding:5px 13px;border-radius:var(--ct-r-pill);white-space:nowrap}
 .ct-bundle-flag--urgency{background:var(--ct-urgency)}
 .ct-bundle-emoji{font-size:54px;line-height:1;margin-bottom:10px}
+.ct-bundle-media{display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.ct-bundle-img{width:96px;height:96px;object-fit:cover;border-radius:var(--ct-r-md);background:var(--ct-bg-surface);display:block}
 .ct-bundle-name{font-weight:700;font-size:16px;color:var(--ct-text)}
 .ct-bundle-prices{margin:10px 0 4px;display:flex;gap:8px;justify-content:center;align-items:baseline}
 .ct-bundle-now{font-weight:800;font-size:20px;color:var(--ct-accent-text)}
 .ct-bundle-was{color:var(--ct-price-was);text-decoration:line-through;font-size:14px}
 .ct-bundle-save{font-size:12px;font-weight:700;color:var(--ct-urgency)}
 .ct-bundle-bottom{display:flex;justify-content:center;margin-top:32px}
+
+/* tier-pair layout — homepage 2-tier bundle per cozyclaw-homepage.html §bundle */
+.ct-tier-pair{padding:56px 0}
+.ct-tier-pair__grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:860px;margin:0 auto;align-items:stretch}
+.ct-tier{position:relative;background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);padding:26px 24px;display:flex;flex-direction:column;transition:transform var(--ct-dur-base, 240ms) var(--ct-ease-out, cubic-bezier(.22,1,.36,1)),box-shadow var(--ct-dur-base, 240ms)}
+.ct-tier:hover{transform:translateY(-4px);box-shadow:var(--ct-shadow-md)}
+.ct-tier--pop{border:2px solid var(--ct-accent);box-shadow:var(--ct-shadow-md)}
+.ct-tier-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--ct-accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:6px 16px;border-radius:var(--ct-r-pill);box-shadow:var(--ct-shadow-sm)}
+.ct-tier__name{font-family:var(--ct-font-display);font-size:21px;margin:0;color:var(--ct-text)}
+.ct-tier__sub{display:block;font-size:13.5px;color:var(--ct-text-2);margin-top:3px}
+.ct-tier__img{width:100%;aspect-ratio:16/10;object-fit:contain;background:var(--ct-bg-surface);border-radius:var(--ct-r-md);margin:16px 0}
+.ct-tier__feat{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:10px}
+.ct-tier__feat li{display:flex;gap:9px;align-items:flex-start;font-size:14px;color:var(--ct-text-2)}
+.ct-tier__feat svg{width:17px;height:17px;flex-shrink:0;margin-top:1px;stroke:var(--ct-success);fill:none;stroke-width:2.4}
+.ct-tier__feat--hl{color:var(--ct-success);font-weight:600}
+.ct-tier__price{font-family:var(--ct-font-display);margin-bottom:16px;display:flex;align-items:baseline;gap:8px}
+.ct-tier__per{font-size:12.5px;color:var(--ct-text-3);font-family:var(--ct-font-body)}
+.ct-tier__price b{font-size:27px;color:var(--ct-text);font-weight:600}
+.ct-tier__ship{font-size:13px;color:var(--ct-success);font-weight:600;font-family:var(--ct-font-body)}
+.ct-btn--block{width:100%;justify-content:center;margin-top:auto}
+.ct-bundle__addons{max-width:860px;margin:22px auto 0;background:var(--ct-accent-subtle);border:1px solid var(--ct-accent-border);border-radius:var(--ct-r-lg);padding:20px 26px}
+.ct-bundle__addons-label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ct-text-3);margin-bottom:6px}
+.ct-bundle__addons-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 26px}
+.ct-bundle__addon{display:flex;gap:12px;align-items:flex-start;padding:11px 0}
+.ct-bundle__addon-img{width:42px;height:42px;flex-shrink:0;border-radius:var(--ct-r-sm);background:var(--ct-bg-raised);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.ct-bundle__addon-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ct-bundle__addon b{display:block;font-size:14.5px;color:var(--ct-text)}
+.ct-bundle__addon small{font-size:12.5px;color:var(--ct-text-2)}
+@media(max-width:760px){.ct-tier-pair__grid{grid-template-columns:1fr}.ct-bundle__addons-grid{grid-template-columns:1fr}}
