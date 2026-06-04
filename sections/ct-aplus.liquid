@@ -34,6 +34,60 @@
       {%- endfor -%}
     </div>
 
+  {%- elsif layout == 'materials-care' -%}
+    {%- comment -%} 2-panel spec rows per cozyclaw-homepage.html §materials {%- endcomment -%}
+    <section class="ct-aplus ct-aplus--materials color-{{ section.settings.color_scheme }}" id="{{ section.settings.anchor_id }}">
+      <div class="page-width">
+        {%- if section.settings.kicker != blank or section.settings.heading != blank -%}
+          <div class="ct-sec-head ct-sec-head--center">
+            {%- if section.settings.kicker != blank -%}<span class="ct-eyebrow">{{ section.settings.kicker }}</span>{%- endif -%}
+            {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+          </div>
+        {%- endif -%}
+        <div class="ct-aplus__mc-grid">
+          {%- for block in section.blocks -%}
+            <div class="ct-aplus__mc-panel" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}<h3>{{ block.settings.title }}</h3>{%- endif -%}
+              {%- if block.settings.specs_rows != blank -%}
+                {%- assign rows = block.settings.specs_rows | newline_to_br | split: '<br />' -%}
+                {%- for row in rows -%}
+                  {%- assign clean = row | strip | strip_newlines -%}
+                  {%- if clean != blank and clean contains '|' -%}
+                    {%- assign parts = clean | split: '|' -%}
+                    <div class="ct-aplus__spec"><span>{{ parts[0] | strip }}</span><b>{{ parts[1] | strip }}</b></div>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}<p class="ct-aplus__mc-note">{{ block.settings.body }}</p>{%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+
+  {%- elsif layout == 'guarantee-4' -%}
+    {%- comment -%} 4-item accent-subtle panel per cozyclaw-homepage.html §guarantee {%- endcomment -%}
+    <section class="ct-aplus ct-aplus--guarantee color-{{ section.settings.color_scheme }}" id="{{ section.settings.anchor_id }}">
+      <div class="page-width">
+        <div class="ct-aplus__guarantee-panel">
+          {%- for block in section.blocks -%}
+            <div class="ct-aplus__guarantee-item" {{ block.shopify_attributes }}>
+              <span class="ct-aplus__guarantee-ic">
+                {%- case block.settings.icon_svg -%}
+                  {%- when 'shield' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 5-3 7-7 9-4-2-7-4-7-9V6z"/></svg>
+                  {%- when 'truck'  -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h13V6H3zM16 9h3l2 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+                  {%- when 'box'    -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4z"/><path d="M4 7v7l8 4 8-4V7"/></svg>
+                  {%- when 'lock'   -%}<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+                {%- endcase -%}
+              </span>
+              {%- if block.settings.title != blank -%}<b>{{ block.settings.title }}</b>{%- endif -%}
+              {%- if block.settings.body != blank -%}<p>{{ block.settings.body }}</p>{%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+
   {%- else -%}
     {%- comment -%} Default banners layout (horizontal cards w/ image + text) {%- endcomment -%}
     <div class="ct-aplus-list">
@@ -73,9 +127,11 @@
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
     { "type": "select", "id": "layout", "label": "Layout", "options": [
-      { "value": "banners", "label": "Banners (horizontal image + text)" },
-      { "value": "spec-grid", "label": "Spec grid (3 compact k/v cards)" },
-      { "value": "assure-grid", "label": "Assurance grid (2 cards w/ h3 + body)" }
+      { "value": "banners",        "label": "Banners (image + text)" },
+      { "value": "spec-grid",      "label": "Spec grid (3 compact)" },
+      { "value": "assure-grid",    "label": "Assure grid (2 assurance cards)" },
+      { "value": "materials-care", "label": "Materials & care (2 panels of spec rows)" },
+      { "value": "guarantee-4",    "label": "Guarantee panel (4 items, accent-subtle bg)" }
     ], "default": "banners" },
     { "type": "text", "id": "anchor_id", "label": "Anchor id (e.g. \"details\")", "info": "Renders id=\"\" on the section wrapper so nav links like #details scroll here." },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "How it works" },
@@ -95,7 +151,17 @@
         { "type": "text", "id": "title", "label": "Title / spec key", "default": "Feature — short headline" },
         { "type": "textarea", "id": "body", "label": "Body / spec value", "default": "2–3 sentences explaining the benefit." },
         { "type": "text", "id": "tag", "label": "Tag pill (banners layout)" },
-        { "type": "text", "id": "specs", "label": "Specs (comma-separated, banners layout)", "default": "Spec 1, Spec 2" }
+        { "type": "text", "id": "specs", "label": "Specs (comma-separated, banners layout)", "default": "Spec 1, Spec 2" },
+        { "type": "textarea", "id": "specs_rows", "label": "Spec rows (materials-care only)",
+          "info": "One per line, format: 'Label | Value'. Example: 'Cover | Soft coral fleece'" },
+        { "type": "select", "id": "icon_svg", "label": "Icon (guarantee-4 only)",
+          "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck",  "label": "Truck" },
+            { "value": "box",    "label": "Box" },
+            { "value": "lock",   "label": "Lock" }
+          ],
+          "default": "shield" }
       ]
     }
   ],

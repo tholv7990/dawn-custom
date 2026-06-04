@@ -27,3 +27,25 @@
 .ct-assure-card__title{font-family:var(--ct-font-display);font-size:21px;font-weight:600;color:var(--ct-text);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .ct-assure-card__body{color:var(--ct-text-2);font-size:14.5px;line-height:1.6}
 .ct-assure-card__body a{color:var(--ct-accent-text);font-weight:600}
+
+/* materials-care — 2-panel spec rows per cozyclaw-homepage.html §materials */
+.ct-aplus--materials{padding:56px 0}
+.ct-aplus__mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:var(--ct-mw, 1280px);margin:0 auto}
+.ct-aplus__mc-panel{background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);padding:30px;box-shadow:var(--ct-shadow-sm)}
+.ct-aplus__mc-panel h3{font-family:var(--ct-font-display);font-size:20px;margin-bottom:16px;color:var(--ct-text)}
+.ct-aplus__spec{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--ct-border-subtle);font-size:14.5px}
+.ct-aplus__spec:last-of-type{border-bottom:none}
+.ct-aplus__spec span{color:var(--ct-text-3)}
+.ct-aplus__spec b{font-weight:600;text-align:right;color:var(--ct-text)}
+.ct-aplus__mc-note{font-size:13.5px;color:var(--ct-text-3);margin-top:16px}
+@media(max-width:760px){.ct-aplus__mc-grid{grid-template-columns:1fr}}
+
+/* guarantee-4 — 4-item accent-subtle panel per cozyclaw-homepage.html §guarantee */
+.ct-aplus--guarantee{padding:56px 0}
+.ct-aplus__guarantee-panel{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:40px 30px;background:var(--ct-accent-subtle);border:1px solid var(--ct-accent-border);border-radius:var(--ct-r-xl);max-width:var(--ct-mw, 1280px);margin:0 auto}
+.ct-aplus__guarantee-item{text-align:center;padding:6px}
+.ct-aplus__guarantee-ic{width:50px;height:50px;border-radius:50%;background:var(--ct-bg-raised);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:var(--ct-shadow-xs)}
+.ct-aplus__guarantee-ic svg{width:24px;height:24px;stroke:var(--ct-accent-strong);stroke-width:1.7;fill:none}
+.ct-aplus__guarantee-item b{font-size:15px;display:block;margin-bottom:4px;color:var(--ct-text)}
+.ct-aplus__guarantee-item p{font-size:13px;color:var(--ct-text-2);margin:0}
+@media(max-width:760px){.ct-aplus__guarantee-panel{grid-template-columns:1fr 1fr;gap:26px 18px}}
