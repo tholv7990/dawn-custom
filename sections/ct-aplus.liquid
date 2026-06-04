@@ -37,13 +37,7 @@
   {%- elsif layout == 'materials-care' -%}
     {%- comment -%} 2-panel spec rows per cozyclaw-homepage.html §materials {%- endcomment -%}
     <section class="ct-aplus ct-aplus--materials color-{{ section.settings.color_scheme }}" id="{{ section.settings.anchor_id }}">
-      <div class="page-width">
-        {%- if section.settings.kicker != blank or section.settings.heading != blank -%}
-          <div class="ct-sec-head ct-sec-head--center">
-            {%- if section.settings.kicker != blank -%}<span class="ct-eyebrow">{{ section.settings.kicker }}</span>{%- endif -%}
-            {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
-          </div>
-        {%- endif -%}
+      <div class="ct-aplus__mc-inner">
         <div class="ct-aplus__mc-grid">
           {%- for block in section.blocks -%}
             <div class="ct-aplus__mc-panel" {{ block.shopify_attributes }}>
