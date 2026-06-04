@@ -1,0 +1,16 @@
+/* section-ct-size-color-guide.css — split swatches + sizes per cozyclaw-homepage.html §guide */
+.ct-guide{background:var(--ct-bg-surface)}
+.ct-guide__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;max-width:var(--ct-mw, 1280px);margin:0 auto}
+.ct-guide__h2{font-family:var(--ct-font-display);font-size:30px;font-weight:600;color:var(--ct-text);margin:10px 0 6px;line-height:1.1}
+.ct-guide__swatches{display:flex;gap:16px;margin:18px 0 8px}
+.ct-guide__sw{text-align:center;font-size:13px;color:var(--ct-text-2);flex:1;max-width:130px}
+.ct-guide__sw img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--ct-r-md);border:1px solid var(--ct-border-subtle);box-shadow:var(--ct-shadow-sm);margin:0 auto 8px;background:var(--ct-bg-raised)}
+.ct-guide__sw-label{display:block}
+.ct-guide__tip{font-size:13px;color:var(--ct-text-3);margin-top:14px}
+.ct-guide__sizes{display:grid;gap:14px}
+.ct-guide__size-card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-md);padding:20px 22px;display:flex;gap:18px;align-items:center}
+.ct-guide__size-badge{width:54px;height:54px;border-radius:var(--ct-r-sm);background:var(--ct-accent);color:#fff;font-family:var(--ct-font-display);font-weight:700;font-size:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ct-guide__size-card b{font-size:16px;color:var(--ct-text);font-weight:600;display:block}
+.ct-guide__size-card p{font-size:13.5px;color:var(--ct-text-2);margin:4px 0 0}
+.ct-guide__warn{padding:24px;text-align:center;color:var(--ct-text-3);background:var(--ct-bg-raised);border:1px dashed var(--ct-border);border-radius:var(--ct-r-md);max-width:var(--ct-mw, 1280px);margin:0 auto}
+@media(max-width:760px){.ct-guide__grid{grid-template-columns:1fr;gap:26px}}
