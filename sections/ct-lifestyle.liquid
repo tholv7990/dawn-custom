@@ -11,11 +11,13 @@
     {%- endif -%}
     <div class="ct-life__grid">
       {%- for block in section.blocks -%}
-        <figure class="ct-life__tile" {{ block.shopify_attributes }}>
+        <figure class="ct-life__tile{% if block.settings.image == blank %} ct-life__tile--ph{% endif %}" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
             <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.image.alt | escape | default: block.settings.caption }}" loading="lazy" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}">
+            {%- if block.settings.caption != blank -%}<figcaption>{{ block.settings.caption }}</figcaption>{%- endif -%}
+          {%- else -%}
+            {%- if block.settings.caption != blank -%}<span class="ct-life__tile-ph">{{ block.settings.caption }}</span>{%- endif -%}
           {%- endif -%}
-          {%- if block.settings.caption != blank -%}<figcaption>{{ block.settings.caption }}</figcaption>{%- endif -%}
         </figure>
       {%- endfor -%}
     </div>
