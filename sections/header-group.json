@@ -11,11 +11,12 @@
         "color_scheme": "scheme-1"
       },
       "blocks": {
-        "m1": { "type": "message", "settings": { "text": "🚚 Free shipping on orders $75+" } },
-        "m2": { "type": "message", "settings": { "text": "🌙 30-night risk-free trial" } },
-        "m3": { "type": "message", "settings": { "text": "🐾 A cozy spot for dogs & cats" } }
+        "m1": { "type": "message", "settings": { "text": "🎁 Claim your 15% off — sign up inside", "link": "#signup-popup" } },
+        "m2": { "type": "message", "settings": { "text": "🚚 Free shipping on orders $75+" } },
+        "m3": { "type": "message", "settings": { "text": "🌙 30-night risk-free trial" } },
+        "m4": { "type": "message", "settings": { "text": "🐾 A cozy spot for dogs & cats" } }
       },
-      "block_order": ["m1","m2","m3"]
+      "block_order": ["m1","m2","m3","m4"]
     },
     "header": {
       "type": "header",
