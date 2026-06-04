@@ -11,7 +11,7 @@
         "h1_em": "Your cleaner sofa.",
         "subheading": "CozyClaw's deep, pillow-edged pet sofa is soft enough that they'll finally pick their own bed over your couch — keeping the fur, dander, and claws off your furniture.",
         "button_label": "Shop CozyClaw",
-        "button_link": "#bundle",
+        "button_link": "",
         "button_label_2": "See sizes & colors",
         "button_link_2": "#guide",
         "trust_line": "★★★★★ 4.9/5 · 13 reviews | ✓ 30-night trial | ✓ Free shipping $75+",
@@ -219,7 +219,7 @@
             "features": "One bed in your chosen color & size\n30-night risk-free trial",
             "price_fallback": "$22.82",
             "button_label": "Choose single",
-            "button_link": "#buy"
+            "button_link": ""
           }
         },
         "plan2": {
@@ -233,7 +233,7 @@
             "features": "Two beds — mix colors & sizes freely\n**FREE shipping on the whole order**\n30-night risk-free trial",
             "price_fallback": "$45.64",
             "button_label": "Choose double",
-            "button_link": "#buy"
+            "button_link": ""
           }
         },
         "addon1": { "type": "addon", "settings": { "product": "chompclean-toy",           "desc": "A squeaky chew that keeps playtime on their bed." } },
@@ -257,6 +257,7 @@
     "ct_final": {
       "type": "ct-final-cta",
       "settings": {
+        "product": "cozy-plush-pet-sofa",
         "eyebrow": "A cozier pet, a cleaner home",
         "heading": "Give them their favorite spot.",
         "subheading": "Give your dog or cat a cozier spot of their own and keep your home a little tidier — backed by a 30-night risk-free trial and free shipping over $75.",
@@ -264,7 +265,7 @@
         "price_was": "",
         "price_save_label": "",
         "button_label": "Shop CozyClaw now",
-        "button_link": "#bundle",
+        "button_link": "",
         "button_label_2": "",
         "show_trust": false,
         "trust_chips": "",
@@ -281,7 +282,7 @@
         "product_name": "Cozy Plush Pet Sofa",
         "rating_text": "★★★★★ 92% 5-star · 13 reviews",
         "button_label": "Add to Cart",
-        "button_link": "#bundle",
+        "button_link": "",
         "color_scheme": "scheme-1"
       }
     }

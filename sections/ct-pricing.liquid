@@ -107,7 +107,9 @@
                   <b>{% if tier_p != blank %}{{ tier_p.price_min | money }}{% else %}{{ block.settings.price_fallback }}{% endif %}</b>
                   {%- if block.settings.featured -%}<span class="ct-tier__ship">ships free</span>{%- endif -%}
                 </div>
-                <a href="{{ block.settings.button_link | default: '#' }}" class="ct-btn ct-btn--{% if block.settings.featured %}primary{% else %}outlined{% endif %} ct-btn--block">{{ block.settings.button_label | default: 'Choose this' }}</a>
+                {%- assign tier_btn_link = block.settings.button_link -%}
+                {%- if tier_btn_link == blank and tier_p != blank -%}{%- assign tier_btn_link = tier_p.url -%}{%- endif -%}
+                <a href="{{ tier_btn_link | default: '#' }}" class="ct-btn ct-btn--{% if block.settings.featured %}primary{% else %}outlined{% endif %} ct-btn--block">{{ block.settings.button_label | default: 'Choose this' }}</a>
               </div>
             {%- endif -%}
           {%- endfor -%}
