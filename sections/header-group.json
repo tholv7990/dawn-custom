@@ -4,11 +4,18 @@
   "sections": {
     "ct_announce": {
       "type": "ct-announce",
-      "blocks": {
-        "msg-1": { "type": "message", "settings": { "text": "🚚 Free shipping on orders over $50 · ★★★★★ 92% 5-star · Loved by 15,000+ cat parents", "link": "" } }
+      "settings": {
+        "display": "static-row",
+        "dismissible": false,
+        "rotate_seconds": 4,
+        "color_scheme": "scheme-1"
       },
-      "block_order": ["msg-1"],
-      "settings": { "dismissible": true, "rotate_seconds": 4, "color_scheme": "scheme-1" }
+      "blocks": {
+        "m1": { "type": "message", "settings": { "text": "🚚 Free shipping on orders $75+" } },
+        "m2": { "type": "message", "settings": { "text": "🌙 30-night risk-free trial" } },
+        "m3": { "type": "message", "settings": { "text": "🐾 A cozy spot for dogs & cats" } }
+      },
+      "block_order": ["m1","m2","m3"]
     },
     "header": {
       "type": "header",
