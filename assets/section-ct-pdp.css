@@ -139,3 +139,14 @@ ct-scarcity { display: block; }
 .ct-pay__icons svg { height: 24px; width: auto; }
 .ct-pay__secure { display: inline-flex; align-items: center; gap: 6px; font-size: var(--ct-text-sm); color: var(--ct-text-2); }
 .ct-pay__secure svg { width: 14px; height: 14px; }
+
+/* ============ Benefits checklist (PDP info column, top) ============ */
+.ct-benefits { list-style: none; padding: 0; margin: 0 0 26px; display: grid; gap: 12px; }
+.ct-benefits li { display: flex; gap: 11px; align-items: flex-start; font-size: 15px; color: var(--ct-text-2); line-height: 1.45; }
+.ct-benefits li b { color: var(--ct-text); font-weight: 700; }
+.ct-benefits__desc { color: var(--ct-text-2); font-weight: 400; }
+.ct-benefits__check { width: 18px; height: 18px; stroke: var(--ct-accent); fill: none; stroke-width: 2.6; flex-shrink: 0; margin-top: 2px; }
+@media (max-width: 749px) {
+  .ct-benefits { gap: 10px; margin-bottom: 22px; }
+  .ct-benefits li { font-size: 14.5px; }
+}

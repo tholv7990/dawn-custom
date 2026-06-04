@@ -5,6 +5,12 @@
       "blocks": {
         "title": { "type": "title" },
         "rating": { "type": "rating" },
+        "benefits": {
+          "type": "ct_benefits",
+          "settings": {
+            "items": "Cloud-soft coral fleece — plush comfort that cushions tired joints.\nRaised bolster edges — a built-in head-rest and a sense of security.\nHelps keep sofas hair-free — gives fur a place that isn't your couch.\nNon-slip base — stays planted on floors and sofas.\nMachine washable — the whole bed washes, fresh in one cycle."
+          }
+        },
         "price": { "type": "price" },
         "scarcity": {
           "type": "scarcity",
@@ -72,6 +78,7 @@
       "block_order": [
         "title",
         "rating",
+        "benefits",
         "price",
         "scarcity",
         "tier-single",

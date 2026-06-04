@@ -487,13 +487,30 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
-                {%- render 'ct-addons', section: section, product: product, product_form_id: product_form_id -%}
               {%- when 'addon' -%}
+              {%- when 'ct_benefits' -%}
+                {%- assign benefit_lines = block.settings.items | newline_to_br | split: '<br />' -%}
+                {%- if benefit_lines.size > 0 -%}
+                  <ul class="ct-benefits" {{ block.shopify_attributes }}>
+                    {%- for line in benefit_lines -%}
+                      {%- assign clean = line | strip | strip_newlines -%}
+                      {%- if clean != blank -%}
+                        {%- assign parts = clean | split: '—' -%}
+                        {%- if parts.size < 2 -%}{%- assign parts = clean | split: ' - ' -%}{%- endif -%}
+                        <li>
+                          <svg class="ct-benefits__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <span><b>{{ parts[0] | strip }}</b>{% if parts[1] != blank %} <span class="ct-benefits__desc">— {{ parts[1] | strip }}</span>{% endif %}</span>
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
               {%- when 'ct_tier' -%}
                 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
                 {%- unless ct_tiers_done -%}
                   {%- assign ct_tiers_done = true -%}
                   {%- render 'ct-bundle-tiers', section: section, product: product -%}
+                  {%- render 'ct-addons', section: section, product: product, product_form_id: product_form_id -%}
                 {%- endunless -%}
                 {% comment %}theme-check-enable UndefinedObject{% endcomment %}
               {%- when 'ct_running_total' -%}
@@ -1015,6 +1032,7 @@
         },
         { "type": "product", "id": "product", "label": "Add-on product" },
         { "type": "text", "id": "badge", "label": "Badge (optional)", "info": "e.g. Best-Selling Combo" },
+        { "type": "select", "id": "flag_style", "label": "Badge color", "options": [ { "value": "accent", "label": "Accent (purple) — premium" }, { "value": "urgency", "label": "Urgency (red) — limited-time savings" }, { "value": "gold", "label": "Gold — social proof / best-seller" } ], "default": "accent" },
         { "type": "text", "id": "savings_override", "label": "Savings text override (optional)", "info": "Replaces the auto-calculated Save X line." }
       ]
     },
@@ -1046,6 +1064,15 @@
       "settings": [
         { "type": "paragraph", "content": "Live total = active tier's variants + checked add-ons. Updates as the customer changes selections. Place this block right above buy_buttons." },
         { "type": "text", "id": "label", "label": "Label", "default": "Total" }
+      ]
+    },
+    {
+      "type": "ct_benefits",
+      "name": "Benefits checklist",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "5-item checkmark list shown high on the PDP info column. One per line: 'Title — description' (use an em dash). The em dash separates the bold title from the lighter description." },
+        { "type": "textarea", "id": "items", "label": "Benefits (one per line)", "default": "Cloud-soft coral fleece — plush comfort that cushions tired joints.\nRaised bolster edges — a built-in head-rest and a sense of security.\nHelps keep sofas hair-free — gives fur a place that isn't your couch.\nNon-slip base — stays planted on floors and sofas.\nMachine washable — the whole bed washes, fresh in one cycle." }
       ]
     },
     {
