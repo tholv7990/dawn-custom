@@ -151,18 +151,37 @@ ct-scarcity { display: block; }
   .ct-benefits li { font-size: 14.5px; }
 }
 
-/* ============ PDP gallery: no thumbnail strip at any viewport ============
-   Dawn's "thumbnail" gallery layout renders a thumbnail-list below/beside the
-   main image. We want the swipeable main slider + Dawn's "1 / N" slider-counter
-   only — no thumbnails. Hide at all viewports. The main slider-component keeps
-   touch-swipe (mobile) and prev/next arrow buttons (desktop). */
-.thumbnail-list,
-.thumbnail-slider,
-.product .thumbnail-list,
-.product .thumbnail-slider { display: none !important; }
+/* ============ PDP gallery + mobile/tablet layout ============
+   Root-cause approach. Dawn's main-product layout makes three assumptions that
+   don't fit our redesign:
 
-/* Make the slider-counter feel like a position indicator (small pill, top-right
-   of the gallery on desktop) — Dawn renders it as plain text by default. */
+     1. `.product--large .product__info-wrapper { max-width: 35%; padding: 0 0 0 4rem }`
+        at >=990px — keeps the info column at 35% of the page in the side-by-side
+        layout. CORRECT for desktop, so we leave it alone.
+
+     2. `.product__info-wrapper { padding: 0 0 0 5rem }` at >=750px — adds 5rem
+        left padding for the 2-col tablet layout. We force the layout to single
+        column below desktop (see below), so this padding becomes spurious whitespace
+        on tablets and we zero it out.
+
+     3. `grid--2-col-tablet { grid-template-columns: 1fr 1fr }` at >=750px — splits
+        media and info side by side at tablet. We want single-column stack until
+        the desktop breakpoint at >=990px so the info column gets full viewport
+        width on phones and tablets alike.
+
+   Our ct-pdp.css loads AFTER section-main-product.css in main-product.liquid, so
+   simple property overrides win by cascade order — no !important needed.
+
+   Plus: hide thumbnail strip (we want a single swipeable image with the built-in
+   "1 / N" slider-counter as position indicator) and force the buy-buttons block
+   to stack vertically and take full width. */
+
+/* (a) Hide the thumbnail strip at all viewports — main slider + counter is the
+   sole gallery navigation. */
+.thumbnail-list,
+.thumbnail-slider { display: none; }
+
+/* (b) Style the slider-counter as a quiet position indicator. */
 .product__media-wrapper { position: relative; }
 .product__media-wrapper .slider-buttons { gap: 12px; }
 .product__media-wrapper .slider-counter {
@@ -172,32 +191,41 @@ ct-scarcity { display: block; }
   letter-spacing: .04em;
 }
 
-/* ============ PDP mobile layout: title → benefits → image → buy box ============
-   On <750px viewports, flatten .product__info-wrapper and .product__info-container
-   via display: contents so block elements become direct grid children of .product.
-   Use CSS `order` to lift title + rating + benefits above the media wrapper.
-   Everything else stays AFTER the media wrapper. */
+/* (c) Force a single-column stack below the desktop breakpoint and zero out the
+   tablet-only left padding on the info column. Selectors mirror Dawn's so cascade
+   order is enough — no !important. */
+@media (max-width: 989px) {
+  .product.grid.grid--2-col-tablet { grid-template-columns: 1fr; }
+  .product__info-wrapper { padding: 0; max-width: none; width: auto; }
+  .product__info-wrapper--extra-padding { padding: 0; }
+  .product--right .product__info-wrapper { padding: 0; }
+  .product--large:not(.product--no-media) .product__info-wrapper,
+  .product--medium:not(.product--no-media) .product__info-wrapper,
+  .product--small:not(.product--no-media) .product__info-wrapper { padding: 0; max-width: none; width: auto; }
+}
+
+/* (d) Mobile reorder (<750px): title → rating → benefits → image → buy box.
+   Use display: contents to flatten the info-wrapper + container so blocks
+   become direct grid children of .product, then use `order` to lift the three
+   top blocks above the media wrapper. Sticky-info is disabled because sticky
+   positioning doesn't work on display:contents boxes. */
 @media (max-width: 749px) {
   .product__info-wrapper,
   .product__info-container { display: contents; }
-  /* Default: every block sits AFTER the image */
   .product__info-wrapper > *,
   .product__info-container > * { order: 10; }
-  /* Lift these three block types above the image */
   .product__title { order: 1; }
   .rating-wrapper { order: 2; }
   .ct-benefits { order: 3; }
-  /* Image gallery wrapper sits between top-info and buy box */
   .product__media-wrapper { order: 5; margin-bottom: 18px; }
-  /* Sticky-info breaks when wrappers are display:contents; disable on mobile */
   .product__column-sticky { position: static; top: auto; max-height: none; overflow: visible; }
 }
 
-/* ============ Running total + ATC layout fix ============
-   .ct-running-total had no CSS, so on mobile (after display: contents flattened
-   the wrappers) it could collide visually with the buy-buttons block. Force it
-   to be a full-width row with label/value spread + the ATC button below
-   spanning full width on mobile. */
+/* ============ Running total + buy buttons ============
+   .ct-running-total had no CSS at all (markup is <div><span><strong>). Style as
+   a clear "label left / value right" row. The buy_buttons block (Dawn-rendered)
+   needs explicit full-width children — Dawn's defaults size the ATC button to
+   its text content. */
 .ct-running-total {
   display: flex;
   align-items: baseline;
@@ -208,61 +236,19 @@ ct-scarcity { display: block; }
   border-top: 1px solid var(--ct-border-subtle);
   border-bottom: 1px solid var(--ct-border-subtle);
 }
-.ct-running-total__label {
-  font-size: 14px;
-  color: var(--ct-text-2);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-.ct-running-total__val {
-  font-family: var(--ct-font-display);
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--ct-text);
-  line-height: 1;
-}
-/* Buy buttons row: always full-width below the total (overrides Dawn's max-width: 44rem). */
-.product-form,
-.product__info-container .product-form { width: 100%; max-width: 100%; }
-.product-form__buttons {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 10px;
-  width: 100% !important;
-  max-width: 100% !important;
-}
-.product-form__buttons > * { width: 100% !important; max-width: 100% !important; }
-.product-form__submit { width: 100% !important; max-width: 100% !important; box-sizing: border-box; }
-.shopify-payment-button,
-.shopify-payment-button > * { width: 100% !important; max-width: 100% !important; }
-.shopify-payment-button button,
-.shopify-payment-button [role="button"] { width: 100% !important; max-width: 100% !important; }
+.ct-running-total__label { font-size: 14px; color: var(--ct-text-2); font-weight: 600; letter-spacing: 0.02em; }
+.ct-running-total__val { font-family: var(--ct-font-display); font-size: 26px; font-weight: 700; color: var(--ct-text); line-height: 1; }
+@media (max-width: 749px) { .ct-running-total__val { font-size: 24px; } }
 
-/* ============ PDP info column: force full-width on mobile + tablet ============
-   Dawn's stock CSS sets `.product--large .product__info-wrapper { max-width: 35%; padding: 0 0 0 4rem }` at >=750px,
-   plus other padding rules at >=750px. When the info column gets reordered to stack
-   below the gallery on mobile (and likewise on tablet for our compact layout), those
-   constraints leave huge empty whitespace on the right. Override at <=989px (covers
-   small phones through tablets — desktop ≥990px keeps the side-by-side layout). */
-@media (max-width: 989px) {
-  .product__info-wrapper,
-  .product--large:not(.product--no-media) .product__info-wrapper,
-  .product--small:not(.product--no-media) .product__info-wrapper,
-  .product--medium:not(.product--no-media) .product__info-wrapper,
-  .product--right .product__info-wrapper,
-  .product__info-wrapper--extra-padding {
-    max-width: 100% !important;
-    width: 100% !important;
-    padding: 0 !important;
-  }
-  .product__info-container {
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-  .product__info-container > * { max-width: 100% !important; }
-  /* Disable the 2-col grid below desktop so the info column always gets full width */
-  .product.grid--2-col-tablet { grid-template-columns: 1fr !important; }
-}
+/* Buy buttons: override Dawn's .product-form__buttons { max-width: 44rem; } cap
+   and stack the ATC + Shop Pay buttons vertically at full width of the column.
+   ct-pdp.css loads AFTER section-main-product.css → plain overrides win. */
+.product-form { max-width: none; }
+.product-form__buttons { display: flex; flex-direction: column; gap: 10px; max-width: none; }
+.product-form__buttons > * { width: 100%; }
+.product-form__submit { width: 100%; box-sizing: border-box; }
+.shopify-payment-button { width: 100%; }
+.shopify-payment-button > * { width: 100%; max-width: none; }
 
 @media (max-width: 749px) {
   /* Ensure the total row and the buy form each take a FULL grid row on mobile */
