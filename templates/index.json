@@ -278,10 +278,10 @@
       "settings": {
         "product": "cozy-plush-pet-sofa",
         "emoji": "",
-        "product_name": "",
+        "product_name": "Cozy Plush Pet Sofa",
         "rating_text": "★★★★★ 92% 5-star · 13 reviews",
-        "button_label": "",
-        "button_link": "",
+        "button_label": "Add to Cart",
+        "button_link": "#bundle",
         "color_scheme": "scheme-1"
       }
     }
