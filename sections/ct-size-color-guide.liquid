@@ -2,6 +2,7 @@
 {{ 'section-ct-size-color-guide.css' | asset_url | stylesheet_tag }}
 
 {%- assign p = section.settings.product -%}
+{%- assign size_blocks = section.blocks | where: 'type', 'size' -%}
 
 <section class="ct-guide color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" id="{{ section.settings.anchor_id }}">
   <div class="page-width">
@@ -49,16 +50,30 @@
           {%- if size_opt != nil -%}
             <div class="ct-guide__sizes">
               {%- for size_value in size_opt.values -%}
-                {%- assign size_initial = size_value | slice: 0 | upcase -%}
-                {%- assign size_desc = '' -%}
-                {%- if size_initial == 'M' -%}{%- assign size_desc = section.settings.size_M_desc -%}{%- endif -%}
-                {%- if size_initial == 'L' -%}{%- assign size_desc = section.settings.size_L_desc -%}{%- endif -%}
-                {%- if size_initial == 'S' -%}{%- assign size_desc = section.settings.size_S_desc -%}{%- endif -%}
-                {%- if size_initial == 'X' -%}{%- assign size_desc = section.settings.size_X_desc -%}{%- endif -%}
-                <div class="ct-guide__size-card">
-                  <span class="ct-guide__size-badge">{{ size_initial }}</span>
+                {%- comment -%} Find a matching size block (case-insensitive exact match on match_value) {%- endcomment -%}
+                {%- assign matched_block = nil -%}
+                {%- assign size_value_lc = size_value | downcase | strip -%}
+                {%- for b in size_blocks -%}
+                  {%- assign match_value_lc = b.settings.match_value | downcase | strip -%}
+                  {%- if match_value_lc != blank and match_value_lc == size_value_lc and matched_block == nil -%}{%- assign matched_block = b -%}{%- endif -%}
+                {%- endfor -%}
+                {%- if matched_block -%}
+                  {%- assign size_badge = matched_block.settings.badge -%}
+                  {%- assign size_label = matched_block.settings.label | default: size_value -%}
+                  {%- assign size_dim = matched_block.settings.dimension -%}
+                  {%- assign size_desc = matched_block.settings.desc -%}
+                {%- else -%}
+                  {%- comment -%} Fallback when no block matches: derive badge from forloop index (1st='M', 2nd='L', 3rd='XL'), label = raw variant value {%- endcomment -%}
+                  {%- assign fallback_badges = 'M,L,XL,S' | split: ',' -%}
+                  {%- assign size_badge = fallback_badges[forloop.index0] | default: '•' -%}
+                  {%- assign size_label = size_value -%}
+                  {%- assign size_dim = '' -%}
+                  {%- assign size_desc = '' -%}
+                {%- endif -%}
+                <div class="ct-guide__size-card" {% if matched_block %}{{ matched_block.shopify_attributes }}{% endif %}>
+                  <span class="ct-guide__size-badge">{{ size_badge }}</span>
                   <div>
-                    <b>{{ size_value }}</b>
+                    <b>{{ size_label }}{% if size_dim != blank %} <span class="ct-guide__size-dim">{{ size_dim }}</span>{% endif %}</b>
                     {%- if size_desc != blank -%}<p>{{ size_desc }}</p>{%- endif -%}
                   </div>
                 </div>
@@ -100,16 +115,33 @@
     { "type": "text", "id": "measuring_tip", "label": "Measuring tip" },
     { "type": "text", "id": "color_option_name", "label": "Color option name", "default": "Color", "info": "Must match the product option name exactly." },
     { "type": "text", "id": "size_option_name",  "label": "Size option name",  "default": "Size",  "info": "Must match the product option name exactly." },
-    { "type": "header", "content": "Size descriptions" },
-    { "type": "textarea", "id": "size_M_desc", "label": "Medium description" },
-    { "type": "textarea", "id": "size_L_desc", "label": "Large description" },
-    { "type": "textarea", "id": "size_S_desc", "label": "Small description (optional)" },
-    { "type": "textarea", "id": "size_X_desc", "label": "Extra Large description (optional)" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "header", "content": "Padding" },
     { "type": "range", "id": "padding_top",    "label": "Top padding",    "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 }
   ],
-  "presets": [ { "name": "CT Size & color guide" } ]
+  "blocks": [
+    {
+      "type": "size",
+      "name": "Size card",
+      "settings": [
+        { "type": "text", "id": "match_value", "label": "Match variant value (REQUIRED)", "info": "Exact text of the product Size option value to map (case-insensitive). Example: '60x80cm' or 'Medium'." },
+        { "type": "text", "id": "badge", "label": "Badge (1–3 chars)", "default": "M", "info": "Shown in the dark square. e.g. 'M', 'L', 'XL'." },
+        { "type": "text", "id": "label", "label": "Display label", "info": "Optional name shown next to the badge (e.g. 'Medium'). Falls back to the raw variant value if blank." },
+        { "type": "text", "id": "dimension", "label": "Dimension subtext (optional)", "info": "Shown in mono font next to the label, e.g. '60 × 80 cm (24″ × 31″)'." },
+        { "type": "textarea", "id": "desc", "label": "Description", "info": "One-line caption shown below the label." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "CT Size & color guide",
+      "blocks": [
+        { "type": "size", "settings": { "match_value": "Medium", "badge": "M", "label": "Medium", "dimension": "60 × 80 cm (24″ × 31″)", "desc": "Best for cats and small dogs — a snug spot for curling up." } },
+        { "type": "size", "settings": { "match_value": "Large",  "badge": "L", "label": "Large",  "dimension": "80 × 90 cm (31″ × 35″)", "desc": "Best for medium and larger dogs, or any pet who loves to sprawl." } }
+      ]
+    }
+  ]
 }
 {% endschema %}

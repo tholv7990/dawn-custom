@@ -133,12 +133,15 @@
         "measuring_tip": "Tip: measure your pet nose-to-tail while they're curled up, then add 4–6″ of breathing room.",
         "color_option_name": "Color",
         "size_option_name": "Size",
-        "size_M_desc": "Best for cats and small dogs — a snug spot for curling up.",
-        "size_L_desc": "Best for medium and larger dogs, or any pet who loves to sprawl.",
         "color_scheme": "scheme-1",
         "padding_top": 56,
         "padding_bottom": 56
-      }
+      },
+      "blocks": {
+        "sz_m": { "type": "size", "settings": { "match_value": "60x80cm", "badge": "M", "label": "Medium", "dimension": "60 × 80 cm (24″ × 31″)", "desc": "Best for cats and small dogs — a snug spot for curling up." } },
+        "sz_l": { "type": "size", "settings": { "match_value": "80x90cm", "badge": "L", "label": "Large",  "dimension": "80 × 90 cm (31″ × 35″)", "desc": "Best for medium and larger dogs, or any pet who loves to sprawl." } }
+      },
+      "block_order": ["sz_m", "sz_l"]
     },
     "ct_compare": {
       "type": "ct-compare",
