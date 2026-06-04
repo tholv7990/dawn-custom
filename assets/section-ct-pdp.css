@@ -192,3 +192,44 @@ ct-scarcity { display: block; }
   /* Sticky-info breaks when wrappers are display:contents; disable on mobile */
   .product__column-sticky { position: static; top: auto; max-height: none; overflow: visible; }
 }
+
+/* ============ Running total + ATC layout fix ============
+   .ct-running-total had no CSS, so on mobile (after display: contents flattened
+   the wrappers) it could collide visually with the buy-buttons block. Force it
+   to be a full-width row with label/value spread + the ATC button below
+   spanning full width on mobile. */
+.ct-running-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  margin: 18px 0 8px;
+  border-top: 1px solid var(--ct-border-subtle);
+  border-bottom: 1px solid var(--ct-border-subtle);
+}
+.ct-running-total__label {
+  font-size: 14px;
+  color: var(--ct-text-2);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.ct-running-total__val {
+  font-family: var(--ct-font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ct-text);
+  line-height: 1;
+}
+/* Buy buttons row: always full-width below the total */
+.product-form,
+.product__info-container .product-form { width: 100%; }
+.product-form__buttons { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.product-form__buttons .product-form__submit { width: 100%; }
+
+@media (max-width: 749px) {
+  /* Ensure the total row and the buy form each take a FULL grid row on mobile */
+  .ct-running-total,
+  .product-form { grid-column: 1 / -1; width: 100%; }
+  .ct-running-total__val { font-size: 24px; }
+}

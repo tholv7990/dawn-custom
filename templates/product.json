@@ -14,7 +14,7 @@
         "price": { "type": "price" },
         "scarcity": {
           "type": "scarcity",
-          "settings": { "threshold": 50, "selling_fast_label": "🔥 2,175 sales", "social_line": "In stock — ships in 3–7 business days" }
+          "settings": { "threshold": 20, "selling_fast_label": "", "social_line": "Ships in 3–7 business days" }
         },
         "tier-single": {
           "type": "ct_tier",
