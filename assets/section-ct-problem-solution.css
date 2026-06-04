@@ -1,0 +1,13 @@
+/* section-ct-problem-solution.css — 2-card problem/solution per cozyclaw-homepage.html §ps */
+.ct-ps__grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:var(--ct-mw, 1280px);margin:0 auto}
+.ct-ps__card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);padding:34px;box-shadow:var(--ct-shadow-sm)}
+.ct-ps__tag{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.ct-ps__card--problem .ct-ps__tag{color:var(--ct-urgency)}
+.ct-ps__card--solution .ct-ps__tag{color:var(--ct-accent-text)}
+.ct-ps__card h3{font-family:var(--ct-font-display);font-size:25px;font-weight:600;margin-bottom:20px;color:var(--ct-text);line-height:1.15}
+.ct-ps__card ul{list-style:none;margin:0;padding:0}
+.ct-ps__card li{display:flex;gap:11px;align-items:flex-start;margin-bottom:13px;font-size:15.5px;color:var(--ct-text-2)}
+.ct-ps__card li svg{width:20px;height:20px;flex-shrink:0;margin-top:1px;fill:none;stroke-width:2.2}
+.ct-ps__card--problem li svg{stroke:var(--ct-urgency)}
+.ct-ps__card--solution li svg{stroke:var(--ct-accent)}
+@media(max-width:760px){.ct-ps__grid{grid-template-columns:1fr}}
