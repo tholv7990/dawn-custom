@@ -1,5 +1,6 @@
 /* section-ct-announce.css — dark-purple bar with white text (CozyClaw spec) */
-.ct-announce{background:var(--ct-accent);color:#fff;border-bottom:none;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 16px;min-height:42px;font-size:13.5px;font-weight:600}
+.ct-announce{background:var(--ct-accent);color:#fff;border-bottom:none;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 16px;min-height:42px;font-size:13.5px;font-weight:600;touch-action:pan-y;cursor:grab;user-select:none}
+.ct-announce:active{cursor:grabbing}
 .ct-announce__viewport{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;min-width:0}
 .ct-announce__msg{display:none;align-items:center;gap:8px}
 .ct-announce__msg.is-active{display:inline-flex}

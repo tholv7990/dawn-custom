@@ -5,7 +5,7 @@
     "ct_announce": {
       "type": "ct-announce",
       "settings": {
-        "display": "static-row",
+        "display": "rotate",
         "dismissible": false,
         "rotate_seconds": 4,
         "color_scheme": "scheme-1"
