@@ -242,11 +242,17 @@ ct-scarcity { display: block; }
 
 /* Buy buttons: override Dawn's .product-form__buttons { max-width: 44rem; } cap
    and stack the ATC + Shop Pay buttons vertically at full width of the column.
-   ct-pdp.css loads AFTER section-main-product.css → plain overrides win. */
-.product-form { max-width: none; }
-.product-form__buttons { display: flex; flex-direction: column; gap: 10px; max-width: none; }
+
+   Root cause: <product-form> is a custom element which defaults to display:inline
+   (content-sized). Same for <shopify-payment-button>. They need explicit block-level
+   display + width:100% — removing max-width alone isn't enough. */
+product-form,
+shopify-payment-button { display: block; width: 100%; }
+.product-form { display: block; width: 100%; max-width: none; }
+.product-form > form { display: block; width: 100%; }
+.product-form__buttons { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: none; }
 .product-form__buttons > * { width: 100%; }
-.product-form__submit { width: 100%; box-sizing: border-box; }
+.product-form__submit { display: block; width: 100%; box-sizing: border-box; }
 .shopify-payment-button { width: 100%; }
 .shopify-payment-button > * { width: 100%; max-width: none; }
 
