@@ -33,22 +33,34 @@
     <div class="ct-footer__grid">
       <div class="ct-footer__brand-col">
         <a href="{{ routes.root_url }}" class="ct-footer__brand">Cozy<span class="ct-footer__paw">Claw</span></a>
-        <p class="ct-footer__tag">Founded to help cat parents make their fur babies' daily lives a little better — one cozy, well-made product at a time.</p>
-        <a href="mailto:support@cozyclaw.com" class="ct-footer__mail">support@cozyclaw.com</a>
+        <p class="ct-footer__tag">Founded to help pet parents make their dogs' and cats' everyday lives a little cozier — one well-made product at a time.</p>
+        {%- if section.settings.address != blank -%}
+          <p class="ct-footer__address">
+            <svg class="ct-footer__contact-ic" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 21s-7-5.2-7-11a7 7 0 0114 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/>
+            </svg>
+            <span>{{ section.settings.address }}</span>
+          </p>
+        {%- endif -%}
+        <a href="mailto:support@cozyclaw.com" class="ct-footer__mail">
+          <svg class="ct-footer__contact-ic" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+          </svg>support@cozyclaw.com
+        </a>
       </div>
 
       <div class="ct-footer__col">
         <h4 class="ct-footer__h4">Shop</h4>
-        <a href="#buy">CozyClaw Mat</a>
-        <a href="#bundle">Bundle &amp; Save</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#why">Why It Works</a>
+        <a href="{{ routes.root_url }}#buy">Cozy Plush Pet Sofa</a>
+        <a href="{{ routes.root_url }}#bundle">Bundle &amp; Save</a>
+        <a href="{{ routes.root_url }}#reviews">Reviews</a>
+        <a href="{{ routes.root_url }}#why">Why It Works</a>
       </div>
 
       <div class="ct-footer__col">
         <h4 class="ct-footer__h4">Help</h4>
         <a href="/policies/shipping-policy">Shipping Policy</a>
-        <a href="/policies/refund-policy">Returns &amp; 7-Day Guarantee</a>
+        <a href="/policies/refund-policy">Returns &amp; 30-Night Guarantee</a>
         <a href="mailto:support@cozyclaw.com">Contact Us</a>
         <a href="/pages/faq">FAQs</a>
       </div>
@@ -62,8 +74,36 @@
       </div>
     </div>
 
+    {%- if section.settings.show_signup_cta -%}
+      <div class="ct-footer__signup-cta">
+        <div class="ct-footer__signup-text">
+          <h3>{{ section.settings.signup_heading }}</h3>
+          <p>{{ section.settings.signup_body }}</p>
+        </div>
+        {%- form 'customer', class: 'ct-footer__signup-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="Enter your email" aria-label="Email address" autocomplete="email" required>
+          <button type="submit" class="ct-btn ct-btn--primary">
+            {%- if form.posted_successfully? -%}
+              {{ section.settings.signup_button_success | default: 'Subscribed ✓' }}
+            {%- else -%}
+              {{ section.settings.signup_button_label }}
+            {%- endif -%}
+          </button>
+          {%- if form.errors -%}
+            <small class="ct-footer__signup-err">Please enter a valid email address.</small>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
     <div class="ct-footer__bottom">
       <span class="ct-footer__copy">© {{ 'now' | date: '%Y' }} CozyClaw. All rights reserved.</span>
+      <span class="ct-footer__secure">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>
+        </svg>Secure checkout
+      </span>
       <span class="ct-footer__pay">
         {%- for type in shop.enabled_payment_types -%}
           {{ type | payment_type_svg_tag: class: 'ct-footer__pay-icon icon icon--full-color' }}
@@ -281,7 +321,16 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
-    }
+    },
+    { "type": "header",   "content": "Brand column" },
+    { "type": "textarea", "id": "address", "label": "Business address (shown with pin icon)",
+      "default": "509 Byrum Rd, Chaparral, NM 88081, United States" },
+    { "type": "header",   "content": "Signup CTA panel" },
+    { "type": "checkbox", "id": "show_signup_cta", "label": "Show \"Join the cozy club\" panel", "default": true },
+    { "type": "text",     "id": "signup_heading", "label": "Signup heading", "default": "Join the cozy club" },
+    { "type": "text",     "id": "signup_body",    "label": "Signup body",    "default": "Get 15% off your first order, plus first dibs on new colors and cozy deals." },
+    { "type": "text",     "id": "signup_button_label",   "label": "Signup button label", "default": "Sign up" },
+    { "type": "text",     "id": "signup_button_success", "label": "Signup success label", "default": "Subscribed ✓" }
   ],
   "default": {
     "blocks": [

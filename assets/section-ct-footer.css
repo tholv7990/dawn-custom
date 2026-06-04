@@ -20,3 +20,24 @@
 .ct-footer__bottom{padding-top:20px;border-top:1px solid var(--ct-border-subtle);font-size:12.5px;color:var(--ct-text-3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center}
 .ct-footer__pay{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
 .ct-footer__pay-icon{height:22px;width:auto;display:inline-block}
+
+/* footer additions — address + signup CTA + secure checkout per cozyclaw-homepage.html §footer */
+.ct-footer__address{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ct-text-2);margin-top:16px;line-height:1.5;max-width:32ch}
+.ct-footer__contact-ic{width:16px;height:16px;stroke:var(--ct-accent);fill:none;stroke-width:1.8;flex-shrink:0}
+.ct-footer__address .ct-footer__contact-ic{margin-top:2px}
+.ct-footer__mail{display:inline-flex;align-items:center;gap:8px;color:var(--ct-accent-text);font-size:14.5px;font-weight:600;text-decoration:none;margin-top:14px}
+.ct-footer__mail:hover{text-decoration:underline}
+.ct-footer__signup-cta{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;background:var(--ct-accent-subtle);border:1px solid var(--ct-accent-border);border-radius:var(--ct-r-lg);padding:26px 30px;margin-top:56px}
+.ct-footer__signup-text h3{font-family:var(--ct-font-display);font-size:21px;margin:0 0 4px;color:var(--ct-text);font-weight:600}
+.ct-footer__signup-text p{font-size:14px;color:var(--ct-text-2);margin:0}
+.ct-footer__signup-form{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0}
+.ct-footer__signup-form input[type="email"]{min-height:var(--ct-touch, 48px);padding:0 18px;border-radius:var(--ct-r-pill);border:1px solid var(--ct-border);background:var(--ct-bg-raised);color:var(--ct-text);font-family:inherit;font-size:14.5px;min-width:230px}
+.ct-footer__signup-form input[type="email"]:focus{outline:none;border-color:var(--ct-accent);box-shadow:0 0 0 3px var(--ct-accent-glow)}
+.ct-footer__signup-err{display:block;width:100%;color:var(--ct-urgency);font-size:12.5px;margin-top:6px}
+.ct-footer__secure{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--ct-text-2)}
+.ct-footer__secure svg{width:15px;height:15px;stroke:var(--ct-success);fill:none;stroke-width:1.9}
+@media(max-width:620px){
+  .ct-footer__signup-cta{flex-direction:column;align-items:stretch}
+  .ct-footer__signup-form{flex-direction:column;width:100%}
+  .ct-footer__signup-form input[type="email"],.ct-footer__signup-form .ct-btn{width:100%}
+}
