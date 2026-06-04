@@ -221,11 +221,22 @@ ct-scarcity { display: block; }
   color: var(--ct-text);
   line-height: 1;
 }
-/* Buy buttons row: always full-width below the total */
+/* Buy buttons row: always full-width below the total (overrides Dawn's max-width: 44rem). */
 .product-form,
-.product__info-container .product-form { width: 100%; }
-.product-form__buttons { display: flex; flex-direction: column; gap: 10px; width: 100%; }
-.product-form__buttons .product-form__submit { width: 100%; }
+.product__info-container .product-form { width: 100%; max-width: 100%; }
+.product-form__buttons {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.product-form__buttons > * { width: 100% !important; max-width: 100% !important; }
+.product-form__submit { width: 100% !important; max-width: 100% !important; box-sizing: border-box; }
+.shopify-payment-button,
+.shopify-payment-button > * { width: 100% !important; max-width: 100% !important; }
+.shopify-payment-button button,
+.shopify-payment-button [role="button"] { width: 100% !important; max-width: 100% !important; }
 
 @media (max-width: 749px) {
   /* Ensure the total row and the buy form each take a FULL grid row on mobile */
