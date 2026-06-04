@@ -1,0 +1,9 @@
+/* section-ct-features-grid.css — 4-col image+body cards per cozyclaw-homepage.html §feat */
+.ct-features__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:var(--ct-mw, 1280px);margin:0 auto}
+.ct-features__card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);overflow:hidden;box-shadow:var(--ct-shadow-sm)}
+.ct-features__img{width:100%;aspect-ratio:1/1;object-fit:contain;background:var(--ct-bg-surface);display:block}
+.ct-features__body{padding:20px 20px 24px}
+.ct-features__body h3{font-family:var(--ct-font-display);font-size:18px;font-weight:600;margin:0 0 7px;color:var(--ct-text)}
+.ct-features__body p{font-size:13.8px;color:var(--ct-text-2);margin:0;line-height:1.5}
+@media(max-width:860px){.ct-features__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.ct-features__grid{grid-template-columns:1fr}}
