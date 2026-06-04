@@ -6,3 +6,9 @@
 .ct-marquee-item::after{content:"🐾";font-family:initial}
 @keyframes ct-marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.ct-marquee-track{animation:none}}
+
+/* italic-divider style — homepage marquee per cozyclaw-homepage.html §marquee */
+.ct-marquee[data-style="italic-divider"]{background:var(--ct-accent-subtle);border-top:1px solid var(--ct-border-faint);border-bottom:1px solid var(--ct-border-faint);padding:16px 0}
+.ct-marquee[data-style="italic-divider"] .ct-marquee-track span{font-family:var(--ct-font-display);font-style:italic;font-size:19px;color:var(--ct-accent-text);display:inline-flex;align-items:center;gap:46px}
+.ct-marquee[data-style="italic-divider"] .ct-marquee-track span::after{content:'\2022';color:var(--ct-accent-border);margin-left:46px}
+.ct-marquee[data-style="italic-divider"] .ct-marquee-track span:last-child::after{content:none}

@@ -2,7 +2,7 @@
 {{ 'section-ct-marquee.css' | asset_url | stylesheet_tag }}
 
 {%- if section.blocks.size > 0 -%}
-  <div class="ct-marquee color-{{ section.settings.color_scheme }}" style="--ct-marquee-speed:{{ section.settings.speed }}s">
+  <div class="ct-marquee color-{{ section.settings.color_scheme }}" data-style="{{ section.settings.style | default: 'loop-blocks' }}" style="--ct-marquee-speed:{{ section.settings.speed }}s">
     <div class="ct-marquee-track">
       {%- for i in (1..2) -%}
         {%- for block in section.blocks -%}
@@ -20,6 +20,7 @@
   "class": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
+    { "type": "select", "id": "style", "label": "Style", "options": [ { "value": "loop-blocks", "label": "Loop blocks (default — used by PDP)" }, { "value": "italic-divider", "label": "Italic phrases with bullet dividers (homepage)" } ], "default": "loop-blocks" },
     { "type": "range", "id": "speed", "label": "Scroll duration", "min": 12, "max": 60, "step": 2, "unit": "s", "default": 28, "info": "Lower = faster. Pauses on hover; disabled when reduced-motion is on." },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
   ],
