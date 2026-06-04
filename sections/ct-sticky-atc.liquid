@@ -64,10 +64,10 @@
   "settings": [
     { "type": "product", "id": "product", "label": "Product (for dynamic source binding)", "info": "Pick the product so product name / button label can be connected to live Shopify data via the chain-link 'Connect dynamic source' icon next to each field." },
     { "type": "image_picker", "id": "image", "label": "Thumbnail image", "info": "Falls back to product.featured_image when blank and a product is picked. Replaces the emoji when set." },
-    { "type": "text", "id": "emoji", "label": "Emoji / icon (only used if no image and no product)", "default": "" },
-    { "type": "text", "id": "product_name", "label": "Product name override (otherwise uses product.title)", "default": "" },
+    { "type": "text", "id": "emoji", "label": "Emoji (only if no image/product)" },
+    { "type": "text", "id": "product_name", "label": "Product name (overrides product.title)" },
     { "type": "text", "id": "rating_text", "label": "Rating text", "default": "★★★★★ 4.7 · 52 reviews" },
-    { "type": "text", "id": "button_label", "label": "Button label override (otherwise uses 'Add to Cart — $X.XX' from product.price_min)", "default": "" },
+    { "type": "text", "id": "button_label", "label": "Button label (overrides 'Add to Cart — $X.XX')" },
     { "type": "url", "id": "button_link", "label": "Button link" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
   ],
