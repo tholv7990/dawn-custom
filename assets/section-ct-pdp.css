@@ -150,3 +150,29 @@ ct-scarcity { display: block; }
   .ct-benefits { gap: 10px; margin-bottom: 22px; }
   .ct-benefits li { font-size: 14.5px; }
 }
+
+/* ============ PDP mobile layout: title → benefits → image → buy box ============
+   Strategy:
+   - On <750px viewports, flatten .product__info-wrapper and .product__info-container
+     via display: contents so block elements become direct grid children of .product.
+   - Use CSS `order` to lift title + rating + benefits above the media wrapper.
+   - Everything else (price, scarcity, tiers, addons, total, buy_buttons, etc.)
+     stays AFTER the media wrapper. */
+@media (max-width: 749px) {
+  .product__info-wrapper,
+  .product__info-container { display: contents; }
+  /* Default: every block sits AFTER the image */
+  .product__info-wrapper > *,
+  .product__info-container > * { order: 10; }
+  /* Lift these three block types above the image */
+  .product__title { order: 1; }
+  .rating-wrapper { order: 2; }
+  .ct-benefits { order: 3; }
+  /* Image gallery wrapper sits between top-info and buy box */
+  .product__media-wrapper { order: 5; margin-bottom: 18px; }
+  /* Re-glue sticky-info disable on mobile (sticky breaks when wrappers are display:contents) */
+  .product__column-sticky { position: static; top: auto; max-height: none; overflow: visible; }
+  /* Hide thumbnails strip on mobile even if mobile_thumbnails setting fails to take effect */
+  .thumbnail-list,
+  .thumbnail-slider { display: none !important; }
+}
