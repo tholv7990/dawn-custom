@@ -1,22 +1,53 @@
 {{ 'ct-sections.css' | asset_url | stylesheet_tag }}
 {{ 'section-ct-pillars.css' | asset_url | stylesheet_tag }}
 
-{% render 'ct-section-padding', section: section %}
-
-<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
-  {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
-  <div class="ct-pillar-grid">
-    {%- for block in section.blocks -%}
-      <div class="ct-card ct-pillar" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
-        {%- if block.settings.number != blank -%}<div class="ct-pillar__num">{{ block.settings.number }}</div>{%- endif -%}
-        {%- if block.settings.icon != blank -%}<div class="ct-pillar__icon">{{ block.settings.icon }}</div>{%- endif -%}
-        <div class="ct-pillar__name">{{ block.settings.name }}</div>
-        {%- if block.settings.desc != blank -%}<p class="ct-pillar__desc">{{ block.settings.desc }}</p>{%- endif -%}
-        {%- if block.settings.quote != blank -%}<div class="ct-pillar__quote">{{ block.settings.quote }}</div>{%- endif -%}
+{%- if section.settings.layout == 'pillars-svg' -%}
+  <section class="ct-pillars-svg color-{{ section.settings.color_scheme }}" id="{{ section.settings.anchor_id }}">
+    <div class="page-width">
+      {%- if section.settings.kicker != blank or section.settings.heading != blank -%}
+        <div class="ct-sec-head ct-sec-head--center">
+          {%- if section.settings.kicker != blank -%}<span class="ct-eyebrow">{{ section.settings.kicker }}</span>{%- endif -%}
+          {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+        </div>
+      {%- endif -%}
+      <div class="ct-pillars-svg__grid">
+        {%- for block in section.blocks -%}
+          <div class="ct-pillars-svg__card" {{ block.shopify_attributes }}>
+            <span class="ct-pillars-svg__ic">
+              {%- case block.settings.icon_svg -%}
+                {%- when 'heart-paw'    -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c5-3 8-6 8-10a4 4 0 00-8-1 4 4 0 00-8 1c0 4 3 7 8 10z"/></svg>
+                {%- when 'bed-bolster'  -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14c0-4 4-6 8-6s8 2 8 6"/><path d="M3 14h18v5H3z"/></svg>
+                {%- when 'shield-couch' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M8 9V6a4 4 0 018 0v3"/></svg>
+                {%- when 'star'         -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l3 6 6 .9-4.5 4.3 1 6.3L12 17l-5.5 3.5 1-6.3L3 9.9 9 9z"/></svg>
+                {%- when 'wash-clock'   -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 109 9"/><path d="M12 7v5l3 2"/></svg>
+                {%- when 'check-double' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7L9 18l-5-5"/><path d="M4 7l3 3"/></svg>
+              {%- endcase -%}
+            </span>
+            {%- if block.settings.name != blank -%}<h3>{{ block.settings.name }}</h3>{%- endif -%}
+            {%- if block.settings.desc != blank -%}<p>{{ block.settings.desc }}</p>{%- endif -%}
+          </div>
+        {%- endfor -%}
       </div>
-    {%- endfor -%}
+    </div>
+  </section>
+{%- else -%}
+  {% render 'ct-section-padding', section: section %}
+
+  <div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+    {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
+    <div class="ct-pillar-grid">
+      {%- for block in section.blocks -%}
+        <div class="ct-card ct-pillar" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.number != blank -%}<div class="ct-pillar__num">{{ block.settings.number }}</div>{%- endif -%}
+          {%- if block.settings.icon != blank -%}<div class="ct-pillar__icon">{{ block.settings.icon }}</div>{%- endif -%}
+          <div class="ct-pillar__name">{{ block.settings.name }}</div>
+          {%- if block.settings.desc != blank -%}<p class="ct-pillar__desc">{{ block.settings.desc }}</p>{%- endif -%}
+          {%- if block.settings.quote != blank -%}<div class="ct-pillar__quote">{{ block.settings.quote }}</div>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
   </div>
-</div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -25,6 +56,13 @@
   "class": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
+    { "type": "select", "id": "layout", "label": "Layout",
+      "options": [
+        { "value": "default",     "label": "Default (used by PDP)" },
+        { "value": "pillars-svg", "label": "6 pillars with SVG icons (homepage)" }
+      ],
+      "default": "default" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "" },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "The system" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "We didn't build equipment. We built a system." },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
@@ -40,7 +78,17 @@
         { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "💪" },
         { "type": "text", "id": "name", "label": "Name", "default": "The Trainer" },
         { "type": "textarea", "id": "desc", "label": "Description", "default": "Short description of this pillar." },
-        { "type": "text", "id": "quote", "label": "Quote (italic)", "default": "A short supporting quote." }
+        { "type": "text", "id": "quote", "label": "Quote (italic)", "default": "A short supporting quote." },
+        { "type": "select", "id": "icon_svg", "label": "SVG icon (pillars-svg layout only)",
+          "options": [
+            { "value": "heart-paw",    "label": "Heart / paw (cozy)" },
+            { "value": "bed-bolster",  "label": "Bed with bolster" },
+            { "value": "shield-couch", "label": "Shield / couch (protect)" },
+            { "value": "star",         "label": "Star (style)" },
+            { "value": "wash-clock",   "label": "Wash / clock (easy clean)" },
+            { "value": "check-double", "label": "Double check (built to last)" }
+          ],
+          "default": "heart-paw" }
       ]
     }
   ],

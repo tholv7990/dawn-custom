@@ -9,3 +9,16 @@
 .ct-pillar__quote{font-size:11px;font-style:italic;color:var(--ct-accent-text);margin-top:8px;line-height:1.4}
 @media(max-width:760px){.ct-pillar-grid{grid-template-columns:1fr 1fr}.ct-pillar-grid>*:last-child{grid-column:span 2}}
 @media(max-width:400px){.ct-pillar-grid{grid-template-columns:1fr}.ct-pillar-grid>*:last-child{grid-column:span 1}}
+
+/* pillars-svg — 6 pillars 3-col with SVG icons + hover lift, per cozyclaw-homepage.html §pillars */
+.ct-pillars-svg{padding:56px 0;background:var(--ct-bg-surface)}
+.ct-pillars-svg__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:var(--ct-mw, 1280px);margin:0 auto}
+.ct-pillars-svg__card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);padding:28px;transition:transform var(--ct-dur-base, 240ms) var(--ct-ease-out, cubic-bezier(.22,1,.36,1)),box-shadow var(--ct-dur-base, 240ms)}
+.ct-pillars-svg__card:hover{transform:translateY(-4px);box-shadow:var(--ct-shadow-md)}
+.ct-pillars-svg__ic{width:46px;height:46px;border-radius:var(--ct-r-sm);background:var(--ct-accent-subtle);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.ct-pillars-svg__ic svg{width:23px;height:23px;stroke:var(--ct-accent-strong);stroke-width:1.7;fill:none}
+.ct-pillars-svg__card h3{font-family:var(--ct-font-display);font-size:19px;margin:0 0 8px;color:var(--ct-text)}
+.ct-pillars-svg__card p{font-size:14.5px;color:var(--ct-text-2);margin:0}
+@media(max-width:860px){.ct-pillars-svg__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.ct-pillars-svg__grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ct-pillars-svg__card{transition:none}.ct-pillars-svg__card:hover{transform:none}}
