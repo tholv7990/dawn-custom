@@ -238,6 +238,32 @@ ct-scarcity { display: block; }
 .shopify-payment-button button,
 .shopify-payment-button [role="button"] { width: 100% !important; max-width: 100% !important; }
 
+/* ============ PDP info column: force full-width on mobile + tablet ============
+   Dawn's stock CSS sets `.product--large .product__info-wrapper { max-width: 35%; padding: 0 0 0 4rem }` at >=750px,
+   plus other padding rules at >=750px. When the info column gets reordered to stack
+   below the gallery on mobile (and likewise on tablet for our compact layout), those
+   constraints leave huge empty whitespace on the right. Override at <=989px (covers
+   small phones through tablets — desktop ≥990px keeps the side-by-side layout). */
+@media (max-width: 989px) {
+  .product__info-wrapper,
+  .product--large:not(.product--no-media) .product__info-wrapper,
+  .product--small:not(.product--no-media) .product__info-wrapper,
+  .product--medium:not(.product--no-media) .product__info-wrapper,
+  .product--right .product__info-wrapper,
+  .product__info-wrapper--extra-padding {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  .product__info-container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .product__info-container > * { max-width: 100% !important; }
+  /* Disable the 2-col grid below desktop so the info column always gets full width */
+  .product.grid--2-col-tablet { grid-template-columns: 1fr !important; }
+}
+
 @media (max-width: 749px) {
   /* Ensure the total row and the buy form each take a FULL grid row on mobile */
   .ct-running-total,
