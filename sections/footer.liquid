@@ -104,11 +104,13 @@
           <rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>
         </svg>Secure checkout
       </span>
-      <span class="ct-footer__pay">
-        {%- for type in shop.enabled_payment_types -%}
-          {{ type | payment_type_svg_tag: class: 'ct-footer__pay-icon icon icon--full-color' }}
-        {%- endfor -%}
-      </span>
+      {%- if shop.enabled_payment_types.size > 0 -%}
+        <span class="ct-footer__pay" aria-label="Accepted payment methods">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'ct-footer__pay-icon icon icon--full-color' }}
+          {%- endfor -%}
+        </span>
+      {%- endif -%}
     </div>
   </div>
 </footer>
