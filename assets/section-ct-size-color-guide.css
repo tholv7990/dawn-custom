@@ -1,7 +1,6 @@
-/* section-ct-size-color-guide.css — split swatches + sizes per cozyclaw-homepage.html §guide */
+/* section-ct-size-color-guide.css — centered header + split swatches/sizes per cozyclaw-homepage.html §guide */
 .ct-guide{background:var(--ct-bg-surface)}
-.ct-guide__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;max-width:var(--ct-mw, 1280px);margin:0 auto}
-.ct-guide__h2{font-family:var(--ct-font-display);font-size:30px;font-weight:600;color:var(--ct-text);margin:10px 0 6px;line-height:1.1}
+.ct-guide__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start;max-width:var(--ct-mw, 1280px);margin:0 auto}
 .ct-guide__swatches{display:flex;gap:16px;margin:18px 0 8px}
 .ct-guide__sw{text-align:center;font-size:13px;color:var(--ct-text-2);flex:1;max-width:130px}
 .ct-guide__sw img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--ct-r-md);border:1px solid var(--ct-border-subtle);box-shadow:var(--ct-shadow-sm);margin:0 auto 8px;background:var(--ct-bg-raised)}

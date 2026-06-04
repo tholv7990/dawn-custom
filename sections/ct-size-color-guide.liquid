@@ -6,14 +6,18 @@
 
 <section class="ct-guide color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" id="{{ section.settings.anchor_id }}">
   <div class="page-width">
+    {%- if section.settings.kicker != blank or section.settings.heading != blank or section.settings.body != blank -%}
+      <div class="ct-sec-head ct-sec-head--center">
+        {%- if section.settings.kicker != blank -%}<span class="ct-eyebrow">{{ section.settings.kicker }}</span>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="ct-guide__h2">{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if section.settings.body != blank -%}<p class="ct-lead">{{ section.settings.body }}</p>{%- endif -%}
+      </div>
+    {%- endif -%}
     {%- if p == blank -%}
       <p class="ct-guide__warn"><em>Pick a product in the section settings to render the size & color guide.</em></p>
     {%- else -%}
       <div class="ct-guide__grid">
         <div class="ct-guide__col">
-          {%- if section.settings.kicker != blank -%}<span class="ct-eyebrow">{{ section.settings.kicker }}</span>{%- endif -%}
-          {%- if section.settings.heading != blank -%}<h2 class="ct-guide__h2">{{ section.settings.heading }}</h2>{%- endif -%}
-          {%- if section.settings.body != blank -%}<p class="ct-lead">{{ section.settings.body }}</p>{%- endif -%}
           {%- assign color_opt_name = section.settings.color_option_name | default: 'Color' -%}
           {%- assign color_opt = nil -%}
           {%- for opt in p.options_with_values -%}

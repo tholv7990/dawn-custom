@@ -16,7 +16,7 @@
 .ct-btn--outlined{background:transparent;color:var(--ct-text);border:1px solid var(--ct-border)}
 .ct-btn--outlined:hover{background:var(--ct-bg-control)}
 .ct-btn--soft{background:var(--ct-accent-subtle);color:var(--ct-accent-text)}
-.ct-btn--soft:hover{background:#b8f5c8;box-shadow:var(--ct-shadow-sm)}
+.ct-btn--soft:hover{background:var(--ct-accent-border);box-shadow:var(--ct-shadow-sm)}
 
 /* ---- Eyebrow + kicker + section head ---- */
 .ct-eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ct-accent-text);margin-bottom:12px}
@@ -25,6 +25,13 @@
 .ct-section-head{text-align:center;max-width:640px;margin:0 auto 32px}
 .ct-section-head__title{font-family:var(--ct-font-display);font-size:clamp(28px,4.6vw,44px);font-weight:600;color:var(--ct-text);letter-spacing:-.01em;line-height:1.08;margin-bottom:10px}
 .ct-section-head__sub{font-size:15px;color:var(--ct-text-2);line-height:1.65}
+/* New convention used by ct-features-grid / ct-lifestyle / ct-problem-solution / ct-pillars (pillars-svg) / ct-aplus (materials-care, guarantee-4) / ct-pricing (tier-pair) / ct-size-color-guide */
+.ct-sec-head{display:flex;flex-direction:column;gap:10px;margin:0 0 36px;max-width:var(--ct-mw, 1280px);margin-left:auto;margin-right:auto}
+.ct-sec-head--center{align-items:center;text-align:center}
+.ct-sec-head .ct-eyebrow{margin-bottom:0}
+.ct-sec-head h2{font-family:var(--ct-font-display);font-size:clamp(27px,4vw,42px);font-weight:600;color:var(--ct-text);letter-spacing:-.01em;line-height:1.1;max-width:22ch;margin:0}
+.ct-sec-head .ct-lead{max-width:60ch;color:var(--ct-text-2);font-size:17px;line-height:1.55;margin:0}
+@media(max-width:640px){.ct-sec-head{margin-bottom:28px}.ct-sec-head .ct-lead{font-size:15px}}
 
 /* ---- Rating row (demo .rating-row/.stars/.rating-count) ---- */
 .ct-rating-row{display:flex;align-items:center;gap:6px;margin-top:4px}
