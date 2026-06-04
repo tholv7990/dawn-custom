@@ -1,11 +1,14 @@
 {%- comment -%}
   Renders the centered section head (kicker + title + optional body).
+  Uses the .ct-sec-head ct-sec-head--center convention so kicker/heading/body
+  styling stays consistent with sections that compose this markup inline
+  (ct-features-grid, ct-lifestyle, ct-problem-solution, ct-size-color-guide).
   Accepts: kicker (string), heading (string), body (string, optional).
 {%- endcomment -%}
 {%- if heading != blank or kicker != blank -%}
-  <div class="ct-section-head" data-reveal>
-    {%- if kicker != blank -%}<div class="ct-kicker">{{ kicker }}</div>{%- endif -%}
-    {%- if heading != blank -%}<h2 class="ct-section-head__title">{{ heading }}</h2>{%- endif -%}
-    {%- if body != blank -%}<p class="ct-section-head__sub">{{ body }}</p>{%- endif -%}
+  <div class="ct-sec-head ct-sec-head--center" data-reveal>
+    {%- if kicker != blank -%}<span class="ct-eyebrow">{{ kicker }}</span>{%- endif -%}
+    {%- if heading != blank -%}<h2>{{ heading }}</h2>{%- endif -%}
+    {%- if body != blank -%}<p class="ct-lead">{{ body }}</p>{%- endif -%}
   </div>
 {%- endif -%}
