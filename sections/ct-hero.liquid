@@ -36,21 +36,20 @@
 {%- endif -%}
 
 {%- if section.settings.layout == 'split-photo' -%}
-  {%- assign hero_p = section.settings.product -%}
   {%- assign hero_img = section.settings.hero_image -%}
-  {%- if hero_img == blank and hero_p != blank -%}
-    {%- assign hero_img = hero_p.featured_image -%}
+  {%- if hero_img == blank and hero_product != blank -%}
+    {%- assign hero_img = hero_product.featured_image -%}
   {%- endif -%}
-  <section class="ct-hero-split color-{{ section.settings.color_scheme }}" id="{{ section.settings.anchor_id | default: section_id }}">
+  <section class="ct-hero-split color-{{ section.settings.color_scheme }}" id="{{ section_id }}">
     {%- if hero_img != blank -%}
-      <img class="ct-hero-split__photo" src="{{ hero_img | image_url: width: 1600 }}" alt="{{ hero_img.alt | escape | default: hero_p.title | default: 'CozyClaw' }}" width="{{ hero_img.width }}" height="{{ hero_img.height }}" loading="eager" fetchpriority="high">
+      <img class="ct-hero-split__photo" src="{{ hero_img | image_url: width: 1600 }}" alt="{{ hero_img.alt | escape | default: hero_product.title | default: 'CozyClaw' }}" width="{{ hero_img.width }}" height="{{ hero_img.height }}" loading="eager" fetchpriority="high">
     {%- endif -%}
     <div class="ct-hero-split__text">
       {%- if section.settings.eyebrow != blank -%}<span class="ct-hero-split__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-      <h1 class="ct-hero-split__h1">{{ section.settings.heading }}{% if section.settings.h1_em != blank %}<br><em>{{ section.settings.h1_em }}</em>{% endif %}</h1>
+      <h1 class="ct-hero-split__h1">{{ hero_heading }}{% if section.settings.h1_em != blank %}<br><em>{{ section.settings.h1_em }}</em>{% endif %}</h1>
       {%- if section.settings.subheading != blank -%}<p class="ct-hero-split__sub">{{ section.settings.subheading }}</p>{%- endif -%}
       <div class="ct-hero-split__cta">
-        {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link | default: '#' }}" class="ct-btn ct-btn--primary">{{ section.settings.button_label }}</a>{%- endif -%}
+        {%- if section.settings.button_label != blank -%}<a href="{{ hero_btn_link | default: '#' }}" class="ct-btn ct-btn--primary">{{ section.settings.button_label }}</a>{%- endif -%}
         {%- if section.settings.button_label_2 != blank -%}<a href="{{ section.settings.button_link_2 | default: '#' }}" class="ct-btn ct-btn--outlined">{{ section.settings.button_label_2 }}</a>{%- endif -%}
       </div>
       {%- if section.settings.trust_line != blank -%}
