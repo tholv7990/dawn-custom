@@ -175,7 +175,7 @@
     },
     "ct_reviews": {
       "type": "ct-reviews",
-      "settings": { "anchor_id": "reviews", "kicker": "", "heading": "", "rating_number": "4.9", "rating_count": "Based on 13 reviews", "layout": "grid", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 },
+      "settings": { "anchor_id": "reviews", "kicker": "", "heading": "", "rating_number": "4.9", "rating_count": "Based on 13 reviews", "layout": "carousel", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 },
       "blocks": {
         "rv1": { "type": "review", "settings": { "rating": 5, "text": "He used to take over the entire couch. Now he goes straight to his CozyClaw the moment we sit down — and the cushions finally stay clean.", "author": "Megan R.", "meta": "Verified buyer · Golden mix", "verified": true } },
         "rv2": { "type": "review", "settings": { "rating": 5, "text": "My cat picked her spot in about five minutes flat. She loves nesting against the raised edge. Washes beautifully too.", "author": "Jordan P.", "meta": "Verified buyer · Tabby cat", "verified": true } },

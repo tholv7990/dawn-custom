@@ -14,13 +14,13 @@
           "type": "ct_tier",
           "settings": {
             "tier_name": "Single Cozy Spot",
-            "tier_tag": "Save 20%",
+            "tier_tag": "",
             "badge": "",
             "featured": false,
             "qty": 1,
-            "save_text": "You save $9.00",
-            "price_now": "$35.97",
-            "price_was": "$44.97",
+            "save_text": "",
+            "price_now": "",
+            "price_was": "",
             "opt_label": "Color",
             "opt_emoji": "🐈"
           }
@@ -29,24 +29,24 @@
           "type": "ct_tier",
           "settings": {
             "tier_name": "Double Comfort",
-            "tier_tag": "Save 36%",
+            "tier_tag": "",
             "badge": "💎 Best value · free shipping",
             "featured": true,
             "qty": 2,
-            "save_text": "You save $32.00",
-            "price_now": "$57.94",
-            "price_was": "$89.94",
+            "save_text": "",
+            "price_now": "",
+            "price_was": "",
             "opt_label": "Color",
             "opt_emoji": "🐈"
           }
         },
         "addon-1": {
           "type": "addon",
-          "settings": { "badge": "💰 Biggest savings today" }
+          "settings": { "badge": "💰 Biggest savings today", "flag_style": "urgency" }
         },
         "addon-2": {
           "type": "addon",
-          "settings": { "badge": "🏆 Best-selling combo" }
+          "settings": { "badge": "🏆 Best-selling combo", "flag_style": "gold" }
         },
         "running-total": {
           "type": "ct_running_total",
@@ -58,7 +58,7 @@
         },
         "payment_reassurance": {
           "type": "payment_reassurance",
-          "settings": { "show_icons": true, "secure_line": "🔒 Secure checkout · Visa · Amex · Apple Pay · Shop Pay" }
+          "settings": { "show_icons": true, "secure_line": "🔒 Secure checkout · SSL-encrypted" }
         },
         "trust-icons": {
           "type": "ct_trust_icons",
@@ -168,7 +168,7 @@
         "rv3": { "type": "review", "settings": { "rating": 4, "text": "Great mat and my cat loves it. It arrived tightly vacuum-sealed and took about a day to fully fluff back out — worth the short wait.", "author": "rlungtha", "meta": "Verified buyer", "verified": true } }
       },
       "block_order": ["rv1", "rv2", "rv3"],
-      "settings": { "kicker": "", "heading": "Real cat parents, real results", "rating_number": "4.6", "rating_count": "92% 5-star · 12 five-star, 1 four-star · 13 verified reviews", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
+      "settings": { "kicker": "", "heading": "Real cat parents, real results", "rating_number": "4.6", "rating_count": "92% 5-star · 12 five-star, 1 four-star · 13 verified reviews", "layout": "carousel", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
     },
     "ct_final": {
       "type": "ct-final-cta",
