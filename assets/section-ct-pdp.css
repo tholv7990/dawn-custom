@@ -151,13 +151,32 @@ ct-scarcity { display: block; }
   .ct-benefits li { font-size: 14.5px; }
 }
 
+/* ============ PDP gallery: no thumbnail strip at any viewport ============
+   Dawn's "thumbnail" gallery layout renders a thumbnail-list below/beside the
+   main image. We want the swipeable main slider + Dawn's "1 / N" slider-counter
+   only — no thumbnails. Hide at all viewports. The main slider-component keeps
+   touch-swipe (mobile) and prev/next arrow buttons (desktop). */
+.thumbnail-list,
+.thumbnail-slider,
+.product .thumbnail-list,
+.product .thumbnail-slider { display: none !important; }
+
+/* Make the slider-counter feel like a position indicator (small pill, top-right
+   of the gallery on desktop) — Dawn renders it as plain text by default. */
+.product__media-wrapper { position: relative; }
+.product__media-wrapper .slider-buttons { gap: 12px; }
+.product__media-wrapper .slider-counter {
+  font-family: var(--ct-font-mono);
+  font-size: 12px;
+  color: var(--ct-text-2);
+  letter-spacing: .04em;
+}
+
 /* ============ PDP mobile layout: title → benefits → image → buy box ============
-   Strategy:
-   - On <750px viewports, flatten .product__info-wrapper and .product__info-container
-     via display: contents so block elements become direct grid children of .product.
-   - Use CSS `order` to lift title + rating + benefits above the media wrapper.
-   - Everything else (price, scarcity, tiers, addons, total, buy_buttons, etc.)
-     stays AFTER the media wrapper. */
+   On <750px viewports, flatten .product__info-wrapper and .product__info-container
+   via display: contents so block elements become direct grid children of .product.
+   Use CSS `order` to lift title + rating + benefits above the media wrapper.
+   Everything else stays AFTER the media wrapper. */
 @media (max-width: 749px) {
   .product__info-wrapper,
   .product__info-container { display: contents; }
@@ -170,9 +189,6 @@ ct-scarcity { display: block; }
   .ct-benefits { order: 3; }
   /* Image gallery wrapper sits between top-info and buy box */
   .product__media-wrapper { order: 5; margin-bottom: 18px; }
-  /* Re-glue sticky-info disable on mobile (sticky breaks when wrappers are display:contents) */
+  /* Sticky-info breaks when wrappers are display:contents; disable on mobile */
   .product__column-sticky { position: static; top: auto; max-height: none; overflow: visible; }
-  /* Hide thumbnails strip on mobile even if mobile_thumbnails setting fails to take effect */
-  .thumbnail-list,
-  .thumbnail-slider { display: none !important; }
 }
