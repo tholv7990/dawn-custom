@@ -2,6 +2,10 @@
   margin-top: 5rem;
 }
 
+.article-template {
+  color: var(--ct-text);
+}
+
 @media screen and (min-width: 750px) {
   .article-template > *:first-child:not(.article-template__hero-container) {
     margin-top: calc(5rem + var(--page-width-margin));
@@ -10,7 +14,19 @@
 
 .article-template__hero-container {
   max-width: 130rem;
-  margin: 0 auto;
+  margin: var(--ct-space-4) auto 0;
+  overflow: hidden;
+  border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-lg);
+  box-shadow: var(--ct-shadow-sm);
+}
+
+.article-template__hero-container .media {
+  background: linear-gradient(135deg, var(--ct-accent-subtle), var(--ct-accent-border));
+}
+
+.article-template__hero-container img {
+  object-fit: cover;
 }
 
 .article-template__hero-small {
@@ -57,6 +73,7 @@
   margin-top: 4.4rem;
   margin-bottom: 2rem;
   line-height: calc(0.8 / var(--font-body-scale));
+  text-align: center;
 }
 
 @media screen and (min-width: 750px) {
@@ -66,7 +83,14 @@
 }
 
 .article-template__title {
-  margin: 0;
+  max-width: 860px;
+  margin: 0 auto;
+  color: var(--ct-text);
+  font-family: var(--ct-font-display);
+  font-size: clamp(3.4rem, 5vw, 6rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.05;
 }
 
 .article-template__title:not(:only-child) {
@@ -78,6 +102,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--ct-accent-text);
+  font-weight: 800;
   text-decoration: none;
 }
 
@@ -88,12 +114,32 @@
 }
 
 .article-template__content {
+  color: var(--ct-text-2);
+  font-size: 1.7rem;
+  line-height: 1.75;
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
 
+.article-template__content h2,
+.article-template__content h3,
+.article-template__content h4 {
+  color: var(--ct-text);
+  font-family: var(--ct-font-display);
+  font-weight: 600;
+  line-height: 1.16;
+}
+
+.article-template__content a {
+  color: var(--ct-accent-text);
+  font-weight: 800;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 .article-template__social-sharing {
   margin-top: 3rem;
+  color: var(--ct-text-2);
 }
 
 .article-template__social-sharing + header,
@@ -104,6 +150,8 @@
 .article-template__comment-wrapper {
   margin-top: 5rem;
   padding: 2.7rem 0;
+  background: var(--ct-accent-subtle);
+  border-top: 1px solid var(--ct-border-subtle);
 }
 
 @media screen and (min-width: 750px) {
@@ -132,8 +180,10 @@
 }
 
 .article-template__comments-comment {
-  color: rgba(var(--color-foreground), 0.75);
-  background-color: rgb(var(--color-background));
+  color: var(--ct-text-2);
+  background-color: var(--ct-bg-raised);
+  border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-md);
   margin-bottom: 1.5rem;
   padding: 2rem 2rem 1.5rem;
 }

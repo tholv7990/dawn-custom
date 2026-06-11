@@ -59,20 +59,62 @@
       </div>
     </section>
 
+  {%- elsif layout == 'brand-story' -%}
+    {%- assign story_block = section.blocks | first -%}
+    <section class="ct-brand-story color-{{ section.settings.color_scheme }}" id="{{ section.settings.anchor_id }}" data-reveal>
+      <div class="ct-brand-story__copy">
+        {%- if section.settings.kicker != blank -%}<span class="ct-eyebrow">{{ section.settings.kicker }}</span>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if story_block != blank and story_block.settings.body != blank -%}
+          {{ story_block.settings.body | newline_to_br }}
+        {%- endif -%}
+        {%- if story_block != blank and story_block.settings.tag != blank -%}<p class="ct-brand-story__tag">{{ story_block.settings.tag }}</p>{%- endif -%}
+      </div>
+      <div class="ct-brand-story__media">
+        {%- if story_block != blank and story_block.settings.image != blank -%}
+          {{
+            story_block.settings.image
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              widths: '480, 720, 900',
+              sizes: '(max-width: 760px) 100vw, 42vw',
+              class: 'ct-brand-story__img',
+              alt: story_block.settings.image.alt | default: section.settings.heading | escape
+          }}
+        {%- else -%}
+          <span aria-hidden="true">{%- render 'ct-fa-icon', icon: 'paw' -%}</span>
+        {%- endif -%}
+      </div>
+    </section>
+
   {%- elsif layout == 'guarantee-4' -%}
     {%- comment -%} 4-item accent-subtle panel per cozyclaw-homepage.html §guarantee {%- endcomment -%}
     <section class="ct-aplus ct-aplus--guarantee color-{{ section.settings.color_scheme }}" id="{{ section.settings.anchor_id }}">
       <div class="page-width">
         <div class="ct-aplus__guarantee-panel">
           {%- for block in section.blocks -%}
+            {%- liquid
+              assign fa_icon = 'shield-heart'
+              assign icon_tone = 'gold'
+              case block.settings.icon_svg
+                when 'shield'
+                  assign fa_icon = 'clock'
+                  assign icon_tone = 'gold'
+                when 'truck'
+                  assign fa_icon = 'truck-fast'
+                  assign icon_tone = 'green'
+                when 'box'
+                  assign fa_icon = 'check-double'
+                  assign icon_tone = 'clay'
+                when 'lock'
+                  assign fa_icon = 'shield-halved'
+                  assign icon_tone = 'coffee'
+              endcase
+            -%}
             <div class="ct-aplus__guarantee-item" {{ block.shopify_attributes }}>
-              <span class="ct-aplus__guarantee-ic">
-                {%- case block.settings.icon_svg -%}
-                  {%- when 'shield' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 5-3 7-7 9-4-2-7-4-7-9V6z"/></svg>
-                  {%- when 'truck'  -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h13V6H3zM16 9h3l2 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
-                  {%- when 'box'    -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4z"/><path d="M4 7v7l8 4 8-4V7"/></svg>
-                  {%- when 'lock'   -%}<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
-                {%- endcase -%}
+              <span class="ct-aplus__guarantee-ic ct-aplus__guarantee-ic--{{ icon_tone }}">
+                {%- render 'ct-fa-icon', icon: fa_icon -%}
               </span>
               {%- if block.settings.title != blank -%}<b>{{ block.settings.title }}</b>{%- endif -%}
               {%- if block.settings.body != blank -%}<p>{{ block.settings.body }}</p>{%- endif -%}
@@ -84,7 +126,7 @@
 
   {%- else -%}
     {%- comment -%} Default banners layout (horizontal cards w/ image + text) {%- endcomment -%}
-    <div class="ct-aplus-list">
+    <div class="ct-aplus-list{% if layout == 'story-rows' %} ct-aplus-list--story{% endif %}">
       {%- for block in section.blocks -%}
         {%- assign ct_rev = forloop.index0 | modulo: 2 -%}
         <div class="ct-card ct-aplus-banner{% if ct_rev == 1 %} ct-aplus-banner--reverse{% endif %}" data-reveal {{ block.shopify_attributes }}>
@@ -122,9 +164,11 @@
   "settings": [
     { "type": "select", "id": "layout", "label": "Layout", "options": [
       { "value": "banners",        "label": "Banners (image + text)" },
+      { "value": "story-rows",     "label": "Story rows (homepage)" },
       { "value": "spec-grid",      "label": "Spec grid (3 compact)" },
       { "value": "assure-grid",    "label": "Assure grid (2 assurance cards)" },
       { "value": "materials-care", "label": "Materials & care (2 panels of spec rows)" },
+      { "value": "brand-story",    "label": "Brand story (dark split)" },
       { "value": "guarantee-4",    "label": "Guarantee panel (4 items, accent-subtle bg)" }
     ], "default": "banners" },
     { "type": "text", "id": "anchor_id", "label": "Anchor id (e.g. \"details\")", "info": "Renders id=\"\" on the section wrapper so nav links like #details scroll here." },

@@ -1,97 +1,186 @@
 {% comment %}
-  PDP bundle tier picker — whole-card toggle (role=radio + aria-checked,
-  no <input>). Each tier exposes N variant selects when active (N = the
-  tier's qty setting). ct-bundle-tiers.js publishes window.ctBundleItems
-  from the active tier's selected variants; ct-addons.js reads that on
-  submit and POSTs the items array to /cart/add.js. Running total
-  ([data-bundle-total]) reflects active tier + checked add-ons.
+  PDP flexible bundle builder. Bed rows are rendered by ct-bundle-tiers.js so
+  customers can add chosen variants into one quantity row per variant.
   Accepts: section, product
 {% endcomment %}
 {%- liquid
   assign tier_blocks = section.blocks | where: 'type', 'ct_tier'
+  assign builder_block = tier_blocks.first
+  assign default_qty = 1
+  assign opt_label = 'Color'
+  assign opt_emoji = '&#128008;'
+
+  for block in tier_blocks
+    if block.settings.featured
+      assign builder_block = block
+    endif
+  endfor
+
+  if builder_block != blank
+    assign default_qty = builder_block.settings.qty | default: 1 | at_least: 1
+    assign opt_label = builder_block.settings.opt_label | default: 'Color'
+    assign opt_emoji = builder_block.settings.opt_emoji | default: '&#128008;'
+  endif
 -%}
-{%- if tier_blocks.size > 0 -%}
+{%- if tier_blocks.size > 0 and product != blank -%}
   {{ 'section-ct-bundle-tiers.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'ct-bundle-tiers.js' | asset_url }}" defer></script>
 
-  <div class="ct-bundle-tiers" data-ct-bundle-tiers>
-    {%- if section.settings.tier_divider_text != blank -%}
-      <div class="ct-bundle-tiers__divider">{{ section.settings.tier_divider_text }}</div>
-    {%- endif -%}
-
-    {%- for block in tier_blocks -%}
-      {%- liquid
-        assign qty = block.settings.qty | default: 1 | at_least: 1
-        assign is_featured = block.settings.featured
-        assign tier_uid = section.id | append: '-' | append: forloop.index0
-      -%}
-      <div
-        class="ct-tier{% if is_featured %} ct-tier--featured ct-tier--active{% endif %}"
-        role="radio"
-        aria-checked="{% if is_featured %}true{% else %}false{% endif %}"
-        tabindex="{% if is_featured %}0{% else %}-1{% endif %}"
-        aria-label="{{ block.settings.tier_name | escape }}"
-        data-ct-tier
-        data-qty="{{ qty }}"
-        {{ block.shopify_attributes }}
-      >
-        {%- if block.settings.badge != blank -%}
-          <span class="ct-tier__best">{{ block.settings.badge }}</span>
-        {%- endif -%}
-
-        <div class="ct-tier__main">
-          <div class="ct-tier__name">
-            {{ block.settings.tier_name }}
-            {%- if block.settings.tier_tag != blank -%}
-              <span class="ct-tier__tag">{{ block.settings.tier_tag }}</span>
-            {%- endif -%}
+  {%- assign automatic_discount_percent = section.settings.automatic_discount_percent | default: 15 -%}
+  {%- liquid
+    capture free_shipping_threshold_raw
+      render 'ct-reward-threshold', key: 'free_shipping'
+    endcapture
+    capture discount_threshold_raw
+      render 'ct-reward-threshold', key: 'discount'
+    endcapture
+    capture reward_thresholds_configured_raw
+      render 'ct-reward-threshold', key: 'configured'
+    endcapture
+    assign free_shipping_threshold = free_shipping_threshold_raw | strip | plus: 0
+    assign discount_threshold = discount_threshold_raw | strip | plus: 0
+    assign reward_thresholds_configured = reward_thresholds_configured_raw | strip
+    assign reward_currency = cart.currency.iso_code | default: localization.country.currency.iso_code | default: shop.currency
+    if settings.currency_code_enabled
+      assign free_shipping_threshold_money = free_shipping_threshold | money_with_currency
+      assign discount_threshold_money = discount_threshold | money_with_currency
+    else
+      assign free_shipping_threshold_money = free_shipping_threshold | money
+      assign discount_threshold_money = discount_threshold | money
+    endif
+  -%}
+  <div
+    class="ct-bundle-tiers"
+    data-ct-bundle-tiers
+    data-discount-percent="{{ automatic_discount_percent }}"
+    data-free-shipping-threshold="{{ free_shipping_threshold }}"
+    data-discount-threshold="{{ discount_threshold }}"
+    data-rewards-configured="{{ reward_thresholds_configured }}"
+    data-reward-currency="{{ reward_currency }}"
+    data-product-title="{{ product.title | escape }}"
+  >
+    {%- if reward_thresholds_configured == 'true' -%}
+      <div class="ct-unlock-reward is-locked" data-bundle-unlock>
+        <p class="ct-unlock-reward__eyebrow">
+          <span class="ct-unlock-reward__check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          Cart rewards
+        </p>
+        <div class="ct-unlock-reward__bar-wrap">
+          <div class="ct-unlock-reward__track" aria-label="Reward progress">
+            <span class="ct-unlock-reward__fill" data-bundle-unlock-fill></span>
           </div>
-          {%- if block.settings.save_text != blank -%}
-            <div class="ct-tier__save">{{ block.settings.save_text }}</div>
-          {%- endif -%}
-
-          <div class="ct-tier__options" data-tier-options>
-            {%- for i in (1..qty) -%}
-              {%- assign mat_idx = i | minus: 1 -%}
-              <div class="ct-tier__opt-row">
-                <span class="ct-tier__opt-thumb" aria-hidden="true">{{ block.settings.opt_emoji | default: '🐈' }}</span>
-                <label class="visually-hidden" for="ct-tier-opt-{{ tier_uid }}-{{ i }}">
-                  {%- if qty > 1 -%}{{ block.settings.opt_label | default: 'Option' }} for item {{ i }}{%- else -%}{{ block.settings.opt_label | default: 'Option' }}{%- endif -%}
-                </label>
-                <select
-                  id="ct-tier-opt-{{ tier_uid }}-{{ i }}"
-                  class="ct-tier__variant"
-                  data-ct-tier-variant
-                  data-mat-index="{{ mat_idx }}"
-                >
-                  {%- if product != blank -%}
-                    {%- for variant in product.variants -%}
-                      <option
-                        value="{{ variant.id }}"
-                        data-price="{{ variant.price }}"
-                        data-compare="{{ variant.compare_at_price | default: 0 }}"
-                        {% unless variant.available %}disabled{% endunless %}
-                        {% if forloop.first %}selected{% endif %}
-                      >{{ variant.title }}{% unless variant.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}</option>
-                    {%- endfor -%}
-                  {%- else -%}
-                    <option value="">—</option>
-                  {%- endif -%}
-                </select>
-              </div>
-            {%- endfor -%}
+          <div class="ct-unlock-reward__node" data-bundle-unlock-node="shipping" style="--ct-unlock-left:50%">
+            <span class="ct-unlock-reward__dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M1 4h14v11H1z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M15 8h4l3 3v4h-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <circle cx="5.5" cy="18" r="1.7" stroke="currentColor" stroke-width="2"/>
+                <circle cx="17.5" cy="18" r="1.7" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </span>
+          </div>
+          <div class="ct-unlock-reward__node" data-bundle-unlock-node="discount" style="--ct-unlock-left:100%">
+            <span class="ct-unlock-reward__dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M19 5 5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="7.5" cy="7.5" r="2.3" stroke="currentColor" stroke-width="2"/>
+                <circle cx="16.5" cy="16.5" r="2.3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </span>
           </div>
         </div>
-
-        <div class="ct-tier__price">
-          {%- if block.settings.price_now != blank -%}
-            <span class="ct-tier__now">{{ block.settings.price_now }}</span>
-          {%- endif -%}
-          {%- if block.settings.price_was != blank -%}
-            <span class="ct-tier__was">{{ block.settings.price_was }}</span>
-          {%- endif -%}
+        <div class="ct-unlock-reward__milestones">
+          <span data-bundle-unlock-label="shipping" style="--ct-unlock-left:50%">
+            <b data-reward-money="{{ free_shipping_threshold }}">{{ free_shipping_threshold_money }}</b>
+            <small>Free shipping</small>
+          </span>
+          <span data-bundle-unlock-label="discount" style="--ct-unlock-left:100%">
+            <b data-reward-money="{{ discount_threshold }}">{{ discount_threshold_money }}</b>
+            <small>{{ automatic_discount_percent }}% off</small>
+          </span>
         </div>
       </div>
-    {%- endfor -%}
+    {%- else -%}
+      <div class="ct-unlock-reward ct-unlock-reward--pending">
+        <p class="ct-unlock-reward__eyebrow">
+          <span class="ct-unlock-reward__check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          Cart rewards
+        </p>
+        <p class="ct-unlock-reward__pending-text">Rewards are calculated at checkout for your market.</p>
+      </div>
+    {%- endif -%}
+
+    <div
+      class="ct-bundle-builder"
+      data-ct-bundle-builder
+      data-default-qty="{{ default_qty }}"
+      data-option-label="{{ opt_label | escape }}"
+      data-option-emoji="{{ opt_emoji | escape }}"
+    >
+      <div class="ct-bundle-builder__head">
+        <div class="ct-bundle-builder__copy">
+          <h3 class="ct-bundle-builder__title">Build your bundle</h3>
+          <p class="ct-bundle-builder__meta" data-bundle-unit-price>
+            {%- if settings.currency_code_enabled -%}
+              {{ product.selected_or_first_available_variant.price | money_with_currency }} each
+            {%- else -%}
+              {{ product.selected_or_first_available_variant.price | money }} each
+            {%- endif -%}
+            {%- if reward_thresholds_configured == 'true' -%}
+              - free shipping at {{ free_shipping_threshold_money }}+
+            {%- else -%}
+              - rewards calculated at checkout
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+
+      <div class="ct-bundle-builder__add-row">
+        <span class="ct-bundle-builder__select-wrap">
+          <select class="ct-bundle-builder__select" data-bundle-picker aria-label="Choose sofa variant">
+            {%- for variant in product.variants -%}
+              {%- assign variant_label = variant.title | replace: '60x80cm', '24 x 31 in' | replace: '80x90cm', '31 x 35 in' -%}
+              <option
+                value="{{ variant.id }}"
+                data-price="{{ variant.price }}"
+                data-compare="{{ variant.compare_at_price | default: 0 }}"
+                {% unless variant.available %}disabled{% endunless %}
+                {% if variant.id == product.selected_or_first_available_variant.id %}selected{% endif %}
+              >
+                {{- variant_label -}}
+                {%- unless variant.available %} - {{ 'products.product.sold_out' | t }}{% endunless -%}
+              </option>
+            {%- endfor -%}
+          </select>
+        </span>
+        <button type="button" class="ct-bundle-builder__add" data-bundle-add-variant>+ Add</button>
+      </div>
+
+      <div class="ct-bundle-builder__rows" data-bundle-bed-rows></div>
+
+      <select class="ct-bundle-builder__options-source" data-bundle-options-source hidden>
+        {%- for variant in product.variants -%}
+          {%- assign variant_label = variant.title | replace: '60x80cm', '24 x 31 in' | replace: '80x90cm', '31 x 35 in' -%}
+          <option
+            value="{{ variant.id }}"
+            data-price="{{ variant.price }}"
+            data-compare="{{ variant.compare_at_price | default: 0 }}"
+            {% unless variant.available %}disabled{% endunless %}
+            {% if variant.id == product.selected_or_first_available_variant.id %}selected{% endif %}
+          >
+            {{- variant_label -}}
+            {%- unless variant.available %} - {{ 'products.product.sold_out' | t }}{% endunless -%}
+          </option>
+        {%- endfor -%}
+      </select>
+    </div>
   </div>
 {%- endif -%}

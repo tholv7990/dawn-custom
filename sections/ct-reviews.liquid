@@ -2,6 +2,8 @@
 {{ 'section-ct-reviews.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'ct-carousel.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'ct-reviews-rail.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'ct-swipe.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'ct-reviews-more.js' | asset_url }}" defer="defer"></script>
 
 {% render 'ct-section-padding', section: section %}
 
@@ -18,22 +20,48 @@
       </div>
     </div>
   {%- endif -%}
+
+  {%- assign desktop_initial_count = section.settings.desktop_initial_count | default: 6 -%}
+  {%- assign desktop_load_step = section.settings.desktop_load_step | default: 6 -%}
+
   {%- capture review_cards -%}
     {%- for block in section.blocks -%}
-      <div class="ct-card ct-review-card" data-reveal data-delay="{{ forloop.index0 | times: 80 }}" {{ block.shopify_attributes }}>
-        <div class="ct-review-head">
-          <span class="ct-stars" aria-label="{{ block.settings.rating }} out of 5">
-            {%- assign r = block.settings.rating | at_most: 5 -%}
-            {%- for s in (1..5) -%}{% if s <= r %}★{% else %}☆{% endif %}{%- endfor -%}
-          </span>
-          {%- if block.settings.verified -%}<span class="ct-review-verified">✓ Verified</span>{%- endif -%}
+      <div
+        class="ct-card ct-review-card"
+        data-review-card
+        {% if section.settings.layout == "grid" and forloop.index > desktop_initial_count %}data-review-hidden="true"{% endif %}
+        data-reveal
+        data-delay="{{ forloop.index0 | times: 80 }}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="ct-review-photo ct-media ct-media--contain{% if block.settings.image == blank %} ct-review-photo--placeholder{% endif %}">
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 560 | image_tag: loading: 'lazy', widths: '280, 400, 560', sizes: '(max-width: 760px) 82vw, 33vw', alt: block.settings.image.alt | default: block.settings.author | escape }}
+          {%- else -%}
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 4l3 3h8l3-3v9a7 7 0 0 1-14 0z"/>
+              <path d="M9 11h.01M15 11h.01M10 15c1.2.8 2.8.8 4 0"/>
+            </svg>
+          {%- endif -%}
+          {%- if block.settings.pin_label != blank -%}
+            <span class="ct-review-pin">{{ block.settings.pin_label }}</span>
+          {%- endif -%}
         </div>
-        <p class="ct-review-text">{{ block.settings.text }}</p>
-        <div class="ct-review-author">
-          <div class="ct-review-avatar">{{ block.settings.author | slice: 0 | upcase }}</div>
-          <div>
-            <div class="ct-review-name">{{ block.settings.author }}</div>
-            {%- if block.settings.meta != blank -%}<div class="ct-review-date">{{ block.settings.meta }}</div>{%- endif -%}
+        <div class="ct-review-body">
+          <div class="ct-review-head">
+            <span class="ct-stars" aria-label="{{ block.settings.rating }} out of 5">
+              {%- assign r = block.settings.rating | at_most: 5 -%}
+              {%- for s in (1..5) -%}{% if s <= r %}★{% else %}☆{% endif %}{%- endfor -%}
+            </span>
+            {%- if block.settings.verified -%}<span class="ct-review-verified">✓ Verified</span>{%- endif -%}
+          </div>
+          <p class="ct-review-text">{{ block.settings.text }}</p>
+          <div class="ct-review-author">
+            <div class="ct-review-avatar">{{ block.settings.author | slice: 0 | upcase }}</div>
+            <div>
+              <div class="ct-review-name">{{ block.settings.author }}</div>
+              {%- if block.settings.meta != blank -%}<div class="ct-review-date">{{ block.settings.meta }}</div>{%- endif -%}
+            </div>
           </div>
         </div>
       </div>
@@ -41,20 +69,31 @@
   {%- endcapture -%}
 
   {%- if section.settings.layout == "grid" -%}
-    <ct-reviews-rail class="ct-reviews-rail">
-      <div class="ct-reviews-track" data-reviews-rail-track data-swipe>{{ review_cards }}</div>
+    <ct-reviews-more class="ct-reviews-more" data-step="{{ desktop_load_step }}">
+      <ct-reviews-rail class="ct-reviews-rail">
+        <div class="ct-reviews-track" data-reviews-rail-track data-swipe>{{ review_cards }}</div>
+        {%- if section.blocks.size > 1 -%}
+          <div class="ct-reviews-rail-dots" role="tablist" aria-label="{{ 'general.slider.name' | t | default: 'Reviews' }}">
+            {%- for block in section.blocks -%}
+              <button type="button" class="ct-reviews-rail-dot{% if forloop.first %} is-active{% endif %}" data-reviews-rail-dot data-index="{{ forloop.index0 }}" aria-label="Review {{ forloop.index }} of {{ section.blocks.size }}"></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </ct-reviews-rail>
       {%- if section.blocks.size > 1 -%}
-        <div class="ct-reviews-rail-dots" role="tablist" aria-label="{{ 'general.slider.name' | t | default: 'Reviews' }}">
-          {%- for block in section.blocks -%}
-            <button type="button" class="ct-reviews-rail-dot{% if forloop.first %} is-active{% endif %}" data-reviews-rail-dot data-index="{{ forloop.index0 }}" aria-label="Review {{ forloop.index }} of {{ section.blocks.size }}"></button>
-          {%- endfor -%}
-        </div>
+        {%- if section.blocks.size > desktop_initial_count -%}
+          <div class="ct-reviews-more__actions">
+            <button type="button" class="ct-btn ct-btn--outlined ct-reviews-more__btn" data-reviews-more-btn>
+              {{ section.settings.view_more_label }}
+            </button>
+          </div>
+        {%- endif -%}
       {%- endif -%}
-    </ct-reviews-rail>
+    </ct-reviews-more>
   {%- else -%}
     <ct-carousel class="ct-reviews-carousel" role="region" aria-roledescription="carousel" aria-label="{{ section.settings.heading | default: 'Reviews' | escape }}" data-autoplay="{{ section.settings.autoplay_ms }}">
       <div class="ct-reviews-track" data-carousel-track tabindex="0">{{ review_cards }}</div>
-      {%- if section.blocks.size > 3 -%}
+      {%- if section.blocks.size > 1 -%}
         <div class="ct-reviews-nav">
           <button type="button" class="ct-carousel-arrow" data-carousel-prev aria-label="{{ 'general.slider.previous_slide' | t }}">
             {{- 'icon-caret.svg' | inline_asset_content -}}
@@ -87,6 +126,9 @@
     { "type": "text", "id": "rating_count", "label": "Aggregate rating count (e.g. 52 verified reviews)" },
     { "type": "select", "id": "layout", "label": "Layout", "options": [ { "value": "carousel", "label": "Carousel" }, { "value": "grid", "label": "Grid" } ], "default": "carousel" },
     { "type": "range", "id": "autoplay_ms", "label": "Autoplay speed (ms, 0 = off)", "min": 0, "max": 8000, "step": 500, "default": 4000 },
+    { "type": "range", "id": "desktop_initial_count", "label": "Desktop reviews shown first", "min": 3, "max": 12, "step": 3, "default": 6 },
+    { "type": "range", "id": "desktop_load_step", "label": "Desktop reviews to reveal per click", "min": 3, "max": 12, "step": 3, "default": 6 },
+    { "type": "text", "id": "view_more_label", "label": "View more button label", "default": "View more reviews" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
@@ -97,6 +139,8 @@
       "name": "Review",
       "settings": [
         { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "image_picker", "id": "image", "label": "Review image" },
+        { "type": "text", "id": "pin_label", "label": "Image label", "info": "Optional short label shown over the review image, e.g. Mochi or Biscuit." },
         { "type": "textarea", "id": "text", "label": "Review text", "default": "Specific result, emotional benefit, and a detail that proves authenticity. Avoid generic praise." },
         { "type": "text", "id": "author", "label": "Author name", "default": "Marcus T." },
         { "type": "text", "id": "meta", "label": "Author meta", "default": "Verified · 2 months ago" },
@@ -104,7 +148,7 @@
       ]
     }
   ],
-  "max_blocks": 12,
+  "max_blocks": 50,
   "presets": [
     {
       "name": "CT Reviews",

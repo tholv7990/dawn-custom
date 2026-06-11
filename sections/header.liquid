@@ -144,25 +144,10 @@
         <h1 class="header__heading">
       {%- endif -%}
           <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo motion-reduce',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2 ct-brand">Cozy<span class="ct-brand__paw">Claw</span></span>
-            {%- endif -%}
+            <div class="header__heading-logo-wrapper">
+              {% capture logo_sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+              {% render 'ct-logo', class: 'header__heading-logo motion-reduce', width: settings.logo_width, sizes: logo_sizes, loading: 'eager', preload: true %}
+            </div>
           </a>
       {%- if request.page_type == 'index' -%}
         </h1>
@@ -170,10 +155,10 @@
     {%- endif -%}
 
     <nav class="ct-landing-nav small-hide" aria-label="Page navigation">
-      <a href="#why" class="ct-landing-nav__link">Why It Works</a>
-      <a href="#details" class="ct-landing-nav__link">Details</a>
-      <a href="#reviews" class="ct-landing-nav__link">Reviews</a>
-      <a href="#bundle" class="ct-landing-nav__link">Bundle &amp; Save</a>
+      <a href="{{ routes.root_url }}#product" class="ct-landing-nav__link">Shop</a>
+      <a href="{{ routes.root_url }}#bundle" class="ct-landing-nav__link">Bundle &amp; Save</a>
+      <a href="{{ routes.root_url }}#reviews" class="ct-landing-nav__link">Reviews</a>
+      <a href="{{ routes.root_url }}#faq" class="ct-landing-nav__link">Help</a>
     </nav>
 
     {%- if section.settings.logo_position == 'middle-center' -%}
@@ -181,25 +166,10 @@
         <h1 class="header__heading">
       {%- endif -%}
           <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2 ct-brand">Cozy<span class="ct-brand__paw">Claw</span></span>
-            {%- endif -%}
+            <div class="header__heading-logo-wrapper">
+              {% capture logo_sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
+              {% render 'ct-logo', class: 'header__heading-logo', width: settings.logo_width, sizes: logo_sizes, loading: 'eager', preload: true %}
+            </div>
           </a>
       {%- if request.page_type == 'index' -%}
         </h1>
@@ -207,7 +177,16 @@
     {%- endif -%}
 
     <div class="header__icons ct-header-actions">
-      <a href="#buy" class="ct-btn ct-btn--primary ct-header-atc small-hide">Add to Cart — $35.97</a>
+      {%- assign header_cta_product = section.settings.cta_product -%}
+      {%- if header_cta_product != blank -%}
+        {%- if settings.currency_code_enabled -%}
+          {%- assign header_cta_price = header_cta_product.price | money_with_currency -%}
+        {%- else -%}
+          {%- assign header_cta_price = header_cta_product.price | money -%}
+        {%- endif -%}
+        {%- assign header_cta_label = header_cta_price | prepend: 'Shop now - ' -%}
+        <a href="{{ header_cta_product.url }}" class="ct-btn ct-btn--primary ct-header-atc small-hide">{{ header_cta_label }}</a>
+      {%- endif -%}
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble" aria-label="{{ 'templates.cart.cart' | t }}">
         {% if cart == empty %}
           <span class="svg-wrapper">{{'icon-cart-empty.svg' | inline_asset_content }}</span>
@@ -390,6 +369,12 @@
   "class": "section-header",
   "max_blocks": 3,
   "settings": [
+    {
+      "type": "product",
+      "id": "cta_product",
+      "label": "Header CTA product",
+      "info": "Pick the product the sticky 'Shop now' button (desktop, right side of header) links to. Button label auto-binds to the product price. Leave blank to hide the CTA."
+    },
     {
       "type": "select",
       "id": "logo_position",

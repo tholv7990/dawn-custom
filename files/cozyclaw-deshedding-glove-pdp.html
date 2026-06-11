@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pet Deshedding Glove Brush – CozyClaw™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF6EC; --paper-2:#F3E9D7; --card:#FFFDF8;
+    --ink:#2A211B; --ink-soft:#6B5C50; --line:#E7DBC7;
+    --clay:#C2603C; --clay-dark:#A64E2F; --sage:#7E8C6A;
+    --gold:#E0A02E; --violet:#7C5CD6;
+    --radius:24px; --radius-sm:14px;
+    --shadow-sm:0 2px 8px rgba(74,53,38,.06);
+    --shadow:0 18px 40px -18px rgba(74,53,38,.30);
+    --shadow-lg:0 30px 70px -28px rgba(74,53,38,.40);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Hanken Grotesk',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .serif{font-family:'Fraunces',serif}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* ANNOUNCEMENT */
+  .announce{background:var(--ink);color:#F3E9D7;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;overflow:hidden}
+  .announce .track{display:flex;gap:64px;white-space:nowrap;padding:9px 0;animation:scroll 26s linear infinite;width:max-content}
+  .announce span{display:inline-flex;align-items:center;gap:9px}
+  .announce svg{width:14px;height:14px;color:var(--clay)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* HEADER */
+  header{position:sticky;top:0;z-index:200;background:rgba(251,246,236,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .logo{font-family:'Fraunces',serif;font-weight:900;font-size:1.45rem;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+  .logo .paw{width:25px;height:25px;color:var(--clay)}
+  .nav-links{display:flex;gap:32px;font-weight:600;font-size:.9rem}
+  .nav-links a{color:var(--ink-soft);transition:color .2s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-right{display:flex;align-items:center;gap:14px}
+  .icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;transition:.2s}
+  .icon-btn:hover{border-color:var(--clay);transform:translateY(-1px)}
+  .icon-btn svg{width:18px;height:18px}
+
+  .pdp{max-width:1180px;margin:0 auto;padding:14px 24px 80px}
+  .crumb{font-size:.82rem;color:var(--ink-soft);padding:18px 0 22px;display:flex;gap:8px;flex-wrap:wrap}
+  .crumb a:hover{color:var(--clay)}
+  .crumb .sep{opacity:.5}
+
+  /* ===== BUY SECTION : desktop two-column (image left / info right).
+     DOM order = title > benefit > image so MOBILE stacks title>benefit>image. ===== */
+  .product{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);column-gap:52px;row-gap:32px;align-items:start}
+  #title{grid-column:2;grid-row:1}
+  #benefits{grid-column:2;grid-row:2}
+  #gallery{grid-column:1;grid-row:1 / span 2;position:sticky;top:90px}
+  .product > section{margin-top:0}
+
+  /* TITLE block */
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-bottom:14px}
+  .eyebrow svg{width:15px;height:15px}
+  h1.title{font-family:'Fraunces',serif;font-weight:600;font-size:2.5rem;line-height:1.05;letter-spacing:-.02em;margin-bottom:16px}
+  .rating{display:flex;align-items:center;gap:11px;margin-bottom:22px}
+  .stars{display:flex;gap:2px}.stars svg{width:18px;height:18px;color:var(--gold)}
+  .rating .num{font-weight:700;font-size:.95rem}
+  .rating .cnt{color:var(--ink-soft);font-size:.88rem}
+  .rating .cnt a{text-decoration:underline;text-underline-offset:2px}
+
+  /* bundle strip = hidden buy area */
+  .bundle{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .bp-tag{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:#F3E9D7;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:100px;margin-bottom:14px}
+  .bp-tag svg{width:13px;height:13px;color:var(--clay)}
+  .bundle p{font-size:.95rem;color:var(--ink-soft);margin-bottom:18px}
+  .bundle strong{color:var(--ink);font-weight:700}
+  .bp-cta{display:inline-flex;align-items:center;gap:9px;background:var(--clay);color:#fff;font-weight:700;font-size:1rem;padding:15px 26px;border-radius:var(--radius-sm);transition:.2s;box-shadow:0 10px 24px -12px var(--clay)}
+  .bp-cta svg{width:17px;height:17px;transition:transform .2s}
+  .bp-cta:hover{background:var(--clay-dark);transform:translateY(-2px)}
+  .bp-cta:hover svg{transform:translateX(4px)}
+
+  /* BENEFIT — ordered list, loaded from metafield */
+  .sec-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);margin-bottom:16px}
+  .sec-eyebrow svg{width:15px;height:15px}
+  .benefit-list{list-style:none;display:flex;flex-direction:column;gap:16px}
+  .b-item{display:flex;gap:14px;align-items:flex-start}
+  .b-num{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--clay);color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:.95rem;display:grid;place-items:center;margin-top:1px}
+  .b-item h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.08rem;line-height:1.25;margin-bottom:2px}
+  .b-item p{font-size:.92rem;color:var(--ink-soft)}
+
+  /* IMAGE — swipe carousel, no thumbnails */
+  .carousel{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .car-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .car-track::-webkit-scrollbar{display:none}
+  .slide{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:1/1;background:var(--card)}
+  .slide img{width:100%;height:100%;object-fit:cover}
+  .car-badge{position:absolute;top:16px;left:16px;z-index:3;background:var(--clay);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:7px 13px;border-radius:100px;box-shadow:var(--shadow-sm)}
+  .heart{position:absolute;top:14px;right:14px;z-index:3;width:42px;height:42px;border-radius:50%;background:rgba(255,253,248,.92);border:none;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(4px)}
+  .heart svg{width:20px;height:20px;color:var(--ink-soft);transition:.2s}
+  .heart.on svg{color:var(--clay);fill:var(--clay)}
+  .car-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,253,248,.92);backdrop-filter:blur(6px);cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow-sm);opacity:0;transition:opacity .2s,transform .2s}
+  .carousel:hover .car-arrow{opacity:1}
+  .car-arrow:hover{transform:translateY(-50%) scale(1.08)}
+  .car-arrow svg{width:20px;height:20px;color:var(--ink)}
+  .car-arrow.prev{left:14px}.car-arrow.next{right:14px}
+  .dots{display:flex;gap:8px;justify-content:center;margin-top:16px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--line);border:none;cursor:pointer;transition:.25s;padding:0}
+  .dot.active{background:var(--clay);width:24px;border-radius:5px}
+  .swipe-hint{text-align:center;font-size:.78rem;color:var(--ink-soft);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:7px}
+  .swipe-hint svg{width:15px;height:15px;color:var(--sage)}
+
+  /* ===== DESCRIPTION : tabbed card, content from Shopify (like the reference) ===== */
+  .desc-section{margin-top:60px}
+  .desc-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);padding:0 26px;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{background:none;border:none;font-family:inherit;font-weight:600;font-size:.98rem;color:var(--ink-soft);padding:20px 10px;cursor:pointer;position:relative;white-space:nowrap;transition:color .2s}
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--ink)}
+  .tab.active::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:3px;background:var(--ink);border-radius:3px 3px 0 0}
+  .tab-panel{display:none;padding:32px}
+  .tab-panel.active{display:block;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .desc-img{width:100%;border-radius:var(--radius-sm);margin-bottom:26px;aspect-ratio:16/11;object-fit:cover;border:1px solid var(--line)}
+  .desc-eyebrow{display:block;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--violet);margin-bottom:10px}
+  .desc-card h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.9rem;line-height:1.1;margin-bottom:18px}
+  .desc-body p{font-size:1.04rem;color:var(--ink-soft);margin-bottom:16px;max-width:70ch}
+  .desc-body strong{color:var(--ink)}
+  .desc-body .desc-img2{margin-top:10px}
+  .spec{display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-size:.98rem}
+  .spec:first-child{padding-top:0}
+  .spec dt{font-weight:700}
+  .spec dd{color:var(--ink-soft);text-align:right}
+  .ship-row{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+  .ship-row:last-child{border-bottom:none}
+  .ship-ic{flex-shrink:0;width:42px;height:42px;border-radius:11px;background:var(--paper-2);display:grid;place-items:center}
+  .ship-ic svg{width:21px;height:21px;color:var(--clay)}
+  .ship-row h4{font-family:'Fraunces',serif;font-weight:600;font-size:1.08rem;margin-bottom:3px}
+  .ship-row p{font-size:.94rem;color:var(--ink-soft)}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:#D9CBB8;padding:60px 0 28px;margin-top:30px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;margin-bottom:40px}
+  footer .logo{color:#F3E9D7;margin-bottom:14px}
+  footer p{font-size:.9rem;line-height:1.6;color:#B7A893;max-width:30ch}
+  footer h4{font-family:'Fraunces',serif;font-size:1rem;color:#F3E9D7;margin-bottom:15px;font-weight:600}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  footer ul a{font-size:.9rem;color:#B7A893;transition:.2s}
+  footer ul a:hover{color:var(--clay)}
+  .foot-bot{border-top:1px solid rgba(255,255,255,.1);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.82rem;color:#8E806E}
+
+  /* STICKY BAR */
+  .stickybar{position:fixed;left:0;right:0;bottom:0;z-index:300;background:rgba(255,253,248,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line);box-shadow:0 -10px 30px -15px rgba(74,53,38,.3);transform:translateY(120%);transition:transform .35s ease;padding:12px 0}
+  .stickybar.show{transform:translateY(0)}
+  .sb-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .sb-left{display:flex;align-items:center;gap:14px;min-width:0}
+  .sb-left img{width:48px;height:48px;border-radius:11px;object-fit:cover;flex-shrink:0}
+  .sb-info .t{font-weight:700;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sb-info .p{color:var(--ink-soft);font-weight:600;font-size:.84rem}
+  .sb-btn{background:var(--clay);color:#fff;border:none;border-radius:12px;padding:13px 26px;font-family:inherit;font-weight:700;font-size:.94rem;cursor:pointer;white-space:nowrap;transition:.2s}
+  .sb-btn:hover{background:var(--clay-dark)}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    /* MOBILE = stacked: title > benefit > image > description > footer */
+    .product{display:block}
+    #gallery{position:static}
+    #benefits,#gallery{margin-top:40px}
+  }
+  @media(max-width:760px){
+    .nav-links{display:none}
+    h1.title{font-size:2.2rem}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .pdp{padding-bottom:96px}
+    .car-arrow{display:none}
+    .bp-cta{width:100%;justify-content:center}
+    .desc-card h2{font-size:1.6rem}
+    .tab-panel{padding:24px}
+  }
+  @media(max-width:480px){ .foot-grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT -->
+<div class="announce">
+  <div class="track">
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Free shipping on every order</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 109 9"/><path d="M12 7v5l3 2"/></svg> 30-night risk-free trial</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><circle cx="6" cy="13" r="2"/><circle cx="18" cy="13" r="2"/><path d="M8 19c0-2 1.8-3.5 4-3.5s4 1.5 4 3.5"/></svg> A cozy spot for dogs & cats</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Free shipping on every order</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 109 9"/><path d="M12 7v5l3 2"/></svg> 30-night risk-free trial</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><circle cx="6" cy="13" r="2"/><circle cx="18" cy="13" r="2"/><path d="M8 19c0-2 1.8-3.5 4-3.5s4 1.5 4 3.5"/></svg> A cozy spot for dogs & cats</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#"><svg class="paw" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="12" cy="6.5" r="2.3"/><circle cx="18" cy="9" r="2.1"/><path d="M12 11c-3 0-5.5 2.2-5.5 4.8 0 2 1.7 3.2 3.4 3.2.9 0 1.4-.4 2.1-.4s1.2.4 2.1.4c1.7 0 3.4-1.2 3.4-3.2C17.5 13.2 15 11 12 11z"/></svg> CozyClaw<span style="font-size:.7rem;vertical-align:super">™</span></a>
+    <nav class="nav-links">
+      <a href="#benefits">Why It Works</a>
+      <a href="#description">Details</a>
+      <a href="https://cozyclaw.shop/">Shop the bundle</a>
+    </nav>
+    <div class="nav-right">
+      <button class="icon-btn" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <button class="icon-btn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 2H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main class="pdp">
+  <div class="crumb"><a href="#">Home</a><span class="sep">/</span><a href="#">Grooming</a><span class="sep">/</span><span>Pet Deshedding Glove Brush</span></div>
+
+  <!-- ===== BUY SECTION ===== -->
+  <div class="product">
+    <!-- TITLE (right column on desktop) -->
+    <section id="title">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2"/><circle cx="12" cy="7" r="2.1"/><circle cx="18" cy="9" r="2"/><path d="M12 11c-2.8 0-5 2-5 4.4 0 1.8 1.5 2.9 3.1 2.9.8 0 1.2-.3 1.9-.3s1.1.3 1.9.3c1.6 0 3.1-1.1 3.1-2.9C17 13 14.8 11 12 11z"/></svg> Grooming · for cats &amp; dogs</span>
+      <h1 class="title serif">Pet Deshedding Glove Brush</h1>
+      <div class="rating">
+        <div class="stars" id="stars"></div>
+        <span class="num">4.8</span>
+        <span class="cnt"><a href="#description">2,148 reviews</a></span>
+      </div>
+      <div class="bundle" id="bundle">
+        <span class="bp-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg> Bundle add-on</span>
+        <p>Sold as part of the <strong>CozyClaw™ Lounge Mat bundle</strong> — not available on its own.</p>
+        <a class="bp-cta" href="https://cozyclaw.shop/">Shop the bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </section>
+
+    <!-- BENEFIT list (right column, after title) — rendered from metafield -->
+    <section id="benefits">
+      <span class="sec-eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg> Why pet parents love it</span>
+      <ol class="benefit-list" id="benefitList"><!-- injected from product metafield --></ol>
+    </section>
+
+    <!-- IMAGE (left column on desktop) — swipe, no thumbnails -->
+    <section id="gallery">
+      <div class="carousel">
+        <span class="car-badge">Bundle add-on</span>
+        <button class="heart" id="heart" aria-label="Save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.4 2.3 5 5.8 5c2 0 3.4 1.2 4.2 2.4C10.8 6.2 12.2 5 14.2 5c3.5 0 5.2 3.4 3.8 6.7C19.5 16.4 12 21 12 21z"/></svg></button>
+        <button class="car-arrow prev" id="prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="car-arrow next" id="next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+        <div class="car-track" id="track"></div>
+      </div>
+      <div class="dots" id="dots"></div>
+      <div class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3"/></svg> Swipe to see more</div>
+    </section>
+  </div>
+
+  <!-- ===== DESCRIPTION (full width, tabbed, content from Shopify) ===== -->
+  <section class="desc-section" id="description">
+    <div class="desc-card">
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-tab="description">Description</button>
+        <button class="tab" data-tab="specs">Specifications</button>
+        <button class="tab" data-tab="shipping">Shipping &amp; Returns</button>
+      </div>
+
+      <!-- DESCRIPTION TAB — rendered from product.description (body_html) -->
+      <div class="tab-panel active" id="tab-description">
+        <img class="desc-img" src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S5ce3b49c0fb64928b440c4e52e603db9l.webp?v=1780503772" alt="Pet Deshedding Glove Brush in use">
+        <span class="desc-eyebrow">Pet Grooming Supplies</span>
+        <h2 class="serif">Pet Deshedding Glove Brush</h2>
+        <div class="desc-body">
+          <p>The <strong>Pet Deshedding Glove Brush</strong> turns shedding season into the part of the day your dog or cat actually looks forward to. Soft silicone tips glide through the coat and lift loose fur while it simply feels like an ordinary cuddle.</p>
+          <p>The double-sided design does double duty: a bristled side for deep deshedding and a smoother side for finishing and dry-bath days. An adjustable strap means one size genuinely fits every hand — and every pet, from a tiny kitten to a Great Dane.</p>
+          <p>When you're done, peel the collected fur off in one satisfying piece, give the glove a rinse, and hang it to dry. No clumps on the sofa, no fur tumbleweeds in the hallway.</p>
+          <img class="desc-img desc-img2" src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sc258b3e2e5644adabc34af871e183439d.webp?v=1780503771" alt="Deshedding glove detail">
+        </div>
+      </div>
+
+      <!-- SPECIFICATIONS TAB — rendered from product metafields -->
+      <div class="tab-panel" id="tab-specs">
+        <dl>
+          <div class="spec"><dt>Best for</dt><dd>Cats &amp; dogs · all coat lengths</dd></div>
+          <div class="spec"><dt>Color</dt><dd>Black</dd></div>
+          <div class="spec"><dt>Design</dt><dd>Double-sided glove</dd></div>
+          <div class="spec"><dt>Material</dt><dd>Breathable mesh + silicone tips</dd></div>
+          <div class="spec"><dt>Weight</dt><dd>~90 g</dd></div>
+          <div class="spec"><dt>Care</dt><dd>Rinse or machine wash, air dry</dd></div>
+        </dl>
+      </div>
+
+      <!-- SHIPPING & RETURNS TAB -->
+      <div class="tab-panel" id="tab-shipping">
+        <div class="ship-row">
+          <div class="ship-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="15" height="12"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg></div>
+          <div><h4 class="serif">Free shipping, every order</h4><p>Tracked delivery on us. Most parcels arrive within 7–12 business days.</p></div>
+        </div>
+        <div class="ship-row">
+          <div class="ship-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 109 9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><h4 class="serif">30-night risk-free trial</h4><p>Not a fit for you and your pet? Send it back within 30 nights for a full refund.</p></div>
+        </div>
+        <div class="ship-row">
+          <div class="ship-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div><h4 class="serif">Secure checkout</h4><p>Encrypted payments via Shop Pay, PayPal, and all major cards.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#"><svg class="paw" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="12" cy="6.5" r="2.3"/><circle cx="18" cy="9" r="2.1"/><path d="M12 11c-3 0-5.5 2.2-5.5 4.8 0 2 1.7 3.2 3.4 3.2.9 0 1.4-.4 2.1-.4s1.2.4 2.1.4c1.7 0 3.4-1.2 3.4-3.2C17.5 13.2 15 11 12 11z"/></svg> CozyClaw™</a>
+        <p>Helping pet parents make their dogs' and cats' everyday lives a little cozier — one well-made product at a time.</p>
+      </div>
+      <div><h4>Shop</h4><ul><li><a href="#">Grooming</a></li><li><a href="#">Beds & sofas</a></li><li><a href="#">Toys</a></li><li><a href="#">Bundle & save</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#">Shipping policy</a></li><li><a href="#">Returns & guarantee</a></li><li><a href="#">Contact us</a></li><li><a href="#">Track order</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">Our story</a></li><li><a href="#">Reviews</a></li><li><a href="#">Privacy policy</a></li><li><a href="#">Terms of service</a></li></ul></div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 CozyClaw™. All rights reserved.</span>
+      <span>509 Byrum Rd, Chaparral, NM 88081 · support@cozyclaw.com</span>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY BAR -->
+<div class="stickybar" id="stickybar">
+  <div class="wrap sb-inner">
+    <div class="sb-left">
+      <img id="sbImg" src="" alt="">
+      <div class="sb-info"><div class="t">Pet Deshedding Glove Brush</div><div class="p">Part of the Lounge Mat bundle</div></div>
+    </div>
+    <a class="sb-btn" href="https://cozyclaw.shop/">Shop the bundle</a>
+  </div>
+</div>
+
+<script>
+  const imgs = [
+    "https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S1a69ae9ec8fc458fbf09f52c6f8db422R.webp?v=1780503774",
+    "https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S036506db8038416786160df51ead0b123.webp?v=1780503773",
+    "https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S0d1d8f4faae6446ba100b6403238e80bT.webp?v=1780503772",
+    "https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sc6112d9dd4f74bff8a2a2f3dd8b5c215r.webp?v=1780503774",
+    "https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S0cd0c677232a4e1192838bce7a6a99b5o.webp?v=1780503771",
+    "https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S5ce3b49c0fb64928b440c4e52e603db9l.webp?v=1780503772",
+    "https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sc258b3e2e5644adabc34af871e183439d.webp?v=1780503771"
+  ];
+
+  /* ===== BENEFIT list — loaded from product metadata (metafield) =====
+     In Shopify, store as a JSON list metafield (e.g. product.metafields.custom.benefits)
+     and inject in Liquid:  const BENEFITS = {{ product.metafields.custom.benefits.value | json }};
+     The render below stays the same — it just reads from that metafield. */
+  const BENEFITS = [
+    { title:'Gentle by design', body:'Soft silicone tips glide through coats without scratching — most pets settle in like it\u2019s a massage.' },
+    { title:'Catches loose fur', body:'The textured palm lifts shedding hair before it lands on your sofa, clothes, and every dark corner.' },
+    { title:'Fits any hand',     body:'One adjustable strap, snug fit — works on a tiny kitten or a Great Dane.' },
+    { title:'Double-sided',      body:'Bristled side for deep deshedding, smooth side for finishing days. Two tools in one glove.' }
+  ];
+  document.getElementById('benefitList').innerHTML = BENEFITS.map((b,i)=>`
+    <li class="b-item reveal">
+      <span class="b-num">${i+1}</span>
+      <div><h3 class="serif">${b.title}</h3><p>${b.body}</p></div>
+    </li>`).join('');
+
+  /* stars */
+  document.getElementById('stars').innerHTML =
+    '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .8-5.2 4.7L18.3 22 12 18.3 5.7 22l1.5-8L2 9.3l7-.8z"/></svg>'.repeat(5);
+
+  /* swipe carousel */
+  const track=document.getElementById('track'), dots=document.getElementById('dots');
+  imgs.forEach((src,i)=>{
+    const s=document.createElement('div'); s.className='slide';
+    s.innerHTML=`<img src="${src}" alt="Pet Deshedding Glove Brush — view ${i+1}" loading="${i?'lazy':'eager'}">`;
+    track.appendChild(s);
+    const d=document.createElement('button'); d.className='dot'+(i?'':' active');
+    d.setAttribute('aria-label','Go to image '+(i+1));
+    d.onclick=()=>track.scrollTo({left:i*track.clientWidth,behavior:'smooth'});
+    dots.appendChild(d);
+  });
+  document.getElementById('sbImg').src=imgs[0];
+  let idx=0; const allDots=[...dots.children];
+  function sync(){const n=Math.round(track.scrollLeft/track.clientWidth);if(n!==idx){idx=n;allDots.forEach((d,i)=>d.classList.toggle('active',i===idx));}}
+  track.addEventListener('scroll',()=>requestAnimationFrame(sync),{passive:true});
+  document.getElementById('prev').onclick=()=>track.scrollTo({left:Math.max(0,idx-1)*track.clientWidth,behavior:'smooth'});
+  document.getElementById('next').onclick=()=>track.scrollTo({left:Math.min(imgs.length-1,idx+1)*track.clientWidth,behavior:'smooth'});
+  document.getElementById('heart').onclick=function(){this.classList.toggle('on');};
+
+  /* tabs */
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.onclick=()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById('tab-'+t.dataset.tab).classList.add('active');
+    };
+  });
+
+  /* sticky bundle bar */
+  const bar=document.getElementById('stickybar'), anchor=document.getElementById('bundle');
+  new IntersectionObserver(([e])=>{bar.classList.toggle('show',!e.isIntersecting && e.boundingClientRect.top<0);},{threshold:0}).observe(anchor);
+
+  /* reveal */
+  const rio=new IntersectionObserver((es)=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);rio.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>rio.observe(el));
+</script>
+</body>
+</html>

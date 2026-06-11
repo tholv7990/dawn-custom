@@ -1,312 +1,100 @@
 {
   "sections": {
-    "ct_hero": {
-      "type": "ct-hero",
+    "ct_home_hero": {
+      "type": "ct-home-hero",
       "settings": {
-        "layout": "split-photo",
-        "product": "cozy-plush-pet-sofa",
-        "anchor_id": "buy",
-        "eyebrow": "The plush sofa-bed for dogs & cats",
-        "heading": "Their favorite spot.",
-        "h1_em": "Your cleaner sofa.",
-        "subheading": "CozyClaw's deep, pillow-edged pet sofa is soft enough that they'll finally pick their own bed over your couch — keeping the fur, dander, and claws off your furniture.",
-        "button_label": "Shop CozyClaw",
-        "button_link": "/products/cozy-plush-pet-sofa",
-        "button_label_2": "See sizes & colors",
-        "button_link_2": "#guide",
-        "trust_line": "★★★★★ 4.9/5 · 13 reviews | ✓ 30-night trial | ✓ Free shipping $75+",
-        "sale_badge": "",
-        "price_now": "",
-        "price_was": "",
-        "price_save_label": "",
-        "rating_text": "",
-        "availability_text": "",
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "main_product": "cozy-plush-pet-sofa"
       }
     },
-    "ct_trust_strip": {
-      "type": "ct-trust-bar",
-      "settings": { "layout": "icon-strip", "color_scheme": "scheme-1" },
-      "blocks": {
-        "c1": { "type": "chip", "settings": { "icon": "paw-fleece", "title": "Cloud-soft coral fleece", "subtitle": "Cozy on every paw" } },
-        "c2": { "type": "chip", "settings": { "icon": "bed-edge",   "title": "Raised pillow edges",     "subtitle": "A built-in head-rest" } },
-        "c3": { "type": "chip", "settings": { "icon": "couch-hair", "title": "Helps keep sofas hair-free","subtitle": "Fur stays on the bed" } },
-        "c4": { "type": "chip", "settings": { "icon": "wash-clock", "title": "Machine-washable",         "subtitle": "Fresh in one cycle" } }
-      },
-      "block_order": ["c1","c2","c3","c4"]
-    },
-    "ct_ba": {
-      "type": "ct-ba",
+    "ct_home_showcase": {
+      "type": "ct-home-showcase",
       "settings": {
-        "kicker": "",
-        "heading": "",
-        "before_tag": "Before",
-        "after_tag": "After",
-        "before_label": "Fur, dander & claws all over your sofa",
-        "after_label": "Their own cozy, washable spot",
-        "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 40
+        "main_product": "cozy-plush-pet-sofa",
+        "main_price_fallback": "$59.99"
       }
     },
-    "ct_ps": {
-      "type": "ct-problem-solution",
-      "settings": { "color_scheme": "scheme-1", "padding_top": 0, "padding_bottom": 56 },
-      "blocks": {
-        "prob": {
-          "type": "card",
-          "settings": {
-            "variant": "problem",
-            "tag_label": "The problem",
-            "heading": "They love your sofa. It doesn't love them back.",
-            "bullets": "Fur and dander work their way deep into your cushions.\nClaws catch and pull at the fabric weave over time.\nEvery evening turns into the same \"scoot over\" standoff.\nThey don't have a spot that's truly, only theirs."
-          }
-        },
-        "sol": {
-          "type": "card",
-          "settings": {
-            "variant": "solution",
-            "tag_label": "The solution",
-            "heading": "A spot they'll claim. A home you'll keep clean.",
-            "bullets": "A bed so plush they choose it over your couch.\nFur collects on a bed you can toss in the wash.\nGentle on paws, and far easier on your furniture.\nTheir own cozy corner — in tones that match your room."
-          }
-        }
-      },
-      "block_order": ["prob","sol"]
-    },
-    "ct_why": {
-      "type": "ct-pillars",
-      "settings": { "layout": "pillars-svg", "anchor_id": "why", "kicker": "Why pet parents love it", "heading": "Comfort for them, peace of mind for you", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 },
-      "blocks": {
-        "p1": { "type": "pillar", "settings": { "icon_svg": "heart-paw",    "name": "Ultra-soft & cozy",     "desc": "A dense coral-fleece surface over thick padding cushions tired joints and holds in warmth on cold mornings." } },
-        "p2": { "type": "pillar", "settings": { "icon_svg": "bed-bolster",  "name": "Secure & supportive",   "desc": "Raised bolster edges double as a head-rest and a wall, giving anxious or older pets a safe place to settle." } },
-        "p3": { "type": "pillar", "settings": { "icon_svg": "shield-couch", "name": "Protects your furniture","desc": "When they have a spot they prefer, you get fewer hairs on the couch, less scratching, and cleaner cushions." } },
-        "p4": { "type": "pillar", "settings": { "icon_svg": "star",         "name": "Stylish & neutral",     "desc": "Coffee, Grey, and Black tones blend into a modern home instead of shouting \"pet stuff\" from the corner." } },
-        "p5": { "type": "pillar", "settings": { "icon_svg": "wash-clock",   "name": "Easy to clean",         "desc": "The whole bed goes straight in the machine and comes out soft and fluffy — ready for the next nap." } },
-        "p6": { "type": "pillar", "settings": { "icon_svg": "check-double", "name": "Built to last",         "desc": "Reinforced seams and a resilient high-loft fill keep their shape and bounce, wash after wash." } }
-      },
-      "block_order": ["p1","p2","p3","p4","p5","p6"]
-    },
-    "ct_features": {
-      "type": "ct-features-grid",
-      "settings": { "anchor_id": "features", "kicker": "Thoughtfully designed", "heading": "Beautifully made, down to the seam", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 },
-      "blocks": {
-        "f1": { "type": "feature", "settings": { "title": "Plush coral-fleece top", "description": "A deep, faux-fur surface that feels like a favorite blanket — and stays that soft after every wash." } },
-        "f2": { "type": "feature", "settings": { "title": "Raised bolster edges", "description": "Cushioned sides work as both a pillow and a wall, so they can curl up tight or stretch right out." } },
-        "f3": { "type": "feature", "settings": { "title": "Non-slip base", "description": "A grippy underside keeps the bed planted on floors, sofas, and slick surfaces — no sliding mid-zoomies." } },
-        "f4": { "type": "feature", "settings": { "title": "Machine washable", "description": "The whole bed goes straight in the wash and comes back soft and fluffy — no fuss, no special care." } }
-      },
-      "block_order": ["f1","f2","f3","f4"]
-    },
-    "ct_marquee": {
-      "type": "ct-marquee",
-      "settings": { "style": "italic-divider", "speed": 22, "color_scheme": "scheme-1" },
-      "blocks": {
-        "m1": { "type": "message", "settings": { "text": "Made for happy dogs & cats" } },
-        "m2": { "type": "message", "settings": { "text": "Cozier naps" } },
-        "m3": { "type": "message", "settings": { "text": "Cleaner sofas" } },
-        "m4": { "type": "message", "settings": { "text": "A spot of their own" } }
-      },
-      "block_order": ["m1","m2","m3","m4"]
-    },
-    "ct_life": {
-      "type": "ct-lifestyle",
-      "settings": { "kicker": "Made for real life", "heading": "Use it anywhere they love to relax", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 },
-      "blocks": {
-        "l1": { "type": "tile", "settings": { "caption": "On the sofa" } },
-        "l2": { "type": "tile", "settings": { "caption": "On the floor" } },
-        "l3": { "type": "tile", "settings": { "caption": "By the window" } },
-        "l4": { "type": "tile", "settings": { "caption": "In their cozy corner" } }
-      },
-      "block_order": ["l1","l2","l3","l4"]
-    },
-    "ct_guide": {
-      "type": "ct-size-color-guide",
+    "ct_home_problem_solution": {
+      "type": "ct-home-problem-solution",
       "settings": {
-        "anchor_id": "guide",
-        "product": "cozy-plush-pet-sofa",
-        "kicker": "Size & color guide",
-        "heading": "Find their perfect fit",
-        "body": "Three neutral colors, two roomy sizes. Pick the shade that suits your space and the size that suits your pet.",
-        "measuring_tip": "Tip: measure your pet nose-to-tail while they're curled up, then add 4–6″ of breathing room.",
-        "color_option_name": "Color",
-        "size_option_name": "Size",
-        "color_scheme": "scheme-1",
-        "padding_top": 56,
-        "padding_bottom": 56
-      },
-      "blocks": {
-        "sz_m": { "type": "size", "settings": { "match_value": "60x80cm", "badge": "M", "label": "Medium", "dimension": "60 × 80 cm (24″ × 31″)", "desc": "Best for cats and small dogs — a snug spot for curling up." } },
-        "sz_l": { "type": "size", "settings": { "match_value": "80x90cm", "badge": "L", "label": "Large",  "dimension": "80 × 90 cm (31″ × 35″)", "desc": "Best for medium and larger dogs, or any pet who loves to sprawl." } }
-      },
-      "block_order": ["sz_m", "sz_l"]
-    },
-    "ct_compare": {
-      "type": "ct-compare",
-      "settings": {
-        "kicker": "How it compares",
-        "heading": "CozyClaw vs. the rest",
-        "feature_label": "Feature",
-        "brand_label": "CozyClaw Sofa-Bed",
-        "col2_label": "Regular Blanket",
-        "col3_label": "Basic Pet Mat",
-        "color_scheme": "scheme-1",
-        "padding_top": 56,
-        "padding_bottom": 56
-      },
-      "blocks": {
-        "r1": { "type": "row", "settings": { "feature": "Cloud-soft coral fleece",     "brand_type": "check", "col2_type": "text", "col2_text": "Sometimes", "col3_type": "cross" } },
-        "r2": { "type": "row", "settings": { "feature": "Raised supportive edges",     "brand_type": "check", "col2_type": "cross", "col3_type": "cross" } },
-        "r3": { "type": "row", "settings": { "feature": "Helps keep sofas hair-free",  "brand_type": "check", "col2_type": "text", "col2_text": "Limited", "col3_type": "text", "col3_text": "Sometimes" } },
-        "r4": { "type": "row", "settings": { "feature": "Machine-washable cover",      "brand_type": "check", "col2_type": "text", "col2_text": "Limited", "col3_type": "text", "col3_text": "Limited" } },
-        "r5": { "type": "row", "settings": { "feature": "Non-slip bottom",             "brand_type": "check", "col2_type": "cross", "col3_type": "text", "col3_text": "Sometimes" } },
-        "r6": { "type": "row", "settings": { "feature": "Stylish, home-friendly look", "brand_type": "check", "col2_type": "cross", "col3_type": "text", "col3_text": "Limited" } },
-        "r7": { "type": "row", "settings": { "feature": "Holds shape over time",       "brand_type": "check", "col2_type": "text", "col2_text": "Low",     "col3_type": "text", "col3_text": "Low" } }
-      },
-      "block_order": ["r1","r2","r3","r4","r5","r6","r7"]
-    },
-    "ct_materials": {
-      "type": "ct-aplus",
-      "settings": { "layout": "materials-care", "anchor_id": "story", "kicker": "Materials & care", "heading": "What it's made of — and how to keep it fresh", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 },
-      "blocks": {
-        "mc1": { "type": "banner", "settings": { "title": "Inside & out", "specs_rows": "Cover | Soft coral fleece\nFill | Thick high-loft padding\nBase | Non-slip backing\nBest for | Dogs & cats\nColors | Coffee · Grey · Black\nSizes | 60×80 & 80×90 cm" } },
-        "mc2": { "type": "banner", "settings": { "title": "Care in three steps", "specs_rows": "1 · Brush off | Lift loose fur with a glove brush\n2 · Wash | Machine wash cold, gentle\n3 · Dry | Air-dry or tumble low", "body": "The fleece keeps its softness and the fill keeps its loft, so it comes out feeling brand new — wash after wash." } }
-      },
-      "block_order": ["mc1","mc2"]
-    },
-    "ct_reviews": {
-      "type": "ct-reviews",
-      "settings": { "anchor_id": "reviews", "kicker": "", "heading": "", "rating_number": "4.9", "rating_count": "Based on 13 reviews", "layout": "carousel", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 },
-      "blocks": {
-        "rv1": { "type": "review", "settings": { "rating": 5, "text": "He used to take over the entire couch. Now he goes straight to his CozyClaw the moment we sit down — and the cushions finally stay clean.", "author": "Megan R.", "meta": "Verified buyer · Golden mix", "verified": true } },
-        "rv2": { "type": "review", "settings": { "rating": 5, "text": "My cat picked her spot in about five minutes flat. She loves nesting against the raised edge. Washes beautifully too.", "author": "Jordan P.", "meta": "Verified buyer · Tabby cat", "verified": true } },
-        "rv3": { "type": "review", "settings": { "rating": 4, "text": "Really comfy and looks great in Coffee. It took a day out of the box to fully fluff up, but after that it's perfect.", "author": "Alicia N.", "meta": "Verified buyer · Two dogs", "verified": true } },
-        "rv4": { "type": "review", "settings": { "rating": 5, "text": "Worth it for the bolster edges alone. My senior boy rests his head on them and settles right down for the night.", "author": "David L.", "meta": "Verified buyer · Senior lab", "verified": true } }
-      },
-      "block_order": ["rv1","rv2","rv3","rv4"]
-    },
-    "ct_guarantee": {
-      "type": "ct-aplus",
-      "settings": { "layout": "guarantee-4", "kicker": "", "heading": "", "color_scheme": "scheme-1", "padding_top": 0, "padding_bottom": 56 },
-      "blocks": {
-        "g1": { "type": "banner", "settings": { "icon_svg": "shield", "title": "30-night trial",     "body": "Sleep on it. If it's not their spot, send it back." } },
-        "g2": { "type": "banner", "settings": { "icon_svg": "truck",  "title": "Free shipping $75+", "body": "Fast, tracked delivery on qualifying orders." } },
-        "g3": { "type": "banner", "settings": { "icon_svg": "box",    "title": "Easy returns",       "body": "A simple, no-drama return process if you need it." } },
-        "g4": { "type": "banner", "settings": { "icon_svg": "lock",   "title": "Secure checkout",    "body": "Encrypted payment with trusted providers." } }
-      },
-      "block_order": ["g1","g2","g3","g4"]
-    },
-    "ct_bundle": {
-      "type": "ct-pricing",
-      "settings": {
-        "layout": "tier-pair",
-        "anchor_id": "bundle",
-        "kicker": "Bundle & save",
-        "heading": "Pick their cozy setup",
-        "subheading": "Most homes have more than one favorite napping spot. Add a second bed and the whole order ships free.",
-        "addons_label": "Complete their setup — optional add-ons",
-        "color_scheme": "scheme-1",
-        "padding_top": 56,
-        "padding_bottom": 56
-      },
-      "blocks": {
-        "plan1": {
-          "type": "plan",
-          "settings": {
-            "featured": false,
-            "product": "cozy-plush-pet-sofa",
-            "name": "Single Cozy Spot",
-            "sub": "One plush sofa-bed",
-            "features": "One bed in your chosen color & size\n30-night risk-free trial",
-            "price_fallback": "$22.82",
-            "button_label": "Choose single",
-            "button_link": "/products/cozy-plush-pet-sofa"
-          }
-        },
-        "plan2": {
-          "type": "plan",
-          "settings": {
-            "featured": true,
-            "product": "cozy-plush-pet-sofa",
-            "name": "Double Comfort",
-            "sub": "Two beds for every favorite spot",
-            "badge": "Most popular · ships free",
-            "features": "Two beds — mix colors & sizes freely\n**FREE shipping on the whole order**\n30-night risk-free trial",
-            "price_fallback": "$45.64",
-            "button_label": "Choose double",
-            "button_link": "/products/cozy-plush-pet-sofa"
-          }
-        },
-        "addon1": { "type": "addon", "settings": { "product": "chompclean-toy",           "desc": "A squeaky chew that keeps playtime on their bed." } },
-        "addon2": { "type": "addon", "settings": { "product": "pet-deshedding-glove-brush","desc": "Lifts loose fur before it ever reaches your sofa." } }
-      },
-      "block_order": ["plan1","plan2","addon1","addon2"]
-    },
-    "ct_faq": {
-      "type": "ct-faq",
-      "settings": { "anchor_id": "faq", "kicker": "Good to know", "heading": "Frequently asked questions", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 },
-      "blocks": {
-        "q1": { "type": "item", "settings": { "question": "What size should I choose?", "answer": "<p>Measure your pet nose-to-tail while they're curled up and add about 4–6 inches. Medium is 60×80 cm (24″×31″) and suits cats and small dogs; Large is 80×90 cm (31″×35″) for medium and larger dogs, or any pet who loves to sprawl.</p>" } },
-        "q2": { "type": "item", "settings": { "question": "Is it machine washable?", "answer": "<p>Yes. The whole bed is machine-washable on a cold, gentle cycle. Air-dry or tumble on low and it comes back soft and fluffy.</p>" } },
-        "q3": { "type": "item", "settings": { "question": "Is it safe for puppies and kittens?", "answer": "<p>It's designed for dogs and cats of all ages. The soft, supportive edges are especially comforting for young or older pets. As with any bed, supervise heavy chewers.</p>" } },
-        "q4": { "type": "item", "settings": { "question": "What is it made of?", "answer": "<p>A soft coral-fleece cover over thick high-loft padding, with a non-slip backing underneath to keep it in place on floors and furniture.</p>" } },
-        "q5": { "type": "item", "settings": { "question": "Will it stay put on my sofa?", "answer": "<p>The grippy non-slip base helps it stay planted on most sofas, floors, and slick surfaces, so it won't slide around when they hop on and off.</p>" } },
-        "q6": { "type": "item", "settings": { "question": "What is your return policy?", "answer": "<p>Every CozyClaw comes with a 30-night risk-free trial. If it isn't their new favorite spot, reach out to support@cozyclaw.com and we'll help with a return. Free shipping applies to orders over $75.</p>" } }
-      },
-      "block_order": ["q1","q2","q3","q4","q5","q6"]
-    },
-    "ct_final": {
-      "type": "ct-final-cta",
-      "settings": {
-        "product": "cozy-plush-pet-sofa",
-        "eyebrow": "A cozier pet, a cleaner home",
-        "heading": "Give them their favorite spot.",
-        "subheading": "Give your dog or cat a cozier spot of their own and keep your home a little tidier — backed by a 30-night risk-free trial and free shipping over $75.",
-        "price_now": "",
-        "price_was": "",
-        "price_save_label": "",
-        "button_label": "Shop CozyClaw now",
-        "button_link": "/products/cozy-plush-pet-sofa",
-        "button_label_2": "",
-        "show_trust": false,
-        "trust_chips": "",
-        "color_scheme": "scheme-1",
-        "padding_top": 56,
-        "padding_bottom": 56
+        "main_product": "cozy-plush-pet-sofa"
       }
     },
-    "ct_sticky_atc": {
-      "type": "ct-sticky-atc",
+    "ct_home_bundle": {
+      "type": "ct-home-bundle",
       "settings": {
-        "product": "cozy-plush-pet-sofa",
-        "emoji": "",
-        "product_name": "Cozy Plush Pet Sofa",
-        "rating_text": "★★★★★ 92% 5-star · 13 reviews",
-        "button_label": "Add to Cart",
-        "button_link": "/products/cozy-plush-pet-sofa",
-        "color_scheme": "scheme-1"
+        "addon_one": "pet-deshedding-glove-brush"
       }
+    },
+    "ct_home_range": {
+      "type": "ct-home-range",
+      "settings": {
+        "main_product": "cozy-plush-pet-sofa",
+        "addon_one": "pet-deshedding-glove-brush",
+        "addon_two": "chompclean-toy",
+        "main_price_fallback": "$59.99",
+        "addon_one_price_fallback": "$14.99",
+        "addon_two_price_fallback": "$17.99"
+      }
+    },
+    "ct_home_story": {
+      "type": "ct-home-story",
+      "settings": {
+        "main_product": "cozy-plush-pet-sofa"
+      }
+    },
+    "ct_home_size": {
+      "type": "ct-home-size",
+      "settings": {
+        "main_product": "cozy-plush-pet-sofa"
+      }
+    },
+    "ct_home_compare": {
+      "type": "ct-home-compare",
+      "settings": {}
+    },
+    "ct_home_reviews": {
+      "type": "ct-home-reviews",
+      "settings": {}
+    },
+    "apps": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "ct_home_brand": {
+      "type": "ct-home-brand",
+      "settings": {
+        "main_product": "cozy-plush-pet-sofa"
+      }
+    },
+    "ct_home_guarantee": {
+      "type": "ct-home-guarantee",
+      "settings": {}
+    },
+    "ct_home_faq": {
+      "type": "ct-home-faq",
+      "settings": {}
+    },
+    "ct_home_signup": {
+      "type": "ct-home-signup",
+      "settings": {}
     }
   },
   "order": [
-    "ct_hero",
-    "ct_trust_strip",
-    "ct_ba",
-    "ct_ps",
-    "ct_why",
-    "ct_features",
-    "ct_marquee",
-    "ct_life",
-    "ct_guide",
-    "ct_compare",
-    "ct_materials",
-    "ct_reviews",
-    "ct_guarantee",
-    "ct_bundle",
-    "ct_faq",
-    "ct_final",
-    "ct_sticky_atc"
+    "ct_home_hero",
+    "ct_home_showcase",
+    "ct_home_problem_solution",
+    "ct_home_bundle",
+    "ct_home_range",
+    "ct_home_story",
+    "ct_home_size",
+    "ct_home_compare",
+    "ct_home_reviews",
+    "apps",
+    "ct_home_brand",
+    "ct_home_guarantee",
+    "ct_home_faq",
+    "ct_home_signup"
   ]
 }

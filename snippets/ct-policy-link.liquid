@@ -1,0 +1,13 @@
+{%- comment -%}
+  Renders a Shopify policy link with an optional fallback URL.
+  Accepts: policy, label, fallback_url
+{%- endcomment -%}
+{%- liquid
+  assign link_url = fallback_url
+  if policy.body != blank and policy.url != blank
+    assign link_url = policy.url
+  endif
+-%}
+{%- if link_url != blank and label != blank -%}
+  <a href="{{ link_url }}">{{ label | escape }}</a>
+{%- endif -%}

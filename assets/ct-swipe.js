@@ -1,19 +1,70 @@
 (function () {
   'use strict';
+
   function init(el) {
-    let startX, scrollLeft, dragging = false;
+    if (el.dataset.ctSwipeReady === 'true') return;
+    el.dataset.ctSwipeReady = 'true';
+
+    let startX;
+    let startY;
+    let scrollLeft;
+    let dragging = false;
+    let tracking = false;
+    let activePointerId = null;
+
     el.style.cursor = 'grab';
+
+    const stop = () => {
+      tracking = false;
+      dragging = false;
+      activePointerId = null;
+      el.style.cursor = 'grab';
+      el.style.userSelect = '';
+    };
+
     el.addEventListener('pointerdown', (e) => {
-      dragging = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft;
-      el.setPointerCapture(e.pointerId); el.style.cursor = 'grabbing'; el.style.userSelect = 'none';
+      if (activePointerId !== null) return;
+      tracking = true;
+      dragging = false;
+      activePointerId = e.pointerId;
+      startX = e.pageX;
+      startY = e.pageY;
+      scrollLeft = el.scrollLeft;
     });
+
     el.addEventListener('pointermove', (e) => {
-      if (!dragging) return;
-      el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX) * 1.2;
-    });
-    ['pointerup', 'pointercancel'].forEach((ev) => el.addEventListener(ev, () => {
-      dragging = false; el.style.cursor = 'grab'; el.style.userSelect = '';
-    }));
+      if (!tracking || e.pointerId !== activePointerId) return;
+
+      const dx = e.pageX - startX;
+      const dy = e.pageY - startY;
+
+      if (!dragging) {
+        if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 6) {
+          stop();
+          return;
+        }
+        if (Math.abs(dx) < 8) return;
+
+        dragging = true;
+        if (el.setPointerCapture) el.setPointerCapture(e.pointerId);
+        el.style.cursor = 'grabbing';
+        el.style.userSelect = 'none';
+      }
+
+      if (e.cancelable) e.preventDefault();
+      el.scrollLeft = scrollLeft - dx * 1.2;
+    }, { passive: false });
+
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach((ev) => el.addEventListener(ev, stop));
   }
-  document.querySelectorAll('[data-swipe]').forEach(init);
+
+  function initAll(root) {
+    (root || document).querySelectorAll('[data-swipe]').forEach(init);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => initAll());
+  document.addEventListener('shopify:section:load', (event) => initAll(event.target));
+  window.ctInitSwipe = initAll;
+
+  initAll();
 })();

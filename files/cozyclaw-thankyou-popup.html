@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CozyClaw — Thank You Popup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ct-accent:#6D3FC4; --ct-accent-strong:#552C9E; --ct-accent-text:#532C9C;
+  --ct-accent-subtle:#EFE7FB; --ct-accent-border:#C9B2EE; --ct-bg:#FAF8FD; --ct-text:#2A2433;
+  --ct-text-2:#645A75; --ct-text-3:#938AA6; --ct-border:rgba(120,100,160,.28);
+  --ct-font:'Public Sans',-apple-system,system-ui,sans-serif; --ct-display:'Fraunces',Georgia,serif;
+  --ct-r-md:12px; --ct-r-lg:18px; --ct-r-xl:22px; --ct-r-pill:9999px; --ct-ease:cubic-bezier(.22,1,.36,1);
+}
+*{ box-sizing:border-box; margin:0; }
+body{ font-family:var(--ct-font); background:var(--ct-bg); color:var(--ct-text); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+.demo-note{ text-align:center; color:var(--ct-text-2); max-width:420px; }
+.demo-note h1{ font-family:var(--ct-display); font-size:24px; font-weight:600; color:var(--ct-text); margin-bottom:10px; }
+.demo-btn{ margin-top:18px; display:inline-flex; gap:8px; font-family:inherit; font-size:15px; font-weight:700; padding:14px 24px; border-radius:var(--ct-r-pill); border:none; background:var(--ct-accent); color:#fff; cursor:pointer; box-shadow:0 8px 20px rgba(109,63,196,.24); }
+
+.backdrop{ position:fixed; inset:0; background:rgba(34,28,44,.62); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px);
+  display:flex; align-items:center; justify-content:center; padding:20px; z-index:999; opacity:0; visibility:hidden; transition:opacity .3s var(--ct-ease), visibility .3s; }
+.backdrop.open{ opacity:1; visibility:visible; }
+#fx{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+
+.card{ position:relative; z-index:1; width:100%; max-width:440px; background:#fff; border-radius:var(--ct-r-xl); padding:46px 38px 38px;
+  text-align:center; box-shadow:0 30px 70px rgba(42,36,51,.5); transform:translateY(16px) scale(.96); transition:transform .35s var(--ct-ease); }
+.backdrop.open .card{ transform:none; }
+.x{ position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%; border:none; background:var(--ct-accent-subtle); color:var(--ct-accent-text);
+  font-size:18px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.x:hover{ background:#e2d3f7; }
+.badge{ width:74px; height:74px; border-radius:50%; background:var(--ct-accent-subtle); display:flex; align-items:center; justify-content:center;
+  margin:0 auto 18px; animation:pop .5s var(--ct-ease) both; }
+.badge svg{ width:36px; height:36px; stroke:var(--ct-accent); stroke-width:2.4; fill:none; }
+@keyframes pop{ 0%{ transform:scale(.4); opacity:0; } 60%{ transform:scale(1.12); } 100%{ transform:scale(1); opacity:1; } }
+.eyebrow{ display:inline-block; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ct-accent-text); margin-bottom:10px; }
+.card h2{ font-family:var(--ct-display); font-size:30px; font-weight:700; line-height:1.08; letter-spacing:-.01em; margin-bottom:12px; }
+.card p{ font-size:15.5px; color:var(--ct-text-2); margin-bottom:8px; }
+.mailbox{ display:flex; align-items:center; gap:12px; text-align:left; border:1px solid var(--ct-accent-border);
+  background:var(--ct-accent-subtle); border-radius:var(--ct-r-md); padding:14px 16px; margin:20px 0; }
+.mailbox svg{ width:26px; height:26px; stroke:var(--ct-accent); stroke-width:2; fill:none; flex-shrink:0; }
+.mailbox span{ font-size:14px; color:var(--ct-text); font-weight:600; }
+.mailbox span b{ color:var(--ct-accent-text); }
+.note{ font-size:12px; color:var(--ct-text-3); margin:0 0 20px; }
+.cta{ width:100%; font-family:inherit; font-size:15px; font-weight:700; padding:16px; border:none; border-radius:var(--ct-r-pill);
+  background:var(--ct-accent); color:#fff; cursor:pointer; box-shadow:0 8px 20px rgba(109,63,196,.24); transition:background .2s, transform .12s; }
+.cta:hover{ background:var(--ct-accent-strong); transform:translateY(-1px); }
+
+@media(max-width:480px){ .card{ padding:40px 24px 30px; } .card h2{ font-size:26px; } }
+@media (prefers-reduced-motion: reduce){ .badge{ animation:none; } .backdrop, .card, .cta{ transition:none; } }
+</style>
+</head>
+<body>
+
+<div class="demo-note">
+  <h1>Thank-you popup</h1>
+  <p>Shown right after someone signs up. Fireworks play in the background while it's open.</p>
+  <button class="demo-btn" onclick="openPopup()">Show popup</button>
+</div>
+
+<div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="tyTitle">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="card">
+    <button class="x" aria-label="Close" onclick="closePopup()">&times;</button>
+    <div class="badge"><svg viewBox="0 0 24 24"><path d="M20.8 8.6a4 4 0 00-6.4-1L12 9.9 9.6 7.6A4 4 0 103.9 13l8.1 7.6 8.1-7.6a4 4 0 00.7-4.4z"/></svg></div>
+    <span class="eyebrow">You're on the list</span>
+    <h2 id="tyTitle">Thank you for signing up! &#127881;</h2>
+    <p>You just made our day. Welcome to the cozy club — we're so glad you and your furry friend are here.</p>
+    <div class="mailbox">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      <span>Your <b>15% off</b> code is on its way — check your inbox to claim it.</span>
+    </div>
+    <p class="note">Don't see it in a minute? Peek in your spam or promotions folder.</p>
+    <button class="cta" onclick="closePopup()">Start shopping</button>
+  </div>
+</div>
+
+<script>
+  var backdrop=document.getElementById('backdrop');
+  function openPopup(){ backdrop.classList.add('open'); startFx(); }
+  function closePopup(){ backdrop.classList.remove('open'); stopFx(); }
+  backdrop.addEventListener('click',function(ev){ if(ev.target===backdrop) closePopup(); });
+  document.addEventListener('keydown',function(ev){ if(ev.key==='Escape') closePopup(); });
+
+  /* ---- Background fireworks (loops while popup is open) ---- */
+  var cv=document.getElementById('fx'), ctx=cv.getContext('2d');
+  var W=0,H=0, parts=[], rockets=[], raf=null, running=false, lastLaunch=0;
+  var COLORS=['#8A5CF0','#B79BF2','#F2C14E','#ffffff','#D9C3F7','#9C7BEA','#F2A0BC'];
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function rnd(a,b){ return a+Math.random()*(b-a); }
+  function pick(){ return COLORS[Math.floor(Math.random()*COLORS.length)]; }
+  function size(){ W=cv.width=cv.clientWidth||window.innerWidth; H=cv.height=cv.clientHeight||window.innerHeight; }
+  function boom(x,y,c){ var n=Math.floor(rnd(38,58)); for(var i=0;i<n;i++){ var a=Math.PI*2*i/n+rnd(-.1,.1); var sp=rnd(2.4,7.6);
+      parts.push({x:x,y:y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,dec:rnd(.006,.013),col:(Math.random()<.7?c:pick()),r:rnd(2.4,3.6)}); } }
+  function launch(){ rockets.push({x:rnd(W*.08,W*.92), y:H+8, vy:-rnd(9,13), ty:rnd(H*.08,H*.55), col:pick()}); }
+  function frame(ts){
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation='lighter';
+    if(running && ts-lastLaunch>rnd(200,400)){ lastLaunch=ts; launch(); if(Math.random()<.5) launch(); }
+    for(var r=rockets.length-1;r>=0;r--){ var k=rockets[r]; k.y+=k.vy; k.vy+=0.14;
+      ctx.globalAlpha=1; ctx.fillStyle=k.col; ctx.shadowBlur=10; ctx.shadowColor=k.col;
+      ctx.beginPath(); ctx.arc(k.x,k.y,2.6,0,7); ctx.fill();
+      if(k.vy>=-1.4 || k.y<=k.ty){ boom(k.x,k.y,k.col); rockets.splice(r,1); } }
+    for(var p=parts.length-1;p>=0;p--){ var q=parts[p]; q.x+=q.vx; q.y+=q.vy; q.vy+=0.045; q.vx*=0.99; q.life-=q.dec;
+      if(q.life<=0){ parts.splice(p,1); continue; }
+      ctx.globalAlpha=Math.max(q.life,0); ctx.fillStyle=q.col; ctx.shadowBlur=12; ctx.shadowColor=q.col;
+      ctx.beginPath(); ctx.arc(q.x,q.y,q.r,0,7); ctx.fill(); }
+    ctx.shadowBlur=0; ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
+    if(running || parts.length || rockets.length){ raf=requestAnimationFrame(frame); } else { raf=null; }
+  }
+  function startFx(){ if(reduce) return; size(); running=true; lastLaunch=0;
+    boom(W*0.5,H*0.26,'#F2C14E'); boom(W*0.22,H*0.4,'#8A5CF0'); boom(W*0.8,H*0.36,'#B79BF2'); boom(W*0.62,H*0.6,'#F2A0BC');
+    if(!raf) raf=requestAnimationFrame(frame); }
+  function stopFx(){ running=false; setTimeout(function(){ if(!running){ parts=[]; rockets=[]; if(W){ctx.clearRect(0,0,W,H);} if(raf){cancelAnimationFrame(raf); raf=null;} } }, 1300); }
+  window.addEventListener('resize',function(){ if(running) size(); });
+
+  setTimeout(openPopup, 600);
+</script>
+</body>
+</html>

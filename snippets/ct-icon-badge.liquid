@@ -1,0 +1,17 @@
+{% comment %}
+  CozyClaw icon badge.
+
+  Accepts:
+  - icon: ct-fa-icon key
+  - tone: sage, clay, teal, coffee, gold
+  - class: optional class string
+{% endcomment %}
+{%- liquid
+  assign badge_icon = icon | default: 'circle-check'
+  assign badge_tone = tone | default: 'sage'
+  assign badge_class = class | default: ''
+-%}
+
+<span class="cth-ic cth-ic--{{ badge_tone }} {{ badge_class }}">
+  {% render 'ct-fa-icon', icon: badge_icon %}
+</span>

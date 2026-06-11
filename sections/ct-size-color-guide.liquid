@@ -32,9 +32,13 @@
                 {%- endfor -%}
                 <div class="ct-guide__sw">
                   {%- if matched_variant != nil and matched_variant.featured_image != blank -%}
-                    <img src="{{ matched_variant.featured_image | image_url: width: 240 }}" alt="{{ p.title }} in {{ color_value }}" loading="lazy" width="240" height="240">
+                    <span class="ct-guide__sw-media">
+                      <img src="{{ matched_variant.featured_image | image_url: width: 240 }}" alt="{{ p.title }} in {{ color_value }}" loading="lazy" width="240" height="240">
+                    </span>
                   {%- elsif p.featured_image != blank -%}
-                    <img src="{{ p.featured_image | image_url: width: 240 }}" alt="{{ p.title }} in {{ color_value }}" loading="lazy" width="240" height="240">
+                    <span class="ct-guide__sw-media">
+                      <img src="{{ p.featured_image | image_url: width: 240 }}" alt="{{ p.title }} in {{ color_value }}" loading="lazy" width="240" height="240">
+                    </span>
                   {%- endif -%}
                   <span class="ct-guide__sw-label">{{ color_value }}</span>
                 </div>
@@ -51,7 +55,23 @@
           {%- for opt in p.options_with_values -%}
             {%- if opt.name == size_opt_name -%}{%- assign size_opt = opt -%}{%- endif -%}
           {%- endfor -%}
-          {%- if size_opt != nil -%}
+          {%- if size_blocks.size > 0 -%}
+            <div class="ct-guide__sizes">
+              {%- for matched_block in size_blocks -%}
+                {%- assign size_badge = matched_block.settings.badge -%}
+                {%- assign size_label = matched_block.settings.label | default: matched_block.settings.match_value -%}
+                {%- assign size_dim = matched_block.settings.dimension -%}
+                {%- assign size_desc = matched_block.settings.desc -%}
+                <div class="ct-guide__size-card" {{ matched_block.shopify_attributes }}>
+                  <span class="ct-guide__size-badge">{{ size_badge }}</span>
+                  <div>
+                    <b>{{ size_label }}{% if size_dim != blank %} <span class="ct-guide__size-dim">{{ size_dim }}</span>{% endif %}</b>
+                    {%- if size_desc != blank -%}<p>{{ size_desc }}</p>{%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- elsif size_opt != nil -%}
             <div class="ct-guide__sizes">
               {%- for size_value in size_opt.values -%}
                 {%- comment -%} Find a matching size block (case-insensitive exact match on match_value) {%- endcomment -%}
@@ -129,10 +149,10 @@
       "type": "size",
       "name": "Size card",
       "settings": [
-        { "type": "text", "id": "match_value", "label": "Match variant value (REQUIRED)", "info": "Exact text of the product Size option value to map (case-insensitive). Example: '60x80cm' or 'Medium'." },
+        { "type": "text", "id": "match_value", "label": "Match variant value (REQUIRED)", "info": "Exact text of the product Size option value to map (case-insensitive). Example: the product's size option value or 'Medium'." },
         { "type": "text", "id": "badge", "label": "Badge (1–3 chars)", "default": "M", "info": "Shown in the dark square. e.g. 'M', 'L', 'XL'." },
         { "type": "text", "id": "label", "label": "Display label", "info": "Optional name shown next to the badge (e.g. 'Medium'). Falls back to the raw variant value if blank." },
-        { "type": "text", "id": "dimension", "label": "Dimension subtext (optional)", "info": "Shown in mono font next to the label, e.g. '60 × 80 cm (24″ × 31″)'." },
+        { "type": "text", "id": "dimension", "label": "Dimension subtext (optional)", "info": "Shown in mono font next to the label, e.g. '24 x 31 in'." },
         { "type": "textarea", "id": "desc", "label": "Description", "info": "One-line caption shown below the label." }
       ]
     }
@@ -142,8 +162,8 @@
     {
       "name": "CT Size & color guide",
       "blocks": [
-        { "type": "size", "settings": { "match_value": "Medium", "badge": "M", "label": "Medium", "dimension": "60 × 80 cm (24″ × 31″)", "desc": "Best for cats and small dogs — a snug spot for curling up." } },
-        { "type": "size", "settings": { "match_value": "Large",  "badge": "L", "label": "Large",  "dimension": "80 × 90 cm (31″ × 35″)", "desc": "Best for medium and larger dogs, or any pet who loves to sprawl." } }
+        { "type": "size", "settings": { "match_value": "Medium", "badge": "M", "label": "Medium", "dimension": "24 x 31 in", "desc": "Best for cats and small dogs — a snug spot for curling up." } },
+        { "type": "size", "settings": { "match_value": "Large",  "badge": "L", "label": "Large",  "dimension": "31 x 35 in", "desc": "Best for medium and larger dogs, or any pet who loves to sprawl." } }
       ]
     }
   ]

@@ -1,7 +1,7 @@
 /* section-ct-lifestyle.css — 4-photo grid with caption overlay per cozyclaw-homepage.html §life */
 .ct-life__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:var(--ct-mw, 1280px);margin:0 auto}
-.ct-life__tile{position:relative;border-radius:var(--ct-r-md);overflow:hidden;margin:0}
-.ct-life__tile img{width:100%;aspect-ratio:1/1;object-fit:contain;background:var(--ct-bg-surface);transition:transform .5s var(--ct-ease-out, cubic-bezier(.22,1,.36,1));display:block}
+.ct-life__tile{position:relative;aspect-ratio:1/1;border-radius:var(--ct-r-md);overflow:hidden;margin:0;background:var(--ct-bg-surface)}
+.ct-life__tile img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ct-ease-out, cubic-bezier(.22,1,.36,1));display:block}
 .ct-life__tile:hover img{transform:scale(1.05)}
 .ct-life__tile figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px;color:#fff;font-weight:600;font-size:14px;background:linear-gradient(transparent, rgba(46,36,29,.74))}
 /* Placeholder state — when no image is uploaded, show a centered caption on accent-subtle bg */

@@ -12,13 +12,13 @@
     <div class="ct-features__grid">
       {%- for block in section.blocks -%}
         <div class="ct-features__card" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            <img class="ct-features__img" src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.image.alt | escape | default: block.settings.title }}" loading="lazy" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}">
-          {%- else -%}
-            <div class="ct-features__img ct-features__img--ph" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="40" height="40"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="11" r="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M21 17l-5-5-5 5-3-3-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-            </div>
-          {%- endif -%}
+          <div class="ct-features__media{% if block.settings.image == blank %} ct-features__media--ph{% endif %}">
+            {%- if block.settings.image != blank -%}
+              <img class="ct-features__img" src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.image.alt | escape | default: block.settings.title }}" loading="lazy" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}">
+            {%- else -%}
+              <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="11" r="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M21 17l-5-5-5 5-3-3-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            {%- endif -%}
+          </div>
           <div class="ct-features__body">
             {%- if block.settings.title != blank -%}<h3>{{ block.settings.title }}</h3>{%- endif -%}
             {%- if block.settings.description != blank -%}<p>{{ block.settings.description }}</p>{%- endif -%}

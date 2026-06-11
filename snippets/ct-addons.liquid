@@ -1,24 +1,53 @@
 {% comment %}
-  Cross-sell add-ons box on the PDP. Renders all section blocks of type 'addon'
-  as selectable cards (whole-card toggle, no checkbox / no radio). On main
-  add-to-cart submit, ct-addons.js bundles the main variant + every pressed
-  add-on into one /cart/add.js call. "Save X" comes from each add-on variant's
-  compare_at_price; can be overridden per block via savings_override.
+  Cross-sell add-ons box on the PDP. Add-ons count toward the $100+
+  automatic-discount threshold and are added with the bundle form submit.
   Accepts: section, product, product_form_id
 {% endcomment %}
 {%- liquid
   assign addon_blocks = section.blocks | where: 'type', 'addon'
+  assign renderable_addons = 0
+  capture addon_free_shipping_threshold_raw
+    render 'ct-reward-threshold', key: 'free_shipping'
+  endcapture
+  capture addon_discount_threshold_raw
+    render 'ct-reward-threshold', key: 'discount'
+  endcapture
+  capture addon_reward_thresholds_configured_raw
+    render 'ct-reward-threshold', key: 'configured'
+  endcapture
+  assign addon_free_shipping_threshold = addon_free_shipping_threshold_raw | strip | plus: 0
+  assign addon_discount_threshold = addon_discount_threshold_raw | strip | plus: 0
+  assign addon_reward_thresholds_configured = addon_reward_thresholds_configured_raw | strip
+  if settings.currency_code_enabled
+    assign addon_free_shipping_threshold_money = addon_free_shipping_threshold | money_with_currency
+    assign addon_discount_threshold_money = addon_discount_threshold | money_with_currency
+  else
+    assign addon_free_shipping_threshold_money = addon_free_shipping_threshold | money
+    assign addon_discount_threshold_money = addon_discount_threshold | money
+  endif
+  for block in addon_blocks
+    if block.settings.product != blank and block.settings.product.selected_or_first_available_variant != blank
+      assign renderable_addons = renderable_addons | plus: 1
+    endif
+  endfor
 -%}
-{%- if addon_blocks.size > 0 -%}
+{%- if renderable_addons > 0 -%}
   {{ 'section-ct-addons.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'ct-addons.js' | asset_url }}" defer="defer"></script>
 
   <div class="ct-addons" data-ct-addons data-product-form-id="{{ product_form_id }}">
     <div class="ct-addons__head">
-      <span class="ct-addons__star" aria-hidden="true">⭐</span>
-      <span class="ct-addons__title">Limited-time add-on discount</span>
-      <span class="ct-addons__star" aria-hidden="true">⭐</span>
+      <span class="ct-addons__line" aria-hidden="true"></span>
+      <span class="ct-addons__title">Optional add-ons</span>
+      <span class="ct-addons__line" aria-hidden="true"></span>
     </div>
+    <p class="ct-addons__note">
+      {%- if addon_reward_thresholds_configured == 'true' -%}
+        Each add-on counts toward free shipping at {{ addon_free_shipping_threshold_money }}+ and 15% off at {{ addon_discount_threshold_money }}+
+      {%- else -%}
+        Each add-on counts toward checkout rewards when eligible.
+      {%- endif -%}
+    </p>
     <ul class="ct-addons__list" role="list">
       {%- for block in addon_blocks -%}
         {%- assign p = block.settings.product -%}
@@ -31,33 +60,57 @@
         {%- if v.compare_at_price > v.price -%}{%- assign has_compare = true -%}{%- endif -%}
         {%- assign savings = 0 -%}
         {%- if has_compare -%}{%- assign savings = v.compare_at_price | minus: v.price -%}{%- endif -%}
+        {%- if settings.currency_code_enabled -%}
+          {%- assign addon_price_money = v.price | money_with_currency -%}
+          {%- assign addon_compare_money = v.compare_at_price | money_with_currency -%}
+          {%- assign addon_savings_money = savings | money_with_currency -%}
+        {%- else -%}
+          {%- assign addon_price_money = v.price | money -%}
+          {%- assign addon_compare_money = v.compare_at_price | money -%}
+          {%- assign addon_savings_money = savings | money -%}
+        {%- endif -%}
+        {%- assign badge_class = '' -%}
+        {%- case block.settings.flag_style -%}
+          {%- when 'urgency' -%}{%- assign badge_class = ' ct-addon__badge--urgency' -%}
+          {%- when 'gold' -%}{%- assign badge_class = ' ct-addon__badge--gold' -%}
+        {%- endcase -%}
         <li class="ct-addons__item" {{ block.shopify_attributes }}>
-          {%- if block.settings.badge != blank -%}
-            <span class="ct-addon__badge">{{ block.settings.badge }}</span>
-          {%- endif -%}
           <div
             class="ct-addon"
             role="button"
             tabindex="0"
-            aria-pressed="false"
-            aria-label="Add {{ p.title | escape }} to your order"
+            aria-pressed="true"
+            aria-label="Add {{ p.title | escape }} to your order for an extra cost"
             data-ct-addon
             data-variant-id="{{ v.id }}"
             data-product-handle="{{ p.handle }}"
+            data-product-title="{{ p.title | escape }}"
+            data-price="{{ v.price }}"
+            data-compare="{{ v.compare_at_price | default: 0 }}"
           >
+            <span class="ct-addon__check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                <polyline points="4 12 10 18 20 6"></polyline>
+              </svg>
+            </span>
             <span class="ct-addon__media">
               {%- if p.featured_image -%}
                 {{ p.featured_image | image_url: width: 96 | image_tag: loading: 'lazy', class: 'ct-addon__img', alt: p.title | escape }}
               {%- else -%}
-                <span class="ct-addon__img ct-addon__img--ph" aria-hidden="true">📦</span>
+                <span class="ct-addon__img ct-addon__img--ph" aria-hidden="true">&#128230;</span>
               {%- endif -%}
             </span>
             <span class="ct-addon__body">
-              <span class="ct-addon__title">{{ p.title }}</span>
+              <span class="ct-addon__top">
+                <span class="ct-addon__title">{{ p.title }}</span>
+                {%- if block.settings.badge != blank -%}
+                  <span class="ct-addon__badge{{ badge_class }}">{{ block.settings.badge }}</span>
+                {%- endif -%}
+              </span>
               {%- if block.settings.savings_override != blank -%}
                 <span class="ct-addon__savings">{{ block.settings.savings_override }}</span>
               {%- elsif has_compare -%}
-                <span class="ct-addon__savings">Save <strong data-addon-save>{{ savings | money }}</strong>!</span>
+                <span class="ct-addon__savings">Save <strong data-addon-save>{{ addon_savings_money }}</strong></span>
               {%- else -%}
                 <span class="ct-addon__savings" data-addon-save-wrap hidden></span>
               {%- endif -%}
@@ -70,26 +123,30 @@
                   data-ct-addon-variant
                 >
                   {%- for variant in p.variants -%}
+                    {%- assign variant_label = variant.title | replace: '60x80cm', '24 x 31 in' | replace: '80x90cm', '31 x 35 in' -%}
                     <option
                       value="{{ variant.id }}"
                       data-price="{{ variant.price }}"
                       data-compare="{{ variant.compare_at_price | default: 0 }}"
                       {% unless variant.available %}disabled{% endunless %}
                       {% if variant.id == v.id %}selected{% endif %}
-                    >{{ variant.title }}{% unless variant.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}</option>
+                    >
+                      {{- variant_label -}}
+                      {%- unless variant.available %} - {{ 'products.product.sold_out' | t }}{% endunless -%}
+                    </option>
                   {%- endfor -%}
                 </select>
               {%- endif -%}
             </span>
             <span class="ct-addon__price">
-              <span class="ct-addon__price-now" data-addon-now>{{ v.price | money }}</span>
+              <span class="ct-addon__price-prefix">+ Add</span>
+              <span class="ct-addon__price-now" data-addon-now>{{ addon_price_money }}</span>
               {%- if has_compare -%}
-                <span class="ct-addon__price-was" data-addon-was>{{ v.compare_at_price | money }}</span>
+                <span class="ct-addon__price-was" data-addon-was>{{ addon_compare_money }}</span>
               {%- else -%}
                 <span class="ct-addon__price-was" data-addon-was hidden></span>
               {%- endif -%}
             </span>
-            <span class="ct-addon__pill" data-addon-pill aria-hidden="true"></span>
           </div>
         </li>
       {%- endfor -%}

@@ -3,19 +3,22 @@
   "presets": {
     "Default": {
       "logo_width": 90,
-      "color_accent": "#6D3FC4",
-      "color_accent_hover": "#552C9E",
+      "color_accent": "#5A3E2B",
+      "color_accent_hover": "#43301F",
       "border_radius": 12,
+      "ct_reward_thresholds_by_currency": "USD:5000,10000",
+      "ct_free_shipping_threshold_cents": "5000",
+      "ct_discount_threshold_cents": "10000",
       "color_schemes": {
         "scheme-1": {
           "settings": {
-            "background": "#FAF8FD",
+            "background": "#F7F2E9",
             "background_gradient": "",
-            "text": "#2A2433",
-            "button": "#6D3FC4",
+            "text": "#2A201A",
+            "button": "#5A3E2B",
             "button_label": "#FFFFFF",
-            "secondary_button_label": "#2A2433",
-            "shadow": "#2A2433"
+            "secondary_button_label": "#2A201A",
+            "shadow": "#2A201A"
           }
         },
         "scheme-2": {
@@ -168,7 +171,7 @@
       "predictive_search_enabled": true,
       "predictive_search_show_vendor": false,
       "predictive_search_show_price": false,
-      "currency_code_enabled": true,
+      "currency_code_enabled": false,
       "cart_type": "notification",
       "show_vendor": false,
       "show_cart_note": false,

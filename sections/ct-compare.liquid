@@ -4,7 +4,10 @@
 {% render 'ct-section-padding', section: section %}
 
 {%- liquid
-  assign cell_keys = 'brand,col2,col3' | split: ','
+  assign cell_keys = 'brand,col2' | split: ','
+  if section.settings.col3_label != blank
+    assign cell_keys = 'brand,col2,col3' | split: ','
+  endif
 -%}
 
 <div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
@@ -13,10 +16,10 @@
     <table class="ct-compare">
       <thead>
         <tr>
-          <th style="width:40%">{{ section.settings.feature_label }}</th>
-          <th class="ct-compare__brand">{{ section.settings.brand_label }} ★</th>
+          <th>{{ section.settings.feature_label }}</th>
+          <th class="ct-compare__brand">{{ section.settings.brand_label }}</th>
           <th>{{ section.settings.col2_label }}</th>
-          <th>{{ section.settings.col3_label }}</th>
+          {%- if section.settings.col3_label != blank -%}<th>{{ section.settings.col3_label }}</th>{%- endif -%}
         </tr>
       </thead>
       <tbody>

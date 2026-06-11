@@ -6,6 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a fork of [Shopify Dawn](https://github.com/Shopify/dawn), Shopify's reference Online Store 2.0 theme. There is **no build step, no bundler, and no `package.json`** — files in `assets/` are served as-is. HTML is rendered server-side with Liquid; JavaScript is added only as progressive enhancement.
 
+## Read first
+
+Before implementing CozyClaw changes, read
+`docs/cozyclaw-implementation-memory.md`. It captures prior decisions and bugs
+around the homepage rebuild, PDP galleries, cart rewards bar, signup popup,
+footer, structured data, encoding issues, Theme Check baseline, and zip
+packaging. Treat it as the working memory for this project.
+
 ## Design rule — follow the reference 100%, never add extras
 
 The CozyClaw design files in `files/` are the **single source of visual truth**:

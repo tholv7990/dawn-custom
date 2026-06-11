@@ -5,7 +5,7 @@
 .ct-journey-step:hover{box-shadow:var(--ct-shadow-md);transform:translateY(-2px)}
 .ct-journey-dot{width:14px;height:14px;border-radius:50%;background:var(--ct-accent-strong);border:3px solid var(--ct-bg-raised);box-shadow:0 0 0 2px var(--ct-accent-border);margin:0 auto 14px;display:block}
 .ct-journey-weeks{font-family:var(--ct-font-mono);font-size:10px;color:var(--ct-accent-text);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;text-align:center}
-.ct-journey-title{font-size:14px;font-weight:800;color:var(--ct-text);margin-bottom:6px;text-align:center}
+.ct-journey-title{font-family:var(--ct-font-display);font-size:16px;font-weight:600;line-height:1.15;color:var(--ct-text);margin-bottom:6px;text-align:center}
 .ct-journey-desc{font-size:12px;color:var(--ct-text-2);line-height:1.6;margin-bottom:8px;text-align:center}
 .ct-journey-badge{display:block;width:fit-content;margin:0 auto;padding:3px 8px;background:var(--ct-accent-subtle);border-radius:var(--ct-r-pill);font-size:10px;color:var(--ct-accent-text);font-weight:600;font-family:var(--ct-font-mono)}
 @media(max-width:640px){.ct-journey-track{grid-template-columns:1fr 1fr}.ct-journey-track::before{display:none}}

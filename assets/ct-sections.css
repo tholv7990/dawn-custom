@@ -1,7 +1,5 @@
-/* assets/ct-sections.css — shared primitives for all ct-* homepage sections.
-   Ported from dawn-design-system.html; demo tokens → --ct-* (spec §4.1),
-   demo .btn family → .ct-btn (spec §5). Loaded by every ct-* section;
-   duplicate <link>s dedupe at the browser cache (same URL). */
+/* Shared primitives for ct-* sections.
+   Reference design values are expressed through --ct-* tokens. */
 
 /* ---- Section CTA buttons (demo .btn family) ---- */
 .ct-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--ct-font-body);font-size:15px;font-weight:600;height:var(--ct-touch);padding:0 22px;border-radius:var(--ct-r-pill);border:none;cursor:pointer;white-space:nowrap;text-decoration:none;transition:background .15s,box-shadow .15s,transform .12s,opacity .15s;position:relative;overflow:hidden}
@@ -11,7 +9,7 @@
 .ct-btn--sm{height:36px;padding:0 16px;font-size:13px}
 .ct-btn--lg{height:56px;padding:0 32px;font-size:16px}
 .ct-btn--full{width:100%}
-.ct-btn--primary{background:var(--ct-accent-strong);color:#fff;box-shadow:var(--ct-shadow-sm)}
+.ct-btn--primary{background:var(--ct-accent-strong);color:var(--ct-bg-raised);box-shadow:var(--ct-shadow-sm)}
 .ct-btn--primary:hover{background:var(--ct-accent);box-shadow:var(--ct-shadow-md);transform:translateY(-1px)}
 .ct-btn--outlined{background:transparent;color:var(--ct-text);border:1px solid var(--ct-border)}
 .ct-btn--outlined:hover{background:var(--ct-bg-control)}
@@ -23,19 +21,21 @@
 .ct-eyebrow__dot{display:none}
 .ct-kicker{font-family:var(--ct-font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ct-accent-text);margin-bottom:10px}
 .ct-section-head{text-align:center;max-width:640px;margin:0 auto 32px}
-.ct-section-head__title{font-family:var(--ct-font-display);font-size:clamp(28px,4.6vw,44px);font-weight:600;color:var(--ct-text);letter-spacing:-.01em;line-height:1.08;margin-bottom:10px}
+.ct-section-head__title{font-family:var(--ct-font-display);font-size:clamp(28px,4vw,42px);font-weight:600;color:var(--ct-text);letter-spacing:-.01em;line-height:1.1;margin-bottom:10px}
 .ct-section-head__sub{font-size:15px;color:var(--ct-text-2);line-height:1.65}
 /* New convention used by ct-features-grid / ct-lifestyle / ct-problem-solution / ct-pillars (pillars-svg) / ct-aplus (materials-care, guarantee-4) / ct-pricing (tier-pair) / ct-size-color-guide */
 .ct-sec-head{display:flex;flex-direction:column;gap:10px;margin:0 0 36px;max-width:var(--ct-mw, 1280px);margin-left:auto;margin-right:auto}
 .ct-sec-head--center{align-items:center;text-align:center}
 .ct-sec-head .ct-eyebrow{margin-bottom:0}
-.ct-sec-head h2{font-family:var(--ct-font-display);font-size:clamp(27px,4vw,42px);font-weight:600;color:var(--ct-text);letter-spacing:-.01em;line-height:1.1;max-width:22ch;margin:0}
+.ct-sec-head h2{font-family:var(--ct-font-display);font-size:clamp(28px,4vw,42px);font-weight:600;color:var(--ct-text);letter-spacing:-.01em;line-height:1.1;max-width:22ch;margin:0}
 .ct-sec-head .ct-lead{max-width:60ch;color:var(--ct-text-2);font-size:17px;line-height:1.55;margin:0}
 @media(max-width:640px){.ct-sec-head{margin-bottom:28px}.ct-sec-head .ct-lead{font-size:15px}}
 
 /* ---- Rating row (demo .rating-row/.stars/.rating-count) ---- */
 .ct-rating-row{display:flex;align-items:center;gap:6px;margin-top:4px}
-.ct-stars{color:var(--ct-rating);font-size:14px;letter-spacing:1px}
+.ct-stars{display:inline-flex;align-items:center;gap:2px;color:var(--ct-rating);font-size:14px;letter-spacing:1px;line-height:1}
+.ct-stars .ct-fa-icon{display:block;width:16px;height:16px;fill:currentColor}
+.ct-stars .ct-fa-icon--empty{color:var(--ct-rating-empty)}
 .ct-rating-count{font-size:13px;color:var(--ct-text-3)}
 
 /* ---- 3-col grid helper ---- */
@@ -46,10 +46,34 @@
 @keyframes ct-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 @media(prefers-reduced-motion:reduce){.ct-eyebrow__dot{animation:none}}
 
-/* ---- Trust chips (demo .trust-row/.trust-chip) — shared by ct-final-cta + ct-pricing ---- */
+/* ---- Trust chips shared by ct-final-cta + ct-pricing ---- */
 .ct-trust-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .ct-trust-chip{display:inline-flex;align-items:center;gap:8px;background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-lg);padding:10px 14px;font-size:13px;font-weight:500;color:var(--ct-text-2)}
-.ct-trust-chip::before{content:'✓';color:var(--ct-accent-text);font-weight:700;font-size:12px}
+.ct-trust-chip::before{content:'\2713';color:var(--ct-accent-text);font-weight:700;font-size:12px}
 
 /* ---- Card surface base (bg + border + radius shared by ct-* cards) ---- */
 .ct-card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-xl)}
+
+/* ---- Shared media fit helpers for ct-* content cards ---- */
+.ct-media{position:relative;display:grid;place-items:center;overflow:hidden;background:var(--ct-bg-surface)}
+.ct-media>img,
+.ct-media>video{width:100%;height:100%;display:block}
+.ct-media--contain>img,
+.ct-media--contain>video{object-fit:contain}
+.ct-media--cover>img,
+.ct-media--cover>video{object-fit:cover}
+.ct-media.ct-media--natural>img,
+.ct-media.ct-media--natural>video{width:100%;height:auto;max-height:none;object-fit:contain}
+
+/* ---- Reusable ct-product-gallery lightbox for plain image slides ---- */
+.ct-gallery-lightbox{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:24px;background:color-mix(in srgb,var(--ct-espresso) 94%,transparent);touch-action:none}
+.ct-gallery-lightbox.is-open{display:flex}
+.ct-gallery-lightbox__img{max-width:min(100%,1200px);max-height:calc(100vh - 48px);border-radius:var(--ct-r-lg);box-shadow:var(--ct-shadow-2xl);object-fit:contain;user-select:none;-webkit-user-drag:none;contain:layout paint;will-change:contents}
+.ct-gallery-lightbox__close{position:absolute;top:18px;right:18px;display:grid;width:44px;height:44px;padding:0;border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-pill);background:var(--ct-bg-raised);color:var(--ct-text);font-size:28px;line-height:1;cursor:pointer;place-items:center}
+.ct-gallery-lightbox__arrow{position:absolute;top:50%;display:grid;width:48px;height:48px;padding:0;border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-pill);background:var(--ct-bg-raised);color:var(--ct-text-2);box-shadow:var(--ct-shadow-sm);cursor:pointer;place-items:center;transform:translateY(-50%)}
+.ct-gallery-lightbox__arrow svg{width:22px;height:22px}
+.ct-gallery-lightbox__arrow:disabled{opacity:.36;cursor:default}
+.ct-gallery-lightbox__arrow--prev{left:18px}
+.ct-gallery-lightbox__arrow--next{right:18px}
+.ct-gallery-lightbox-open{overflow:hidden}
+@media(max-width:749px){.ct-gallery-lightbox__arrow{display:none}.ct-gallery-lightbox{padding:14px;background:var(--ct-espresso)}.ct-gallery-lightbox__img{max-height:calc(100vh - 28px)}}

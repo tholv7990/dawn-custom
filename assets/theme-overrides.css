@@ -2,6 +2,20 @@
    All values use --ct-* tokens. Components authored in px (root-independent;
    we never change Dawn's 62.5% html font-size). */
 
+/* ---- Global horizontal-overflow guard ----
+   Shopify auto-renders /policies/* and admin-authored pages with whatever
+   the merchant typed (often "------" or "=====" separators that don't break).
+   Long unbroken strings would push the body wider than the viewport on
+   mobile and create a horizontal scrollbar. Clip the page horizontally and
+   force long words/strings to wrap inside policy + page + rich-text content. */
+html, body { overflow-x: clip; max-width: 100%; }
+.shopify-policy__container,
+.shopify-policy__body,
+.shopify-policy__title,
+.main-page-title,
+.page-width .rte,
+main .rte { overflow-wrap: anywhere; word-break: break-word; }
+
 /* ---- Typography ---- */
 body,
 .rte,
@@ -54,10 +68,36 @@ h3, .h3 { font-size: var(--ct-text-lg); font-weight: var(--ct-fw-semi); }
 .ct-brand{font-family:var(--ct-font-display);font-weight:700;letter-spacing:-.01em;color:var(--ct-text)}
 .ct-brand__paw{color:var(--ct-accent-text)}
 
-/* ---- Header landing nav (anchor links to homepage sections) ---- */
-.ct-landing-nav{display:flex;gap:26px;align-items:center;justify-self:center}
-.ct-landing-nav__link{font-size:15px;font-weight:600;color:var(--ct-text-2);text-decoration:none;transition:color .15s}
-.ct-landing-nav__link:hover{color:var(--ct-accent-text)}
+/* ---- Global CozyClaw header: cream blurred bar from homepage reference ---- */
+.shopify-section-header-sticky .header-wrapper,
+.header-wrapper {
+  background: color-mix(in srgb, var(--ct-bg) 92%, transparent);
+  border-bottom-color: var(--ct-border-subtle);
+  backdrop-filter: saturate(140%) blur(10px);
+}
+.header {
+  min-height: calc(var(--ct-touch) + var(--ct-space-3) + var(--ct-space-1));
+}
+
+/* ---- Header landing nav (global links to product/homepage anchors) ---- */
+.ct-landing-nav {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: var(--ct-space-5);
+}
+
+.ct-landing-nav__link {
+  color: var(--ct-accent-text);
+  font-size: var(--ct-text-base);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color .15s;
+}
+
+.ct-landing-nav__link:hover {
+  color: var(--ct-accent-text);
+}
 
 /* ---- Header ATC pill + cart icon ---- */
 .ct-header-actions{display:flex;align-items:center;gap:14px}
@@ -160,12 +200,16 @@ img { max-width: 100%; }
 
 /* ---- Back to top (ct-back-to-top.js) ---- */
 ct-back-to-top {
-  position: fixed; right: 20px; bottom: 20px; z-index: 50;
+  position: fixed; right: 20px; bottom: 20px; z-index: 210;
   opacity: 0; visibility: hidden; transform: translateY(8px);
   transition: opacity var(--ct-dur-base) var(--ct-ease-out),
-              transform var(--ct-dur-base) var(--ct-ease-out), visibility var(--ct-dur-base);
+              transform var(--ct-dur-base) var(--ct-ease-out),
+              bottom var(--ct-dur-base) var(--ct-ease-out),
+              visibility var(--ct-dur-base);
 }
 ct-back-to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
+/* When the sticky add-to-cart bar is visible, lift the back-to-top button above it. */
+body:has(.ct-sticky-atc.is-visible) ct-back-to-top { bottom: 84px; }
 ct-back-to-top button {
   width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
   background: var(--ct-accent); color: #fff; box-shadow: var(--ct-shadow-md);
@@ -173,6 +217,31 @@ ct-back-to-top button {
 }
 ct-back-to-top button:hover { background: var(--ct-accent-strong); }
 ct-back-to-top button svg { width: 18px; height: 18px; transform: rotate(180deg); }
+
+/* ---- Product media modal: mobile horizontal swipe ----
+   Dawn's modal stacks media vertically and hides all but the .active item on mobile,
+   so customers can't swipe between images. Convert to a horizontal scroll-snap rail. */
+@media screen and (max-width: 749px) {
+  .product-media-modal__dialog { align-items: stretch; }
+  .product-media-modal__content {
+    display: flex; flex-direction: row;
+    overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0; height: 100vh; max-height: 100vh;
+  }
+  .product-media-modal__content::-webkit-scrollbar { display: none; }
+  .product-media-modal__content > * {
+    display: flex !important;
+    align-items: center; justify-content: center;
+    flex: 0 0 100%; min-width: 100%; max-width: 100%;
+    scroll-snap-align: center; scroll-snap-stop: always;
+    margin: 0;
+  }
+  .product-media-modal__content > * + * { margin-top: 0; }
+  .product-media-modal__content .media { width: 100%; }
+}
 
 /* ---- Rating stars — Google-style gold fill + light-grey empty.
    Dawn prints ★★★★★ and clips a gradient to the text; the fill width is --percent

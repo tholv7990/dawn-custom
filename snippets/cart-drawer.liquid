@@ -7,6 +7,8 @@
 
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+{{ 'section-ct-cart.css' | asset_url | stylesheet_tag }}
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
@@ -75,20 +77,56 @@
           </span>
         </button>
       </div>
-      {%- assign ct_threshold = settings.free_shipping_threshold | default: 50 | times: 100 -%}
-      {%- if ct_threshold == 0 -%}{%- assign ct_threshold = 5000 -%}{%- endif -%}
       {%- if cart != empty -%}
-        {%- assign ct_remaining = ct_threshold | minus: cart.total_price -%}
-        {%- assign ct_pct = cart.total_price | times: 100 | divided_by: ct_threshold | at_most: 100 -%}
+        {%- liquid
+          capture ct_free_shipping_threshold_raw
+            render 'ct-reward-threshold', key: 'free_shipping'
+          endcapture
+          capture ct_discount_threshold_raw
+            render 'ct-reward-threshold', key: 'discount'
+          endcapture
+          capture ct_reward_thresholds_configured_raw
+            render 'ct-reward-threshold', key: 'configured'
+          endcapture
+          assign ct_free_shipping_threshold = ct_free_shipping_threshold_raw | strip | plus: 0
+          assign ct_discount_threshold = ct_discount_threshold_raw | strip | plus: 0
+          assign ct_reward_thresholds_configured = ct_reward_thresholds_configured_raw | strip
+          assign ct_cart_subtotal = cart.items_subtotal_price
+          assign ct_free_shipping_progress = 0
+          if ct_reward_thresholds_configured == 'true'
+            assign ct_free_shipping_progress = ct_cart_subtotal | times: 100 | divided_by: ct_discount_threshold | at_most: 100
+          endif
+          assign ct_discount_remaining = ct_discount_threshold | minus: ct_cart_subtotal
+          assign ct_shipping_remaining = ct_free_shipping_threshold | minus: ct_cart_subtotal
+          if settings.currency_code_enabled
+            assign ct_free_shipping_threshold_money = ct_free_shipping_threshold | money_with_currency
+            assign ct_discount_remaining_money = ct_discount_remaining | money_with_currency
+            assign ct_shipping_remaining_money = ct_shipping_remaining | money_with_currency
+          else
+            assign ct_free_shipping_threshold_money = ct_free_shipping_threshold | money
+            assign ct_discount_remaining_money = ct_discount_remaining | money
+            assign ct_shipping_remaining_money = ct_shipping_remaining | money
+          endif
+        -%}
         <div class="ct-cart__bar">
-          {%- if ct_remaining > 0 -%}
-            <p class="ct-cart__bar-text">
-              Add {{ ct_remaining | money }} more for <strong>free shipping</strong>
+          {%- if ct_reward_thresholds_configured != 'true' -%}
+            <p class="ct-cart__bar-text">Rewards calculated at checkout for your market.</p>
+          {%- elsif ct_cart_subtotal >= ct_discount_threshold -%}
+            <p class="ct-cart__bar-text ct-cart__bar-text--reached">15% off and free shipping unlocked.</p>
+          {%- elsif ct_cart_subtotal >= ct_free_shipping_threshold -%}
+            <p class="ct-cart__bar-text ct-cart__bar-text--reached">
+              Free shipping unlocked. Add {{ ct_discount_remaining_money }} to unlock 15% off.
             </p>
           {%- else -%}
-            <p class="ct-cart__bar-text ct-cart__bar-text--reached">You've unlocked free shipping!</p>
+            <p class="ct-cart__bar-text">
+              Add {{ ct_shipping_remaining_money }} to unlock free shipping.
+            </p>
           {%- endif -%}
-          <div class="ct-cart__bar-track"><div class="ct-cart__bar-fill" style="width:{{ ct_pct }}%"></div></div>
+          {%- if ct_reward_thresholds_configured == 'true' -%}
+            <div class="ct-cart__bar-track">
+              <div class="ct-cart__bar-fill" style="width:{{ ct_free_shipping_progress }}%"></div>
+            </div>
+          {%- endif -%}
         </div>
       {%- endif -%}
       <cart-drawer-items
@@ -135,6 +173,19 @@
 
                   <tbody role="rowgroup">
                     {%- for item in cart.items -%}
+                      {%- liquid
+                        if settings.currency_code_enabled
+                          assign item_original_price_money = item.original_price | money_with_currency
+                          assign item_final_price_money = item.final_price | money_with_currency
+                          assign item_original_line_price_money = item.original_line_price | money_with_currency
+                          assign item_final_line_price_money = item.final_line_price | money_with_currency
+                        else
+                          assign item_original_price_money = item.original_price | money
+                          assign item_final_price_money = item.final_price | money
+                          assign item_original_line_price_money = item.original_line_price | money
+                          assign item_final_line_price_money = item.final_line_price | money
+                        endif
+                      -%}
                       <tr
                         id="CartDrawer-Item-{{ item.index | plus: 1 }}"
                         class="cart-item{% if item.parent_relationship.parent != null %} cart-item__nested-line{% endif %}"
@@ -177,18 +228,18 @@
                                 {{ 'products.product.price.regular_price' | t }}
                               </span>
                               <s class="cart-item__old-price product-option">
-                                {{- item.original_price | money -}}
+                                {{- item_original_price_money -}}
                               </s>
                               <span class="visually-hidden">
                                 {{ 'products.product.price.sale_price' | t }}
                               </span>
                               <strong class="cart-item__final-price product-option">
-                                {{ item.final_price | money }}
+                                {{ item_final_price_money }}
                               </strong>
                             </div>
                           {%- else -%}
                             <div class="product-option">
-                              {{ item.original_price | money }}
+                              {{ item_original_price_money }}
                             </div>
                           {%- endif -%}
 
@@ -259,18 +310,18 @@
                                   {{ 'products.product.price.regular_price' | t }}
                                 </span>
                                 <s class="cart-item__old-price price price--end">
-                                  {{ item.original_line_price | money }}
+                                  {{ item_original_line_price_money }}
                                 </s>
                                 <span class="visually-hidden">
                                   {{ 'products.product.price.sale_price' | t }}
                                 </span>
                                 <span class="price price--end">
-                                  {{ item.final_line_price | money }}
+                                  {{ item_final_line_price_money }}
                                 </span>
                               </div>
                             {%- else -%}
                               <span class="price price--end">
-                                {{ item.original_line_price | money }}
+                                {{ item_original_line_price_money }}
                               </span>
                             {%- endif -%}
 
@@ -519,7 +570,13 @@
               {%- endif -%}
               <div class="ct-cart__upsell-info">
                 <div class="ct-cart__upsell-name">{{ ct_upsell_product.title | escape }}</div>
-                <div class="ct-cart__upsell-price">{{ ct_upsell_variant.price | money }}</div>
+                <div class="ct-cart__upsell-price">
+                  {%- if settings.currency_code_enabled -%}
+                    {{ ct_upsell_variant.price | money_with_currency }}
+                  {%- else -%}
+                    {{ ct_upsell_variant.price | money }}
+                  {%- endif -%}
+                </div>
               </div>
               {% render 'ct-add-to-cart', product: ct_upsell_product, variant: ct_upsell_variant, label: 'Add', btn_class: 'ct-btn ct-btn--soft ct-btn--sm', form_id: 'ct-upsell-form', section_id: 'cart-drawer-upsell', form_class: 'ct-cart__upsell-form' %}
             </div>
@@ -551,24 +608,7 @@
         <!-- Subtotals -->
 
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
-          <div>
-            {%- if cart.cart_level_discount_applications.size > 0 -%}
-              <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
-                {%- for discount in cart.cart_level_discount_applications -%}
-                  <li class="discounts__discount discounts__discount--end">
-                    {{- 'icon-discount.svg' | inline_asset_content -}}
-                    {{ discount.title | escape }}
-                    (-{{ discount.total_allocated_amount | money }})
-                  </li>
-                {%- endfor -%}
-              </ul>
-            {%- endif -%}
-          </div>
-
-          <div class="totals" role="status">
-            <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
-          </div>
+          {%- render 'ct-cart-summary', cart: cart, compact: true -%}
 
           <small class="tax-note caption-large rte">
             {%- if cart.duties_included and cart.taxes_included -%}
@@ -616,7 +656,11 @@
         {%- if cart != empty -%}
           <div class="ct-cart__trust">
             <span>Secure checkout</span>
-            <span>Free shipping over {{ ct_threshold | money }}</span>
+            {%- if ct_reward_thresholds_configured == 'true' -%}
+              <span>Free shipping at {{ ct_free_shipping_threshold_money }}+</span>
+            {%- else -%}
+              <span>Rewards calculated at checkout</span>
+            {%- endif -%}
             <span>90-day returns</span>
           </div>
         {%- endif -%}

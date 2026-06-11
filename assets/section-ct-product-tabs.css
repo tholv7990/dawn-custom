@@ -30,4 +30,10 @@
 .ct-tabs__panel { padding: 26px 28px; }
 .ct-tabs__panel[hidden] { display: none; }
 .ct-tabs__panel-inner { max-width: 760px; color: var(--ct-text-2); }
-.ct-tabs__panel-inner :is(h2, h3, h4) { color: var(--ct-text); }
+.ct-tabs__panel-inner :is(h2, h3, h4) {
+  color: var(--ct-text);
+  font-family: var(--ct-font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}

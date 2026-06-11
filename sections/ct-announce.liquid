@@ -7,8 +7,10 @@
       <div class="page-width">
         {%- for block in section.blocks -%}
           <span class="ct-announce--static-row__item" {{ block.shopify_attributes }}>
-            {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
-            {%- else -%}{{ block.settings.text }}
+            <span class="ct-announce--static-row__sep" aria-hidden="true">{% render 'ct-fa-icon', icon: 'paw' %}</span>
+            {%- if block.settings.link != blank -%}
+              <a class="ct-announce--static-row__text" href="{{ block.settings.link }}"{% if block.settings.link == '#signup-popup' or block.settings.link == '#signup' %} data-ct-signup-popup-trigger{% endif %}>{{ block.settings.text }}</a>
+            {%- else -%}<span class="ct-announce--static-row__text">{{ block.settings.text }}</span>
             {%- endif -%}
           </span>
         {%- endfor -%}
@@ -20,13 +22,13 @@
       <div class="ct-announce__viewport">
         {%- for block in section.blocks -%}
           <div class="ct-announce__msg{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
-            <span class="ct-announce__dot" aria-hidden="true"></span>
+            <span class="ct-announce__paw" aria-hidden="true">{% render 'ct-fa-icon', icon: 'paw' %}</span>
             {%- if block.settings.link != blank -%}
-              <a class="ct-announce__link" href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+              <a class="ct-announce__link" href="{{ block.settings.link }}"{% if block.settings.link == '#signup-popup' or block.settings.link == '#signup' %} data-ct-signup-popup-trigger{% endif %}>{{ block.settings.text }}</a>
             {%- else -%}
               <span>{{ block.settings.text }}</span>
             {%- endif -%}
-            <span class="ct-announce__dot" aria-hidden="true"></span>
+            <span class="ct-announce__paw" aria-hidden="true">{% render 'ct-fa-icon', icon: 'paw' %}</span>
           </div>
         {%- endfor -%}
       </div>
@@ -110,7 +112,7 @@
       "type": "message",
       "name": "Message",
       "settings": [
-        { "type": "text", "id": "text", "label": "Text", "default": "🚚 Free shipping on orders over $50" },
+        { "type": "text", "id": "text", "label": "Text", "default": "🚚 Free shipping at $50+" },
         { "type": "url", "id": "link", "label": "Link (optional)" }
       ]
     }
@@ -120,7 +122,7 @@
     {
       "name": "CT Announce bar",
       "blocks": [
-        { "type": "message", "settings": { "text": "🚚 Free shipping on orders over $50" } },
+        { "type": "message", "settings": { "text": "🚚 Free shipping at $50+" } },
         { "type": "message", "settings": { "text": "★★★★★ 92% 5-star · Loved by 15,000+ cat parents" } }
       ]
     }

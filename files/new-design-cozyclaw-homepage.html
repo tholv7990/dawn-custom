@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#2A201A">
+<title>CozyClaw™ Plush Pet Sofa — the cozy spot cats & dogs actually choose</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --cream:#F7F2E9;        /* page background, warm cream */
+  --cream-panel:#EFE7D7;  /* alt panel */
+  --paper:#FFFDF8;        /* cards */
+  --espresso:#2A201A;     /* primary text / near-black */
+  --coffee:#5A3E2B;       /* mid brown accent (matches logo) */
+  --coffee-soft:#8A745D;  /* muted brown text */
+  --sage:#8A9A7B;         /* secondary structural accent */
+  --sage-deep:#6E7E60;
+  --gold:#C9A24B;         /* ratings + premium only */
+  --coral:#D9543F;        /* savings / urgency only */
+  --line:#E2D7C2;         /* hairline */
+  --shadow:0 18px 40px -24px rgba(42,32,26,.45);
+  --radius:18px;
+  --maxw:1140px;
+  --ff-disp:"Fraunces",Georgia,serif;
+  --ff-body:"Hanken Grotesk",-apple-system,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;overflow-x:clip}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  color:var(--espresso);
+  font-family:var(--ff-body);
+  font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--ff-disp);font-weight:600;line-height:1.08;margin:0;letter-spacing:-.01em}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.eyebrow{font-family:var(--ff-body);font-weight:700;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-deep)}
+.muted{color:var(--coffee-soft)}
+.center{text-align:center}
+section{position:relative}
+
+/* ============ BUTTONS ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+  font-family:var(--ff-body);font-weight:700;font-size:1rem;
+  padding:15px 28px;border-radius:999px;border:2px solid transparent;cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--espresso);color:var(--cream);box-shadow:var(--shadow)}
+.btn-primary:hover{background:#1d1611}
+.btn-ghost{background:transparent;color:var(--espresso);border-color:var(--espresso)}
+.btn-ghost:hover{background:var(--espresso);color:var(--cream)}
+.btn-coral{background:var(--coral);color:#fff}
+.btn-coral:hover{background:#c2452f}
+.btn-block{width:100%}
+
+/* ============ STARS ============ */
+.stars{display:inline-flex;gap:2px;color:var(--gold);vertical-align:middle}
+.stars svg{width:16px;height:16px}
+.rate{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.95rem}
+.rate .count{color:var(--coffee-soft);font-weight:500}
+
+/* ============ ANNOUNCEMENT BAR ============ */
+.announce{background:linear-gradient(90deg,#5A3E2B,#6E4B36);color:var(--cream);font-size:.86rem;font-weight:700;
+  text-align:center;padding:10px 16px;letter-spacing:.01em}
+.announce a{color:inherit;text-decoration:none}
+.announce b{color:var(--gold)}
+.announce .pawsep{display:inline-flex;vertical-align:-2px;margin:0 9px;color:#E7C9A8;opacity:.9}
+.announce .pawsep svg{width:14px;height:14px}
+
+/* ============ HEADER ============ */
+.head{position:sticky;top:0;z-index:50;background:rgba(247,242,233,.92);
+  backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--line)}
+.head-row{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--ff-disp);font-weight:600;font-size:1.5rem;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.logo sup{font-size:.5em;top:-.7em;font-weight:500}
+.logo .pawmark{width:26px;height:26px;color:var(--coffee)}
+.nav{display:flex;gap:30px;align-items:center}
+.nav a{font-weight:600;font-size:.95rem;color:var(--coffee)}
+.nav a:hover{color:var(--espresso)}
+.head-cta{display:flex;align-items:center;gap:14px}
+.cart-btn{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:.92rem}
+.cart-btn svg{width:20px;height:20px}
+.cart-count{background:var(--coral);color:#fff;font-size:.7rem;font-weight:700;min-width:18px;height:18px;
+  border-radius:9px;display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
+.burger{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--espresso)}
+.burger svg{width:26px;height:26px}
+
+/* ============ HERO ============ */
+.hero{padding:46px 0 18px}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(2.4rem,5.2vw,3.7rem);margin:14px 0 10px}
+.hero h1 em{font-style:italic;color:var(--coffee)}
+.hero p.lede{font-size:1.12rem;max-width:33ch;color:var(--coffee)}
+.hero-rate{margin:18px 0 6px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0 16px}
+.swatch-row{display:flex;align-items:center;gap:12px;margin-top:6px}
+.swatch-row .lbl{font-size:.82rem;font-weight:600;color:var(--coffee-soft)}
+.sw{width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer}
+.sw[data-c="coffee"]{background:#6b4f3a}
+.sw[data-c="grey"]{background:#9a9690}
+.sw[data-c="black"]{background:#2c2925}
+.hero-micro{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px;font-size:.86rem;font-weight:600;color:var(--coffee)}
+.hero-micro span{display:inline-flex;align-items:center;gap:6px}
+.hero-micro svg{width:17px;height:17px;color:var(--sage-deep)}
+
+/* image slots — clean cream block, no labels */
+.imgslot{background:linear-gradient(135deg,#EDE3D1,#E3D6BF);border-radius:var(--radius);
+  position:relative;overflow:hidden;border:1px solid var(--line)}
+.imgslot::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120px 120px at 70% 30%,rgba(255,255,255,.5),transparent)}
+.imgslot .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#c4b393;opacity:.7}
+.imgslot .ph svg{width:64px;height:64px}
+.hero-img{aspect-ratio:4/4.4;box-shadow:var(--shadow)}
+.hero-badge{position:absolute;left:16px;top:16px;z-index:2;background:var(--coral);color:#fff;
+  font-weight:700;font-size:.78rem;padding:7px 13px;border-radius:999px;box-shadow:var(--shadow)}
+
+/* ============ TRUST STRIP (under hero) ============ */
+.trust{background:var(--espresso);color:var(--cream);margin-top:26px}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:22px 0}
+.trust-item{display:flex;gap:12px;align-items:center;padding:6px 14px}
+.trust-item svg{width:24px;height:24px;flex-shrink:0}
+.trust-item h4{font-family:var(--ff-body);font-weight:700;font-size:.96rem;margin:0 0 1px}
+.trust-item p{margin:0;font-size:.8rem;color:rgba(247,242,233,.66)}
+
+/* ============ PRODUCT SHOWCASE ============ */
+.showcase{padding:64px 0}
+.show-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.gallery .main{aspect-ratio:1/1}
+.dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
+.dots .dot{width:7px;height:7px;border-radius:50%;background:var(--line);transition:width .2s}
+.dots .dot.on{width:22px;border-radius:4px;background:var(--coffee)}
+.buy h2{font-size:clamp(1.9rem,3.6vw,2.5rem);margin-bottom:8px}
+.price-row{display:flex;align-items:baseline;gap:12px;margin:14px 0 4px}
+.price{font-family:var(--ff-disp);font-weight:600;font-size:2rem}
+.price-was{color:var(--coffee-soft);text-decoration:line-through;font-size:1.1rem}
+.save-tag{background:#fbe9e4;color:var(--coral);font-weight:700;font-size:.8rem;padding:3px 10px;border-radius:6px}
+.opt-label{font-weight:700;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;color:var(--coffee-soft);margin:20px 0 9px}
+.opt-label span{color:var(--espresso);text-transform:none;letter-spacing:0;margin-left:6px}
+.sw-lg{display:flex;gap:12px}
+.sw-lg .sw{width:42px;height:42px}
+.sw-lg .sw.on{box-shadow:0 0 0 2px var(--cream),0 0 0 4px var(--coffee)}
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{padding:11px 20px;border:2px solid var(--line);background:var(--paper);border-radius:12px;
+  font-weight:600;cursor:pointer;font-size:.95rem;transition:.15s;text-align:center;min-width:108px}
+.pill small{display:block;font-weight:500;color:var(--coffee-soft);font-size:.74rem}
+.pill.on{border-color:var(--coffee);background:#f3ebdc}
+.buy-actions{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.assure{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;font-size:.84rem;font-weight:600;color:var(--coffee)}
+.assure span{display:inline-flex;align-items:center;gap:6px}
+.assure svg{width:16px;height:16px;color:var(--sage-deep)}
+
+/* ============ BUNDLE BAND ============ */
+.bundle{background:var(--sage);color:#fff;border-radius:var(--radius);overflow:hidden;
+  display:grid;grid-template-columns:1.2fr 1fr;align-items:center;margin:0;box-shadow:var(--shadow)}
+#bundle{padding:64px 20px}
+.bundle-copy{padding:40px 44px}
+.bundle .eyebrow{color:rgba(255,255,255,.8)}
+.bundle h2{color:#fff;font-size:clamp(1.7rem,3.4vw,2.3rem);margin:8px 0 10px}
+.bundle p{color:rgba(255,255,255,.92);max-width:42ch;margin:0 0 22px}
+.bundle .imgslot{height:100%;min-height:240px;border-radius:0;border:none}
+.bundle .imgslot{background:linear-gradient(135deg,#7c8c6d,#9aa98b)}
+.bundle .imgslot .ph{color:rgba(255,255,255,.45)}
+
+/* ============ VALUE STORY BLOCKS ============ */
+.story{padding:64px 0}
+.story-head{max-width:560px;margin:0 auto 44px;text-align:center}
+.story-head h2{font-size:clamp(2rem,4vw,2.7rem);margin:10px 0}
+.story-row{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center;margin-bottom:54px}
+.story-row:last-child{margin-bottom:0}
+.story-row.rev .story-text{order:2}
+.story-row .imgslot{aspect-ratio:5/4}
+.story-text h3{font-size:1.5rem;margin:6px 0 10px}
+.story-text p{color:var(--coffee);margin:0}
+.story-num{font-family:var(--ff-disp);font-size:.9rem;font-weight:600;color:var(--sage-deep)}
+
+/* ============ REVIEWS ============ */
+.reviews{padding:64px 0;background:var(--cream)}
+.rev-head{text-align:center;max-width:620px;margin:0 auto 40px}
+.rev-head h2{font-size:clamp(2rem,4vw,2.7rem);margin:10px 0 14px}
+.rev-agg{display:inline-flex;align-items:center;gap:14px;background:var(--paper);border:1px solid var(--line);
+  border-radius:999px;padding:10px 20px;font-weight:700}
+.rev-agg .big{font-family:var(--ff-disp);font-size:1.5rem}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.rev-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.rev-card .imgslot{aspect-ratio:1/1;border-radius:0;border:none}
+.rev-body{padding:18px 20px 22px}
+.rev-body .stars{margin-bottom:8px}
+.rev-body p{margin:0 0 14px;font-size:.96rem}
+.rev-author{display:flex;align-items:center;gap:8px;font-size:.86rem}
+.rev-author b{font-weight:700}
+.verified{display:inline-flex;align-items:center;gap:4px;color:var(--sage-deep);font-weight:700;font-size:.78rem}
+.verified svg{width:14px;height:14px}
+
+/* ============ GUARANTEE ============ */
+.guarantee{padding:64px 0}
+.guar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.guar-card{text-align:center;padding:26px 18px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius)}
+.guar-card svg{width:24px;height:24px}
+.guar-card .ic-chip{margin:0 auto 12px}
+.guar-card h4{font-family:var(--ff-body);font-weight:700;font-size:1.02rem;margin:0 0 4px}
+.guar-card p{margin:0;font-size:.85rem;color:var(--coffee-soft)}
+
+/* ============ FAQ ============ */
+.faq{padding:64px 0;max-width:760px;margin:0 auto}
+.faq h2{text-align:center;font-size:clamp(1.9rem,3.8vw,2.5rem);margin-bottom:28px}
+.q{border-bottom:1px solid var(--line)}
+.q button{width:100%;background:none;border:none;cursor:pointer;text-align:left;
+  font-family:var(--ff-body);font-weight:700;font-size:1.05rem;color:var(--espresso);
+  padding:20px 36px 20px 0;position:relative}
+.q button::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  font-size:1.5rem;color:var(--coffee);transition:transform .2s}
+.q.open button::after{transform:translateY(-50%) rotate(45deg)}
+.q .a{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.q .a p{margin:0;padding:0 0 20px;color:var(--coffee)}
+
+/* ============ EMAIL CAPTURE ============ */
+.signup{background:var(--espresso);color:var(--cream)}
+.signup-in{padding:64px 20px;text-align:center;max-width:620px;margin:0 auto}
+.signup h2{color:var(--cream);font-size:clamp(1.8rem,3.6vw,2.4rem);margin:10px 0 8px}
+.signup p{color:rgba(247,242,233,.78);margin:0 0 24px}
+.signup .form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.signup input{flex:1;min-width:220px;max-width:340px;padding:14px 18px;border-radius:999px;border:none;
+  font-family:var(--ff-body);font-size:1rem;background:var(--cream);color:var(--espresso)}
+.signup small{display:block;margin-top:14px;color:rgba(247,242,233,.5);font-size:.78rem}
+.signup small b{color:var(--gold)}
+
+/* ============ FOOTER ============ */
+.foot{background:#1d1611;color:rgba(247,242,233,.72);padding:54px 0 30px;font-size:.9rem}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px;margin-bottom:36px}
+.foot .logo{color:var(--cream);margin-bottom:12px}
+.foot .logo .pawmark{color:var(--gold)}
+.foot p{margin:0 0 8px;max-width:32ch}
+.foot h5{color:var(--cream);font-family:var(--ff-body);font-weight:700;font-size:.82rem;letter-spacing:.1em;
+  text-transform:uppercase;margin:0 0 14px}
+.foot ul{list-style:none;margin:0;padding:0}
+.foot li{margin-bottom:9px}
+.foot a:hover{color:var(--cream)}
+.foot-bottom{border-top:1px solid rgba(247,242,233,.14);padding-top:22px;display:flex;
+  justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:.8rem}
+.pays{display:flex;gap:8px;align-items:center}
+.pays span{background:rgba(247,242,233,.1);border-radius:5px;padding:4px 9px;font-size:.7rem;font-weight:700;letter-spacing:.04em}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:920px){
+  .hero-grid,.show-grid,.bundle,.story-row,.story-row.rev .story-text{grid-template-columns:1fr;order:0}
+  .hero{padding:30px 0 6px}
+  .hero-img{aspect-ratio:4/3.6}
+  .trust-grid{grid-template-columns:1fr 1fr}
+  .guar-grid{grid-template-columns:1fr 1fr}
+  .rev-grid{grid-template-columns:1fr;gap:18px}
+  .rev-grid .rev-card:nth-child(n+3){display:none} /* show 2 on mobile, rest via link */
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .nav{display:none}
+  .burger{display:inline-flex}
+  .bundle-copy{padding:32px 26px}
+  .story-row{margin-bottom:40px}
+}
+@media(max-width:560px){
+  body{font-size:16px}
+  .trust-grid{grid-template-columns:1fr}
+  .guar-grid{grid-template-columns:1fr 1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .hero-actions .btn{flex:1}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+:focus-visible{outline:3px solid var(--sage-deep);outline-offset:2px;border-radius:6px}
+/* ===== ported sections (problem/solution, size guide, comparison, brand story) ===== */
+.psol{background:var(--cream-panel);padding:64px 0}
+.psol-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.pcard{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px}
+.pcard.bad{border-top:4px solid var(--coral)}
+.pcard.good{border-top:4px solid var(--sage-deep)}
+.pcard h3{font-size:1.3rem;margin:0 0 14px}
+.pcard ul{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.pcard li{display:flex;gap:10px;align-items:flex-start;font-size:.97rem}
+.pcard li svg{width:19px;height:19px;flex-shrink:0;margin-top:2px}
+.pcard.bad li svg{color:var(--coral)}
+.pcard.good li svg{color:var(--sage-deep)}
+.sizeguide{padding:64px 0}
+.sg-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.sg-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.sg-card .imgslot{aspect-ratio:16/10;border-radius:0;border:none}
+.sg-body{padding:22px 24px}
+.sg-tag{display:inline-block;background:#f3ebdc;color:var(--coffee);font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:6px;margin-bottom:10px}
+.sg-body h3{font-size:1.25rem;margin:0 0 6px}
+.sg-body p{margin:0 0 14px;color:var(--coffee);font-size:.95rem}
+.sg-specs{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:.9rem}
+.sg-specs li{display:flex;gap:9px;align-items:center}
+.sg-specs svg{width:16px;height:16px;color:var(--sage-deep);flex-shrink:0}
+.cmpsec{padding:64px 0}
+.cmp{max-width:680px;margin:0 auto;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper)}
+.cmp table{width:100%;border-collapse:collapse}
+.cmp th,.cmp td{padding:14px 14px;text-align:center;border-bottom:1px solid var(--line);font-size:.92rem}
+.cmp th{font-family:var(--ff-disp);font-weight:600;font-size:.98rem}
+.cmp td:first-child,.cmp th:first-child{text-align:left;font-weight:700}
+.cmp .us{background:#f3ebdc}
+.cmp thead .us{background:var(--coffee);color:var(--cream);font-weight:700}
+.cmp .yes{color:var(--sage-deep);font-weight:700}
+.cmp .no{color:var(--coffee-soft)}
+.cmp tr:last-child td{border-bottom:none}
+.brandstory{background:var(--espresso);color:var(--cream);padding:64px 0}
+.bs-grid{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center}
+.brandstory .eyebrow{color:rgba(247,242,233,.7)}
+.brandstory h2{color:var(--cream);font-size:clamp(1.9rem,4vw,2.5rem);margin:10px 0 16px}
+.brandstory p{color:rgba(247,242,233,.8);margin:0 0 14px}
+.brandstory .imgslot{aspect-ratio:5/4;background:linear-gradient(135deg,#3a2c22,#4a3829)}
+.brandstory .imgslot .ph{color:rgba(247,242,233,.3)}
+@media(max-width:920px){.psol-grid,.sg-grid,.bs-grid{grid-template-columns:1fr}.brandstory .bs-grid{gap:26px}}
+/* ===== sticky add-to-cart bar (merged from landing) ===== */
+body{padding-bottom:72px}
+.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -10px 30px -18px rgba(42,32,26,.4);transform:translateY(100%);transition:transform .25s ease}
+.stickybar.show{transform:translateY(0)}
+.stickybar-in{max-width:var(--maxw);margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px}
+.sb-info{display:flex;flex-direction:column;line-height:1.2}
+.sb-info .nm{font-weight:700;font-size:.95rem}
+.sb-info .pr{font-weight:700;color:var(--coffee)}
+.sb-sel{display:flex;gap:6px}
+.sb-sel .sw{width:24px;height:24px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer}
+.sb-sel .sw.on{box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--coffee)}
+.stickybar .btn{margin-left:auto;padding:13px 26px}
+@media(max-width:560px){.sb-sel{display:none}.stickybar-in{padding:9px 12px}.stickybar .btn{padding:12px 18px;font-size:.92rem}}
+.brandmark{width:32px;height:32px;display:block;flex-shrink:0}
+.wordmark{display:inline-flex;align-items:baseline}
+.wm-cozy{color:var(--espresso)}
+.wm-claw{color:var(--coffee)}
+.foot .logo .wm-cozy,.foot .logo .wm-claw{color:var(--cream)}
+/* functional duotone icon chips */
+.ic-chip{width:44px;height:44px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.ic-chip svg{width:24px;height:24px}
+.ic-sage{background:#E7ECE0;color:#5E7256}
+.ic-teal{background:#DEEAE9;color:#54857F}
+.ic-clay{background:#F6E4D9;color:#BC6A45}
+.ic-coffee{background:#EEE4D8;color:#5A3E2B}
+.ic-gold{background:#F4E9CF;color:#A87E29}
+.ic-coral{background:#FBE7E1;color:#C8482F}
+/* ===== section separators: alternating warm bands + hairline seam ===== */
+.story,.cmpsec{background:var(--cream-panel)}
+.showcase,.psol,.story,.sizeguide,.cmpsec,.reviews,.guarantee{border-top:1px solid var(--line)}
+.guarantee{border-bottom:1px solid var(--line)}
+.brandstory,.signup{border-top:1px solid rgba(247,242,233,.12)}
+/* ===== shop the range (standalone product cards) ===== */
+.collection{padding:64px 0;border-top:1px solid var(--line)}
+.collection .story-head p{color:var(--coffee-soft);margin:10px 0 0}
+.coll-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.coll-card{display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
+.coll-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.coll-img{aspect-ratio:1/1;position:relative;border:none;border-radius:0}
+.cc-badge{position:absolute;left:12px;top:12px;background:var(--coral);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:6px;z-index:2}
+.coll-body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+.coll-body h3{font-family:var(--ff-body);font-weight:700;font-size:1.05rem;margin:0 0 5px}
+.coll-body p{margin:0;font-size:.88rem;color:var(--coffee-soft);line-height:1.45;flex:1}
+.coll-foot{display:flex;align-items:center;gap:10px;margin-top:12px}
+.coll-price{font-weight:700;font-size:1.05rem;color:var(--espresso)}
+.coll-rate{font-size:.82rem;color:var(--gold);font-weight:700}
+.coll-shop{margin-top:10px;font-weight:700;font-size:.9rem;color:var(--coffee)}
+.coll-card:hover .coll-shop{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<!-- ===== ANNOUNCEMENT BAR ===== -->
+<div class="announce">
+  <span class="pawsep"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span><a href="#signup"><b>15% off your first order</b> when you join the litter</a><span class="pawsep"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span>Free shipping over $50<span class="pawsep"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span>30-night cozy trial
+</div>
+
+<!-- ===== HEADER ===== -->
+<header class="head">
+  <div class="wrap head-row">
+    <a class="logo" href="#" aria-label="CozyClaw home">
+      <svg class="brandmark" viewBox="0 0 96 96" role="img" aria-hidden="true"><rect x="0" y="0" width="96" height="96" rx="24" fill="#5A3E2B"/><path d="M27 41 L23 14 L48 33 Z" fill="#FAF0E8"/><path d="M69 41 L73 14 L48 33 Z" fill="#FAF0E8"/><circle cx="48" cy="58" r="27" fill="#FAF0E8"/><path d="M31 37 L28 20 L42 33 Z" fill="#5A3E2B"/><path d="M65 37 L68 20 L54 33 Z" fill="#5A3E2B"/><path d="M35 55 q5 5 10 0" fill="none" stroke="#5A3E2B" stroke-width="2.6" stroke-linecap="round"/><path d="M51 55 q5 5 10 0" fill="none" stroke="#5A3E2B" stroke-width="2.6" stroke-linecap="round"/><path d="M44.5 62 L51.5 62 L48 66.5 Z" fill="#5A3E2B"/><path d="M48 66.5 q-4 4 -8 2" fill="none" stroke="#5A3E2B" stroke-width="2" stroke-linecap="round"/><path d="M48 66.5 q4 4 8 2" fill="none" stroke="#5A3E2B" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="wordmark"><span class="wm-cozy">Cozy</span><span class="wm-claw">Claw<sup>™</sup></span></span>
+    </a>
+    <nav class="nav">
+      <a href="#product">Shop</a>
+      <a href="#bundle">Bundle &amp; Save</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">Help</a>
+    </nav>
+    <div class="head-cta">
+      <a class="cart-btn" href="/cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <button class="burger" id="burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Coral-fleece pet sofa · cats &amp; dogs</span>
+      <h1>The cozy spot they <em>pick over your couch</em>.</h1>
+      <p class="lede">A cleaner sofa, a cozier pet, a home that still looks like yours — the plush pet sofa they choose over the couch.</p>
+      <div class="hero-rate rate">
+        <span class="stars" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg>
+        </span>
+        <span>4.5</span><span class="count">· 99 reviews</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#product">Shop the Cozy Sofa</a>
+        <a class="btn btn-ghost" href="#video">See it in action</a>
+      </div>
+      <div class="swatch-row">
+        <span class="lbl">3 colorways</span>
+        <span class="sw" data-c="coffee" title="Coffee"></span>
+        <span class="sw" data-c="grey" title="Grey"></span>
+        <span class="sw" data-c="black" title="Black"></span>
+      </div>
+      <div class="hero-micro">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Free US shipping over $50</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 30-night cozy trial</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Machine washable</span>
+      </div>
+    </div>
+    <!-- HERO IMAGE: replace .imgslot with a lifestyle photo of a pet curled up on the sofa -->
+    <div class="imgslot hero-img">
+      <span class="hero-badge">Bestseller</span>
+      <span class="ph"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span>
+    </div>
+  </div>
+
+  <!-- ===== TRUST STRIP (icon callouts under hero) ===== -->
+  <div class="trust">
+    <div class="wrap trust-grid">
+      <div class="trust-item">
+        <span class="ic-chip ic-sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg></span>
+        <div><h4>Calming comfort</h4><p>Soft walls pets nuzzle into</p></div>
+      </div>
+      <div class="trust-item">
+        <span class="ic-chip ic-clay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M12 7v5l3 2"/></svg></span>
+        <div><h4>Joint support</h4><p>Cushioned base for old &amp; young</p></div>
+      </div>
+      <div class="trust-item">
+        <span class="ic-chip ic-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a9 4 0 0 0 18 0M3 8a9 4 0 0 1 18 0v8a9 4 0 0 1-18 0z"/></svg></span>
+        <div><h4>Machine washable</h4><p>Zip-off cover, easy clean</p></div>
+      </div>
+      <div class="trust-item">
+        <span class="ic-chip ic-coffee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 L4 9 L12 4 L20 9 L20 18 Z"/><path d="M4 18h16"/></svg></span>
+        <div><h4>Non-slip base</h4><p>Waterproof liner, stays put</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCT SHOWCASE ===== -->
+<section class="showcase" id="product">
+  <div class="wrap show-grid">
+    <div class="gallery">
+      <!-- MAIN PRODUCT IMAGE: swap to selected-color product shot via JS or manually -->
+      <div class="imgslot main" id="galMain">
+        <span class="ph"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span>
+      </div>
+      <div class="dots" aria-hidden="true">
+        <span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+
+    <div class="buy">
+      <span class="eyebrow">The CozyClaw™ Plush Pet Sofa</span>
+      <h2>One little sofa. A whole lot of calm.</h2>
+      <div class="rate" style="margin-top:10px">
+        <span class="stars" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg>
+        </span>
+        <span>4.5</span><span class="count" id="reviewCount">· 99 reviews</span>
+      </div>
+
+      <div class="price-row">
+        <span class="price" id="price">$59.99</span>
+      </div>
+      <p class="muted" style="margin:0;font-size:.92rem">Plus free shipping over $50 — most single orders ship free.</p>
+
+      <div class="opt-label">Available in <span>Coffee · Grey · Black</span></div>
+      <div class="sw-lg" style="margin-bottom:6px">
+        <span class="sw" data-c="coffee" title="Coffee"></span>
+        <span class="sw" data-c="grey" title="Grey"></span>
+        <span class="sw" data-c="black" title="Black"></span>
+      </div>
+      <p class="muted" style="margin:6px 0 0;font-size:.86rem">Two sizes for pets up to 22 lb — pick your color and size on the product page.</p>
+
+      <div class="buy-actions" style="margin-top:22px">
+        <a class="btn btn-coral btn-block" href="/products/cozy-plush-pet-sofa" style="font-size:1.08rem;padding:17px">Shop the Cozy Sofa →</a>
+        <a class="btn btn-ghost btn-block" href="#bundle">See the Cleaner Couch Kit</a>
+      </div>
+
+      <div class="assure">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> 30-night cozy trial</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Free returns</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Secure checkout</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROBLEM / SOLUTION ===== -->
+<section class="psol">
+  <div class="wrap">
+    <div class="story-head"><span class="eyebrow">The real problem</span><h2>They love your couch. Give them their own.</h2></div>
+    <div class="psol-grid">
+      <div class="pcard bad">
+        <h3>Right now</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg> Your sofa collects fur, dander, and claw marks</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg> They sleep on the couch no matter what bed you buy</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg> Flat mats and blankets slide around and flatten fast</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg> Nothing in the room actually looks good</li>
+        </ul>
+      </div>
+      <div class="pcard good">
+        <h3>With CozyClaw</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> A spot so cozy they choose it over your couch</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Fur and scratches stay on the sofa they own, not yours</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Raised walls and a supportive base that holds its shape</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Warm, neutral tones made to suit your room</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLEANER COUCH KIT (bundle) ===== -->
+<section class="wrap" id="bundle">
+  <div class="bundle">
+    <div class="bundle-copy">
+      <span class="eyebrow">Cleaner Couch Kit</span>
+      <h2>Protect the whole couch.</h2>
+      <p>Pair the sofa with the deshedding glove and ChompClean toy — everything to keep fur off your furniture. Your order ships free over $50, and at $100 we take 15% off automatically.</p>
+      <a class="btn btn-primary" href="/collections/all">Build my Cleaner Couch Kit</a>
+    </div>
+    <!-- BUNDLE IMAGE: lifestyle shot of two pets / sofa + add-ons -->
+    <div class="imgslot"><span class="ph"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span></div>
+  </div>
+</section>
+
+<!-- ===== SHOP THE RANGE (standalone products) ===== -->
+<section class="collection">
+  <div class="wrap">
+    <div class="story-head">
+      <span class="eyebrow">Shop the range</span>
+      <h2>Cozy on its own. Better together.</h2>
+      <p>The sofa they curl up in, plus the everyday extras — grab any of them on their own, or pair them up.</p>
+    </div>
+    <div class="coll-grid">
+      <a class="coll-card" href="/products/cozy-plush-pet-sofa">
+        <div class="imgslot coll-img"><span class="cc-badge">Bestseller</span><span class="ph"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span></div>
+        <div class="coll-body">
+          <h3>Cozy Plush Pet Sofa</h3>
+          <p>The raised-wall bed they curl into — and pick over your couch.</p>
+          <div class="coll-foot"><span class="coll-price">$59.99</span><span class="coll-rate"><svg viewBox="0 0 24 24" fill="currentColor" style="width:13px;height:13px;vertical-align:-2px"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg> 4.5 · 99</span></div>
+          <span class="coll-shop">Shop →</span>
+        </div>
+      </a>
+      <a class="coll-card" href="/products/pet-deshedding-glove-brush">
+        <div class="imgslot coll-img"><span class="ph"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span></div>
+        <div class="coll-body">
+          <h3>Deshedding Glove</h3>
+          <p>Lifts loose fur off your pet before it ends up on the furniture.</p>
+          <div class="coll-foot"><span class="coll-price">$14.99</span></div>
+          <span class="coll-shop">Shop →</span>
+        </div>
+      </a>
+      <a class="coll-card" href="/products/squeaky-chew-toy-dogs-cats">
+        <div class="imgslot coll-img"><span class="ph"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span></div>
+        <div class="coll-body">
+          <h3>ChompClean Chew Toy</h3>
+          <p>A squeaky chew toy to keep them happily busy.</p>
+          <div class="coll-foot"><span class="coll-price">$17.99</span></div>
+          <span class="coll-shop">Shop →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VALUE STORY BLOCKS ===== -->
+<section class="story" id="video">
+  <div class="wrap">
+    <div class="story-head">
+      <span class="eyebrow">Why they choose it</span>
+      <h2>The bed they pick over the couch.</h2>
+    </div>
+
+    <div class="story-row">
+      <div class="story-text">
+        <span class="story-num">01 — Comfort</span>
+        <h3>A nook that calms the zoomies</h3>
+        <p>The raised, plush walls speak to a pet's natural instinct to burrow and feel protected. Anxious cats and dogs lean in, settle within minutes, and stay — it's the spot they'll pick over your couch.</p>
+      </div>
+      <!-- IMAGE/GIF: pet relaxing, or short looping clip of pet settling in -->
+      <div class="imgslot"><span class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m10 8 6 4-6 4z"/><circle cx="12" cy="12" r="9"/></svg></span></div>
+    </div>
+
+    <div class="story-row rev">
+      <div class="story-text">
+        <span class="story-num">02 — Care</span>
+        <h3>Cleans up in one zip</h3>
+        <p>Fur, mud, the occasional accident — the cover zips off and goes straight in the wash, so it stays fresh and odor-free. The waterproof, non-slip liner keeps your floor dry and the sofa exactly where you put it.</p>
+      </div>
+      <div class="imgslot"><span class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8a9 4 0 0 0 18 0M3 8a9 4 0 0 1 18 0v8a9 4 0 0 1-18 0z"/></svg></span></div>
+    </div>
+
+    <div class="story-row">
+      <div class="story-text">
+        <span class="story-num">03 — Home</span>
+        <h3>The pet bed that doesn't look like one</h3>
+        <p>Coffee, Grey, and Black — warm, neutral tones chosen to sit happily in your living room, not fight it. A pet sofa you won't want to hide when guests come over.</p>
+      </div>
+      <div class="imgslot"><span class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18 L4 9 L12 4 L20 9 L20 18 Z"/><path d="M4 18h16"/></svg></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SIZE GUIDE ===== -->
+<section class="sizeguide">
+  <div class="wrap">
+    <div class="story-head"><span class="eyebrow">Find their size</span><h2>Two sizes. Pick by your pet's weight.</h2></div>
+    <div class="sg-grid">
+      <div class="sg-card">
+        <!-- SIZE PHOTO: a cat / small dog curled in the Small -->
+        <div class="imgslot"><span class="ph"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span></div>
+        <div class="sg-body">
+          <span class="sg-tag">Small</span>
+          <h3>For cats &amp; small dogs</h3>
+          <p>"Luna, a 9-lb tabby, curls into the small and doesn't move till morning." Best for pets who like to nest.</p>
+          <ul class="sg-specs">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Fits cats &amp; small dogs up to 11 lb</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Sofa approx. 60 × 80 cm (24 × 31 in)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Zip-off washable cover</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sg-card">
+        <!-- SIZE PHOTO: a medium pet stretched in the Large -->
+        <div class="imgslot"><span class="ph"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span></div>
+        <div class="sg-body">
+          <span class="sg-tag">Large</span>
+          <h3>For medium pets</h3>
+          <p>"Cooper, a 20-lb spaniel, finally has a spot that fits him properly." Best for pets who like to stretch and lean.</p>
+          <ul class="sg-specs">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Fits medium pets up to 22 lb</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Sofa approx. 80 × 90 cm (31 × 35 in)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Zip-off washable cover</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPARISON ===== -->
+<section class="cmpsec">
+  <div class="wrap">
+    <div class="story-head"><span class="eyebrow">Why not a blanket or mat</span><h2>CozyClaw vs. the alternatives</h2></div>
+    <div class="cmp">
+      <table>
+        <thead><tr><th></th><th class="us">CozyClaw™</th><th>Mat or blanket</th></tr></thead>
+        <tbody>
+          <tr><td>Raised calming walls</td><td class="us yes">Yes</td><td class="no">No</td></tr>
+          <tr><td>Keeps its shape</td><td class="us yes">Yes</td><td class="no">Flattens</td></tr>
+          <tr><td>Non-slip waterproof base</td><td class="us yes">Yes</td><td class="no">No</td></tr>
+          <tr><td>Redirects fur off your couch</td><td class="us yes">Yes</td><td class="no">Barely</td></tr>
+          <tr><td>Looks like furniture</td><td class="us yes">Yes</td><td class="no">No</td></tr>
+          <tr><td>They actually choose it</td><td class="us yes">Yes</td><td class="no">Rarely</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REVIEWS ===== -->
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="rev-head">
+      <span class="eyebrow">Real homes, real naps</span>
+      <h2>Cats &amp; dogs that picked their CozyClaw</h2>
+      <div class="rev-agg">
+        <span class="big">4.5</span>
+        <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg></span>
+        <span class="count" id="aggCount">99 verified reviews</span>
+      </div>
+    </div>
+    <div class="rev-grid">
+      <!-- Review photos: large square pet photo per card (Judge.me photo reviews) -->
+      <div class="rev-card">
+        <div class="imgslot"><span class="ph"></span></div>
+        <div class="rev-body">
+          <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg></span>
+          <p>"My rescue used to sleep on the sofa and pace all night. First evening with the CozyClaw he curled up and slept through — now he picks it over the couch every time. The grey blends right into our living room too."</p>
+          <div class="rev-author"><b>Maria L.</b> <span class="verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Verified buyer</span></div>
+        </div>
+      </div>
+      <div class="rev-card">
+        <div class="imgslot"><span class="ph"></span></div>
+        <div class="rev-body">
+          <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg></span>
+          <p>"Washes beautifully — zip the cover off, cold wash, done. After three weeks it still looks brand new. Our two cats fight over it."</p>
+          <div class="rev-author"><b>James &amp; Theo</b> <span class="verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Verified buyer</span></div>
+        </div>
+      </div>
+      <div class="rev-card">
+        <div class="imgslot"><span class="ph"></span></div>
+        <div class="rev-body">
+          <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.5 6.8L12 17.5 5.9 20.9l1.5-6.8L2.2 8.9l6.9-.6z"/></svg></span>
+          <p>"Bought the large for our senior beagle's hips. He gets up easier in the mornings now. Honestly should have bought it a year ago."</p>
+          <div class="rev-author"><b>Priya S.</b> <span class="verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Verified buyer</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="center" style="margin-top:30px"><a class="btn btn-ghost" href="#reviews">Read all reviews</a></div>
+  </div>
+</section>
+
+<!-- ===== BRAND STORY ===== -->
+<section class="brandstory">
+  <div class="wrap bs-grid">
+    <div>
+      <span class="eyebrow">Why we made it</span>
+      <h2>For pets who claim the couch — and people who still want a clean home.</h2>
+      <p>CozyClaw started with a slightly annoying truth: pets pick the sofa over every bed you buy them. So we built the one they'd actually choose — plush, raised walls that make them feel safe, on a base that holds its shape, in tones that suit your room instead of fighting it.</p>
+      <p>The result is a spot they love and a couch that finally gets a break. Cozy for them, cleaner for you.</p>
+      <p style="color:rgba(247,242,233,.6);font-size:.9rem;margin:0">By pet people, for pet people.</p>
+    </div>
+    <!-- BRAND PHOTO: warm in-home shot of a pet settled on the sofa -->
+    <div class="imgslot"><span class="ph"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.1"/><circle cx="11" cy="6" r="2.1"/><circle cx="16" cy="6.6" r="2.1"/><circle cx="19.5" cy="10.2" r="1.8"/><path d="M12 12.2c-3 0-5.4 2.1-5.4 4.4 0 1.8 1.6 2.7 3.3 2.7 1 0 1.4-.4 2.1-.4s1.1.4 2.1.4c1.7 0 3.3-.9 3.3-2.7 0-2.3-2.4-4.4-5.4-4.4z"/></svg></span></div>
+  </div>
+</section>
+
+<!-- ===== GUARANTEE ===== -->
+<section class="guarantee">
+  <div class="wrap">
+    <div class="story-head"><span class="eyebrow">The CozyClaw promise</span><h2 style="font-size:clamp(1.8rem,3.6vw,2.4rem);margin-top:8px">Try it cozy, risk-free</h2><p class="muted" style="margin-top:8px">By pet people, for pet people — real humans, real support.</p></div>
+    <div class="guar-grid">
+      <div class="guar-card">
+        <span class="ic-chip ic-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M12 7v5l3 2"/></svg></span>
+        <h4>30-night trial</h4><p>Sleep on it. Not cozy? Send it back.</p>
+      </div>
+      <div class="guar-card">
+        <span class="ic-chip ic-sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg></span>
+        <h4>Free US shipping</h4><p>Free on every order over $50.</p>
+      </div>
+      <div class="guar-card">
+        <span class="ic-chip ic-clay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 5 5v1"/></svg></span>
+        <h4>Easy returns</h4><p>Simple, no-stress return process.</p>
+      </div>
+      <div class="guar-card">
+        <span class="ic-chip ic-coffee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5z"/></svg></span>
+        <h4>Secure checkout</h4><p>Encrypted payment, data protected.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <h2>Good questions, honest answers</h2>
+    <div class="q">
+      <button>Which size should I get?</button>
+      <div class="a"><p>Small suits cats and small dogs up to about 11 lb; Large fits medium pets up to about 22 lb. If your pet likes to sprawl rather than curl, size up.</p></div>
+    </div>
+    <div class="q">
+      <button>How do I wash it?</button>
+      <div class="a"><p>Unzip the outer cover and machine wash cold, then air dry. The waterproof inner liner wipes clean with a damp cloth. No special detergent needed.</p></div>
+    </div>
+    <div class="q">
+      <button>Will my anxious pet actually use it?</button>
+      <div class="a"><p>Most do within a few days. The raised, soft walls create a sense of security that calms many anxious cats and dogs. Pop a familiar blanket or toy inside for the first night to speed things up — and you've got 30 nights to be sure.</p></div>
+    </div>
+    <div class="q">
+      <button>When will it arrive?</button>
+      <div class="a"><p>Orders are processed within 1–2 business days and typically arrive within the standard US delivery window shown at checkout. You'll get a tracking link by email as soon as it ships.</p></div>
+    </div>
+    <div class="q">
+      <button>What's your return policy?</button>
+      <div class="a"><p>If it's not the cozy upgrade you hoped for, reach out within 30 nights for a return. See our full Shipping &amp; Returns policy for details.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EMAIL CAPTURE ===== -->
+<section class="signup" id="signup">
+  <div class="signup-in">
+    <span class="eyebrow" style="color:rgba(247,242,233,.7)">Join the litter</span>
+    <h2>15% off your first order — any size</h2>
+    <p>Join the list and we'll email your 15% code, plus first dibs on new colors. No spam, unsubscribe anytime.</p>
+    <div class="form">
+      <input type="email" id="emailIn" placeholder="you@email.com" aria-label="Email address">
+      <button class="btn btn-coral" id="emailBtn">Send my code</button>
+    </div>
+    <small>We'll email your code · 15% off your first order, any value · one discount per order — offers don't combine</small>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo">
+          <svg class="brandmark" viewBox="0 0 96 96" role="img" aria-hidden="true"><rect x="0" y="0" width="96" height="96" rx="24" fill="#FAF0E8"/><path d="M27 41 L23 14 L48 33 Z" fill="#5A3E2B"/><path d="M69 41 L73 14 L48 33 Z" fill="#5A3E2B"/><circle cx="48" cy="58" r="27" fill="#5A3E2B"/><path d="M31 37 L28 20 L42 33 Z" fill="#FAF0E8"/><path d="M65 37 L68 20 L54 33 Z" fill="#FAF0E8"/><path d="M35 55 q5 5 10 0" fill="none" stroke="#FAF0E8" stroke-width="2.6" stroke-linecap="round"/><path d="M51 55 q5 5 10 0" fill="none" stroke="#FAF0E8" stroke-width="2.6" stroke-linecap="round"/><path d="M44.5 62 L51.5 62 L48 66.5 Z" fill="#FAF0E8"/><path d="M48 66.5 q-4 4 -8 2" fill="none" stroke="#FAF0E8" stroke-width="2" stroke-linecap="round"/><path d="M48 66.5 q4 4 8 2" fill="none" stroke="#FAF0E8" stroke-width="2" stroke-linecap="round"/></svg>
+          <span class="wordmark"><span class="wm-cozy">Cozy</span><span class="wm-claw">Claw<sup>™</sup></span></span>
+        </div>
+        <p>The plush pet sofa cats &amp; dogs actually choose — cozy for them, furniture-worthy for you.</p>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="#product">Cozy Pet Sofa</a></li>
+          <li><a href="#bundle">Bundle &amp; Save</a></li>
+          <li><a href="#">ChompClean Toy</a></li>
+          <li><a href="#">Deshedding Glove</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Help</h5>
+        <ul>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="/pages/shipping-returns">Shipping &amp; Returns</a></li>
+          <li><a href="/account">Track order</a></li>
+          <li><a href="/pages/contact">Contact us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/pages/about">Our story</a></li>
+          <li><a href="/pages/privacy">Privacy</a></li>
+          <li><a href="/pages/terms">Terms</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> CozyClaw™. All rights reserved.</span>
+      <div class="pays"><span>VISA</span><span>MC</span><span>AMEX</span><span>PAYPAL</span><span>SHOP PAY</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* FAQ accordion */
+document.querySelectorAll(".q button").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    var q=btn.parentElement, a=q.querySelector(".a"), open=q.classList.contains("open");
+    document.querySelectorAll(".q").forEach(function(x){x.classList.remove("open");x.querySelector(".a").style.maxHeight=null;});
+    if(!open){ q.classList.add("open"); a.style.maxHeight=a.scrollHeight+"px"; }
+  });
+});
+
+/* email capture (wire to Klaviyo) */
+document.getElementById("emailBtn").addEventListener("click",function(){
+  var v=document.getElementById("emailIn").value.trim();
+  if(!v||v.indexOf("@")<0){ document.getElementById("emailIn").focus(); return; }
+  this.textContent="Check your inbox ✓"; this.disabled=true;
+});
+
+/* mobile menu (simple jump to shop for now) */
+document.getElementById("burger").addEventListener("click",function(){
+  document.getElementById("product").scrollIntoView({behavior:"smooth"});
+});
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+/* sticky shop bar — reveal on scroll past hero */
+(function(){
+  var bar=document.getElementById("stickybar"); if(!bar) return;
+  var hero=document.querySelector(".hero");
+  window.addEventListener("scroll",function(){
+    bar.classList.toggle("show", window.scrollY > (hero.offsetHeight - 60));
+  },{passive:true});
+})();
+
+</script>
+<!-- ===== STICKY ADD-TO-CART BAR (appears on scroll) ===== -->
+<div class="stickybar" id="stickybar">
+  <div class="stickybar-in">
+    <div class="sb-info"><span class="nm">CozyClaw™ Pet Sofa</span><span class="pr">$59.99 · free shipping over $50</span></div>
+    <a class="btn btn-coral" href="/products/cozy-plush-pet-sofa">Shop the Cozy Sofa →</a>
+  </div>
+</div>
+
+</body>
+</html>

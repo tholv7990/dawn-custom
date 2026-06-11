@@ -1,0 +1,22 @@
+<section class="cth-guarantee">
+  <div class="page-width">
+    <div class="cth-head"><span class="cth-eyebrow">The CozyClaw promise</span><h2>Try it cozy, risk-free</h2><p>By pet people, for pet people - real humans, real support.</p></div>
+    <div class="cth-guarantee__grid">
+      <article>{% render 'ct-icon-badge', icon: 'clock', tone: 'gold' %}<b>30-night trial</b><p>Sleep on it. Not cozy? Send it back.</p></article>
+      <article>{% render 'ct-icon-badge', icon: 'truck-fast', tone: 'sage' %}<b>Free US shipping</b><p>Free on every order over $50.</p></article>
+      <article>{% render 'ct-icon-badge', icon: 'box-open', tone: 'clay' %}<b>Easy returns</b><p>Simple, no-stress return process.</p></article>
+      <article>{% render 'ct-icon-badge', icon: 'lock', tone: 'coffee' %}<b>Secure checkout</b><p>Encrypted payment, data protected.</p></article>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CT home guarantee",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [],
+  "presets": [{ "name": "CT home guarantee" }]
+}
+{% endschema %}

@@ -67,12 +67,24 @@
     </span>
     {%- if single_option and card_variant != blank -%}
       <span class="ct-bundle__price">
-        <span class="ct-bundle__price-now">{{ card_variant.price | money }}</span>
+        <span class="ct-bundle__price-now">
+          {%- if settings.currency_code_enabled -%}
+            {{ card_variant.price | money_with_currency }}
+          {%- else -%}
+            {{ card_variant.price | money }}
+          {%- endif -%}
+        </span>
         {%- if card_variant.id == base_variant.id -%}
           <span class="ct-bundle__price-diff">base</span>
         {%- else -%}
           {%- assign card_diff = card_variant.price | minus: base_variant.price -%}
-          <span class="ct-bundle__price-diff">+{{ card_diff | money }}</span>
+          <span class="ct-bundle__price-diff">
+            +{%- if settings.currency_code_enabled -%}
+              {{ card_diff | money_with_currency }}
+            {%- else -%}
+              {{ card_diff | money }}
+            {%- endif -%}
+          </span>
         {%- endif -%}
       </span>
     {%- endif -%}

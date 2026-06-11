@@ -8,16 +8,26 @@
 {%- assign final_price_now = section.settings.price_now -%}
 {%- assign final_price_was = section.settings.price_was -%}
 {%- assign final_price_save = section.settings.price_save_label -%}
+{%- assign final_btn_link = section.settings.button_link -%}
 {%- if final_product != blank -%}
-  {%- assign final_price_now = final_product.price | money -%}
+  {%- if settings.currency_code_enabled -%}
+    {%- assign final_price_now = final_product.price | money_with_currency -%}
+  {%- else -%}
+    {%- assign final_price_now = final_product.price | money -%}
+  {%- endif -%}
   {%- if final_product.compare_at_price > final_product.price -%}
-    {%- assign final_price_was = final_product.compare_at_price | money -%}
+    {%- if settings.currency_code_enabled -%}
+      {%- assign final_price_was = final_product.compare_at_price | money_with_currency -%}
+    {%- else -%}
+      {%- assign final_price_was = final_product.compare_at_price | money -%}
+    {%- endif -%}
     {%- assign final_save_pct = final_product.compare_at_price | minus: final_product.price | times: 100 | divided_by: final_product.compare_at_price -%}
     {%- assign final_price_save = final_save_pct | append: '%' | prepend: 'Save ' -%}
   {%- else -%}
     {%- assign final_price_was = blank -%}
     {%- assign final_price_save = blank -%}
   {%- endif -%}
+  {%- if final_btn_link == blank -%}{%- assign final_btn_link = final_product.url -%}{%- endif -%}
 {%- endif -%}
 
 <div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
@@ -35,7 +45,7 @@
       {%- endif -%}
       <div class="ct-final-cta__btns">
         {%- if section.settings.button_label != blank -%}
-          <a class="ct-btn ct-btn--primary ct-btn--lg" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
+          <a class="ct-btn ct-btn--primary ct-btn--lg" href="{{ final_btn_link | default: '#' }}">{{ section.settings.button_label }}</a>
         {%- endif -%}
         {%- if section.settings.button_label_2 != blank -%}
           <a class="ct-btn ct-btn--outlined" href="{{ section.settings.button_link_2 | default: '#' }}">{{ section.settings.button_label_2 }}</a>
@@ -72,7 +82,7 @@
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Your living room is ready. Are you?" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "12 weeks from now, you'll either have started — or you'll still be thinking about it." },
     { "type": "header", "content": "Price row (optional)" },
-    { "type": "text", "id": "price_now", "label": "Current price (e.g. $35.97)" },
+    { "type": "text", "id": "price_now", "label": "Current price" },
     { "type": "text", "id": "price_was", "label": "Compare-at price (struck)" },
     { "type": "text", "id": "price_save_label", "label": "Save chip (e.g. Save 20%)" },
     { "type": "header", "content": "Buttons" },
@@ -83,7 +93,7 @@
     { "type": "header", "content": "Trust chips" },
     { "type": "checkbox", "id": "show_trust", "label": "Show trust chips", "default": true },
     { "type": "select", "id": "trust_style", "label": "Trust row style", "options": [ { "value": "chips", "label": "Chips (checkmark prefix)" }, { "value": "pills", "label": "Pills (check svg)" } ], "default": "chips" },
-    { "type": "textarea", "id": "trust_chips", "label": "Trust chips (one per line)", "default": "Free US Shipping\n90-Day Returns\n4.7 · 52 Reviews" },
+    { "type": "textarea", "id": "trust_chips", "label": "Trust chips (one per line)", "default": "Free shipping at $50+\n90-Day Returns\n4.7 · 52 Reviews" },
     { "type": "header", "content": "Section" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },

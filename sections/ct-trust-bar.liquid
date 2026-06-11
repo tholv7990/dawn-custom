@@ -2,21 +2,40 @@
 {{ 'section-ct-trust-bar.css' | asset_url | stylesheet_tag }}
 
 {%- if section.settings.layout == 'icon-strip' -%}
-  <div class="ct-trust-strip color-{{ section.settings.color_scheme }}" data-reveal>
+  <div class="ct-trust-strip ct-trust-strip--icons color-{{ section.settings.color_scheme }}" data-reveal>
     <div class="page-width">
       {%- for block in section.blocks -%}
+        {%- liquid
+          assign label_text = block.settings.title | append: ' ' | append: block.settings.subtitle | append: ' ' | append: block.settings.label | downcase
+          assign icon_key = 'check'
+          assign icon_tone = 'sage'
+          if label_text contains 'calming' or label_text contains 'comfort' or label_text contains 'soft walls'
+            assign icon_key = 'heart'
+            assign icon_tone = 'sage'
+          elsif label_text contains 'joint' or label_text contains 'support'
+            assign icon_key = 'clock'
+            assign icon_tone = 'clay'
+          elsif label_text contains 'wash'
+            assign icon_key = 'database'
+            assign icon_tone = 'teal'
+          elsif label_text contains 'non-slip' or label_text contains 'base' or label_text contains 'stay'
+            assign icon_key = 'home'
+            assign icon_tone = 'coffee'
+          endif
+        -%}
         <div class="ct-trust-strip__item" {{ block.shopify_attributes }}>
-          <span class="ct-trust-strip__ic">
-            {%- case block.settings.icon -%}
-              {%- when 'truck'        -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h13V6H3zM16 9h3l2 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
-              {%- when 'shield-money' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 5-3 7-7 9-4-2-7-4-7-9V6z"/></svg>
-              {%- when 'lock'         -%}<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
-              {%- when 'chat'         -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H7l-3 3z"/></svg>
-              {%- when 'check'        -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-              {%- when 'paw-fleece'   -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c5-3 8-6 8-10a4 4 0 00-8-1 4 4 0 00-8 1c0 4 3 7 8 10z"/></svg>
-              {%- when 'bed-edge'     -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14c0-4 4-6 8-6s8 2 8 6"/><path d="M3 14h18v4H3z"/></svg>
-              {%- when 'couch-hair'   -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-              {%- when 'wash-clock'   -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 109 9"/><path d="M12 7v5l3 2"/></svg>
+          <span class="ct-trust-strip__ic ct-trust-strip__ic--{{ icon_tone }}">
+            {%- case icon_key -%}
+              {%- when 'heart' -%}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>
+              {%- when 'clock' -%}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M12 7v5l3 2"/></svg>
+              {%- when 'database' -%}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a9 4 0 0 0 18 0M3 8a9 4 0 0 1 18 0v8a9 4 0 0 1-18 0z"/></svg>
+              {%- when 'home' -%}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18V9l8-5 8 5v9"/><path d="M4 18h16"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
             {%- endcase -%}
           </span>
           <div>
@@ -31,15 +50,55 @@
   <div class="ct-trust-strip color-{{ section.settings.color_scheme }}" data-reveal>
     <div class="page-width ct-trust-strip__inner">
       {%- for block in section.blocks -%}
-        <span class="ct-trust-item" {{ block.shopify_attributes }}>
-          {%- case block.settings.icon -%}
-            {%- when 'truck' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-            {%- when 'shield-money' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            {%- when 'lock' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            {%- when 'chat' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-            {%- when 'check' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            {%- else -%}<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          {%- endcase -%}
+        {%- liquid
+          assign label_text = block.settings.label | downcase
+          assign fa_icon = 'circle-check'
+          assign icon_tone = 'green'
+          case block.settings.icon
+            when 'paw'
+              assign fa_icon = 'paw'
+              assign icon_tone = 'coffee'
+            when 'bed'
+              assign fa_icon = 'bed'
+              assign icon_tone = 'coffee'
+            when 'couch'
+              assign fa_icon = 'couch'
+              assign icon_tone = 'green'
+            when 'soap'
+              assign fa_icon = 'soap'
+              assign icon_tone = 'green'
+            when 'truck'
+              assign fa_icon = 'truck-fast'
+              assign icon_tone = 'coffee'
+            when 'shield-money'
+              assign fa_icon = 'shield-heart'
+              assign icon_tone = 'green'
+            when 'shield'
+              assign fa_icon = 'shield-heart'
+              assign icon_tone = 'green'
+            when 'lock'
+              assign fa_icon = 'lock'
+              assign icon_tone = 'green-dark'
+            when 'chat'
+              assign fa_icon = 'headset'
+              assign icon_tone = 'coffee'
+          endcase
+          if label_text contains 'support'
+            assign fa_icon = 'headset'
+            assign icon_tone = 'coffee'
+          elsif label_text contains 'shipping' or label_text contains 'delivery'
+            assign fa_icon = 'truck-fast'
+            assign icon_tone = 'coffee'
+          elsif label_text contains 'secure' or label_text contains 'payment' or label_text contains 'checkout'
+            assign fa_icon = 'lock'
+            assign icon_tone = 'green-dark'
+          elsif label_text contains 'money' or label_text contains 'guarantee'
+            assign fa_icon = 'shield-heart'
+            assign icon_tone = 'green'
+          endif
+        -%}
+        <span class="ct-trust-item ct-trust-item--{{ icon_tone }}" {{ block.shopify_attributes }}>
+          {%- render 'ct-fa-icon', icon: fa_icon -%}
           {{ block.settings.label }}
         </span>
       {%- endfor -%}
@@ -68,6 +127,10 @@
       "name": "Trust item",
       "settings": [
         { "type": "select", "id": "icon", "label": "Icon", "options": [
+          { "value": "paw",          "label": "Paw (fleece)" },
+          { "value": "bed",          "label": "Bed (pillow edges)" },
+          { "value": "couch",        "label": "Couch (hair-free)" },
+          { "value": "soap",         "label": "Soap (washable)" },
           { "value": "truck",        "label": "Truck (shipping)" },
           { "value": "shield-money", "label": "Shield (money-back)" },
           { "value": "lock",         "label": "Lock (security)" },
@@ -90,7 +153,7 @@
       "name": "CT Trust strip",
       "blocks": [
         { "type": "chip", "settings": { "icon": "truck",        "label": "Fast Shipping" } },
-        { "type": "chip", "settings": { "icon": "shield-money", "label": "7-Day Money-Back Guarantee" } },
+        { "type": "chip", "settings": { "icon": "shield-money", "label": "30-Day Money-Back Guarantee" } },
         { "type": "chip", "settings": { "icon": "lock",         "label": "Secured Payments" } },
         { "type": "chip", "settings": { "icon": "chat",         "label": "Support That Cares" } }
       ]

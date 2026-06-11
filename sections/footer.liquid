@@ -1,26 +1,13 @@
-﻿{% comment %}theme-check-disable UndefinedObject{% endcomment %}
-{{ 'section-footer.css' | asset_url | stylesheet_tag }}
-{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 {{ 'section-ct-footer.css' | asset_url | stylesheet_tag }}
+{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .footer {
-    margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
-  }
-
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
   @media screen and (min-width: 750px) {
-    .footer {
-      margin-top: {{ section.settings.margin_top }}px;
-    }
-
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -28,88 +15,68 @@
   }
 {%- endstyle -%}
 
-<footer class="ct-footer color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+<footer class="ct-footer section-{{ section.id }}-padding">
   <div class="page-width">
     <div class="ct-footer__grid">
       <div class="ct-footer__brand-col">
-        <a href="{{ routes.root_url }}" class="ct-footer__brand">Cozy<span class="ct-footer__paw">Claw</span></a>
-        <p class="ct-footer__tag">Founded to help pet parents make their dogs' and cats' everyday lives a little cozier — one well-made product at a time.</p>
-        {%- if section.settings.address != blank -%}
-          <p class="ct-footer__address">
-            <svg class="ct-footer__contact-ic" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 21s-7-5.2-7-11a7 7 0 0114 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/>
-            </svg>
-            <span>{{ section.settings.address }}</span>
-          </p>
-        {%- endif -%}
-        <a href="mailto:support@cozyclaw.com" class="ct-footer__mail">
-          <svg class="ct-footer__contact-ic" viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
-          </svg>support@cozyclaw.com
+        <a href="{{ routes.root_url }}" class="ct-footer__logo" aria-label="CozyClaw home">
+          {% render 'ct-logo',
+            image: section.settings.footer_logo,
+            class: 'ct-footer__logo-img',
+            width: 180,
+            sizes: '180px',
+            fallback: 'cozyclaw-logo-reversed.svg'
+          %}
         </a>
+        <p>Founded to help pet parents make their dogs' and cats' everyday lives a little cozier &mdash; one well-made product at a time.</p>
+        <address class="ct-footer__contact">
+          <span>509 Byrum Rd, Chaparral, NM 88081, United States</span>
+          <a href="mailto:support@cozyclaw.com">support@cozyclaw.com</a>
+        </address>
       </div>
 
-      <div class="ct-footer__col">
-        <h4 class="ct-footer__h4">Shop</h4>
-        <a href="{{ routes.root_url }}#buy">Cozy Plush Pet Sofa</a>
-        <a href="{{ routes.root_url }}#bundle">Bundle &amp; Save</a>
-        <a href="{{ routes.root_url }}#reviews">Reviews</a>
-        <a href="{{ routes.root_url }}#why">Why It Works</a>
-      </div>
+      <nav class="ct-footer__col" aria-label="Shop">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="/products/cozy-plush-pet-sofa">Cozy Plush Pet Sofa</a></li>
+          <li><a href="{{ routes.root_url }}#bundle">Bundle &amp; Save</a></li>
+          <li><a href="{{ routes.root_url }}#reviews">Reviews</a></li>
+          <li><a href="{{ routes.root_url }}#video">Why It Works</a></li>
+          <li><a href="{{ blogs.news.url | default: '/blogs/news' }}">Blog</a></li>
+        </ul>
+      </nav>
 
-      <div class="ct-footer__col">
-        <h4 class="ct-footer__h4">Help</h4>
-        <a href="/policies/shipping-policy">Shipping Policy</a>
-        <a href="/policies/refund-policy">Returns &amp; 30-Night Guarantee</a>
-        <a href="mailto:support@cozyclaw.com">Contact Us</a>
-        <a href="/pages/faq">FAQs</a>
-      </div>
+      <nav class="ct-footer__col" aria-label="Help">
+        <h5>Help</h5>
+        <ul>
+          <li>{% render 'ct-policy-link', policy: shop.shipping_policy, label: 'Shipping Policy', fallback_url: '/policies/shipping-policy' %}</li>
+          <li>{% render 'ct-policy-link', policy: shop.refund_policy, label: 'Returns & 30-Night Guarantee', fallback_url: '/policies/refund-policy' %}</li>
+          <li><a href="/pages/contact">Contact Us</a></li>
+        </ul>
+      </nav>
 
-      <div class="ct-footer__col">
-        <h4 class="ct-footer__h4">Legal</h4>
-        <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}">Privacy Policy</a>
-        <a href="{{ shop.terms_of_service.url | default: '/policies/terms-of-service' }}">Terms of Service</a>
-        <a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}">Refund &amp; Return Policy</a>
-        <a href="/policies/cookie-policy">Cookie Policy</a>
-      </div>
+      <nav class="ct-footer__col" aria-label="Legal">
+        <h5>Legal</h5>
+        <ul>
+          <li>{% render 'ct-policy-link', policy: shop.privacy_policy, label: 'Privacy Policy', fallback_url: '/policies/privacy-policy' %}</li>
+          <li>{% render 'ct-policy-link', policy: shop.terms_of_service, label: 'Terms of Service', fallback_url: '/policies/terms-of-service' %}</li>
+          <li>{% render 'ct-policy-link', policy: shop.refund_policy, label: 'Refund & Return Policy', fallback_url: '/policies/refund-policy' %}</li>
+        </ul>
+      </nav>
     </div>
 
-    {%- if section.settings.show_signup_cta -%}
-      <div class="ct-footer__signup-cta">
-        <div class="ct-footer__signup-text">
-          <h3>{{ section.settings.signup_heading }}</h3>
-          <p>{{ section.settings.signup_body }}</p>
-        </div>
-        {%- form 'customer', class: 'ct-footer__signup-form' -%}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <input type="email" name="contact[email]" placeholder="Enter your email" aria-label="Email address" autocomplete="email" required>
-          <button type="submit" class="ct-btn ct-btn--primary">
-            {%- if form.posted_successfully? -%}
-              {{ section.settings.signup_button_success | default: 'Subscribed ✓' }}
-            {%- else -%}
-              {{ section.settings.signup_button_label }}
-            {%- endif -%}
-          </button>
-          {%- if form.errors -%}
-            <small class="ct-footer__signup-err">Please enter a valid email address.</small>
-          {%- endif -%}
-        {%- endform -%}
-      </div>
-    {%- endif -%}
-
     <div class="ct-footer__bottom">
-      <span class="ct-footer__copy">© {{ 'now' | date: '%Y' }} CozyClaw. All rights reserved.</span>
-      <span class="ct-footer__secure">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>
-        </svg>Secure checkout
+      <span class="ct-footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }} CozyClaw<span class="ct-footer__tm">&#8482;</span>. All rights reserved.
       </span>
       {%- if shop.enabled_payment_types.size > 0 -%}
-        <span class="ct-footer__pay" aria-label="Accepted payment methods">
+        <ul class="ct-footer__pays list list-payment" role="list" aria-label="Accepted payment methods">
           {%- for type in shop.enabled_payment_types -%}
-            {{ type | payment_type_svg_tag: class: 'ct-footer__pay-icon icon icon--full-color' }}
+            <li class="list-payment__item">
+              {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+            </li>
           {%- endfor -%}
-        </span>
+        </ul>
       {%- endif -%}
     </div>
   </div>
@@ -117,232 +84,33 @@
 
 {% schema %}
 {
-  "name": "t:sections.footer.name",
-  "blocks": [
-    {
-      "type": "@app"
-    },
-    {
-      "type": "link_list",
-      "name": "t:sections.footer.blocks.link_list.name",
-      "settings": [
-        {
-          "type": "inline_richtext",
-          "id": "heading",
-          "default": "t:sections.footer.blocks.link_list.settings.heading.default",
-          "label": "t:sections.footer.blocks.link_list.settings.heading.label"
-        },
-        {
-          "type": "link_list",
-          "id": "menu",
-          "default": "footer",
-          "label": "t:sections.footer.blocks.link_list.settings.menu.label"
-        }
-      ]
-    },
-    {
-      "type": "brand_information",
-      "name": "t:sections.footer.blocks.brand_information.name",
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "t:sections.footer.blocks.brand_information.settings.paragraph.content"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_social",
-          "default": true,
-          "label": "t:sections.footer.blocks.brand_information.settings.show_social.label",
-          "info": "t:sections.footer.blocks.brand_information.settings.show_social.info"
-        }
-      ]
-    },
-    {
-      "type": "text",
-      "name": "t:sections.footer.blocks.text.name",
-      "settings": [
-        {
-          "type": "inline_richtext",
-          "id": "heading",
-          "default": "t:sections.footer.blocks.text.settings.heading.default",
-          "label": "t:sections.footer.blocks.text.settings.heading.label"
-        },
-        {
-          "type": "richtext",
-          "id": "subtext",
-          "default": "t:sections.footer.blocks.text.settings.subtext.default",
-          "label": "t:sections.footer.blocks.text.settings.subtext.label"
-        }
-      ]
-    },
-    {
-      "type": "image",
-      "name": "Image",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "range",
-          "id": "image_width",
-          "min": 50,
-          "max": 550,
-          "step": 5,
-          "unit": "px",
-          "label": "Width",
-          "default": 100
-        },
-        {
-          "type": "select",
-          "id": "alignment",
-          "label": "Alignment",
-          "options": [
-            {
-              "value": "",
-              "label": "Left"
-            },
-            {
-              "value": "center",
-              "label": "Center"
-            },
-            {
-              "value": "right",
-              "label": "Right"
-            }
-          ],
-          "default": "center"
-        }
-      ]
-    }
-  ],
+  "name": "CT footer",
   "settings": [
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.footer.settings.header__1.content",
-      "info": "t:sections.footer.settings.header__1.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "newsletter_enable",
-      "default": true,
-      "label": "t:sections.footer.settings.newsletter_enable.label"
-    },
-    {
-      "type": "inline_richtext",
-      "id": "newsletter_heading",
-      "default": "t:sections.footer.settings.newsletter_heading.default",
-      "label": "t:sections.footer.settings.newsletter_heading.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.footer.settings.header__9.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_follow_on_shop",
-      "default": true,
-      "label": "t:sections.footer.settings.enable_follow_on_shop.label",
-      "info": "t:sections.footer.settings.enable_follow_on_shop.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_social",
-      "default": true,
-      "label": "t:sections.footer.settings.show_social.label",
-      "info": "t:sections.footer.settings.show_social.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_country_selector",
-      "default": true,
-      "label": "t:sections.footer.settings.enable_country_selector.label",
-      "info": "t:sections.footer.settings.enable_country_selector.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_language_selector",
-      "default": true,
-      "label": "t:sections.footer.settings.enable_language_selector.label",
-      "info": "t:sections.footer.settings.enable_language_selector.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "payment_enable",
-      "default": true,
-      "label": "t:sections.footer.settings.payment_enable.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_policy",
-      "default": true,
-      "label": "t:sections.footer.settings.show_policy.label",
-      "info": "t:sections.footer.settings.show_policy.info"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.spacing"
-    },
-    {
-      "type": "range",
-      "id": "margin_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.footer.settings.margin_top.label",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer logo"
     },
     {
       "type": "range",
       "id": "padding_top",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 2,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
+      "label": "Padding top",
+      "default": 54
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 2,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
-    },
-    { "type": "header",   "content": "Brand column" },
-    { "type": "textarea", "id": "address", "label": "Business address (shown with pin icon)",
-      "default": "509 Byrum Rd, Chaparral, NM 88081, United States" },
-    { "type": "header",   "content": "Signup CTA panel" },
-    { "type": "checkbox", "id": "show_signup_cta", "label": "Show \"Join the cozy club\" panel", "default": true },
-    { "type": "text",     "id": "signup_heading", "label": "Signup heading", "default": "Join the cozy club" },
-    { "type": "text",     "id": "signup_body",    "label": "Signup body",    "default": "Get 15% off your first order, plus first dibs on new colors and cozy deals." },
-    { "type": "text",     "id": "signup_button_label",   "label": "Signup button label", "default": "Sign up" },
-    { "type": "text",     "id": "signup_button_success", "label": "Signup success label", "default": "Subscribed ✓" }
-  ],
-  "default": {
-    "blocks": [
-      {
-        "type": "link_list"
-      },
-      {
-        "type": "text"
-      }
-    ]
-  }
+      "label": "Padding bottom",
+      "default": 30
+    }
+  ]
 }
 {% endschema %}

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F7F1E8">
+<title>Cozy Plush Pet Sofa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:only light;
+    --bg:#F7F1E8; --paper:#FFFFFF; --paper-2:#FFFCF7;
+    --ink:#221B14; --muted:#8B7E6E; --faint:#B4A696; --line:#E8DDCE;
+    --espresso:#2A2018; --espresso-2:#3B2E22;
+    --deal:#CF4A2E; --deal-soft:#FBE9E2;
+    --gold:#B9852A; --gold-soft:#FAEFD7;
+    --shop:#5A31F4;
+    --shadow:0 1px 2px rgba(34,27,20,.05), 0 14px 34px -16px rgba(34,27,20,.20);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:"Hanken Grotesk",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip;max-width:100%;color-scheme:only light}
+  /* hard-lock to light even when the device is in dark mode */
+  @media (prefers-color-scheme: dark){
+    :root{color-scheme:only light}
+    html,body{background:#F7F1E8 !important;color:#221B14 !important}
+  }
+  body{min-height:100vh;padding:24px 20px 56px;
+    background:radial-gradient(1100px 600px at 100% -8%, #FBF6EE 0%, rgba(251,246,238,0) 55%), var(--bg);}
+  .page{max-width:1180px;margin:0 auto}
+
+  /* ---------- responsive grid: desktop = image left / info right; mobile reflows ---------- */
+  .grid{display:grid;gap:38px 52px;align-items:start;
+    grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+    grid-template-areas:"crumb crumb" "gallery title" "gallery benefits" "gallery buy";}
+  .crumb{grid-area:crumb} .gallery{grid-area:gallery} .titleblk{grid-area:title}
+  .benefits{grid-area:benefits} .buy{grid-area:buy}
+  @media(max-width:900px){
+    .grid{gap:24px;grid-template-columns:minmax(0,1fr);
+      grid-template-areas:"crumb" "title" "benefits" "gallery" "buy";}
+  }
+
+  .crumb{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.01em;margin-bottom:2px}
+  .crumb b{color:var(--ink);font-weight:700}
+
+  /* ---------- gallery ---------- */
+  .gallery{position:sticky;top:24px;align-self:start}
+  @media(max-width:900px){.gallery{position:static}}
+  .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:22px;border:1px solid var(--line);
+    -ms-overflow-style:none;scrollbar-width:none;box-shadow:var(--shadow)}
+  .track::-webkit-scrollbar{display:none}
+  .slide{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:1/1;display:grid;place-items:center;position:relative;
+    background:linear-gradient(165deg,#F3E9DB,#EADCC8)}
+  .slide:nth-child(2){background:linear-gradient(165deg,#EFE6D6,#E2D2BC)}
+  .slide:nth-child(3){background:linear-gradient(165deg,#F1E7D8,#E6D7C2)}
+  .slide:nth-child(4){background:linear-gradient(165deg,#EDE3D2,#DFCFB8)}
+  .slide .big{font-size:120px;filter:drop-shadow(0 18px 24px rgba(34,27,20,.16))}
+  .slide .cap{position:absolute;left:16px;bottom:16px;background:rgba(255,253,248,.86);backdrop-filter:blur(4px);
+    color:var(--ink);font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;border:1px solid var(--line)}
+  .gnav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
+    background:rgba(255,253,248,.9);display:grid;place-items:center;cursor:pointer;transition:.2s;z-index:2;opacity:0}
+  .gwrap{position:relative}
+  .gwrap:hover .gnav{opacity:1}
+  .gnav:hover{background:#fff;transform:translateY(-50%) scale(1.07)}
+  .gnav.prev{left:14px}.gnav.next{right:14px}
+  .gnav svg{width:16px;height:16px;stroke:var(--ink);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  @media(max-width:900px){.gnav{display:none}}
+  .dots{display:flex;gap:7px;justify-content:center;margin-top:14px}
+  .dot{width:8px;height:8px;border-radius:50%;background:#D8CBB8;cursor:pointer;transition:.3s}
+  .dot.active{width:24px;border-radius:99px;background:var(--ink)}
+
+  /* ---------- title ---------- */
+  .titleblk h1{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(34px,4vw,50px);line-height:1.02;letter-spacing:-.015em}
+  .rating{display:flex;align-items:center;gap:10px;margin-top:14px}
+  .stars{position:relative;display:inline-block;font-size:17px;letter-spacing:2px;line-height:1}
+  .stars .base{color:#DDD0BD}
+  .stars .fill{position:absolute;left:0;top:0;color:var(--ink);overflow:hidden;white-space:nowrap;width:90%}
+  .rating .count{font-size:13px;color:var(--muted);font-weight:600}
+
+  /* ---------- benefits ---------- */
+  .benefits ul{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .benefits li{display:flex;gap:11px;font-size:15px;line-height:1.45;color:var(--espresso)}
+  .benefits .tick{flex:0 0 auto;width:21px;height:21px;border-radius:50%;background:var(--espresso);display:grid;place-items:center;margin-top:1px}
+  .benefits .tick svg{width:11px;height:11px;stroke:#F7F1E8;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .benefits b{font-weight:800}
+  .benefits .m{color:var(--muted)}
+
+  /* ---------- buy box ---------- */
+  .buy{max-width:480px}
+  /* unlock reward bar */
+  .unlock{position:relative;overflow:hidden;border-radius:16px;padding:13px 15px;margin-bottom:16px;transition:.4s}
+  .unlock.on{background:linear-gradient(105deg,var(--espresso),var(--espresso-2));color:#F7F1E8}
+  .unlock.off{background:linear-gradient(105deg,#6F6253,#857560);color:#FBF6EE}
+  .unlock-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .unlock .msg{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px;min-width:0}
+  .unlock .amt{font-family:"Fraunces",serif;font-weight:600;font-size:17px;white-space:nowrap}
+  .unlock .amt small{font-family:"Hanken Grotesk";font-size:11px;font-weight:700;opacity:.8;margin-left:3px}
+  .utrack{margin-top:10px;height:6px;border-radius:999px;background:rgba(247,241,232,.22);overflow:hidden}
+  .ufill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold),#E6C56B);transition:width .45s cubic-bezier(.4,0,.2,1)}
+
+  .opt{position:relative;background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:15px;margin-bottom:11px;cursor:pointer;transition:.26s;box-shadow:var(--shadow)}
+  .opt:hover{border-color:#DBCBB4}
+  .opt.sel{border-color:var(--espresso);background:var(--paper-2);box-shadow:0 2px 4px rgba(42,32,24,.08),0 18px 40px -18px rgba(42,32,24,.5)}
+  .opt .ribbon{position:absolute;top:-11px;left:16px;background:var(--espresso);color:#F7F1E8;font-size:10.5px;font-weight:700;padding:5px 11px;border-radius:999px;display:flex;align-items:center;gap:6px;box-shadow:0 8px 16px -7px rgba(42,32,24,.7)}
+  .row{display:flex;align-items:flex-start;gap:12px}
+  .radio{flex:0 0 auto;width:21px;height:21px;border-radius:50%;border:2px solid #D5C4AD;margin-top:2px;display:grid;place-items:center;transition:.2s}
+  .radio::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--espresso);transform:scale(0);transition:.2s cubic-bezier(.34,1.56,.64,1)}
+  .opt.sel .radio{border-color:var(--espresso)} .opt.sel .radio::after{transform:scale(1)}
+  .meta{flex:1 1 auto;min-width:0}
+  .ttl{font-size:16px;font-weight:800;letter-spacing:-.01em}
+  .sub{font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:500}
+  .chip{display:inline-flex;align-items:center;gap:5px;margin-top:9px;font-size:10.5px;font-weight:800;padding:4px 9px;border-radius:7px}
+  .chip.go{background:var(--deal-soft);color:var(--deal)} .chip.hint{background:#F2E9DA;color:var(--gold)}
+  .priceblk{flex:0 0 auto;text-align:right;padding-left:6px}
+  .strike{font-size:12.5px;color:var(--faint);text-decoration:line-through;text-decoration-thickness:1.5px;font-weight:600}
+  .now{font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.1;margin-top:1px}
+  .save-tag{display:inline-block;margin-top:5px;background:var(--deal-soft);color:var(--deal);font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:7px}
+
+  .config{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .35s,opacity .3s}
+  .opt.sel .config{grid-template-rows:1fr;opacity:1}
+  .config-inner{overflow:hidden;display:flex;flex-direction:column;gap:9px}
+  .opt.sel .config-inner{padding-top:13px;margin-top:13px;border-top:1px dashed var(--line)}
+  .selectrow{display:flex;align-items:center;gap:10px}
+  .thumb{flex:0 0 auto;width:38px;height:38px;border-radius:10px;background:linear-gradient(160deg,#F2E8D8,#E6D6BF);display:grid;place-items:center;font-size:19px;border:1px solid var(--line)}
+  .sel-wrap{position:relative;flex:1 1 auto}
+  select{-webkit-appearance:none;appearance:none;width:100%;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink);background:var(--paper-2);border:1.5px solid var(--line);border-radius:10px;padding:10px 34px 10px 12px;cursor:pointer;transition:.2s}
+  select:hover{border-color:#DBCBB4} select:focus{outline:none;border-color:var(--espresso);box-shadow:0 0 0 3px #EFE6D6}
+  .sel-wrap::after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-65%) rotate(45deg);pointer-events:none}
+
+  /* flexible bundle builder */
+  .builder{background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:15px;margin-bottom:11px;box-shadow:var(--shadow)}
+  .b-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+  .b-head>div{min-width:0}
+  .b-head .ttl{font-size:16px;font-weight:800;letter-spacing:-.01em}
+  .b-head .sub{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+  .qtyctl{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:11px;background:var(--paper-2);overflow:hidden;flex:0 0 auto}
+  .qtyctl button{width:38px;height:38px;border:none;background:none;font-size:20px;font-weight:700;color:var(--espresso);cursor:pointer;transition:.15s;line-height:1}
+  .qtyctl button:hover:not(:disabled){background:#EFE6D6}
+  .qtyctl button:disabled{opacity:.3;cursor:not-allowed}
+  .qtyctl span{min-width:34px;text-align:center;font-weight:800;font-size:15px}
+  .bedrows{display:flex;flex-direction:column;gap:9px}
+  .bednum{font-size:15px;font-weight:800;color:var(--espresso)}
+  .rm{flex:0 0 auto;width:34px;height:40px;border:1.5px solid var(--line);background:var(--paper-2);border-radius:10px;color:var(--muted);font-size:19px;line-height:1;cursor:pointer;transition:.15s}
+  .rm:hover:not(:disabled){border-color:var(--deal);color:var(--deal);background:var(--deal-soft)}
+  .rm:disabled{opacity:.35;cursor:not-allowed}
+
+  .addhead{display:flex;align-items:center;gap:10px;margin:20px 2px 5px}
+  .addhead .line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+  .addhead .txt{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+  .addnote{text-align:center;font-size:11px;color:var(--faint);font-weight:600;margin:0 0 11px}
+  .addon{display:flex;align-items:center;gap:12px;background:var(--paper);border:1.5px solid var(--line);border-radius:15px;padding:12px 13px;margin-bottom:10px;cursor:pointer;transition:.24s;box-shadow:var(--shadow);position:relative}
+  .addon:hover{border-color:#DBCBB4}
+  .addon.on{border-color:var(--espresso);background:var(--paper-2)}
+  .check{flex:0 0 auto;width:23px;height:23px;border-radius:7px;border:2px solid #D5C4AD;display:grid;place-items:center;transition:.2s;background:#fff}
+  .check svg{width:12px;height:12px;stroke:#F7F1E8;stroke-width:3.4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .28s ease .04s}
+  .addon.on .check{background:var(--espresso);border-color:var(--espresso)} .addon.on .check svg{stroke-dashoffset:0}
+  .a-thumb{flex:0 0 auto;width:48px;height:48px;border-radius:12px;background:linear-gradient(160deg,#F2E8D8,#E6D6BF);display:grid;place-items:center;font-size:24px;border:1px solid var(--line)}
+  .a-meta{flex:1 1 auto;min-width:0}
+  .a-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .a-ttl{font-size:14px;font-weight:800;letter-spacing:-.01em}
+  .a-badge{font-size:9px;font-weight:800;padding:3px 7px;border-radius:6px;text-transform:uppercase;white-space:nowrap}
+  .a-badge.hot{background:var(--deal-soft);color:var(--deal)} .a-badge.combo{background:var(--gold-soft);color:var(--gold)}
+  .a-sub{font-size:11.5px;color:var(--muted);margin-top:4px;font-weight:600}
+  .a-price{flex:0 0 auto;text-align:right}
+  .a-add{font-size:9px;color:var(--deal);font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+  .a-now{font-size:14px;font-weight:800;letter-spacing:-.01em;margin-top:1px}
+
+  .total{padding-top:18px;margin-top:8px;border-top:1px solid var(--line)}
+  .t-rows{display:flex;flex-direction:column;gap:9px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .t-line{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--muted);font-weight:600}
+  .t-line .v{color:var(--ink);font-weight:700}
+  .t-line .lab2{display:block;min-width:0}
+  .t-line .lab2 em{font-style:normal;font-weight:800;color:var(--ink);margin-left:4px}
+  .t-line .lab2 small{display:block;font-size:11px;color:var(--faint);font-weight:600;margin-top:3px}
+  .t-line.save,.t-line.save .v{color:var(--deal)}
+  .t-line .free{color:var(--espresso);font-weight:800;letter-spacing:.03em}
+  .t-final{display:flex;align-items:flex-end;justify-content:space-between;padding-top:14px}
+  .t-final .lab{font-size:13px;font-weight:700;color:var(--muted)} .t-final .lab small{display:block;font-size:10.5px;font-weight:600;color:var(--faint);margin-top:3px;max-width:200px}
+  .t-amt{text-align:right}
+  .t-amt .was{font-size:13px;color:var(--faint);text-decoration:line-through;text-decoration-thickness:1.5px;font-weight:600}
+  .t-amt .big{font-family:"Fraunces",serif;font-size:30px;font-weight:600;letter-spacing:-.01em;line-height:.95;margin-top:2px}
+
+  .btn{width:100%;margin-top:14px;cursor:pointer;border-radius:13px;padding:16px;font-family:inherit;font-size:15px;font-weight:800;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;gap:9px;transition:.2s;border:1.6px solid var(--espresso)}
+  .btn.cart{background:var(--paper);color:var(--ink)}
+  .btn.cart:hover{background:var(--espresso);color:#F7F1E8}
+  .btn.shop{background:var(--shop);color:#fff;border-color:var(--shop);margin-top:11px}
+  .btn.shop:hover{filter:brightness(1.07)}
+  .btn .pill{background:rgba(0,0,0,.08);padding:3px 9px;border-radius:999px;font-size:12px;font-weight:800}
+  .btn.cart:hover .pill{background:rgba(247,241,232,.2)}
+  .btn.shop .logo{font-weight:900;letter-spacing:-.02em}
+  .morepay{text-align:center;font-size:12px;color:var(--muted);font-weight:600;text-decoration:underline;text-underline-offset:3px;margin-top:11px;cursor:pointer}
+
+  .pays{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+  .pay{height:24px;min-width:36px;padding:0 6px;border-radius:5px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:9px;font-weight:800;letter-spacing:.02em;color:#555}
+  .pay.visa{color:#1A1F71;font-style:italic}.pay.mc{position:relative} .pay.amex{color:#1F72CF}.pay.pp{color:#253B80;font-style:italic}.pay.shop{color:#5A31F4}
+  .mc i{width:11px;height:11px;border-radius:50%;display:inline-block}.mc i:first-child{background:#EB001B;margin-right:-4px}.mc i:last-child{background:#F79E1B;opacity:.85}
+  .secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:600;margin-top:12px}
+  .secure svg{width:12px;height:12px;stroke:var(--espresso);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+  .trust .t{display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center}
+  .trust .ic{width:48px;height:48px;border-radius:50%;background:linear-gradient(160deg,#F2E8D8,#E6D6BF);display:grid;place-items:center;font-size:22px}
+  .trust .tl{font-size:11.5px;font-weight:700;color:var(--espresso);line-height:1.25}
+
+  @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.13)}100%{transform:scale(1)}}
+  .pop{animation:pop .42s cubic-bezier(.34,1.56,.64,1)}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="grid">
+
+  <div class="crumb">Home › <b>Cozy Plush Pet Sofa</b></div>
+
+  <!-- GALLERY (swap .slide blocks for real <img> tags) -->
+  <div class="gallery">
+    <div class="gwrap">
+      <div class="track" id="track">
+        <div class="slide"><span class="big">🛋️</span><span class="cap">Cloud-soft coral fleece</span></div>
+        <div class="slide"><span class="big">🐶</span><span class="cap">Raised bolster edges</span></div>
+        <div class="slide"><span class="big">📏</span><span class="cap">31 × 35 in</span></div>
+        <div class="slide"><span class="big">🧺</span><span class="cap">Machine washable</span></div>
+      </div>
+      <div class="gnav prev" id="gPrev"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+      <div class="gnav next" id="gNext"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <!-- TITLE -->
+  <div class="titleblk">
+    <h1>Cozy Plush<br>Pet Sofa</h1>
+    <div class="rating">
+      <span class="stars"><span class="base">★★★★★</span><span class="fill">★★★★★</span></span>
+      <span class="count">(99)</span>
+    </div>
+  </div>
+
+  <!-- BENEFITS -->
+  <div class="benefits">
+    <ul>
+      <li><span class="tick"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></span><span><b>Cloud-soft coral fleece</b> <span class="m">— plush comfort that cushions tired joints.</span></span></li>
+      <li><span class="tick"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></span><span><b>Raised bolster edges</b> <span class="m">— a built-in head-rest and a sense of security.</span></span></li>
+      <li><span class="tick"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></span><span><b>Helps keep sofas hair-free</b> <span class="m">— gives fur a place that isn't your couch.</span></span></li>
+      <li><span class="tick"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></span><span><b>Non-slip base</b> <span class="m">— stays planted on floors and sofas.</span></span></li>
+      <li><span class="tick"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></span><span><b>Machine washable</b> <span class="m">— the whole bed washes fresh in one cycle.</span></span></li>
+    </ul>
+  </div>
+
+  <!-- BUY BOX -->
+  <div class="buy">
+    <div class="unlock on" id="unlock">
+      <div class="unlock-top">
+        <div class="msg" id="unlockMsg">🎁 15% off unlocked + free shipping</div>
+        <div class="amt" id="unlockAmt"></div>
+      </div>
+      <div class="utrack"><div class="ufill" id="ufill"></div></div>
+    </div>
+
+    <!-- FLEXIBLE BUNDLE BUILDER: any number of beds, each its own variant -->
+    <div class="builder">
+      <div class="b-head">
+        <div>
+          <div class="ttl">Build your bundle</div>
+          <div class="sub" id="bedUnit"></div>
+        </div>
+        <div class="qtyctl">
+          <button id="bedMinus" aria-label="Remove a bed">−</button>
+          <span id="bedCount">2</span>
+          <button id="bedPlus" aria-label="Add a bed">+</button>
+        </div>
+      </div>
+      <div class="bedrows" id="bedRows"><!-- one variant selector per bed --></div>
+    </div>
+
+    <div class="addhead"><div class="line"></div><div class="txt">Optional add-ons</div><div class="line"></div></div>
+    <p class="addnote">Each add-on counts toward your 2-item 15% reward</p>
+
+    <div class="addon" data-addon="toy" id="addToy">
+      <div class="check"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></div>
+      <div class="a-thumb">🦴</div>
+      <div class="a-meta"><div class="a-top"><span class="a-ttl">ChompClean Toy</span><span class="a-badge hot">🪙 Biggest savings</span></div><div class="a-sub">Color: Orange ▾</div></div>
+      <div class="a-price"><div class="a-add">+ Add</div><div class="a-now" id="pToy"></div></div>
+    </div>
+
+    <div class="addon" data-addon="glove" id="addGlove">
+      <div class="check"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg></div>
+      <div class="a-thumb">🧤</div>
+      <div class="a-meta"><div class="a-top"><span class="a-ttl">Pet Deshedding Glove</span><span class="a-badge combo">🏆 Best-selling combo</span></div><div class="a-sub">Black / 5 pcs ▾</div></div>
+      <div class="a-price"><div class="a-add">+ Add</div><div class="a-now" id="pGlove"></div></div>
+    </div>
+
+    <div class="total">
+      <div class="t-rows" id="tRows"></div>
+      <div class="t-final">
+        <div class="lab">Total today<small id="tNote"></small></div>
+        <div class="t-amt"><div class="was" id="tWas"></div><div class="big" id="tBig"></div></div>
+      </div>
+
+      <button class="btn cart" id="cta">Add to cart <span class="pill" id="ctaPill"></span></button>
+      <button class="btn shop">Buy with <span class="logo">shop</span></button>
+      <div class="morepay">More payment options</div>
+
+      <div class="pays">
+        <span class="pay visa">VISA</span><span class="pay mc"><i></i><i></i></span><span class="pay amex">AMEX</span>
+        <span class="pay">Pay</span><span class="pay">G&nbsp;Pay</span><span class="pay pp">PayPal</span>
+        <span class="pay shop">shop</span><span class="pay">JCB</span><span class="pay">Maestro</span><span class="pay">UnionPay</span>
+      </div>
+      <div class="secure"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Secure checkout · SSL-encrypted</div>
+
+      <div class="trust">
+        <div class="t"><div class="ic">🚚</div><div class="tl">Fast shipping</div></div>
+        <div class="t"><div class="ic">🔒</div><div class="tl">Secure payments</div></div>
+        <div class="t"><div class="ic">💜</div><div class="tl">Support that cares</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  /* ===== PRICING (VND) — flexible bundle builder =====
+     Free shipping at 1 item. 15% off (whole cart) at 2+ items (beds + add-ons, any combo).
+     Each bed is its own line item; identical variants merge into one line with a quantity. */
+  const RATE=0.15, DISCOUNT_ON_ADDONS=true;
+  // Sofa variants — map id to the real Shopify variant IDs
+  const VARIANTS=[
+    { id:'GID_COFFEE',  label:'Coffee / 31 × 35 in',  price:1604000 },
+    { id:'GID_OATMEAL', label:'Oatmeal / 31 × 35 in', price:1604000 },
+    { id:'GID_SAGE',    label:'Sage / 36 × 42 in',    price:1604000 }
+  ];
+  const ADDON_DEFS={
+    toy:  { id:'GID_TOY',   label:'ChompClean Toy',       price:481000 },
+    glove:{ id:'GID_GLOVE', label:'Pet Deshedding Glove', price:401000 }
+  };
+  const state={ beds:[0,1], toy:false, glove:false };  // beds = array of variant indices (default 2)
+
+  const vnd=n=>Math.round(n).toLocaleString('vi-VN')+'₫';
+  const $=id=>document.getElementById(id);
+  const pulse=el=>{el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');};
+
+  /* one variant selector per bed */
+  function renderBeds(){
+    $('bedRows').innerHTML = state.beds.map((vi,i)=>`
+      <div class="selectrow">
+        <div class="thumb bednum">${i+1}</div>
+        <div class="sel-wrap"><select data-bed="${i}">${VARIANTS.map((v,k)=>`<option value="${k}"${k===vi?' selected':''}>${v.label}</option>`).join('')}</select></div>
+        <button class="rm" data-bed="${i}" ${state.beds.length<=1?'disabled':''} aria-label="Remove this bed">×</button>
+      </div>`).join('');
+    $('bedRows').querySelectorAll('select[data-bed]').forEach(s=>s.onchange=()=>{state.beds[+s.dataset.bed]=+s.value;render();});
+    $('bedRows').querySelectorAll('.rm').forEach(b=>{ if(!b.hasAttribute('disabled')) b.onclick=()=>{state.beds.splice(+b.dataset.bed,1);render();pulse($('unlockAmt'));}; });
+  }
+
+  function render(){
+    renderBeds();
+    const bedCount=state.beds.length;
+    $('bedCount').textContent=bedCount;
+    $('bedMinus').disabled=bedCount<=1;
+    $('bedUnit').textContent=vnd(VARIANTS[0].price)+' each · free shipping';
+    $('addToy').classList.toggle('on',state.toy);
+    $('addGlove').classList.toggle('on',state.glove);
+    $('pToy').textContent=vnd(ADDON_DEFS.toy.price);
+    $('pGlove').textContent=vnd(ADDON_DEFS.glove.price);
+
+    // group beds by variant for the breakdown
+    // beds collapse into ONE summary line — just the quantity (variants are chosen above)
+    const sofaSub=state.beds.reduce((s,vi)=>s+VARIANTS[vi].price,0);
+    let addonSub=0, addonCount=0;
+    if(state.toy){addonSub+=ADDON_DEFS.toy.price;addonCount++;}
+    if(state.glove){addonSub+=ADDON_DEFS.glove.price;addonCount++;}
+
+    const items=bedCount+addonCount, subtotal=sofaSub+addonSub, qualifies=items>=2;
+    const base=DISCOUNT_ON_ADDONS?subtotal:sofaSub;
+    const discount=qualifies?Math.round(base*RATE):0;
+    const total=subtotal-discount;
+
+    // unlock bar
+    $('ufill').style.width=Math.min(items,2)/2*100+'%';
+    if(qualifies){$('unlock').className='unlock on';$('unlockMsg').textContent='🎁 15% off unlocked + free shipping';$('unlockAmt').innerHTML='–'+vnd(discount)+' <small>15%</small>';}
+    else{$('unlock').className='unlock off';$('unlockMsg').textContent='🚚 Free shipping on · add 1 more for 15% off';$('unlockAmt').innerHTML='<small>almost there!</small>';}
+
+    // compact breakdown — one line for all beds, add-ons stay as their own lines (max 2)
+    let html=`<div class="t-line"><span class="lab2">Cozy Plush Pet Sofa <em>×${bedCount}</em></span><span class="v">${vnd(sofaSub)}</span></div>`;
+    if(state.toy)html+=`<div class="t-line"><span>ChompClean Toy</span><span class="v">${vnd(ADDON_DEFS.toy.price)}</span></div>`;
+    if(state.glove)html+=`<div class="t-line"><span>Pet Deshedding Glove</span><span class="v">${vnd(ADDON_DEFS.glove.price)}</span></div>`;
+    if(qualifies)html+=`<div class="t-line save"><span>15% off · 2+ items</span><span class="v">– ${vnd(discount)}</span></div>`;
+    html+=`<div class="t-line"><span>Shipping</span><span class="free">FREE</span></div>`;
+    $('tRows').innerHTML=html;
+
+    if(qualifies){$('tWas').style.display='block';$('tWas').textContent=vnd(subtotal);$('tNote').textContent='You save '+vnd(discount)+' — applied automatically';}
+    else{$('tWas').style.display='none';$('tNote').textContent='Free shipping included · add 1 item for 15% off';}
+    $('tBig').textContent=vnd(total);
+    $('ctaPill').textContent=vnd(total);
+  }
+
+  /* multi-line cart payload — each variant becomes its own line item */
+  function buildCart(){
+    const merged={}; state.beds.forEach(vi=>{const id=VARIANTS[vi].id;merged[id]=(merged[id]||0)+1;});
+    const items=Object.entries(merged).map(([id,quantity])=>({id,quantity}));
+    if(state.toy)items.push({id:ADDON_DEFS.toy.id,quantity:1});
+    if(state.glove)items.push({id:ADDON_DEFS.glove.id,quantity:1});
+    return items; // POST /cart/add.js  ->  { items }
+  }
+
+  $('bedPlus').addEventListener('click',()=>{state.beds.push(state.beds[state.beds.length-1] ?? 0);render();pulse($('unlockAmt'));});
+  $('bedMinus').addEventListener('click',()=>{if(state.beds.length>1){state.beds.pop();render();pulse($('unlockAmt'));}});
+  $('addToy').addEventListener('click',e=>{if(e.target.tagName==='SELECT')return;state.toy=!state.toy;render();pulse($('unlockAmt'));});
+  $('addGlove').addEventListener('click',e=>{if(e.target.tagName==='SELECT')return;state.glove=!state.glove;render();pulse($('unlockAmt'));});
+  $('cta').addEventListener('click',()=>{
+    const items=buildCart(), n=items.reduce((s,i)=>s+i.quantity,0);
+    console.log('POST /cart/add.js', {items});   // wire to Shopify AJAX cart
+    const o=$('cta').innerHTML;$('cta').innerHTML=`🐾 Added ${n} item${n>1?'s':''}!`;setTimeout(()=>$('cta').innerHTML=o,1600);
+  });
+
+  // ---- gallery carousel ----
+  const track=$('track'), slides=[...track.children], dotsWrap=$('dots');
+  slides.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>track.scrollTo({left:track.clientWidth*i,behavior:'smooth'});dotsWrap.appendChild(d);});
+  const dots=[...dotsWrap.children];
+  let raf;
+  track.addEventListener('scroll',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{const i=Math.round(track.scrollLeft/track.clientWidth);dots.forEach((d,k)=>d.classList.toggle('active',k===i));});});
+  $('gPrev').onclick=()=>track.scrollBy({left:-track.clientWidth,behavior:'smooth'});
+  $('gNext').onclick=()=>track.scrollBy({left:track.clientWidth,behavior:'smooth'});
+
+  render();
+</script>
+</body>
+</html>

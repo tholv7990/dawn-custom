@@ -1,41 +1,278 @@
-/* section-ct-addons.css — PDP cross-sell add-ons box.
-   Whole-card toggle: role=button + aria-pressed. No <input> involved.
-   Tokens: --ct-* from snippets/css-variables.liquid. */
-.ct-addons{margin-top:16px;background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-xl);padding:14px;box-shadow:var(--ct-shadow-xs)}
-.ct-addons__head{display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--ct-font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ct-accent-text);margin-bottom:12px}
-.ct-addons__star{font-size:14px;line-height:1}
-.ct-addons__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.ct-addons__item{position:relative}
+/* PDP add-ons inside the buy box. */
 
-.ct-addon{position:relative;display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;column-gap:12px;row-gap:6px;padding:12px;background:var(--ct-bg);border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-lg);cursor:pointer;transition:border-color .15s,box-shadow .15s,background .15s;outline:none}
-.ct-addon:hover{border-color:var(--ct-border);box-shadow:var(--ct-shadow-xs)}
-.ct-addon:focus-visible{box-shadow:var(--ct-focus)}
-.ct-addon[aria-pressed="true"]{border-color:var(--ct-accent-border);background:var(--ct-accent-subtle);box-shadow:var(--ct-shadow-sm)}
+.ct-addons {
+  width: 100%;
+  margin-top: 18px;
+}
 
-.ct-addon__media{width:52px;height:52px;border-radius:var(--ct-r-md);background:var(--ct-bg-surface);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ct-addon__img{width:100%;height:100%;object-fit:cover;display:block}
-.ct-addon__img--ph{font-size:24px}
+.ct-addons__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 2px 5px;
+}
 
-.ct-addon__body{min-width:0;display:flex;flex-direction:column;gap:4px}
-.ct-addon__title{font-size:14px;font-weight:600;color:var(--ct-text);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ct-addon__savings{font-size:12px;color:var(--ct-accent-text);font-weight:500}
-.ct-addon__savings strong{font-weight:700}
-.ct-addon__variant{margin-top:2px;font-family:var(--ct-font-body);font-size:13px;height:30px;padding:0 28px 0 10px;border:1px solid var(--ct-border-strong);border-radius:var(--ct-r-md);background:var(--ct-bg-raised) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='none' stroke='%23637381' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/></svg>") no-repeat right 10px center;color:var(--ct-text);max-width:160px;appearance:none;-webkit-appearance:none;cursor:pointer}
-.ct-addon__variant:focus{outline:none;border-color:var(--ct-accent-text);box-shadow:var(--ct-focus)}
+.ct-addons__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ct-border-subtle), transparent);
+}
 
-.ct-addon__price{display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;gap:2px}
-.ct-addon__price-now{font-size:14px;font-weight:700;color:var(--ct-text)}
-.ct-addon__price-was{font-size:12px;color:var(--ct-text-3);text-decoration:line-through}
+.ct-addons__title {
+  color: var(--ct-text-2);
+  font-family: var(--ct-font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 
-.ct-addon__pill{display:inline-flex;align-items:center;justify-content:center;min-width:68px;height:30px;padding:0 12px;border-radius:var(--ct-r-pill);font-size:13px;font-weight:600;background:var(--ct-bg-raised);border:1px solid var(--ct-border-strong);color:var(--ct-text);transition:background .15s,color .15s,border-color .15s}
-.ct-addon__pill::after{content:'Add'}
-.ct-addon[aria-pressed="true"] .ct-addon__pill{background:var(--ct-accent-strong);color:#fff;border-color:var(--ct-accent-strong)}
-.ct-addon[aria-pressed="true"] .ct-addon__pill::after{content:'Added ✓'}
+.ct-addons__note {
+  margin: 0 0 11px;
+  color: var(--ct-text-3);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
 
-.ct-addon__badge{position:absolute;top:-9px;right:12px;z-index:1;background:var(--ct-accent-strong);color:#fff;font-family:var(--ct-font-mono);font-size:10px;font-weight:600;padding:3px 10px;border-radius:var(--ct-r-pill);box-shadow:var(--ct-shadow-sm);pointer-events:none;letter-spacing:.04em}
+.ct-addons__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
 
-@media(max-width:480px){
-  .ct-addon{grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;column-gap:10px}
-  .ct-addon__price{grid-column:3;grid-row:1}
-  .ct-addon__pill{grid-column:1 / -1;grid-row:2;width:100%;min-width:0}
+.ct-addon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 13px;
+  border: 1.5px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-lg);
+  background: var(--ct-bg-raised);
+  box-shadow: var(--ct-shadow-xs);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.ct-addon:hover {
+  border-color: var(--ct-accent-border);
+}
+
+.ct-addon:focus-visible {
+  box-shadow: var(--ct-focus);
+}
+
+.ct-addon[aria-pressed="true"] {
+  border-color: var(--ct-text);
+  background: var(--ct-bg);
+}
+
+.ct-addon__check {
+  display: grid;
+  flex: 0 0 auto;
+  width: 23px;
+  height: 23px;
+  border: 2px solid var(--ct-border);
+  border-radius: 7px;
+  background: var(--ct-bg-raised);
+  place-items: center;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.ct-addon__check svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: #fff;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.4;
+  transition: stroke-dashoffset 0.25s ease;
+}
+
+.ct-addon[aria-pressed="true"] .ct-addon__check {
+  border-color: var(--ct-text);
+  background: var(--ct-text);
+}
+
+.ct-addon[aria-pressed="true"] .ct-addon__check svg {
+  stroke-dashoffset: 0;
+}
+
+.ct-addon__media {
+  display: grid;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-md);
+  background: linear-gradient(160deg, var(--ct-accent-subtle), var(--ct-bg-surface));
+  place-items: center;
+}
+
+.ct-addon__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ct-addon__img--ph {
+  font-size: 24px;
+}
+
+.ct-addon__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ct-addon__top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.ct-addon__title {
+  color: var(--ct-text);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.ct-addon__badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 3px 7px;
+  overflow: hidden;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: var(--ct-r-sm);
+}
+
+.ct-addon__badge--urgency {
+  color: var(--ct-badge-sale);
+  background: var(--ct-error-light);
+}
+
+.ct-addon__badge--gold {
+  color: var(--ct-rating);
+  background: var(--ct-warning-light);
+}
+
+.ct-addon__savings {
+  color: var(--ct-text-2);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.ct-addon__savings strong {
+  font-weight: 800;
+}
+
+.ct-addon__variant {
+  width: min(100%, 160px);
+  height: 32px;
+  padding: 0 28px 0 10px;
+  color: var(--ct-text);
+  font-family: var(--ct-font-body);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-md);
+  background: var(--ct-bg);
+  appearance: auto;
+  -webkit-appearance: menulist;
+  cursor: pointer;
+}
+
+.ct-addon__variant:focus {
+  outline: none;
+  border-color: var(--ct-accent);
+  box-shadow: var(--ct-focus);
+}
+
+.ct-addon__price {
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.ct-addon__price-prefix {
+  color: var(--ct-badge-sale);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.ct-addon__price-now {
+  display: block;
+  margin-top: 1px;
+  color: var(--ct-text);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.ct-addon__price-was {
+  display: block;
+  color: var(--ct-price-was);
+  font-size: 11px;
+  text-decoration: line-through;
+}
+
+@media (max-width: 480px) {
+  .ct-addons,
+  .ct-addon {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .ct-addon {
+    display: grid;
+    grid-template-columns: 23px 48px minmax(0, 1fr) auto;
+    column-gap: 10px;
+  }
+
+  .ct-addon__variant {
+    width: 100%;
+  }
+
+  .ct-addon__price {
+    min-width: max-content;
+  }
+}
+
+@media (max-width: 380px) {
+  .ct-addon {
+    grid-template-columns: 23px 48px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .ct-addon__price {
+    grid-column: 3;
+    text-align: left;
+  }
 }

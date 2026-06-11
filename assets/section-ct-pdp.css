@@ -1,4 +1,4 @@
-/* section-ct-pdp.css — Minimals skin over Dawn's native PDP.
+/* section-ct-pdp.css - Minimals skin over Dawn's native PDP.
    Pure presentation: no markup or JS depends on these rules, so the page
    stays a working Dawn PDP if this file is removed. All PDP component
    styling (bundle cards, scarcity, payment row) also lives here. */
@@ -18,6 +18,32 @@
   border: 2px solid var(--ct-accent);
 }
 
+@media (min-width: 990px) {
+  .product.grid.grid--2-col-tablet {
+    display: grid;
+    grid-template-columns: var(--ct-product-layout-media) var(--ct-product-layout-buy);
+    gap: var(--ct-product-layout-gap);
+    max-width: var(--ct-product-layout-width);
+    margin-inline: auto;
+  }
+
+  .product--large:not(.product--no-media) .product__media-wrapper,
+  .product--medium:not(.product--no-media) .product__media-wrapper,
+  .product--small:not(.product--no-media) .product__media-wrapper,
+  .product--large:not(.product--no-media) .product__info-wrapper,
+  .product--medium:not(.product--no-media) .product__info-wrapper,
+  .product--small:not(.product--no-media) .product__info-wrapper {
+    width: auto;
+    max-width: none;
+    padding: 0;
+  }
+
+  .product--right .product__info-wrapper,
+  .product--large:not(.product--no-media).product--right .product__info-wrapper {
+    padding: 0;
+  }
+}
+
 /* ---- Vendor / title / descriptor ---- */
 .product__info-container .product__text.caption-with-letter-spacing {
   color: var(--ct-accent-text);
@@ -27,8 +53,8 @@
 .product__info-container .product__title h1,
 .product__info-container .product__title > h2 {
   font-family: var(--ct-font-heading);
-  font-weight: var(--ct-fw-bold);
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   line-height: var(--ct-leading-tight);
 }
 .product__info-container .product__text.subtitle {
@@ -50,14 +76,16 @@
 .product__info-container .price .badge,
 .product__info-container .price__badge-sale {
   background: var(--ct-badge-sale);
-  color: #fff;
+  color: var(--ct-on-accent);
   border: 0;
   border-radius: var(--ct-r-pill);
   font-weight: var(--ct-fw-bold);
 }
 
 /* ---- Rating row ---- */
-.product__info-container .rating-star { --color-rating-star: var(--ct-rating); }
+.product__info-container .rating-wrapper { display: flex; align-items: center; gap: 8px; }
+.product__info-container .rating-star { --color-rating-star: var(--ct-rating); color: var(--ct-rating); }
+.product__info-container .ct-stars { color: var(--ct-rating); font-size: 16px; letter-spacing: 1px; line-height: 1; }
 .product__info-container .rating-count { color: var(--ct-text-2); }
 
 /* ---- Native ATC -> Minimals primary pill (skin by selector; markup untouched) ---- */
@@ -66,14 +94,14 @@
   font-family: var(--ct-font-body);
   font-weight: var(--ct-fw-bold);
   font-size: var(--ct-text-md);
-  min-height: 56px;
+  min-height: var(--ct-product-pill-button-height);
   box-shadow: var(--ct-shadow-sm);
   transition: background var(--ct-dur-fast) var(--ct-ease-out), transform var(--ct-dur-fast);
 }
-.product__info-container .product-form__submit.button--primary { background: var(--ct-accent); color: #fff; }
+.product__info-container .product-form__submit.button--primary { background: var(--ct-accent); color: var(--ct-on-accent); }
 .product__info-container .product-form__submit.button--primary:hover:not([disabled]) { background: var(--ct-accent-strong); }
 .product__info-container .product-form__submit:active:not([disabled]) { transform: translateY(1px); }
-/* Dynamic-checkout / Shop Pay button stays Shopify-native — spacing only. */
+/* Dynamic-checkout / Shop Pay button stays Shopify-native - spacing only. */
 .product__info-container .shopify-payment-button { margin-top: var(--ct-space-2); }
 
 /* ---- Quantity ---- */
@@ -122,14 +150,14 @@
 .ct-bundle__price { text-align: right; white-space: nowrap; }
 .ct-bundle__price-now { display: block; font-weight: var(--ct-fw-bold); font-size: var(--ct-text-md); }
 .ct-bundle__price-diff { font-size: var(--ct-text-xs); color: var(--ct-text-3); }
-.ct-bundle__ribbon { position: absolute; top: -10px; right: 14px; background: var(--ct-badge-best); color: #fff; font-size: var(--ct-text-xs); font-weight: var(--ct-fw-bold); padding: 3px 9px; border-radius: var(--ct-r-pill); }
+.ct-bundle__ribbon { position: absolute; top: -10px; right: 14px; background: var(--ct-badge-best); color: var(--ct-on-accent); font-size: var(--ct-text-xs); font-weight: var(--ct-fw-bold); padding: 3px 9px; border-radius: var(--ct-r-pill); }
 .ct-bundle--best { border-color: var(--ct-accent-border); }
 
 /* ============ Scarcity bar ============ */
 ct-scarcity { display: block; }
-.ct-scarcity { background: var(--ct-warning-light); border: 1px solid #ffe2a8; border-radius: var(--ct-r-md); padding: 10px 14px; margin: var(--ct-space-3) 0; }
+.ct-scarcity { background: var(--ct-warning-light); border: 1px solid var(--ct-scarcity-border); border-radius: var(--ct-r-md); padding: 10px 14px; margin: var(--ct-space-3) 0; }
 .ct-scarcity__top { display: flex; justify-content: space-between; gap: var(--ct-space-2); font-size: var(--ct-text-sm); font-weight: var(--ct-fw-semi); color: var(--ct-warning-dark); }
-.ct-scarcity__bar { height: 6px; background: #fce3ae; border-radius: var(--ct-r-pill); margin-top: 8px; overflow: hidden; }
+.ct-scarcity__bar { height: 6px; background: var(--ct-scarcity-track); border-radius: var(--ct-r-pill); margin-top: 8px; overflow: hidden; }
 .ct-scarcity__bar i { display: block; height: 100%; background: var(--ct-warning); border-radius: var(--ct-r-pill); }
 .ct-scarcity__social { font-size: var(--ct-text-xs); color: var(--ct-warning-dark); opacity: 0.85; margin-top: 6px; }
 
@@ -145,7 +173,11 @@ ct-scarcity { display: block; }
 .ct-benefits li { display: flex; gap: 11px; align-items: flex-start; font-size: 15px; color: var(--ct-text-2); line-height: 1.45; }
 .ct-benefits li b { color: var(--ct-text); font-weight: 700; }
 .ct-benefits__desc { color: var(--ct-text-2); font-weight: 400; }
-.ct-benefits__check { width: 18px; height: 18px; stroke: var(--ct-accent); fill: none; stroke-width: 2.6; flex-shrink: 0; margin-top: 2px; }
+.ct-benefits__check { width: 18px; height: 18px; color: var(--ct-success); fill: currentColor; flex-shrink: 0; margin-top: 2px; }
+.ct-benefits__check--coffee { color: var(--ct-accent-strong); }
+.ct-benefits__check--green { color: var(--ct-success); }
+.ct-benefits__check--green-dark { color: var(--ct-success-dark); }
+.ct-benefits__check--gold { color: var(--ct-rating); }
 @media (max-width: 749px) {
   .ct-benefits { gap: 10px; margin-bottom: 22px; }
   .ct-benefits li { font-size: 14.5px; }
@@ -156,27 +188,27 @@ ct-scarcity { display: block; }
    don't fit our redesign:
 
      1. `.product--large .product__info-wrapper { max-width: 35%; padding: 0 0 0 4rem }`
-        at >=990px — keeps the info column at 35% of the page in the side-by-side
-        layout. CORRECT for desktop, so we leave it alone.
+        at >=990px keeps the info column too narrow for the CozyClaw buy box.
+        We override it with shared product layout tokens.
 
-     2. `.product__info-wrapper { padding: 0 0 0 5rem }` at >=750px — adds 5rem
+     2. `.product__info-wrapper { padding: 0 0 0 5rem }` at >=750px adds 5rem
         left padding for the 2-col tablet layout. We force the layout to single
         column below desktop (see below), so this padding becomes spurious whitespace
         on tablets and we zero it out.
 
-     3. `grid--2-col-tablet { grid-template-columns: 1fr 1fr }` at >=750px — splits
+     3. `grid--2-col-tablet { grid-template-columns: 1fr 1fr }` at >=750px splits
         media and info side by side at tablet. We want single-column stack until
         the desktop breakpoint at >=990px so the info column gets full viewport
         width on phones and tablets alike.
 
    Our ct-pdp.css loads AFTER section-main-product.css in main-product.liquid, so
-   simple property overrides win by cascade order — no !important needed.
+   simple property overrides win by cascade order - no !important needed.
 
    Plus: hide thumbnail strip (we want a single swipeable image with the built-in
    "1 / N" slider-counter as position indicator) and force the buy-buttons block
    to stack vertically and take full width. */
 
-/* (a) Hide the thumbnail strip at all viewports — main slider + counter is the
+/* (a) Hide the thumbnail strip at all viewports - main slider + counter is the
    sole gallery navigation. */
 .thumbnail-list,
 .thumbnail-slider { display: none; }
@@ -191,9 +223,149 @@ ct-scarcity { display: block; }
   letter-spacing: .04em;
 }
 
+.ct-main-product-gallery {
+  display: block;
+}
+
+.ct-main-product-gallery__carousel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-xl);
+  background: var(--ct-bg-raised);
+  box-shadow: var(--ct-shadow-sm);
+}
+
+.ct-main-product-gallery__track {
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  cursor: default;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ct-main-product-gallery__track.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.ct-main-product-gallery__track::-webkit-scrollbar {
+  display: none;
+}
+
+.ct-main-product-gallery__slide {
+  flex: 0 0 100%;
+  min-width: 100%;
+  scroll-snap-align: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.ct-main-product-gallery__slide .product-media-container,
+.ct-main-product-gallery__slide .product__modal-opener,
+.ct-main-product-gallery__slide .product__media,
+.ct-main-product-gallery__slide .media {
+  width: 100%;
+  height: 100%;
+}
+
+.ct-main-product-gallery__slide .product-media-container {
+  border: 0;
+  border-radius: 0;
+}
+
+.ct-main-product-gallery__slide .product__media {
+  aspect-ratio: 1 / 1;
+}
+
+.ct-main-product-gallery__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.ct-main-product-gallery__arrow {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  display: grid;
+  width: var(--ct-gallery-arrow-size);
+  height: var(--ct-gallery-arrow-size);
+  padding: 0;
+  border: 1px solid var(--ct-border-subtle);
+  border-radius: var(--ct-r-pill);
+  background: color-mix(in srgb, var(--ct-bg-raised) 94%, transparent);
+  color: var(--ct-text-2);
+  box-shadow: var(--ct-shadow-sm);
+  cursor: pointer;
+  place-items: center;
+  transform: translateY(-50%);
+  transition: background var(--ct-dur-fast, .2s), color var(--ct-dur-fast, .2s), transform var(--ct-dur-fast, .2s), opacity var(--ct-dur-fast, .2s);
+}
+
+.ct-main-product-gallery__arrow:hover {
+  background: var(--ct-bg-raised);
+  color: var(--ct-text);
+  transform: translateY(-50%) scale(1.04);
+}
+
+.ct-main-product-gallery__arrow:disabled {
+  opacity: .38;
+  cursor: default;
+  transform: translateY(-50%);
+}
+
+.ct-main-product-gallery__arrow svg {
+  width: var(--ct-gallery-icon-size);
+  height: var(--ct-gallery-icon-size);
+}
+
+.ct-main-product-gallery__arrow--prev {
+  left: var(--ct-gallery-control-inset);
+}
+
+.ct-main-product-gallery__arrow--next {
+  right: var(--ct-gallery-control-inset);
+}
+
+.ct-main-product-gallery__dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--ct-gallery-dot-gap);
+  margin-top: var(--ct-gallery-dots-offset);
+}
+
+.ct-main-product-gallery__dot {
+  width: var(--ct-gallery-dot-size);
+  height: var(--ct-gallery-dot-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--ct-r-pill);
+  background: var(--ct-border);
+  cursor: pointer;
+  transition: width var(--ct-dur-fast, .2s), background var(--ct-dur-fast, .2s);
+}
+
+.ct-main-product-gallery__dot.is-active {
+  width: var(--ct-gallery-dot-active-width);
+  background: var(--ct-accent);
+}
+
+@media (max-width: 749px) {
+  .ct-main-product-gallery__arrow {
+    display: none;
+  }
+}
+
 /* (c) Force a single-column stack below the desktop breakpoint and zero out the
    tablet-only left padding on the info column. Selectors mirror Dawn's so cascade
-   order is enough — no !important. */
+   order is enough - no !important. */
 @media (max-width: 989px) {
   .product.grid.grid--2-col-tablet { grid-template-columns: 1fr; }
   .product__info-wrapper { padding: 0; max-width: none; width: auto; }
@@ -210,6 +382,18 @@ ct-scarcity { display: block; }
    top blocks above the media wrapper. Sticky-info is disabled because sticky
    positioning doesn't work on display:contents boxes. */
 @media (max-width: 749px) {
+  .product.grid.grid--2-col-tablet {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .product.grid.grid--2-col-tablet > .grid__item {
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+
   .product__info-wrapper,
   .product__info-container { display: contents; }
   .product__info-wrapper > *,
@@ -224,41 +408,89 @@ ct-scarcity { display: block; }
 /* ============ Running total + buy buttons ============
    .ct-running-total had no CSS at all (markup is <div><span><strong>). Style as
    a clear "label left / value right" row. The buy_buttons block (Dawn-rendered)
-   needs explicit full-width children — Dawn's defaults size the ATC button to
+   needs explicit full-width children - Dawn's defaults size the ATC button to
    its text content. */
 .ct-running-total {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 14px 0;
-  margin: 18px 0 8px;
+  display: block;
+  width: 100%;
+  padding: 18px 0 0;
+  margin: 8px 0 0;
   border-top: 1px solid var(--ct-border-subtle);
-  border-bottom: 1px solid var(--ct-border-subtle);
+  border-bottom: 0;
 }
-.ct-running-total__label { font-size: 14px; color: var(--ct-text-2); font-weight: 600; letter-spacing: 0.02em; }
-.ct-running-total__val { font-family: var(--ct-font-display); font-size: 26px; font-weight: 700; color: var(--ct-text); line-height: 1; }
-@media (max-width: 749px) { .ct-running-total__val { font-size: 24px; } }
 
 /* Buy buttons: override Dawn's .product-form__buttons { max-width: 44rem; } cap
    and stack the ATC + Shop Pay buttons vertically at full width of the column.
 
    Root cause: <product-form> is a custom element which defaults to display:inline
    (content-sized). Same for <shopify-payment-button>. They need explicit block-level
-   display + width:100% — removing max-width alone isn't enough. */
+   display + width:100% - removing max-width alone isn't enough. */
 product-form,
 shopify-payment-button { display: block; width: 100%; }
 .product-form { display: block; width: 100%; max-width: none; }
 .product-form > form { display: block; width: 100%; }
-.product-form__buttons { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: none; }
+.product-form__buttons { display: flex; flex-direction: column; gap: var(--ct-product-form-gap); width: 100%; max-width: none; margin-top: 14px; }
 .product-form__buttons > * { width: 100%; }
-.product-form__submit { display: block; width: 100%; box-sizing: border-box; }
+.product-form__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: var(--ct-product-button-height);
+  box-sizing: border-box;
+  padding: 15px 18px;
+  color: var(--ct-text);
+  font-family: var(--ct-font-body);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0;
+  border: 1.6px solid var(--ct-accent);
+  border-radius: var(--ct-product-button-radius);
+  background: var(--ct-bg-raised);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.product-form__submit:hover {
+  color: var(--ct-on-accent);
+  border-color: var(--ct-accent);
+  background: var(--ct-accent);
+}
 .shopify-payment-button { width: 100%; }
 .shopify-payment-button > * { width: 100%; max-width: none; }
+.shopify-payment-button__button,
+.shopify-payment-button__button--unbranded {
+  min-height: var(--ct-product-button-height);
+  border-radius: var(--ct-product-button-radius);
+  font-family: var(--ct-font-body);
+  font-size: 15px;
+  font-weight: 800;
+}
 
 @media (max-width: 749px) {
   /* Ensure the total row and the buy form each take a FULL grid row on mobile */
+  .product__info-container > *,
+  .ct-benefits,
+  .ct-bundle-tiers,
+  .ct-addons,
   .ct-running-total,
-  .product-form { grid-column: 1 / -1; width: 100%; }
+  .product-form,
+  .product-form > form,
+  .product-form__buttons,
+  .shopify-payment-button,
+  .ct-pay,
+  .ct-trust-icons {
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .product-form__buttons .button,
+  .shopify-payment-button__button,
+  .shopify-payment-button__button--unbranded {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .ct-running-total__val { font-size: 24px; }
 }

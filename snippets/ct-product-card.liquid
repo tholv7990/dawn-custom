@@ -1,0 +1,43 @@
+{% comment %}
+  CozyClaw product card.
+
+  Accepts:
+  - product: Shopify product object
+  - url: card URL
+  - title: fallback/display title
+  - description: short product description
+  - price: rendered price string
+  - badge: optional badge text
+{% endcomment %}
+{%- liquid
+  assign card_product = product
+  assign card_url = url | default: routes.all_products_collection_url
+  assign card_title = title | default: card_product.title
+  assign card_description = description
+  assign card_price = price
+-%}
+
+<a class="cth-card" href="{{ card_url }}">
+  {%- if badge != blank -%}
+    <span class="cth-card__badge">{{ badge }}</span>
+  {%- endif -%}
+  <span class="cth-card__media ct-media ct-media--natural">
+    {%- if card_product.featured_image != blank -%}
+      {{
+        card_product.featured_image
+        | image_url: width: 600
+        | image_tag: loading: 'lazy', class: 'cth-imgslot__img', alt: card_title
+      }}
+    {%- endif -%}
+  </span>
+  <span class="cth-card__body">
+    <b>{{ card_title }}</b>
+    {%- if card_description != blank -%}
+      <small>{{ card_description }}</small>
+    {%- endif -%}
+    {%- if card_price != blank -%}
+      <strong>{{ card_price }}</strong>
+    {%- endif -%}
+    <em>Shop &rarr;</em>
+  </span>
+</a>

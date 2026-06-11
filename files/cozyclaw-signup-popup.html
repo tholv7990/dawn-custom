@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CozyClaw — 15% Off Signup Popup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ct-accent:#6D3FC4; --ct-accent-strong:#552C9E; --ct-accent-text:#532C9C;
+  --ct-accent-subtle:#EFE7FB; --ct-bg:#FAF8FD; --ct-text:#2A2433; --ct-text-2:#645A75;
+  --ct-text-3:#938AA6; --ct-border:rgba(120,100,160,.28); --ct-success:#5B9A6B;
+  --ct-font:'Public Sans',-apple-system,system-ui,sans-serif; --ct-display:'Fraunces',Georgia,serif;
+  --ct-r-md:12px; --ct-r-lg:18px; --ct-r-xl:22px; --ct-r-pill:9999px;
+  --ct-ease:cubic-bezier(.22,1,.36,1);
+}
+*{ box-sizing:border-box; margin:0; }
+body{ font-family:var(--ct-font); background:var(--ct-bg); color:var(--ct-text); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+.demo-note{ text-align:center; color:var(--ct-text-2); max-width:420px; }
+.demo-note h1{ font-family:var(--ct-display); font-size:24px; font-weight:600; color:var(--ct-text); margin-bottom:10px; }
+.demo-btn{ margin-top:18px; display:inline-flex; align-items:center; gap:8px; font-family:inherit; font-size:15px; font-weight:700; padding:14px 24px; border-radius:var(--ct-r-pill); border:none; background:var(--ct-accent); color:#fff; cursor:pointer; box-shadow:0 8px 20px rgba(109,63,196,.24); }
+
+/* Overlay */
+.backdrop{ position:fixed; inset:0; background:rgba(42,36,51,.55); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);
+  display:flex; align-items:center; justify-content:center; padding:20px; z-index:999; opacity:0; visibility:hidden; transition:opacity .3s var(--ct-ease), visibility .3s; }
+.backdrop.open{ opacity:1; visibility:visible; }
+
+.modal{ position:relative; width:100%; max-width:740px; background:#fff; border-radius:var(--ct-r-xl); overflow:hidden;
+  display:grid; grid-template-columns:.82fr 1fr; box-shadow:0 30px 70px rgba(42,36,51,.4);
+  transform:translateY(16px) scale(.97); transition:transform .35s var(--ct-ease); }
+.backdrop.open .modal{ transform:none; }
+
+.modal-visual{ position:relative; min-height:440px;
+  background-image:linear-gradient(180deg, rgba(85,44,158,.05), rgba(85,44,158,.55)), url('https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sc68ba0bf97fc446882fe68d55365fbf6p.webp?v=1780498796');
+  background-size:cover; background-position:center; display:flex; align-items:flex-end; padding:22px; }
+.disc-tag{ background:#fff; color:var(--ct-accent-text); font-family:var(--ct-display); font-weight:700; font-size:34px; line-height:.95;
+  padding:14px 18px; border-radius:var(--ct-r-lg); box-shadow:0 10px 24px rgba(42,36,51,.25); }
+.disc-tag small{ display:block; font-family:var(--ct-font); font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ct-text-3); margin-top:4px; }
+
+.modal-form{ padding:42px 40px; position:relative; }
+.x{ position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%; border:none; background:var(--ct-accent-subtle); color:var(--ct-accent-text);
+  font-size:18px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s; }
+.x:hover{ background:#e2d3f7; }
+.eyebrow{ display:inline-block; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ct-accent-text); margin-bottom:12px; }
+.modal h2{ font-family:var(--ct-display); font-size:32px; font-weight:700; line-height:1.05; letter-spacing:-.01em; margin-bottom:12px; }
+.modal h2 .em{ color:var(--ct-accent); }
+.sub{ font-size:15.5px; color:var(--ct-text-2); margin-bottom:22px; }
+.field{ display:flex; flex-direction:column; gap:10px; }
+.field input{ width:100%; padding:15px 16px; font-family:inherit; font-size:15px; color:var(--ct-text);
+  border:1.5px solid var(--ct-border); border-radius:var(--ct-r-md); background:#fff; transition:border-color .15s, box-shadow .15s; }
+.field input:focus{ outline:none; border-color:var(--ct-accent); box-shadow:0 0 0 3px rgba(109,63,196,.15); }
+.field input.err{ border-color:#D9433A; box-shadow:0 0 0 3px rgba(217,67,58,.12); }
+.err-msg{ display:none; color:#D9433A; font-size:12.5px; }
+.err-msg.show{ display:block; }
+.cta{ width:100%; font-family:inherit; font-size:15px; font-weight:700; padding:16px; border:none; border-radius:var(--ct-r-pill);
+  background:var(--ct-accent); color:#fff; cursor:pointer; box-shadow:0 8px 20px rgba(109,63,196,.24); transition:background .2s, transform .12s; margin-top:2px; }
+.cta:hover{ background:var(--ct-accent-strong); transform:translateY(-1px); }
+.consent{ font-size:11.5px; color:var(--ct-text-3); margin-top:14px; line-height:1.5; }
+.consent a{ color:var(--ct-accent-text); }
+.nothanks{ display:block; width:100%; text-align:center; background:none; border:none; font-family:inherit; font-size:12.5px;
+  color:var(--ct-text-3); text-decoration:underline; cursor:pointer; margin-top:14px; }
+
+/* Success state */
+.done{ display:none; text-align:center; padding:8px 0; }
+.modal.is-done .signup{ display:none; }
+.modal.is-done .done{ display:block; }
+.done .tick{ width:60px; height:60px; border-radius:50%; background:var(--ct-accent-subtle); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
+.done .tick svg{ width:28px; height:28px; stroke:var(--ct-accent); stroke-width:3; fill:none; }
+.code-box{ display:flex; align-items:center; justify-content:space-between; gap:12px; border:1.5px dashed var(--ct-accent-border,#C9B2EE);
+  background:var(--ct-accent-subtle); border-radius:var(--ct-r-md); padding:13px 16px; margin:16px 0 18px; }
+.code-box .code{ font-family:var(--ct-display); font-weight:700; font-size:22px; letter-spacing:.08em; color:var(--ct-accent-text); }
+.code-box button{ font-family:inherit; font-size:13px; font-weight:700; color:var(--ct-accent-text); background:#fff; border:1px solid var(--ct-border);
+  border-radius:var(--ct-r-pill); padding:8px 14px; cursor:pointer; white-space:nowrap; }
+
+@media(max-width:640px){
+  .modal{ grid-template-columns:1fr; max-width:420px; }
+  .modal-visual{ min-height:140px; }
+  .modal-form{ padding:34px 26px; }
+  .modal h2{ font-size:27px; }
+}
+</style>
+</head>
+<body>
+
+<div class="demo-note">
+  <h1>Signup popup preview</h1>
+  <p>This is how the 15%-off email popup looks. It opens automatically; use the button to reopen it.</p>
+  <button class="demo-btn" onclick="openPopup()">Show popup</button>
+</div>
+
+<div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="popTitle">
+  <div class="modal" id="modal">
+    <button class="x" aria-label="Close" onclick="closePopup()">&times;</button>
+    <div class="modal-visual" aria-hidden="true">
+      <span class="disc-tag">15% OFF<small>your first order</small></span>
+    </div>
+    <div class="modal-form">
+      <div class="signup">
+        <span class="eyebrow">Welcome to the cozy club</span>
+        <h2 id="popTitle">Get <span class="em">15% off</span> your first order</h2>
+        <p class="sub">Drop your email and we'll send your code straight to your inbox — plus first dibs on new colors and cozy deals for your dog or cat.</p>
+        <div class="field">
+          <input type="email" id="email" placeholder="Enter your email" aria-label="Email address" autocomplete="email">
+          <span class="err-msg" id="errMsg">Please enter a valid email address.</span>
+          <button class="cta" onclick="submitEmail()">Send my 15% code</button>
+        </div>
+        <p class="consent">By signing up you agree to receive marketing emails from CozyClaw. Unsubscribe anytime. See our <a href="#">Privacy Policy</a>.</p>
+        <button class="nothanks" onclick="closePopup()">No thanks, I'll pay full price</button>
+      </div>
+      <div class="done">
+        <div class="tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <h2>You're in! 🎉</h2>
+        <p class="sub">Your 15% code is ready — use it at checkout. We've also emailed it to you.</p>
+        <div class="code-box"><span class="code">COZY15</span><button onclick="copyCode(this)">Copy code</button></div>
+        <button class="cta" onclick="closePopup()">Start shopping</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var backdrop=document.getElementById('backdrop'), modal=document.getElementById('modal');
+  function openPopup(){ modal.classList.remove('is-done'); backdrop.classList.add('open'); setTimeout(function(){document.getElementById('email').focus();},320); }
+  function closePopup(){ backdrop.classList.remove('open'); }
+  function submitEmail(){
+    var i=document.getElementById('email'), e=document.getElementById('errMsg');
+    var ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim());
+    if(!ok){ i.classList.add('err'); e.classList.add('show'); i.focus(); return; }
+    i.classList.remove('err'); e.classList.remove('show');
+    // TODO: send i.value to your email app (Klaviyo/Shopify Email) and issue the real Shopify discount.
+    modal.classList.add('is-done');
+  }
+  function copyCode(btn){
+    if(navigator.clipboard) navigator.clipboard.writeText('COZY15');
+    var t=btn.textContent; btn.textContent='Copied!'; setTimeout(function(){btn.textContent=t;},1500);
+  }
+  backdrop.addEventListener('click',function(ev){ if(ev.target===backdrop) closePopup(); });
+  document.addEventListener('keydown',function(ev){ if(ev.key==='Escape') closePopup(); });
+  // Demo: auto-open shortly after load. In production, trigger on delay/scroll/exit-intent via your popup app.
+  setTimeout(openPopup, 700);
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<section class="cth-reviews" id="reviews">
+  <div class="page-width">
+    <div class="cth-head">
+      <span class="cth-eyebrow">Real homes, real naps</span>
+      <h2>Cats &amp; dogs that picked their CozyClaw</h2>
+      <div class="cth-review-pill"><b>4.9</b>{% render 'ct-stars' %}<span>Based on 13 reviews</span></div>
+    </div>
+    <div class="cth-reviewgrid">
+      <article><div class="cth-imgslot"></div><div>{% render 'ct-stars' %}<p>He used to take over the entire couch. Now he goes straight to his CozyClaw the moment we sit down, and the cushions finally stay clean.</p><b>Megan R.</b><small>Verified buyer &middot; Golden mix</small></div></article>
+      <article><div class="cth-imgslot"></div><div>{% render 'ct-stars' %}<p>My cat picked her spot in about five minutes flat. She loves nesting against the raised edge. Washes beautifully too.</p><b>Jordan P.</b><small>Verified buyer &middot; Tabby cat</small></div></article>
+      <article><div class="cth-imgslot"></div><div>{% render 'ct-stars', rating: 4 %}<p>Really comfy and looks great in Coffee. It took a day out of the box to fully fluff up, but after that it is perfect.</p><b>Alicia N.</b><small>Verified buyer &middot; Two dogs</small></div></article>
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      <div class="cth-app-slot" id="customer-reviews">
+        {%- for block in section.blocks -%}
+          {%- render block -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    <div class="cth-center">
+      <a class="cth-btn cth-btn--ghost" href="{% if section.blocks.size > 0 %}#customer-reviews{% else %}#reviews{% endif %}">Read all reviews</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CT home reviews",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "CT home reviews" }]
+}
+{% endschema %}

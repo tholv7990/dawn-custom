@@ -3,15 +3,19 @@
 
 {% render 'ct-section-padding', section: section %}
 
-<div class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+{%- assign section_id = section.settings.anchor_id | default: section.id -%}
+
+<section id="{{ section_id }}" class="ct-email section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="ct-email-inner" data-reveal>
     {%- if section.settings.kicker != blank -%}<div class="ct-kicker">{{ section.settings.kicker }}</div>{%- endif -%}
     {%- if section.settings.heading != blank -%}<h2 class="ct-email-title">{{ section.settings.heading }}</h2>{%- endif -%}
     {%- if section.settings.subheading != blank -%}<p class="ct-email-sub">{{ section.settings.subheading }}</p>{%- endif -%}
 
-    {%- form 'customer', class: 'ct-email-formwrap' -%}
+    {%- form 'customer', class: 'ct-email-formwrap', data-ct-newsletter-form: '' -%}
       <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="hidden" name="contact[accepts_marketing]" value="true">
       {%- if form.posted_successfully? -%}
+        <span hidden data-ct-newsletter-success></span>
         <div class="ct-email-success">
           <div class="ct-email-success__icon">✓</div>
           <div class="ct-email-success__title">{{ section.settings.success_title }}</div>
@@ -27,10 +31,12 @@
             aria-label="{{ section.settings.placeholder }}"
             autocorrect="off"
             autocapitalize="off"
+            autocomplete="email"
             required
           >
-          <button type="submit" class="ct-btn ct-btn--primary">{{ section.settings.button_label }}</button>
+          <button type="submit" class="ct-btn ct-btn--primary" disabled aria-disabled="true">{{ section.settings.button_label }}</button>
         </div>
+        <span class="ct-email-error" data-newsletter-err>Please enter a valid email address.</span>
         {%- if form.errors -%}
           <div class="ct-email-error">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</div>
         {%- endif -%}
@@ -39,7 +45,7 @@
 
     {%- if section.settings.disclaimer != blank -%}<div class="ct-email-fine">{{ section.settings.disclaimer }}</div>{%- endif -%}
   </div>
-</div>
+</section>
 
 {% schema %}
 {
@@ -48,12 +54,13 @@
   "class": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
-    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Join 10,000+ athletes" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Get weekly training tips + exclusive offers" },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "No spam. Unsubscribe any time. Join cat parents who get cozy tips every week." },
-    { "type": "text", "id": "placeholder", "label": "Input placeholder", "default": "Enter your email address" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe →" },
-    { "type": "text", "id": "disclaimer", "label": "Fine print", "default": "By subscribing you agree to our Privacy Policy. Unsubscribe any time." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "signup" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Join the litter" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "15% off your first order — any size" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Join the list and we'll email your 15% code, plus first dibs on new colors. No spam, unsubscribe anytime." },
+    { "type": "text", "id": "placeholder", "label": "Input placeholder", "default": "you@email.com" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send my code" },
+    { "type": "text", "id": "disclaimer", "label": "Fine print", "default": "We'll email your code · 15% off your first order, any value · one discount per order — offers don't combine" },
     { "type": "header", "content": "Success message" },
     { "type": "text", "id": "success_title", "label": "Success title", "default": "You're in!" },
     { "type": "text", "id": "success_text", "label": "Success text", "default": "Check your inbox for a welcome email." },

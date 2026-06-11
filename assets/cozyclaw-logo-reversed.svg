@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="380" height="130" viewBox="0 0 380 130" role="img">
-<title>CozyClaw Lounge Mat logo — reversed</title>
-<desc>Reversed version for dark or photographic backgrounds: a light tile with a purple sleeping cat face, a light CozyClaw wordmark, and the descriptor Plush Lounge Mat.</desc>
+<title>CozyClaw™ Lounge Mat logo — reversed</title>
+<desc>Reversed version for dark or photographic backgrounds: a light tile with a purple sleeping cat face, a light CozyClaw™ wordmark, and the descriptor Plush Lounge Mat.</desc>
 <style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&amp;display=swap');.wm{font-family:'Fraunces',Georgia,'Times New Roman',serif}.tg{font-family:'Public Sans',system-ui,Arial,sans-serif}</style>
 <g transform="translate(12,18)">
 <rect x="0" y="0" width="96" height="96" rx="24" fill="#F6F1FC"/>
@@ -15,6 +15,6 @@
 <path d="M48 66.5 q-4 4 -8 2" fill="none" stroke="#F6F1FC" stroke-width="2" stroke-linecap="round"/>
 <path d="M48 66.5 q4 4 8 2" fill="none" stroke="#F6F1FC" stroke-width="2" stroke-linecap="round"/>
 </g>
-<text x="128" y="76" class="wm" font-size="46" font-weight="600" fill="#F6F1FC">CozyClaw</text>
+<text x="128" y="76" class="wm" font-size="46" font-weight="600" fill="#F6F1FC">CozyClaw™</text>
 <text x="129" y="102" class="tg" font-size="15" fill="#C9B2EE">Plush Lounge Mat</text>
 </svg>

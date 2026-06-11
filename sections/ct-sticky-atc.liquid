@@ -1,15 +1,27 @@
 {{ 'ct-sections.css' | asset_url | stylesheet_tag }}
 {{ 'section-ct-sticky-atc.css' | asset_url | stylesheet_tag }}
 
-{%- comment -%} Live product binding: product name + button label suffix auto-bind when section.settings.product is picked. {%- endcomment -%}
+{%- comment -%} Live product binding: product data fills blanks; explicit settings win. {%- endcomment -%}
 {%- assign atc_product = section.settings.product -%}
 {%- assign atc_name = section.settings.product_name -%}
 {%- assign atc_btn_label = section.settings.button_label -%}
 {%- assign atc_btn_link = section.settings.button_link -%}
 {%- if atc_product != blank -%}
-  {%- if atc_product.title != blank -%}{%- assign atc_name = atc_product.title -%}{%- endif -%}
-  {%- assign atc_btn_label = atc_product.price_min | money | prepend: 'Add to Cart — ' -%}
+  {%- if atc_name == blank and atc_product.title != blank -%}{%- assign atc_name = atc_product.title -%}{%- endif -%}
+  {%- if settings.currency_code_enabled -%}
+    {%- assign atc_price = atc_product.price_min | money_with_currency -%}
+  {%- else -%}
+    {%- assign atc_price = atc_product.price_min | money -%}
+  {%- endif -%}
+  {%- if atc_btn_label == blank -%}{%- assign atc_btn_label = atc_price | prepend: 'Add to Cart — ' -%}{%- endif -%}
   {%- if atc_btn_link == blank -%}{%- assign atc_btn_link = atc_product.url -%}{%- endif -%}
+{%- endif -%}
+{%- assign atc_meta = section.settings.rating_text -%}
+{%- if section.settings.meta_mode == 'price' -%}
+  {%- assign atc_meta = atc_price -%}
+  {%- if section.settings.price_suffix != blank -%}
+    {%- assign atc_meta = atc_meta | append: ' · ' | append: section.settings.price_suffix -%}
+  {%- endif -%}
 {%- endif -%}
 
 <div class="ct-sticky-atc color-{{ section.settings.color_scheme }}" id="ct-sticky-atc-{{ section.id }}" role="region" aria-label="Quick add to cart">
@@ -25,10 +37,10 @@
     {%- endif -%}
     <div class="ct-sticky-atc__text">
       <div class="ct-sticky-atc__name">{{ atc_name }}</div>
-      {%- if section.settings.rating_text != blank -%}
-        <div class="ct-sticky-atc__rating">
-          <span class="ct-stars" aria-hidden="true">★★★★★</span>
-          <span>{{ section.settings.rating_text }}</span>
+      {%- if atc_meta != blank -%}
+        <div class="ct-sticky-atc__meta{% if section.settings.meta_mode == 'rating' %} ct-sticky-atc__meta--rating{% endif %}">
+          {%- if section.settings.meta_mode == 'rating' -%}<span class="ct-stars" aria-hidden="true">★★★★★</span>{%- endif -%}
+          <span>{{ atc_meta }}</span>
         </div>
       {%- endif -%}
     </div>
@@ -66,7 +78,9 @@
     { "type": "image_picker", "id": "image", "label": "Thumbnail image", "info": "Falls back to product.featured_image when blank and a product is picked. Replaces the emoji when set." },
     { "type": "text", "id": "emoji", "label": "Emoji (only if no image/product)" },
     { "type": "text", "id": "product_name", "label": "Product name (overrides product.title)" },
-    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "★★★★★ 4.7 · 52 reviews" },
+    { "type": "select", "id": "meta_mode", "label": "Meta line mode", "options": [ { "value": "rating", "label": "Rating" }, { "value": "price", "label": "Price + suffix" } ], "default": "rating" },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.7 · 52 reviews" },
+    { "type": "text", "id": "price_suffix", "label": "Price suffix", "default": "free shipping over $50" },
     { "type": "text", "id": "button_label", "label": "Button label (overrides 'Add to Cart — $X.XX')" },
     { "type": "url", "id": "button_link", "label": "Button link" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }

@@ -11,3 +11,6 @@ Thumbs.db
 
 # Claude Code local settings (personal, not team policy)
 .claude/settings.local.json
+
+# Theme export / packaging artifacts (build outputs, not source)
+*.zip

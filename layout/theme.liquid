@@ -47,13 +47,9 @@
     <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'ct-reveal.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'ct-countup.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'ct-swipe.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'ct-accordion.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'ct-ba.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'ct-scrollspy.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'ct-sticky-atc.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'ct-quickview.js' | asset_url }}" defer="defer"></script>
+    {%- if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' -%}
+      <script src="{{ 'ct-quickview.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
 
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
@@ -278,6 +274,10 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'theme-overrides.css' | asset_url | stylesheet_tag }}
+    {%- if template.name == 'index' -%}
+      {{ 'ct-sections.css' | asset_url | stylesheet_tag }}
+      {{ 'section-ct-homepage.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
@@ -335,6 +335,36 @@
 
     <script>
       window.shopUrl = '{{ request.origin }}';
+      window.theme = window.theme || {};
+      window.theme.moneyFormat = {% if settings.currency_code_enabled %}{{ shop.money_with_currency_format | json }}{% else %}{{ shop.money_format | json }}{% endif %};
+
+      // Minimal Shopify.formatMoney polyfill so JS-rendered totals match the shop's money format.
+      // Mirrors the placeholder semantics from currency.js: amount / amount_no_decimals with
+      // comma / space / apostrophe separator variants.
+      window.Shopify = window.Shopify || {};
+      if (typeof window.Shopify.formatMoney !== 'function') {
+        window.Shopify.formatMoney = function (cents, format) {
+          if (typeof cents === 'string') cents = cents.replace('.', '');
+          cents = Number(cents);
+          if (isNaN(cents) || cents == null) cents = 0;
+          var fmt = format || window.theme.moneyFormat;
+          if (!fmt) return '$' + (cents / 100).toFixed(2);
+          var re = /\{\{\s*(\w+)\s*\}\}/;
+          var match = fmt.match(re);
+          if (!match) return fmt;
+          var placeholder = match[1];
+          var precision = placeholder.indexOf('no_decimals') !== -1 ? 0 : 2;
+          var thousands = ',', decimal = '.';
+          if (placeholder.indexOf('with_comma_separator') !== -1) { thousands = '.'; decimal = ','; }
+          else if (placeholder.indexOf('with_space_separator') !== -1) { thousands = ' '; decimal = ','; }
+          else if (placeholder.indexOf('with_apostrophe_separator') !== -1) { thousands = "'"; decimal = '.'; }
+          var value = (cents / 100).toFixed(precision);
+          var parts = value.split('.');
+          var intPart = parts[0].replace(/(\d)(?=(\d{3})+$)/g, '$1' + thousands);
+          var decPart = parts[1] ? decimal + parts[1] : '';
+          return fmt.replace(re, intPart + decPart);
+        };
+      }
       window.routes = {
         cart_add_url: '{{ routes.cart_add_url }}',
         cart_change_url: '{{ routes.cart_change_url }}',

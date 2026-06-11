@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme:only light; background-color:#FBF6F0;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<title>CozyClaw™ — The Plush Sofa-Bed Dogs & Cats Actually Choose</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: only light;
+  /* Backgrounds (warm cream) */
+  --ct-bg:#FBF6F0; --ct-bg-surface:#FEFAF5; --ct-bg-raised:#FFFFFF;
+  --ct-bg-control:rgba(150,100,70,.08); --ct-bg-control-h:rgba(150,100,70,.16);
+  /* Text (warm brown-gray) */
+  --ct-text:#2E241D; --ct-text-2:#6B5A4D; --ct-text-3:#9C8B7C; --ct-text-off:#C7B8A9;
+  /* Borders (warm-tinted) */
+  --ct-border:rgba(150,100,70,.30); --ct-border-strong:rgba(150,100,70,.20);
+  --ct-border-subtle:rgba(150,100,70,.14); --ct-border-faint:rgba(150,100,70,.07);
+  /* Shadows (warm cast) */
+  --ct-shadow-xs:0 1px 2px rgba(90,60,40,.12); --ct-shadow-sm:0 4px 10px rgba(90,60,40,.12);
+  --ct-shadow-md:0 8px 20px rgba(90,60,40,.14); --ct-shadow-lg:0 16px 36px rgba(90,60,40,.16);
+  --ct-shadow-2xl:0 26px 56px rgba(90,60,40,.20);
+  /* Accent — dark coffee */
+  --ct-accent:#5A3E2B; --ct-accent-strong:#43301F; --ct-accent-text:#4E3526;
+  --ct-accent-subtle:#F1E8DE; --ct-accent-border:#D9C7B4; --ct-accent-glow:rgba(90,62,43,.24);
+  /* Status */
+  --ct-urgency:#B23A2E; --ct-success:#5B9A6B; --ct-price:#2E241D; --ct-price-was:#A8978A; --ct-rating:#E0A53B;
+  /* Radius / layout / motion */
+  --ct-r-sm:6px; --ct-r-md:12px; --ct-r-lg:18px; --ct-r-xl:24px; --ct-r-pill:9999px;
+  --ct-mw:1280px; --ct-gutter:24px; --ct-touch:48px;
+  --ct-dur-fast:120ms; --ct-dur-base:240ms; --ct-ease:cubic-bezier(.22,1,.36,1);
+  --ct-focus:0 0 0 2px #FBF6F0, 0 0 0 4px #4E3526;
+  --ct-display:'Fraunces',Georgia,serif; --ct-font:'Public Sans',-apple-system,system-ui,sans-serif; --ct-mono:'DM Mono',monospace;
+}
+*{ box-sizing:border-box; margin:0; }
+html{ scroll-behavior:smooth; color-scheme:only light; background-color:#FBF6F0; }
+body{ font-family:var(--ct-font); color:var(--ct-text); background:var(--ct-bg); line-height:1.6; -webkit-font-smoothing:antialiased; }
+img{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+:focus-visible{ outline:none; box-shadow:var(--ct-focus); border-radius:var(--ct-r-sm); }
+.wrap{ max-width:var(--ct-mw); margin:0 auto; padding:0 var(--ct-gutter); }
+h1,h2,h3{ font-family:var(--ct-display); font-weight:600; line-height:1.08; letter-spacing:-.01em; color:var(--ct-text); }
+.eyebrow{ font-family:var(--ct-font); font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--ct-accent-text); }
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:var(--ct-touch); font-family:inherit; font-weight:700; font-size:15px;
+  padding:0 30px; border-radius:var(--ct-r-pill); border:none; cursor:pointer; transition:transform var(--ct-dur-fast) var(--ct-ease), background var(--ct-dur-base), box-shadow var(--ct-dur-base); }
+.btn-primary{ background:var(--ct-accent); color:#fff; box-shadow:0 10px 24px var(--ct-accent-glow); }
+.btn-primary:hover{ background:var(--ct-accent-strong); transform:translateY(-2px); }
+.btn-outlined{ background:var(--ct-bg-raised); color:var(--ct-text); border:1.5px solid var(--ct-border); }
+.btn-outlined:hover{ border-color:var(--ct-accent-border); background:var(--ct-accent-subtle); }
+.section{ padding:84px 0; }
+.center{ text-align:center; }
+.lead{ color:var(--ct-text-2); font-size:18px; }
+.sec-head{ display:flex; flex-direction:column; align-items:center; gap:12px; margin-bottom:46px; }
+.sec-head h2{ font-size:clamp(27px,4vw,42px); max-width:20ch; }
+.sec-head p{ max-width:60ch; }
+
+/* announce — accent */
+.announce{ background:var(--ct-accent); color:#fff; font-size:12.5px; letter-spacing:.04em; }
+.announce .wrap{ display:flex; gap:30px; justify-content:center; flex-wrap:wrap; padding:9px var(--ct-gutter); }
+.announce span{ display:inline-flex; align-items:center; gap:7px; opacity:.96; }
+.announce b{ font-weight:700; }
+
+/* header */
+.header{ position:sticky; top:0; z-index:50; background:rgba(252,250,254,.88); backdrop-filter:blur(10px); border-bottom:1px solid var(--ct-border-subtle); }
+.header .wrap{ display:flex; align-items:center; justify-content:space-between; height:68px; }
+.brand{ font-family:var(--ct-display); font-weight:600; font-size:24px; letter-spacing:-.02em; color:var(--ct-text); }
+.brand .paw{ color:var(--ct-accent); }
+.brand sup{ font-size:.4em; vertical-align:super; font-weight:600; margin-left:1px; letter-spacing:0; color:var(--ct-text-3); }
+.nav ul{ display:flex; gap:30px; list-style:none; font-size:14.5px; font-weight:600; color:var(--ct-text-2); }
+.nav a:hover{ color:var(--ct-text); }
+.header-ic{ display:flex; gap:18px; align-items:center; color:var(--ct-text-2); }
+.header-ic svg{ width:20px; height:20px; stroke:currentColor; stroke-width:1.8; fill:none; cursor:pointer; }
+.header-cart{ position:relative; }
+.header-cart b{ position:absolute; top:-7px; right:-9px; background:var(--ct-accent); color:#fff; font-family:var(--ct-font); font-size:10px; font-weight:700; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+@media(max-width:860px){ .nav{ display:none; } }
+
+/* hero */
+.hero{ position:relative; max-width:1440px; margin:0 auto; min-height:520px; display:flex; align-items:center; overflow:hidden; }
+.hero-text{ position:relative; z-index:2; width:100%; display:flex; flex-direction:column; justify-content:center; padding:64px 56px 64px max(var(--ct-gutter), calc((100% - var(--ct-mw))/2 + var(--ct-gutter))); }
+.hero h1{ font-size:clamp(38px,5.2vw,58px); margin:16px 0 18px; }
+.hero h1 em{ font-style:italic; color:var(--ct-accent); }
+.hero p{ font-size:19px; color:var(--ct-text-2); max-width:46ch; margin-bottom:28px; }
+.hero-cta{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+.hero-trust{ display:flex; gap:22px; flex-wrap:wrap; margin-top:26px; font-size:13.5px; color:var(--ct-text-2); }
+.hero-trust span{ display:inline-flex; align-items:center; gap:7px; }
+.stars{ color:var(--ct-rating); letter-spacing:1px; }
+.hero-photo{ position:absolute; top:0; right:0; height:100%; width:56%; object-fit:cover; object-position:center; z-index:0; -webkit-mask:linear-gradient(to right, transparent 0%, #000 22%, #000 92%, transparent 100%); mask:linear-gradient(to right, transparent 0%, #000 22%, #000 92%, transparent 100%); }
+.hero-scrim{ display:none; }
+@media(max-width:860px){
+  .hero{ flex-direction:column; min-height:0; max-width:none; overflow:visible; }
+  .hero-photo{ position:static; width:100%; height:auto; order:1; -webkit-mask:none; mask:none; }
+  .hero-text{ padding:40px var(--ct-gutter); order:2; }
+}
+
+/* trust strip — accent-subtle band */
+.trust-strip{ background:var(--ct-accent-subtle); }
+.trust-strip .wrap{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; padding:26px var(--ct-gutter); }
+.trust-item{ display:flex; gap:13px; align-items:center; }
+.trust-item .ic{ width:42px; height:42px; border-radius:var(--ct-r-sm); background:var(--ct-bg-raised); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:var(--ct-shadow-xs); }
+.trust-item .ic svg{ width:21px; height:21px; stroke:var(--ct-accent-strong); stroke-width:1.8; fill:none; }
+.trust-item b{ font-size:14.5px; display:block; color:var(--ct-text); }
+.trust-item small{ font-size:12.5px; color:var(--ct-text-3); }
+@media(max-width:760px){ .trust-strip .wrap{ grid-template-columns:1fr 1fr; gap:20px 14px; } }
+
+/* problem / solution */
+.ps{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.ps .card{ border-radius:var(--ct-r-lg); padding:34px; border:1px solid var(--ct-border-subtle); }
+.ps .prob{ background:var(--ct-bg-raised); box-shadow:var(--ct-shadow-sm); }
+.ps .sol{ background:var(--ct-bg-raised); box-shadow:var(--ct-shadow-sm); }
+.ps .tag{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:10px; }
+.ps .prob .tag{ color:var(--ct-urgency); }
+.ps .sol .tag{ color:var(--ct-accent-text); }
+.ps h3{ font-size:25px; margin-bottom:20px; }
+.ps ul{ list-style:none; }
+.ps li{ display:flex; gap:11px; align-items:flex-start; margin-bottom:13px; font-size:15.5px; color:var(--ct-text-2); }
+.ps li svg{ width:20px; height:20px; flex-shrink:0; margin-top:1px; fill:none; stroke-width:2.2; }
+.ps .prob li svg{ stroke:var(--ct-urgency); }
+.ps .sol li svg{ stroke:var(--ct-accent); }
+.ps .pic{ width:100%; aspect-ratio:4/3; object-fit:contain; background:var(--ct-bg-surface); border-radius:var(--ct-r-md); margin-top:6px; }
+@media(max-width:760px){ .ps{ grid-template-columns:1fr; } }
+
+/* before/after compare slider */
+.ba-compare{ position:relative; width:100%; aspect-ratio:16/9; border-radius:var(--ct-r-lg); overflow:hidden; box-shadow:var(--ct-shadow-md); border:1px solid var(--ct-accent-border); user-select:none; touch-action:none; cursor:ew-resize; background:var(--ct-bg-surface); --pos:50%; margin-bottom:30px; }
+.ba-compare img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
+.ba-compare .before{ clip-path:inset(0 calc(100% - var(--pos)) 0 0); }
+.ba-compare .tag{ position:absolute; top:16px; z-index:4; font-size:11.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:6px 13px; border-radius:var(--ct-r-pill); }
+.ba-compare .tag-b{ left:16px; background:rgba(178,58,46,.92); color:#fff; }
+.ba-compare .tag-a{ right:16px; background:rgba(91,154,107,.94); color:#fff; }
+.ba-compare .cap{ position:absolute; bottom:18px; z-index:4; max-width:44%; font-size:14px; font-weight:600; line-height:1.3; color:#fff; text-shadow:0 1px 6px rgba(0,0,0,.6); }
+.ba-compare .cap-b{ left:18px; } .ba-compare .cap-a{ right:18px; text-align:right; }
+.ba-compare .divider{ position:absolute; top:0; bottom:0; left:var(--pos); width:3px; background:#fff; transform:translateX(-50%); z-index:3; box-shadow:0 0 0 1px rgba(90,60,40,.18); pointer-events:none; }
+.ba-compare .knob{ position:absolute; top:50%; left:var(--pos); width:46px; height:46px; transform:translate(-50%,-50%); z-index:4; background:#fff; border-radius:50%; box-shadow:0 6px 18px rgba(90,60,40,.32); display:flex; align-items:center; justify-content:center; pointer-events:none; }
+.ba-compare .knob svg{ width:24px; height:24px; stroke:var(--ct-accent); fill:none; stroke-width:2.2; }
+.ba-hint{ text-align:center; font-family:var(--ct-mono); font-size:12px; letter-spacing:.04em; color:var(--ct-text-3); margin:-18px 0 30px; }
+@media(max-width:760px){ .ba-compare{ aspect-ratio:4/3; } .ba-compare .cap{ font-size:12.5px; max-width:48%; } }
+
+/* pillars */
+.pillars{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.pillar{ background:var(--ct-bg-raised); border:1px solid var(--ct-border-subtle); border-radius:var(--ct-r-lg); padding:28px; transition:transform var(--ct-dur-base) var(--ct-ease), box-shadow var(--ct-dur-base); }
+.pillar:hover{ transform:translateY(-4px); box-shadow:var(--ct-shadow-md); }
+.pillar .ic{ width:46px; height:46px; border-radius:var(--ct-r-sm); background:var(--ct-accent-subtle); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+.pillar .ic svg{ width:23px; height:23px; stroke:var(--ct-accent-strong); stroke-width:1.7; fill:none; }
+.pillar h3{ font-size:19px; margin-bottom:8px; }
+.pillar p{ font-size:14.5px; color:var(--ct-text-2); }
+@media(max-width:860px){ .pillars{ grid-template-columns:1fr 1fr; } }
+@media(max-width:560px){ .pillars{ grid-template-columns:1fr; } }
+
+/* features w/ images */
+.feat{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.feat .card{ background:var(--ct-bg-raised); border:1px solid var(--ct-border-subtle); border-radius:var(--ct-r-lg); overflow:hidden; box-shadow:var(--ct-shadow-sm); }
+.feat img{ width:100%; aspect-ratio:1/1; object-fit:contain; background:var(--ct-bg-surface); }
+.feat .body{ padding:20px 20px 24px; }
+.feat h3{ font-size:18px; margin-bottom:7px; }
+.feat p{ font-size:13.8px; color:var(--ct-text-2); }
+@media(max-width:860px){ .feat{ grid-template-columns:1fr 1fr; } }
+@media(max-width:520px){ .feat{ grid-template-columns:1fr; } }
+
+/* marquee */
+.marquee{ background:var(--ct-accent-subtle); overflow:hidden; padding:16px 0; border-top:1px solid var(--ct-border-faint); border-bottom:1px solid var(--ct-border-faint); }
+.marquee-track{ display:flex; gap:46px; white-space:nowrap; width:max-content; will-change:transform; animation:scroll 22s linear infinite; }
+.marquee span{ font-family:var(--ct-display); font-style:italic; font-size:19px; color:var(--ct-accent-text); display:inline-flex; align-items:center; gap:46px; }
+.marquee span::after{ content:'\2022'; color:var(--ct-accent-border); }
+@keyframes scroll{ to{ transform:translateX(-50%); } }
+
+/* lifestyle */
+.life{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.life figure{ position:relative; border-radius:var(--ct-r-md); overflow:hidden; }
+.life img{ width:100%; aspect-ratio:1/1; object-fit:contain; background:var(--ct-bg-surface); transition:transform .5s var(--ct-ease); }
+.life figure:hover img{ transform:scale(1.05); }
+.life figcaption{ position:absolute; left:0; right:0; bottom:0; padding:14px; color:#fff; font-weight:600; font-size:14px;
+  background:linear-gradient(transparent, rgba(46,36,29,.74)); }
+@media(max-width:760px){ .life{ grid-template-columns:1fr 1fr; } }
+
+/* size & color guide */
+.guide{ background:var(--ct-bg-surface); }
+.guide .grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:40px; align-items:center; }
+.swatches{ display:flex; gap:16px; margin:18px 0 8px; }
+.sw{ text-align:center; font-size:13px; color:var(--ct-text-2); flex:1; max-width:130px; }
+.sw img{ display:block; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:var(--ct-r-md); border:1px solid var(--ct-border-subtle); box-shadow:var(--ct-shadow-sm); margin:0 auto 8px; background:var(--ct-bg-raised); }
+.sizes{ display:grid; gap:14px; }
+.size{ background:var(--ct-bg-raised); border:1px solid var(--ct-border-subtle); border-radius:var(--ct-r-md); padding:20px 22px; display:flex; gap:18px; align-items:center; }
+.size .badge{ width:54px; height:54px; border-radius:var(--ct-r-sm); background:var(--ct-accent); color:#fff; font-family:var(--ct-display); font-weight:700; font-size:24px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.size b{ font-size:16px; } .size .dim{ font-family:var(--ct-mono); font-size:13px; color:var(--ct-accent-text); }
+.size p{ font-size:13.5px; color:var(--ct-text-2); }
+.fit-tip{ font-size:13px; color:var(--ct-text-3); margin-top:14px; }
+@media(max-width:760px){ .guide .grid{ grid-template-columns:1fr; gap:26px; } }
+
+/* comparison */
+.compare{ overflow-x:auto; }
+table{ width:100%; border-collapse:collapse; min-width:560px; background:var(--ct-bg-raised); border-radius:var(--ct-r-lg); overflow:hidden; box-shadow:var(--ct-shadow-sm); }
+th,td{ padding:16px 18px; text-align:center; font-size:14px; border-bottom:1px solid var(--ct-border-subtle); }
+th{ font-family:var(--ct-display); font-weight:600; font-size:15px; color:var(--ct-text); }
+thead th:first-child, tbody td:first-child{ text-align:left; color:var(--ct-text); font-weight:600; }
+.col-us{ background:var(--ct-accent-subtle); }
+thead .col-us{ color:var(--ct-accent-text); }
+td .yes{ color:var(--ct-accent); font-weight:700; }
+td .mid{ color:var(--ct-text-3); } td .no{ color:var(--ct-text-off); }
+
+/* materials & care */
+.mc{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.mc .panel{ background:var(--ct-bg-raised); border:1px solid var(--ct-border-subtle); border-radius:var(--ct-r-lg); padding:30px; box-shadow:var(--ct-shadow-sm); }
+.mc h3{ font-size:20px; margin-bottom:16px; }
+.spec{ display:flex; justify-content:space-between; gap:16px; padding:11px 0; border-bottom:1px solid var(--ct-border-subtle); font-size:14.5px; }
+.spec:last-of-type{ border-bottom:none; }
+.spec span{ color:var(--ct-text-3); } .spec b{ font-weight:600; text-align:right; color:var(--ct-text); }
+@media(max-width:760px){ .mc{ grid-template-columns:1fr; } }
+
+/* reviews */
+.reviews{ background:var(--ct-bg-surface); }
+.rev-head{ display:flex; flex-direction:column; align-items:center; gap:6px; margin-bottom:40px; }
+.rev-head .big{ font-family:var(--ct-display); font-size:46px; font-weight:700; line-height:1; color:var(--ct-text); }
+.rev-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.rev-card{ background:var(--ct-bg-raised); border-radius:var(--ct-r-lg); padding:24px; border:1px solid var(--ct-border-subtle); }
+.rev-card .stars{ font-size:14px; margin-bottom:10px; }
+.rev-card p{ font-size:14px; color:var(--ct-text); margin-bottom:16px; }
+.rev-who{ display:flex; align-items:center; gap:11px; }
+.rev-av{ width:38px; height:38px; border-radius:50%; background:var(--ct-accent); color:#fff; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; font-family:var(--ct-display); }
+.rev-who b{ font-size:13.5px; display:block; color:var(--ct-text); } .rev-who small{ font-size:11.5px; color:var(--ct-accent-text); }
+@media(max-width:980px){ .rev-grid{ grid-template-columns:1fr 1fr; } }
+@media(max-width:560px){ .rev-grid{ grid-template-columns:1fr; } }
+
+/* guarantee — accent-subtle panel */
+.guarantee{ background:var(--ct-accent-subtle); border:1px solid var(--ct-accent-border); border-radius:var(--ct-r-xl); }
+.guar{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; padding:40px 30px; }
+.guar .g{ text-align:center; padding:6px; }
+.guar .ic{ width:50px; height:50px; border-radius:50%; background:var(--ct-bg-raised); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:var(--ct-shadow-xs); }
+.guar .ic svg{ width:24px; height:24px; stroke:var(--ct-accent-strong); stroke-width:1.7; fill:none; }
+.guar b{ font-size:15px; display:block; margin-bottom:4px; color:var(--ct-text); }
+.guar p{ font-size:13px; color:var(--ct-text-2); }
+@media(max-width:760px){ .guar{ grid-template-columns:1fr 1fr; gap:26px 18px; } }
+
+/* bundle — light accent-subtle panel */
+.bundle-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:860px; margin:0 auto; align-items:stretch; }
+.btier{ position:relative; background:var(--ct-bg-raised); border:1px solid var(--ct-border-subtle); border-radius:var(--ct-r-lg); padding:26px 24px; display:flex; flex-direction:column; transition:transform var(--ct-dur-base) var(--ct-ease), box-shadow var(--ct-dur-base); }
+.btier:hover{ transform:translateY(-4px); box-shadow:var(--ct-shadow-md); }
+.btier-pop{ border:2px solid var(--ct-accent); box-shadow:var(--ct-shadow-md); }
+.btier-badge{ position:absolute; top:-13px; left:50%; transform:translateX(-50%); white-space:nowrap; background:var(--ct-accent); color:#fff; font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:6px 16px; border-radius:var(--ct-r-pill); box-shadow:var(--ct-shadow-sm); }
+.btier h3{ font-size:21px; margin:0; }
+.btier-sub{ display:block; font-size:13.5px; color:var(--ct-text-2); margin-top:3px; }
+.btier-img{ width:100%; aspect-ratio:16/10; object-fit:contain; background:var(--ct-bg-surface); border-radius:var(--ct-r-md); margin:16px 0; }
+.btier-feat{ list-style:none; margin:0 0 20px; display:grid; gap:10px; }
+.btier-feat li{ display:flex; gap:9px; align-items:flex-start; font-size:14px; color:var(--ct-text-2); }
+.btier-feat svg{ width:17px; height:17px; flex-shrink:0; margin-top:1px; stroke:var(--ct-success); fill:none; stroke-width:2.4; }
+.btier-feat .hl{ color:var(--ct-success); font-weight:600; }
+.btier-price{ font-family:var(--ct-display); margin-bottom:16px; display:flex; align-items:baseline; gap:8px; }
+.btier-price b{ font-size:27px; color:var(--ct-text); font-weight:600; }
+.btier-price .ship{ font-size:13px; color:var(--ct-success); font-weight:600; font-family:var(--ct-font); }
+.btier-price .per{ font-size:12.5px; color:var(--ct-text-3); font-family:var(--ct-font); }
+.btn-block{ width:100%; justify-content:center; margin-top:auto; }
+.bundle-addons{ max-width:860px; margin:22px auto 0; background:var(--ct-accent-subtle); border:1px solid var(--ct-accent-border); border-radius:var(--ct-r-lg); padding:20px 26px; }
+.addons-flex{ display:grid; grid-template-columns:1fr 1fr; gap:8px 26px; }
+.addon-label{ display:block; font-size:11.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--ct-text-3); margin-bottom:6px; }
+.addon{ display:flex; gap:12px; align-items:flex-start; padding:11px 0; }
+.addon-ic{ width:42px; height:42px; flex-shrink:0; border-radius:var(--ct-r-sm); background:var(--ct-bg-raised); overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.addon-ic img{ width:100%; height:100%; object-fit:cover; display:block; }
+.addon-ic svg{ width:19px; height:19px; stroke:var(--ct-accent); fill:none; stroke-width:2; }
+.addon b{ display:block; font-size:14.5px; }
+.addon small{ font-size:12.5px; color:var(--ct-text-2); }
+@media(max-width:760px){ .bundle-grid{ grid-template-columns:1fr; } .addons-flex{ grid-template-columns:1fr; } }
+
+/* faq */
+.faq-item{ border-bottom:1px solid var(--ct-border-subtle); }
+.faq-q{ width:100%; min-height:var(--ct-touch); background:none; border:none; text-align:left; font-family:inherit; font-size:17px; font-weight:600; color:var(--ct-text);
+  padding:22px 40px 22px 0; cursor:pointer; position:relative; }
+.faq-q::after{ content:'+'; position:absolute; right:6px; top:50%; transform:translateY(-50%); font-size:24px; color:var(--ct-accent); font-weight:400; transition:transform var(--ct-dur-base); }
+.faq-item.open .faq-q::after{ content:'\2212'; }
+.faq-a{ max-height:0; overflow:hidden; transition:max-height var(--ct-dur-base) var(--ct-ease); }
+.faq-a p{ padding:0 40px 22px 0; color:var(--ct-text-2); font-size:15px; }
+.faq-item.open .faq-a{ max-height:340px; }
+
+/* final cta — light accent-subtle band */
+.finalcta{ background:var(--ct-accent-subtle); border:1px solid var(--ct-accent-border); border-radius:var(--ct-r-xl); text-align:center; padding:64px 40px; }
+.finalcta h2{ font-size:clamp(28px,4vw,40px); margin-bottom:14px; }
+.finalcta p{ color:var(--ct-text-2); font-size:17px; margin-bottom:26px; max-width:52ch; margin-left:auto; margin-right:auto; }
+
+/* footer — light */
+.footer{ background:var(--ct-bg-surface); border-top:1px solid var(--ct-border-subtle); margin-top:84px; }
+.footer .wrap{ padding-top:64px; padding-bottom:30px; }
+.foot-grid{ display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; align-items:start; gap:34px; }
+.foot-email{ display:inline-flex; align-items:center; gap:8px; margin-top:14px; color:var(--ct-accent-text); font-size:14.5px; font-weight:600; }
+.foot-email:hover{ text-decoration:underline; }
+.footer .brand{ margin-bottom:12px; display:inline-block; }
+.foot-blurb{ font-size:13.5px; max-width:34ch; color:var(--ct-text-2); }
+.foot-address{ display:flex; align-items:flex-start; gap:8px; font-size:13px; color:var(--ct-text-2); margin-top:16px; line-height:1.5; max-width:32ch; }
+.foot-contact-ic{ width:16px; height:16px; stroke:var(--ct-accent); fill:none; stroke-width:1.8; flex-shrink:0; }
+.foot-address .foot-contact-ic{ margin-top:2px; }
+.footer h4{ color:var(--ct-text); font-family:var(--ct-font); font-size:13px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:16px; }
+.footer ul{ list-style:none; margin:0; padding:0; display:grid; gap:10px; font-size:14px; }
+.footer ul a{ color:var(--ct-text-2); } .footer ul a:hover{ color:var(--ct-accent-text); }
+.foot-news p{ color:var(--ct-text-2); }
+.foot-news input{ width:100%; min-height:46px; padding:0 14px; border-radius:var(--ct-r-sm); border:1px solid var(--ct-border); background:var(--ct-bg-raised); color:var(--ct-text); font-family:inherit; font-size:13.5px; margin-bottom:10px; }
+.foot-news input::placeholder{ color:var(--ct-text-3); }
+.foot-news .btn{ width:100%; }
+.foot-soc{ display:flex; gap:14px; margin-top:18px; }
+.foot-soc a{ width:38px; height:38px; border-radius:50%; border:1px solid var(--ct-border); display:flex; align-items:center; justify-content:center; }
+.foot-soc svg{ width:16px; height:16px; stroke:var(--ct-text-2); fill:none; stroke-width:1.8; }
+/* footer sign-up CTA */
+.foot-cta{ display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  background:var(--ct-accent-subtle); border:1px solid var(--ct-accent-border); border-radius:var(--ct-r-lg); padding:26px 30px; margin-top:56px; }
+.foot-cta .t h3{ font-size:21px; margin-bottom:4px; }
+.foot-cta .t p{ font-size:14px; color:var(--ct-text-2); }
+.foot-cta .form{ display:flex; gap:10px; flex-wrap:wrap; }
+.foot-cta input{ min-height:var(--ct-touch); padding:0 18px; border-radius:var(--ct-r-pill); border:1px solid var(--ct-border);
+  background:var(--ct-bg-raised); color:var(--ct-text); font-family:inherit; font-size:14.5px; min-width:230px; }
+.foot-cta input:focus{ outline:none; border-color:var(--ct-accent); box-shadow:0 0 0 3px var(--ct-accent-glow); }
+@media(max-width:620px){ .foot-cta{ flex-direction:column; align-items:stretch; } .foot-cta .form{ flex-direction:column; } .foot-cta input, .foot-cta .btn{ width:100%; } }
+/* secure payment row */
+.foot-pay{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.foot-pay .secure{ display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--ct-text-2); }
+.foot-pay .secure svg{ width:15px; height:15px; stroke:var(--ct-success); fill:none; stroke-width:1.9; }
+.foot-pay .pay-badges{ display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.pay{ display:inline-flex; align-items:center; justify-content:center; height:27px; min-width:40px; padding:0 9px; border-radius:5px;
+  background:#fff; border:1px solid var(--ct-border-subtle); box-shadow:var(--ct-shadow-xs); font-size:11px; font-weight:800; letter-spacing:.02em; line-height:1; }
+.pay.visa{ color:#1A1F71; font-style:italic; }
+.pay.mc{ color:#1A1A1A; } .pay.mc i{ width:13px; height:13px; border-radius:50%; display:inline-block; }
+.pay.mc .a{ background:#EB001B; } .pay.mc .b{ background:#F79E1B; margin-left:-6px; mix-blend-mode:multiply; }
+.pay.amex{ color:#fff; background:#1F72CD; border-color:#1F72CD; }
+.pay.pp{ color:#003087; font-style:italic; } .pay.pp em{ color:#0099E0; font-style:italic; }
+.pay.apay{ color:#111; } .pay.spay{ color:#5A31F4; } .pay.gpay{ color:#3C4043; }
+.foot-bottom{ border-top:1px solid var(--ct-border-subtle); margin-top:46px; padding-top:22px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; font-size:12.5px; color:var(--ct-text-3); }
+@media(max-width:860px){
+  .foot-grid{ grid-template-columns:1fr 1fr; gap:36px 24px; }
+  .foot-brand{ grid-column:1 / -1; }
+}
+.footer .wrap{ padding-bottom:96px; }
+
+/* sticky add-to-cart */
+.sticky-atc{ position:fixed; left:0; right:0; bottom:0; z-index:60; background:var(--ct-bg-raised);
+  border-top:1px solid var(--ct-border-subtle); box-shadow:0 -10px 30px rgba(90,60,40,.12);
+  transform:translateY(110%); transition:transform var(--ct-dur-base) var(--ct-ease); }
+.sticky-atc.show{ transform:none; }
+.sticky-atc .wrap{ display:flex; align-items:center; justify-content:space-between; gap:14px; padding:11px var(--ct-gutter); }
+.sticky-atc .info{ display:flex; align-items:center; gap:12px; min-width:0; }
+.sticky-atc img{ width:48px; height:48px; border-radius:10px; object-fit:cover; flex-shrink:0; border:1px solid var(--ct-border-subtle); }
+.sticky-atc .meta b{ font-family:var(--ct-display); font-size:16px; display:block; line-height:1.15; color:var(--ct-text); }
+.sticky-atc .meta small{ font-size:12px; color:var(--ct-text-2); display:inline-flex; gap:6px; align-items:center; }
+.sticky-atc .meta .stars{ color:var(--ct-rating); font-size:12px; letter-spacing:.5px; }
+.sticky-atc .btn{ flex-shrink:0; white-space:nowrap; }
+@media(max-width:560px){
+  .sticky-atc .meta b{ font-size:14.5px; }
+  .sticky-atc .meta .revtext{ display:none; }
+  .sticky-atc .btn{ padding:0 18px; font-size:14px; min-height:46px; }
+}
+
+/* reveal + reduced motion */
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme: only light;
+    --ct-bg:#FBF6F0; --ct-bg-surface:#FEFAF5; --ct-bg-raised:#FFFFFF;
+    --ct-text:#2E241D; --ct-text-2:#6B5A4D; --ct-text-3:#9C8B7C; --ct-text-off:#C7B8A9;
+    --ct-accent:#5A3E2B; --ct-accent-strong:#43301F; --ct-accent-text:#4E3526;
+    --ct-accent-subtle:#F1E8DE; --ct-accent-border:#D9C7B4;
+  }
+  html, body{ background-color:#FBF6F0 !important; color:#2E241D !important; }
+}
+.reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s var(--ct-ease), transform .7s var(--ct-ease); }
+.reveal.is-visible{ opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce){
+  *{ scroll-behavior:auto; }
+  .reveal{ opacity:1; transform:none; transition:none; }
+  .marquee-track{ animation:none; }
+  .life figure:hover img{ transform:none; }
+  .btn, .pillar{ transition:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- announce -->
+<div class="announce"><div class="wrap">
+  <span>&#128666; <b>Free shipping</b> on orders $75+</span>
+  <span>&#127769; <b>30-night</b> risk-free trial</span>
+  <span>&#128062; A cozy spot for <b>dogs &amp; cats</b></span>
+</div></div>
+
+<!-- header -->
+<header class="header"><div class="wrap">
+  <a href="#" class="brand">Cozy<span class="paw">Claw</span><sup>&trade;</sup></a>
+  <nav class="nav"><ul>
+    <li><a href="#features">Shop</a></li>
+    <li><a href="#bundle">Best Sellers</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#story">About</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul></nav>
+  <div class="header-ic">
+    <svg viewBox="0 0 24 24" aria-label="Search"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+    <svg viewBox="0 0 24 24" aria-label="Account"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+    <span class="header-cart"><svg viewBox="0 0 24 24" aria-label="Cart"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M6 6L5 3H2"/></svg><b>0</b></span>
+  </div>
+</div></header>
+
+<!-- hero -->
+<section class="hero">
+  <img class="hero-photo" src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sc68ba0bf97fc446882fe68d55365fbf6p.webp?v=1780498796" alt="Dog resting on a CozyClaw plush sofa-bed">
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-text reveal is-visible">
+    <span class="eyebrow">The plush sofa-bed for dogs &amp; cats</span>
+    <h1>Their favorite spot.<br><em>Your cleaner sofa.</em></h1>
+    <p>CozyClaw's deep, pillow-edged pet sofa is soft enough that they'll finally pick their own bed over your couch — keeping the fur, dander, and claws off your furniture.</p>
+    <div class="hero-cta">
+      <a href="#bundle" class="btn btn-primary">Shop CozyClaw</a>
+      <a href="#guide" class="btn btn-outlined">See sizes &amp; colors</a>
+    </div>
+    <div class="hero-trust">
+      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span style="color:var(--ct-text-2)">4.9/5 · 13 reviews</span></span>
+      <span>&#10003; 30-night trial</span>
+      <span>&#10003; Free shipping $75+</span>
+    </div>
+  </div>
+</section>
+
+<!-- trust strip -->
+<div class="trust-strip"><div class="wrap">
+  <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 21c5-3 8-6 8-10a4 4 0 00-8-1 4 4 0 00-8 1c0 4 3 7 8 10z"/></svg></span><div><b>Cloud-soft coral fleece</b><small>Cozy on every paw</small></div></div>
+  <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 14c0-4 4-6 8-6s8 2 8 6"/><path d="M3 14h18v4H3z"/></svg></span><div><b>Raised pillow edges</b><small>A built-in head-rest</small></div></div>
+  <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><div><b>Helps keep sofas hair-free</b><small>Fur stays on the bed</small></div></div>
+  <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9"/><path d="M12 7v5l3 2"/></svg></span><div><b>Machine-washable</b><small>Fresh in one cycle</small></div></div>
+</div></div>
+
+<!-- problem / solution -->
+<section class="section"><div class="wrap">
+  <div class="ba-compare reveal" id="baCompare" role="slider" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+    <img class="after" src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sc68ba0bf97fc446882fe68d55365fbf6p.webp?v=1780498796" alt="A sofa with a CozyClaw pet bed on it">
+    <img class="before" src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S6bf961fb4e8a48729f92fa08354ca682O.webp?v=1780498796" alt="A sofa without a pet bed">
+    <span class="tag tag-b">Before</span>
+    <span class="tag tag-a">After</span>
+    <span class="cap cap-b">Fur, dander &amp; claws all over your sofa</span>
+    <span class="cap cap-a">Their own cozy, washable spot</span>
+    <div class="divider"></div>
+    <div class="knob"><svg viewBox="0 0 24 24"><path d="M9 6l-4 6 4 6M15 6l4 6-4 6"/></svg></div>
+  </div>
+  <p class="ba-hint">Drag to compare — or use &larr; / &rarr; arrow keys</p>
+  <div class="ps">
+    <div class="card prob reveal">
+      <div class="tag">The problem</div>
+      <h3>They love your sofa. It doesn't love them back.</h3>
+      <ul>
+        <li><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Fur and dander work their way deep into your cushions.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Claws catch and pull at the fabric weave over time.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Every evening turns into the same "scoot over" standoff.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>They don't have a spot that's truly, only theirs.</li>
+      </ul>
+    </div>
+    <div class="card sol reveal">
+      <div class="tag">The solution</div>
+      <h3>A spot they'll claim. A home you'll keep clean.</h3>
+      <ul>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>A bed so plush they choose it over your couch.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Fur collects on a bed you can toss in the wash.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Gentle on paws, and far easier on your furniture.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Their own cozy corner — in tones that match your room.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- why pillars -->
+<section class="section" style="background:var(--ct-bg-surface)"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">Why pet parents love it</span>
+    <h2>Comfort for them, peace of mind for you</h2>
+    <p class="lead">Every detail is built around one idea: give your dog or cat a place so good they'll never want to leave it.</p>
+  </div>
+  <div class="pillars">
+    <div class="pillar reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 21c5-3 8-6 8-10a4 4 0 00-8-1 4 4 0 00-8 1c0 4 3 7 8 10z"/></svg></span><h3>Ultra-soft &amp; cozy</h3><p>A dense coral-fleece surface over thick padding cushions tired joints and holds in warmth on cold mornings.</p></div>
+    <div class="pillar reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 14c0-4 4-6 8-6s8 2 8 6"/><path d="M3 14h18v5H3z"/></svg></span><h3>Secure &amp; supportive</h3><p>Raised bolster edges double as a head-rest and a wall, giving anxious or older pets a safe place to settle.</p></div>
+    <div class="pillar reveal"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M8 9V6a4 4 0 018 0v3"/></svg></span><h3>Protects your furniture</h3><p>When they have a spot they prefer, you get fewer hairs on the couch, less scratching, and cleaner cushions.</p></div>
+    <div class="pillar reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l3 6 6 .9-4.5 4.3 1 6.3L12 17l-5.5 3.5 1-6.3L3 9.9 9 9z"/></svg></span><h3>Stylish &amp; neutral</h3><p>Coffee, Grey, and Black tones blend into a modern home instead of shouting "pet stuff" from the corner.</p></div>
+    <div class="pillar reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9"/><path d="M12 7v5l3 2"/></svg></span><h3>Easy to clean</h3><p>The whole bed goes straight in the machine and comes out soft and fluffy — ready for the next nap.</p></div>
+    <div class="pillar reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M20 7L9 18l-5-5"/><path d="M4 7l3 3"/></svg></span><h3>Built to last</h3><p>Reinforced seams and a resilient high-loft fill keep their shape and bounce, wash after wash.</p></div>
+  </div>
+</div></section>
+
+<!-- features w/ images -->
+<section class="section" id="features"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">Thoughtfully designed</span>
+    <h2>Beautifully made, down to the seam</h2>
+  </div>
+  <div class="feat">
+    <div class="card reveal"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S406fffa8c67d4e68b36a83ae663911b0y.webp?v=1780498796" alt="Plush coral-fleece surface"><div class="body"><h3>Plush coral-fleece top</h3><p>A deep, faux-fur surface that feels like a favorite blanket — and stays that soft after every wash.</p></div></div>
+    <div class="card reveal"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sb75526b52f8d43f397981f334b909aafF.webp?v=1780498796" alt="Raised bolster edges"><div class="body"><h3>Raised bolster edges</h3><p>Cushioned sides work as both a pillow and a wall, so they can curl up tight or stretch right out.</p></div></div>
+    <div class="card reveal"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sbf704be07ddd4c10adad72633a594629S.webp?v=1780498797" alt="Non-slip base"><div class="body"><h3>Non-slip base</h3><p>A grippy underside keeps the bed planted on floors, sofas, and slick surfaces — no sliding mid-zoomies.</p></div></div>
+    <div class="card reveal"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S4266af0b5e144b3abc9d082ad02705f0R.webp?v=1780498797" alt="Machine washable"><div class="body"><h3>Machine washable</h3><p>The whole bed goes straight in the wash and comes back soft and fluffy — no fuss, no special care.</p></div></div>
+  </div>
+</div></section>
+
+<!-- marquee -->
+<div class="marquee"><div class="marquee-track">
+  <span>Made for happy dogs &amp; cats&nbsp;</span><span>Cozier naps&nbsp;</span><span>Cleaner sofas&nbsp;</span><span>A spot of their own&nbsp;</span>
+  <span>Made for happy dogs &amp; cats&nbsp;</span><span>Cozier naps&nbsp;</span><span>Cleaner sofas&nbsp;</span><span>A spot of their own&nbsp;</span>
+</div></div>
+
+<!-- lifestyle -->
+<section class="section"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">Made for real life</span>
+    <h2>Use it anywhere they love to relax</h2>
+  </div>
+  <div class="life">
+    <figure class="reveal"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sc68ba0bf97fc446882fe68d55365fbf6p.webp?v=1780498796" alt="On the sofa"><figcaption>On the sofa</figcaption></figure>
+    <figure class="reveal"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S0d4e7241dbca4bf1a06b87479b1166dfS.webp?v=1780498797" alt="On the floor"><figcaption>On the floor</figcaption></figure>
+    <figure class="reveal"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S2a381fdd19594af290b618eb14be07a5I.webp?v=1780498796" alt="By the window"><figcaption>By the window</figcaption></figure>
+    <figure class="reveal"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S6bf961fb4e8a48729f92fa08354ca682O.webp?v=1780498796" alt="In their cozy corner"><figcaption>In their cozy corner</figcaption></figure>
+  </div>
+</div></section>
+
+<!-- size & color guide -->
+<section class="section guide" id="guide"><div class="wrap grid">
+  <div class="reveal">
+    <span class="eyebrow">Size &amp; color guide</span>
+    <h2 style="font-size:30px; margin:10px 0 6px;">Find their perfect fit</h2>
+    <p class="lead" style="font-size:16px;">Three neutral colors, two roomy sizes. Pick the shade that suits your space and the size that suits your pet.</p>
+    <div class="swatches">
+      <div class="sw"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S4266af0b5e144b3abc9d082ad02705f0R.webp?v=1780498797" alt="Cozy Plush Pet Sofa in Coffee">Coffee</div>
+      <div class="sw"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S2a381fdd19594af290b618eb14be07a5I.webp?v=1780498796" alt="Cozy Plush Pet Sofa in Grey">Grey</div>
+      <div class="sw"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S0d4e7241dbca4bf1a06b87479b1166dfS.webp?v=1780498797" alt="Cozy Plush Pet Sofa in Black">Black</div>
+    </div>
+    <p class="fit-tip">Tip: measure your pet nose-to-tail while they're curled up, then add 4–6&quot; of breathing room.</p>
+  </div>
+  <div class="sizes reveal">
+    <div class="size"><span class="badge">M</span><div><b>Medium</b> <span class="dim">60 &times; 80 cm (24&Prime; &times; 31&Prime;)</span><p>Best for cats and small dogs — a snug spot for curling up.</p></div></div>
+    <div class="size"><span class="badge">L</span><div><b>Large</b> <span class="dim">80 &times; 90 cm (31&Prime; &times; 35&Prime;)</span><p>Best for medium and larger dogs, or any pet who loves to sprawl.</p></div></div>
+  </div>
+</div></section>
+
+<!-- comparison -->
+<section class="section"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">How it compares</span>
+    <h2>CozyClaw vs. the rest</h2>
+  </div>
+  <div class="compare reveal"><table>
+    <thead><tr><th>Feature</th><th class="col-us">CozyClaw Sofa-Bed</th><th>Regular Blanket</th><th>Basic Pet Mat</th></tr></thead>
+    <tbody>
+      <tr><td>Cloud-soft coral fleece</td><td class="col-us"><span class="yes">&#10003;</span></td><td><span class="mid">Sometimes</span></td><td><span class="no">&#10007;</span></td></tr>
+      <tr><td>Raised supportive edges</td><td class="col-us"><span class="yes">&#10003;</span></td><td><span class="no">&#10007;</span></td><td><span class="no">&#10007;</span></td></tr>
+      <tr><td>Helps keep sofas hair-free</td><td class="col-us"><span class="yes">&#10003;</span></td><td><span class="mid">Limited</span></td><td><span class="mid">Sometimes</span></td></tr>
+      <tr><td>Machine-washable cover</td><td class="col-us"><span class="yes">&#10003;</span></td><td><span class="mid">Limited</span></td><td><span class="mid">Limited</span></td></tr>
+      <tr><td>Non-slip bottom</td><td class="col-us"><span class="yes">&#10003;</span></td><td><span class="no">&#10007;</span></td><td><span class="mid">Sometimes</span></td></tr>
+      <tr><td>Stylish, home-friendly look</td><td class="col-us"><span class="yes">&#10003;</span></td><td><span class="no">&#10007;</span></td><td><span class="mid">Limited</span></td></tr>
+      <tr><td>Holds shape over time</td><td class="col-us"><span class="yes">&#10003;</span></td><td><span class="no">Low</span></td><td><span class="no">Low</span></td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<!-- materials & care -->
+<section class="section" id="story" style="background:var(--ct-bg-surface)"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">Materials &amp; care</span>
+    <h2>What it's made of — and how to keep it fresh</h2>
+  </div>
+  <div class="mc">
+    <div class="panel reveal">
+      <h3>Inside &amp; out</h3>
+      <div class="spec"><span>Cover</span><b>Soft coral fleece, zip-off</b></div>
+      <div class="spec"><span>Fill</span><b>Thick high-loft padding</b></div>
+      <div class="spec"><span>Base</span><b>Non-slip backing</b></div>
+      <div class="spec"><span>Best for</span><b>Dogs &amp; cats</b></div>
+      <div class="spec"><span>Colors</span><b>Coffee · Grey · Black</b></div>
+      <div class="spec"><span>Sizes</span><b>60×80 &amp; 80×90 cm</b></div>
+    </div>
+    <div class="panel reveal">
+      <h3>Care in three steps</h3>
+      <div class="spec"><span>1 · Unzip</span><b>Remove the cover</b></div>
+      <div class="spec"><span>2 · Wash</span><b>Machine wash cold, gentle</b></div>
+      <div class="spec"><span>3 · Dry</span><b>Air-dry or tumble low</b></div>
+      <p style="font-size:13.5px; color:var(--ct-text-3); margin-top:16px;">The fleece keeps its softness and the fill keeps its loft, so it comes out feeling brand new — wash after wash.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- reviews -->
+<section class="section reviews" id="reviews"><div class="wrap">
+  <div class="rev-head reveal">
+    <span class="stars" style="font-size:20px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    <div class="big">4.9 out of 5</div>
+    <p class="lead" style="font-size:15px;">Based on 13 reviews</p>
+  </div>
+  <div class="rev-grid">
+    <div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"He used to take over the entire couch. Now he goes straight to his CozyClaw the moment we sit down — and the cushions finally stay clean."</p><div class="rev-who"><span class="rev-av">M</span><div><b>Megan R.</b><small>Verified buyer · Golden mix</small></div></div></div>
+    <div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"My cat picked her spot in about five minutes flat. She loves nesting against the raised edge. Washes beautifully too."</p><div class="rev-who"><span class="rev-av">J</span><div><b>Jordan P.</b><small>Verified buyer · Tabby cat</small></div></div></div>
+    <div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div><p>"Really comfy and looks great in Coffee. It took a day out of the box to fully fluff up, but after that it's perfect."</p><div class="rev-who"><span class="rev-av">A</span><div><b>Alicia N.</b><small>Verified buyer · Two dogs</small></div></div></div>
+    <div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Worth it for the bolster edges alone. My senior boy rests his head on them and settles right down for the night."</p><div class="rev-who"><span class="rev-av">D</span><div><b>David L.</b><small>Verified buyer · Senior lab</small></div></div></div>
+  </div>
+</div></section>
+
+<!-- guarantee -->
+<section class="section"><div class="wrap">
+  <div class="guarantee"><div class="guar">
+    <div class="g reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 7-7 9-4-2-7-4-7-9V6z"/></svg></span><b>30-night trial</b><p>Sleep on it. If it's not their spot, send it back.</p></div>
+    <div class="g reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 13h13V6H3zM16 9h3l2 3v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg></span><b>Free shipping $75+</b><p>Fast, tracked delivery on qualifying orders.</p></div>
+    <div class="g reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 7l8-4 8 4-8 4z"/><path d="M4 7v7l8 4 8-4V7"/></svg></span><b>Easy returns</b><p>A simple, no-drama return process if you need it.</p></div>
+    <div class="g reveal"><span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span><b>Secure checkout</b><p>Encrypted payment with trusted providers.</p></div>
+  </div></div>
+</div></section>
+
+<!-- bundle -->
+<section class="section" id="bundle"><div class="wrap">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">Bundle &amp; save</span>
+    <h2>Pick their cozy setup</h2>
+    <p class="lead">Most homes have more than one favorite napping spot. Add a second bed and the whole order ships free.</p>
+  </div>
+  <div class="bundle-grid reveal">
+    <div class="btier">
+      <h3>Single Cozy Spot</h3>
+      <span class="btier-sub">One plush sofa-bed</span>
+      <img class="btier-img" src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sc68ba0bf97fc446882fe68d55365fbf6p.webp?v=1780498796" alt="One CozyClaw plush sofa-bed">
+      <ul class="btier-feat">
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>One bed in your chosen color &amp; size</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>30-night risk-free trial</li>
+      </ul>
+      <div class="btier-price"><span class="per">from</span><b>$22.82</b></div>
+      <a href="#" class="btn btn-outlined btn-block">Choose single</a>
+    </div>
+    <div class="btier btier-pop">
+      <span class="btier-badge">Most popular &middot; ships free</span>
+      <h3>Double Comfort</h3>
+      <span class="btier-sub">Two beds for every favorite spot</span>
+      <img class="btier-img" src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S2a381fdd19594af290b618eb14be07a5I.webp?v=1780498796" alt="Two CozyClaw plush pet sofas">
+      <ul class="btier-feat">
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Two beds — mix colors &amp; sizes freely</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span class="hl">FREE shipping on the whole order</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>30-night risk-free trial</li>
+      </ul>
+      <div class="btier-price"><span class="per">from</span><b>$45.64</b><span class="ship">ships free</span></div>
+      <a href="#" class="btn btn-primary btn-block">Choose double</a>
+    </div>
+  </div>
+  <div class="bundle-addons reveal">
+    <span class="addon-label">Complete their setup — optional add-ons</span>
+    <div class="addons-flex">
+      <div class="addon"><span class="addon-ic"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S30639965412442918c19b3fc56c38e9bt.webp?v=1780502219" alt="ChompClean Toy"></span><div><b>ChompClean Toy</b><small>A squeaky chew that keeps playtime on their bed.</small></div></div>
+      <div class="addon"><span class="addon-ic"><img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/S1a69ae9ec8fc458fbf09f52c6f8db422R.webp?v=1780503774" alt="Pet Deshedding Glove Brush"></span><div><b>Pet Deshedding Glove Brush</b><small>Lifts loose fur before it ever reaches your sofa.</small></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- faq -->
+<section class="section" id="faq" style="background:var(--ct-bg-surface)"><div class="wrap" style="max-width:780px;">
+  <div class="sec-head center reveal">
+    <span class="eyebrow">Good to know</span>
+    <h2>Frequently asked questions</h2>
+  </div>
+  <div class="reveal">
+    <div class="faq-item"><button class="faq-q">What size should I choose?</button><div class="faq-a"><p>Measure your pet nose-to-tail while they're curled up and add about 4–6 inches. Medium is 60×80&nbsp;cm (24&Prime;×31&Prime;) and suits cats and small dogs; Large is 80×90&nbsp;cm (31&Prime;×35&Prime;) for medium and larger dogs, or any pet who loves to sprawl.</p></div></div>
+    <div class="faq-item"><button class="faq-q">Is it machine washable?</button><div class="faq-a"><p>Yes. The whole bed is machine-washable on a cold, gentle cycle. Air-dry or tumble on low and it comes back soft and fluffy.</p></div></div>
+    <div class="faq-item"><button class="faq-q">Is it safe for puppies and kittens?</button><div class="faq-a"><p>It's designed for dogs and cats of all ages. The soft, supportive edges are especially comforting for young or older pets. As with any bed, supervise heavy chewers.</p></div></div>
+    <div class="faq-item"><button class="faq-q">What is it made of?</button><div class="faq-a"><p>A soft coral-fleece cover over thick high-loft padding, with a non-slip backing underneath to keep it in place on floors and furniture.</p></div></div>
+    <div class="faq-item"><button class="faq-q">Will it stay put on my sofa?</button><div class="faq-a"><p>The grippy non-slip base helps it stay planted on most sofas, floors, and slick surfaces, so it won't slide around when they hop on and off.</p></div></div>
+    <div class="faq-item"><button class="faq-q">What is your return policy?</button><div class="faq-a"><p>Every CozyClaw comes with a 30-night risk-free trial. If it isn't their new favorite spot, reach out to support@cozyclaw.com and we'll help with a return. Free shipping applies to orders over $75.</p></div></div>
+  </div>
+</div></section>
+
+<!-- final CTA -->
+<section class="section"><div class="wrap">
+  <div class="finalcta reveal">
+    <span class="eyebrow">A cozier pet, a cleaner home</span>
+    <h2 style="margin-top:12px;">Give them their favorite spot.</h2>
+    <p>Give your dog or cat a cozier spot of their own and keep your home a little tidier — backed by a 30-night risk-free trial and free shipping over $75.</p>
+    <a href="#bundle" class="btn btn-primary">Shop CozyClaw now</a>
+  </div>
+</div></section>
+
+<!-- footer -->
+<footer class="footer"><div class="wrap">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="#" class="brand">Cozy<span class="paw">Claw</span><sup>&trade;</sup></a>
+      <p class="foot-blurb">Founded to help pet parents make their dogs' and cats' everyday lives a little cozier — one well-made product at a time.</p>
+      <p class="foot-address"><svg class="foot-contact-ic" viewBox="0 0 24 24"><path d="M12 21s-7-5.2-7-11a7 7 0 0114 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span>509 Byrum Rd, Chaparral, NM 88081, United States</span></p>
+      <a class="foot-email" href="mailto:support@cozyclaw.com"><svg class="foot-contact-ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>support@cozyclaw.com</a>
+    </div>
+    <div><h4>Shop</h4><ul>
+      <li><a href="#features">Cozy Plush Pet Sofa</a></li>
+      <li><a href="#bundle">Bundle &amp; Save</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#features">Why It Works</a></li>
+    </ul></div>
+    <div><h4>Help</h4><ul>
+      <li><a href="#">Shipping Policy</a></li>
+      <li><a href="#">Returns &amp; 7-Day Guarantee</a></li>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ul></div>
+    <div><h4>Legal</h4><ul>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms of Service</a></li>
+      <li><a href="#">Refund &amp; Return Policy</a></li>
+      <li><a href="#">Cookie Policy</a></li>
+    </ul></div>
+  </div>
+
+  <div class="foot-cta">
+    <div class="t">
+      <h3>Join the cozy club</h3>
+      <p>Get 15% off your first order, plus first dibs on new colors and cozy deals.</p>
+    </div>
+    <div class="form">
+      <input type="email" id="footEmail" placeholder="Enter your email" aria-label="Email address" autocomplete="email">
+      <button class="btn btn-primary" onclick="footSignup(this)">Sign up</button>
+    </div>
+  </div>
+
+  <div class="foot-bottom">
+    <span>© 2026 CozyClaw. All rights reserved.</span>
+    <div class="foot-pay">
+      <span class="secure"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Secure checkout</span>
+      <div class="pay-badges" aria-label="Accepted payment methods">
+        <span class="pay visa">VISA</span>
+        <span class="pay mc"><i class="a"></i><i class="b"></i></span>
+        <span class="pay amex">AMEX</span>
+        <span class="pay pp">Pay<em>Pal</em></span>
+        <span class="pay apay">&#63743;Pay</span>
+        <span class="pay gpay">G&nbsp;Pay</span>
+        <span class="pay spay">shop<span style="color:#5A31F4">Pay</span></span>
+      </div>
+    </div>
+  </div>
+</div></footer>
+
+<!-- sticky add to cart -->
+<div class="sticky-atc" id="stickyAtc">
+  <div class="wrap">
+    <div class="info">
+      <img src="https://cdn.shopify.com/s/files/1/0998/3669/0711/files/Sc68ba0bf97fc446882fe68d55365fbf6p.webp?v=1780498796" alt="Cozy Plush Pet Sofa">
+      <div class="meta">
+        <b>Cozy Plush Pet Sofa</b><br>
+        <small><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 92% 5-star <span class="revtext">· 13 reviews</span></small>
+      </div>
+    </div>
+    <a href="#bundle" class="btn btn-primary">Add to Cart — from $22.82</a>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(function(b){
+    b.addEventListener('click', function(){ b.parentElement.classList.toggle('open'); });
+  });
+  function footSignup(btn){
+    var i=document.getElementById('footEmail');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim())){ i.focus(); i.style.borderColor='var(--ct-urgency)'; return; }
+    i.style.borderColor='var(--ct-border)'; btn.textContent='Subscribed ✓'; i.value='';
+    // TODO: connect to your email app (Klaviyo / Shopify Email) and issue the 15% code.
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+  }, { threshold:.12 });
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  var atc=document.getElementById('stickyAtc');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY>620){ atc.classList.add('show'); } else { atc.classList.remove('show'); }
+  }, { passive:true });
+
+  // before/after compare slider
+  var ba=document.getElementById('baCompare');
+  if(ba){
+    var dragging=false;
+    function setPos(x){
+      var r=ba.getBoundingClientRect();
+      var p=Math.max(2, Math.min(98, (x-r.left)/r.width*100));
+      ba.style.setProperty('--pos', p+'%');
+      ba.setAttribute('aria-valuenow', Math.round(p));
+    }
+    ba.addEventListener('pointerdown', function(e){ dragging=true; ba.setPointerCapture(e.pointerId); setPos(e.clientX); });
+    ba.addEventListener('pointermove', function(e){ if(dragging) setPos(e.clientX); });
+    ba.addEventListener('pointerup', function(){ dragging=false; });
+    ba.addEventListener('pointercancel', function(){ dragging=false; });
+    ba.addEventListener('keydown', function(e){
+      var cur=parseFloat(ba.style.getPropertyValue('--pos'))||50;
+      if(e.key==='ArrowLeft'){ cur=Math.max(2,cur-4); }
+      else if(e.key==='ArrowRight'){ cur=Math.min(98,cur+4); }
+      else { return; }
+      ba.style.setProperty('--pos', cur+'%'); ba.setAttribute('aria-valuenow', Math.round(cur)); e.preventDefault();
+    });
+  }
+</script>
+</body>
+</html>

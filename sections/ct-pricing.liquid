@@ -8,13 +8,159 @@
 {%- assign layout = section.settings.layout | default: 'plans' -%}
 {%- assign section_id = section.settings.anchor_id | default: section.id -%}
 
-<div id="{{ section_id }}" class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
-  {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
-  {%- if section.settings.subheading != blank -%}
-    <p class="ct-pricing__sub" data-reveal>{{ section.settings.subheading }}</p>
-  {%- endif -%}
+{%- if layout == 'automatic-savings' -%}
+  <script src="{{ 'ct-pricing.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
-  {%- if layout == 'bundle' -%}
+<div id="{{ section_id }}" class="page-width section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  {%- unless layout == 'cleaner-kit' -%}
+    {% render 'ct-section-head', kicker: section.settings.kicker, heading: section.settings.heading %}
+    {%- if section.settings.subheading != blank -%}
+      <p class="ct-pricing__sub" data-reveal>{{ section.settings.subheading }}</p>
+    {%- endif -%}
+  {%- endunless -%}
+
+  {%- if layout == 'automatic-savings' -%}
+    {%- liquid
+      capture savings_free_shipping_threshold_raw
+        render 'ct-reward-threshold', key: 'free_shipping'
+      endcapture
+      capture savings_discount_threshold_raw
+        render 'ct-reward-threshold', key: 'discount'
+      endcapture
+      capture savings_reward_thresholds_configured_raw
+        render 'ct-reward-threshold', key: 'configured'
+      endcapture
+      assign savings_free_shipping_threshold = savings_free_shipping_threshold_raw | strip | plus: 0
+      assign savings_discount_threshold = savings_discount_threshold_raw | strip | plus: 0
+      assign savings_reward_thresholds_configured = savings_reward_thresholds_configured_raw | strip
+      assign savings_demo_total = savings_discount_threshold | times: 140 | divided_by: 100
+      assign savings_max_total = savings_discount_threshold | times: 150 | divided_by: 100
+      assign savings_percent = section.settings.automatic_discount_percent | default: 15
+      if settings.currency_code_enabled
+        assign savings_free_shipping_money = savings_free_shipping_threshold | money_with_currency
+        assign savings_discount_money = savings_discount_threshold | money_with_currency
+        assign savings_max_money = savings_max_total | money_with_currency
+        assign savings_demo_total_money = savings_demo_total | money_with_currency
+      else
+        assign savings_free_shipping_money = savings_free_shipping_threshold | money
+        assign savings_discount_money = savings_discount_threshold | money
+        assign savings_max_money = savings_max_total | money
+        assign savings_demo_total_money = savings_demo_total | money
+      endif
+    -%}
+    {%- if savings_reward_thresholds_configured == 'true' -%}
+      <ct-savings-calculator
+        class="ct-savings"
+        data-free-shipping-threshold="{{ savings_free_shipping_threshold }}"
+        data-discount-threshold="{{ savings_discount_threshold }}"
+        data-discount-percent="{{ savings_percent }}"
+        data-max-total="{{ savings_max_total }}"
+        data-money-format="{{ shop.money_format | escape }}"
+        data-reveal
+      >
+        <div class="ct-savings__top">
+          <div>
+            <p class="ct-savings__label">Reward milestones</p>
+            <output class="ct-savings__amount" data-savings-amount for="ct-savings-range-{{ section.id }}">
+              {{ savings_demo_total_money }}
+            </output>
+          </div>
+          <p class="ct-savings__status" data-savings-status>
+            {{ savings_discount_money }} reached - {{ savings_percent }}% off + free shipping
+          </p>
+        </div>
+
+        <div class="ct-savings__track-wrap">
+          <div class="ct-savings__milestone ct-savings__milestone--shipping">
+            <span>{{ savings_free_shipping_money }} <small>Free shipping</small></span>
+          </div>
+          <div class="ct-savings__milestone ct-savings__milestone--discount">
+            <span>{{ savings_discount_money }} <small>{{ savings_percent }}% off</small></span>
+          </div>
+          <div class="ct-savings__track" aria-hidden="true">
+            <span class="ct-savings__fill" data-savings-fill></span>
+            <span class="ct-savings__mark ct-savings__mark--shipping"></span>
+            <span class="ct-savings__mark ct-savings__mark--discount"></span>
+          </div>
+          <input
+            id="ct-savings-range-{{ section.id }}"
+            class="ct-savings__range"
+            type="range"
+            min="0"
+            max="{{ savings_max_total }}"
+            step="500"
+            value="{{ savings_demo_total }}"
+            aria-label="Try an order total"
+            data-savings-range
+          >
+          <div class="ct-savings__scale" aria-hidden="true">
+            <span>{{ 0 | money }}</span>
+            <span>{{ savings_max_money }}+</span>
+          </div>
+        </div>
+
+        <div class="ct-savings__chips" aria-label="Automatic savings details">
+          <span>No code needed</span>
+          <span>Applied at checkout</span>
+          <span>30-night risk-free trial</span>
+        </div>
+
+        {%- if section.settings.bottom_button_label != blank -%}
+          <a class="ct-btn ct-btn--primary ct-btn--lg ct-savings__cta" href="{{ section.settings.bottom_button_link | default: '#' }}">
+            {{ section.settings.bottom_button_label }}
+          </a>
+        {%- endif -%}
+        <p class="ct-savings__note">Discounts apply to your whole cart - mix any colours & sizes.</p>
+      </ct-savings-calculator>
+    {%- else -%}
+      <div class="ct-savings" data-reveal>
+        <div class="ct-savings__top">
+          <div>
+            <p class="ct-savings__label">Reward milestones</p>
+            <p class="ct-savings__amount">Calculated at checkout</p>
+          </div>
+          <p class="ct-savings__status">Rewards are calculated for your market at checkout.</p>
+        </div>
+      </div>
+    {%- endif -%}
+
+  {%- elsif layout == 'cleaner-kit' -%}
+    {%- assign kit_image = section.settings.kit_image -%}
+    {%- if kit_image == blank -%}
+      {%- assign first_addon = section.blocks | where: 'type', 'addon' | first -%}
+      {%- if first_addon != blank and first_addon.settings.product != blank -%}
+        {%- assign kit_image = first_addon.settings.product.featured_image -%}
+      {%- endif -%}
+    {%- endif -%}
+    <section class="ct-cleaner-kit color-{{ section.settings.color_scheme }}" data-reveal>
+      <div class="ct-cleaner-kit__copy">
+        {%- if section.settings.kicker != blank -%}<span class="ct-eyebrow">{{ section.settings.kicker }}</span>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+        {%- if section.settings.bottom_button_label != blank -%}
+          <a class="ct-btn ct-btn--primary ct-btn--lg" href="{{ section.settings.bottom_button_link | default: '#' }}">{{ section.settings.bottom_button_label }}</a>
+        {%- endif -%}
+      </div>
+      <div class="ct-cleaner-kit__media">
+        {%- if kit_image != blank -%}
+          {{
+            kit_image
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              widths: '480, 720, 900',
+              sizes: '(max-width: 760px) 100vw, 42vw',
+              class: 'ct-cleaner-kit__img',
+              alt: kit_image.alt | default: section.settings.heading | escape
+          }}
+        {%- else -%}
+          <span aria-hidden="true">{%- render 'ct-fa-icon', icon: 'paw' -%}</span>
+        {%- endif -%}
+      </div>
+    </section>
+
+  {%- elsif layout == 'bundle' -%}
     {%- comment -%} Compact bundle cards per cozyclaw-landing.html .bundle-grid.
         Each block can pick its own product (block.settings.block_product); when
         set, name + prices + save chip auto-bind to live Shopify data. Hardcoded
@@ -30,11 +176,24 @@
         {%- assign bundle_was = block.settings.price_was -%}
         {%- assign bundle_save = block.settings.save_text -%}
         {%- if bp != blank -%}
-          {%- assign bundle_now = bp.price | money -%}
+          {%- if settings.currency_code_enabled -%}
+            {%- assign bundle_now = bp.price | money_with_currency -%}
+          {%- else -%}
+            {%- assign bundle_now = bp.price | money -%}
+          {%- endif -%}
           {%- if bp.compare_at_price > bp.price -%}
-            {%- assign bundle_was = bp.compare_at_price | money -%}
+            {%- if settings.currency_code_enabled -%}
+              {%- assign bundle_was = bp.compare_at_price | money_with_currency -%}
+            {%- else -%}
+              {%- assign bundle_was = bp.compare_at_price | money -%}
+            {%- endif -%}
             {%- assign save_diff = bp.compare_at_price | minus: bp.price -%}
-            {%- assign bundle_save = save_diff | money | prepend: 'Save ' -%}
+            {%- if settings.currency_code_enabled -%}
+              {%- assign bundle_save_money = save_diff | money_with_currency -%}
+            {%- else -%}
+              {%- assign bundle_save_money = save_diff | money -%}
+            {%- endif -%}
+            {%- assign bundle_save = bundle_save_money | prepend: 'Save ' -%}
           {%- else -%}
             {%- assign bundle_was = blank -%}
             {%- assign bundle_save = blank -%}
@@ -63,12 +222,64 @@
     {%- endif -%}
 
   {%- elsif layout == 'tier-pair' -%}
+    {%- liquid
+      assign plan_blocks = section.blocks | where: 'type', 'plan'
+      assign addon_blocks = section.blocks | where: 'type', 'addon'
+      assign discount_percent = section.settings.automatic_discount_percent | default: 15
+      capture free_shipping_threshold_raw
+        render 'ct-reward-threshold', key: 'free_shipping'
+      endcapture
+      capture discount_threshold_raw
+        render 'ct-reward-threshold', key: 'discount'
+      endcapture
+      capture reward_thresholds_configured_raw
+        render 'ct-reward-threshold', key: 'configured'
+      endcapture
+      assign discount_threshold_cents = discount_threshold_raw | strip | plus: 0
+      assign free_shipping_threshold_cents = free_shipping_threshold_raw | strip | plus: 0
+      assign reward_thresholds_configured = reward_thresholds_configured_raw | strip
+      if settings.currency_code_enabled
+        assign discount_threshold_money = discount_threshold_cents | money_with_currency
+        assign free_shipping_threshold_money = free_shipping_threshold_cents | money_with_currency
+      else
+        assign discount_threshold_money = discount_threshold_cents | money
+        assign free_shipping_threshold_money = free_shipping_threshold_cents | money
+      endif
+    -%}
     <section class="ct-tier-pair color-{{ section.settings.color_scheme }}" id="{{ section_id }}">
       <div class="ct-tier-pair__inner">
         <div class="ct-tier-pair__grid">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'plan' -%}
+          {%- for block in plan_blocks -%}
               {%- assign tier_p = block.settings.block_product -%}
+              {%- assign tier_qty = 1 -%}
+              {%- if block.settings.featured -%}{%- assign tier_qty = 2 -%}{%- endif -%}
+              {%- assign tier_regular_cents = 0 -%}
+              {%- assign tier_discounted_cents = 0 -%}
+              {%- assign tier_savings_cents = 0 -%}
+              {%- assign tier_regular_money = blank -%}
+              {%- assign tier_discounted_money = blank -%}
+              {%- assign tier_savings_money = blank -%}
+              {%- assign tier_discount_eligible = false -%}
+                {%- if tier_p != blank -%}
+                  {%- assign tier_regular_cents = tier_p.price_min | times: tier_qty -%}
+                {%- if reward_thresholds_configured == 'true' and tier_regular_cents >= discount_threshold_cents -%}
+                  {%- assign tier_discount_eligible = true -%}
+                  {%- assign discount_multiplier = 100 | minus: discount_percent -%}
+                  {%- assign tier_discounted_cents = tier_regular_cents | times: discount_multiplier | divided_by: 100 -%}
+                  {%- assign tier_savings_cents = tier_regular_cents | minus: tier_discounted_cents -%}
+                {%- else -%}
+                  {%- assign tier_discounted_cents = tier_regular_cents -%}
+                {%- endif -%}
+                {%- if settings.currency_code_enabled -%}
+                  {%- assign tier_regular_money = tier_regular_cents | money_with_currency -%}
+                  {%- assign tier_discounted_money = tier_discounted_cents | money_with_currency -%}
+                  {%- assign tier_savings_money = tier_savings_cents | money_with_currency -%}
+                {%- else -%}
+                  {%- assign tier_regular_money = tier_regular_cents | money -%}
+                  {%- assign tier_discounted_money = tier_discounted_cents | money -%}
+                  {%- assign tier_savings_money = tier_savings_cents | money -%}
+                {%- endif -%}
+              {%- endif -%}
               <div class="ct-tier{% if block.settings.featured %} ct-tier--pop{% endif %}" {{ block.shopify_attributes }}>
                 {%- if block.settings.featured and block.settings.badge != blank -%}
                   <span class="ct-tier-badge">{{ block.settings.badge }}</span>
@@ -76,9 +287,13 @@
                 <h3 class="ct-tier__name">{{ block.settings.name }}</h3>
                 {%- if block.settings.tagline != blank -%}<span class="ct-tier__sub">{{ block.settings.tagline }}</span>{%- endif -%}
                 {%- if block.settings.image != blank -%}
-                  <img class="ct-tier__img" src="{{ block.settings.image | image_url: width: 600 }}" width="600" height="375" alt="{{ block.settings.image.alt | escape | default: block.settings.name }}" loading="lazy">
+                  <div class="ct-tier__media">
+                    <img class="ct-tier__img" src="{{ block.settings.image | image_url: width: 600 }}" width="600" height="375" alt="{{ block.settings.image.alt | escape | default: block.settings.name }}" loading="lazy">
+                  </div>
                 {%- elsif tier_p != blank and tier_p.featured_image != blank -%}
-                  <img class="ct-tier__img" src="{{ tier_p.featured_image | image_url: width: 600 }}" width="600" height="375" alt="{{ tier_p.title }}" loading="lazy">
+                  <div class="ct-tier__media">
+                    <img class="ct-tier__img" src="{{ tier_p.featured_image | image_url: width: 600 }}" width="600" height="375" alt="{{ tier_p.title }}" loading="lazy">
+                  </div>
                 {%- endif -%}
                 {%- if block.settings.features != blank -%}
                   <ul class="ct-tier__feat">
@@ -96,30 +311,48 @@
                   </ul>
                 {%- endif -%}
                 <div class="ct-tier__price">
-                  <span class="ct-tier__per">from</span>
-                  <b>{% if tier_p != blank %}{{ tier_p.price_min | money }}{% else %}{{ block.settings.price_fallback }}{% endif %}</b>
-                  {%- if block.settings.featured -%}<span class="ct-tier__ship">ships free</span>{%- endif -%}
+                  <span class="ct-tier__per">
+                    {%- if block.settings.featured -%}bundle price{%- else -%}each{%- endif -%}
+                  </span>
+                  <b>
+                    {%- if tier_p != blank and block.settings.featured -%}
+                      {{ tier_discounted_money }}
+                    {%- elsif tier_p != blank -%}
+                      {{ tier_regular_money }}
+                    {%- else -%}
+                      {{ block.settings.price_fallback }}
+                    {%- endif -%}
+                  </b>
+                  {%- if tier_p != blank and block.settings.featured and tier_discount_eligible -%}
+                    <span class="ct-tier__was">{{ tier_regular_money }}</span>
+                    <span class="ct-tier__ship">{{ discount_percent }}% off {{ discount_threshold_money }}+ - save {{ tier_savings_money }}</span>
+                  {%- elsif block.settings.featured and reward_thresholds_configured == 'true' -%}
+                    <span class="ct-tier__ship">{{ discount_percent }}% off at {{ discount_threshold_money }}+</span>
+                  {%- elsif reward_thresholds_configured == 'true' -%}
+                    <span class="ct-tier__ship">regular price alone - free shipping at {{ free_shipping_threshold_money }}+</span>
+                  {%- else -%}
+                    <span class="ct-tier__ship">rewards calculated at checkout</span>
+                  {%- endif -%}
                 </div>
                 {%- assign tier_btn_link = block.settings.button_link -%}
                 {%- if tier_btn_link == blank and tier_p != blank -%}{%- assign tier_btn_link = tier_p.url -%}{%- endif -%}
                 <a href="{{ tier_btn_link | default: '#' }}" class="ct-btn ct-btn--{% if block.settings.featured %}primary{% else %}outlined{% endif %} ct-btn--block">{{ block.settings.button_label | default: 'Choose this' }}</a>
               </div>
-            {%- endif -%}
           {%- endfor -%}
         </div>
-        {%- assign has_addons = false -%}
-        {%- for block in section.blocks -%}{%- if block.type == 'addon' -%}{%- assign has_addons = true -%}{%- endif -%}{%- endfor -%}
-        {%- if has_addons -%}
+        {%- if addon_blocks.size > 0 -%}
           <div class="ct-bundle__addons">
             {%- if section.settings.addons_label != blank -%}
               <span class="ct-bundle__addons-label">{{ section.settings.addons_label }}</span>
             {%- endif -%}
             <div class="ct-bundle__addons-grid">
-              {%- for block in section.blocks -%}
-                {%- if block.type == 'addon' -%}
+              {%- for block in addon_blocks -%}
                   {%- assign ap = block.settings.product -%}
                   {%- assign aimg = block.settings.image -%}
                   {%- if aimg == blank and ap != blank -%}{%- assign aimg = ap.featured_image -%}{%- endif -%}
+                  {%- assign av = ap.selected_or_first_available_variant -%}
+                  {%- assign addon_has_compare = false -%}
+                  {%- if av != blank and av.compare_at_price > av.price -%}{%- assign addon_has_compare = true -%}{%- endif -%}
                   <div class="ct-bundle__addon" {{ block.shopify_attributes }}>
                     {%- if aimg != blank -%}
                       <span class="ct-bundle__addon-img"><img src="{{ aimg | image_url: width: 120 }}" width="120" height="120" alt="{{ aimg.alt | escape | default: block.settings.title | default: ap.title }}" loading="lazy"></span>
@@ -127,9 +360,26 @@
                     <div>
                       <b>{{ block.settings.title | default: ap.title }}</b>
                       {%- if block.settings.desc != blank -%}<small>{{ block.settings.desc }}</small>{%- endif -%}
+                  {%- if av != blank -%}
+                    {%- if settings.currency_code_enabled -%}
+                      {%- assign av_price_money = av.price | money_with_currency -%}
+                      {%- assign av_compare_money = av.compare_at_price | money_with_currency -%}
+                    {%- else -%}
+                      {%- assign av_price_money = av.price | money -%}
+                      {%- assign av_compare_money = av.compare_at_price | money -%}
+                    {%- endif -%}
+                    <span class="ct-bundle__addon-price">
+                      + Add for extra cost:
+                      <strong>{{ av_price_money }}</strong>
+                      {%- if addon_has_compare -%}
+                            <s>{{ av_compare_money }}</s>
+                          {%- endif -%}
+                        </span>
+                      {%- else -%}
+                        <span class="ct-bundle__addon-price">+ Add for extra cost</span>
+                      {%- endif -%}
                     </div>
                   </div>
-                {%- endif -%}
               {%- endfor -%}
             </div>
           </div>
@@ -154,7 +404,13 @@
           {%- if block.settings.tagline != blank -%}<div class="ct-plan__tagline">{{ block.settings.tagline }}</div>{%- endif -%}
           <div class="ct-plan__price-row">
             <span class="ct-plan__price">
-              {%- if variant != blank -%}{{ variant.price | money }}{%- else -%}{{ block.settings.price_fallback }}{%- endif -%}
+              {%- if variant != blank -%}
+                {%- if settings.currency_code_enabled -%}
+                  {{ variant.price | money_with_currency }}
+                {%- else -%}
+                  {{ variant.price | money }}
+                {%- endif -%}
+              {%- else -%}{{ block.settings.price_fallback }}{%- endif -%}
             </span>
             {%- if block.settings.price_diff != blank -%}<span class="ct-plan__price-diff">{{ block.settings.price_diff }}</span>{%- endif -%}
           </div>
@@ -204,14 +460,16 @@
   "class": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
-    { "type": "select", "id": "layout", "label": "Layout", "options": [ { "value": "plans", "label": "Plans (full cards)" }, { "value": "bundle", "label": "Bundle (compact)" }, { "value": "tier-pair", "label": "2-tier comparison + addons (homepage)" } ], "default": "plans" },
-    { "type": "text", "id": "addons_label", "label": "Addons strip label (tier-pair only)", "default": "Complete their setup — optional add-ons" },
+    { "type": "select", "id": "layout", "label": "Layout", "options": [ { "value": "plans", "label": "Plans (full cards)" }, { "value": "bundle", "label": "Bundle (compact)" }, { "value": "cleaner-kit", "label": "Cleaner Couch Kit banner (homepage)" }, { "value": "tier-pair", "label": "2-tier comparison + addons (homepage)" }, { "value": "automatic-savings", "label": "Automatic savings calculator (homepage)" } ], "default": "plans" },
+    { "type": "text", "id": "addons_label", "label": "Addons strip label (tier-pair only)", "default": "Optional add-ons - add for extra cost; rewards calculated at checkout" },
+    { "type": "range", "id": "automatic_discount_percent", "label": "Automatic bundle discount percent", "min": 0, "max": 50, "step": 1, "unit": "%", "default": 15, "info": "Display estimate for the Shopify automatic discount: $100+ cart subtotal." },
     { "type": "text", "id": "anchor_id", "label": "Anchor id (e.g. \"bundle\")" },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Pick your system" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "One system. Three ways in." },
     { "type": "textarea", "id": "subheading", "label": "Sub-heading (bundle layout)" },
     { "type": "product", "id": "product", "label": "Product (plans layout)" },
     { "type": "header", "content": "Bundle bottom CTA" },
+    { "type": "image_picker", "id": "kit_image", "label": "Cleaner Kit image" },
     { "type": "text", "id": "bottom_button_label", "label": "Bottom CTA label", "default": "Add Bundle to Cart →" },
     { "type": "url", "id": "bottom_button_link", "label": "Bottom CTA link" },
     { "type": "header", "content": "Trust chips (plans)" },
@@ -244,7 +502,7 @@
         { "type": "text", "id": "button_label", "label": "Per-card button (plans)" },
         { "type": "select", "id": "button_style", "label": "Button style (plans)", "options": [ { "value": "primary", "label": "Primary" }, { "value": "outlined", "label": "Outlined" }, { "value": "soft", "label": "Soft" } ], "default": "primary" },
         { "type": "url", "id": "button_link", "label": "Button link (plans)" },
-        { "type": "text", "id": "price_fallback", "label": "Now price", "default": "$35.97" },
+        { "type": "text", "id": "price_fallback", "label": "Now price" },
         { "type": "text", "id": "price_was", "label": "Was price (struck, bundle)" },
         { "type": "text", "id": "note", "label": "Note under button (plans)" }
       ]
@@ -265,7 +523,7 @@
     {
       "name": "CT Pricing",
       "blocks": [
-        { "type": "plan", "settings": { "tag": "Basic", "name": "The Plan", "button_style": "outlined", "price_fallback": "$35.97" } }
+        { "type": "plan", "settings": { "tag": "Basic", "name": "The Plan", "button_style": "outlined" } }
       ]
     }
   ]

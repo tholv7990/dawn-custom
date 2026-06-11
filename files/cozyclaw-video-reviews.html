@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CozyClaw — Benefits, In action & Reviews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:only light;
+    --cream:#F8F1E8; --cream-2:#F1E8DE; --raised:#FFFDF9;
+    --coffee:#43301F; --coffee-2:#5A3E2B; --ink-soft:#6B5848;
+    --coffee-soft:#EADFD1; --coffee-border:#E2D4C2; --accent:#5A3E2B; --accent-strong:#43301F;
+    --gold:#E0A53B; --success:#65734A;
+    --border:rgba(90,62,43,.16); --border-soft:rgba(90,62,43,.10);
+    --shadow-sm:0 4px 10px rgba(67,48,31,.08);
+    --shadow-md:0 10px 24px rgba(67,48,31,.12);
+    --shadow-lg:0 18px 40px rgba(67,48,31,.16);
+    --font:'Public Sans',system-ui,sans-serif;
+    --display:'Fraunces',Georgia,serif;
+    --r-md:14px; --r-lg:20px; --r-xl:26px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:var(--font); background:var(--cream); color:var(--coffee);
+        -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+  section{ padding:60px 0; }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--accent); background:var(--coffee-soft);
+    padding:7px 14px; border-radius:999px; margin-bottom:16px; }
+  .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent);
+    animation:pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ transform:scale(1); opacity:1 } 50%{ transform:scale(1.6); opacity:.5 } }
+  h2{ font-family:var(--display); font-weight:600; line-height:1.08;
+      font-size:clamp(28px,4vw,40px); letter-spacing:-.015em; color:var(--coffee); }
+  h2 .pop{ color:var(--accent); }
+  .sub{ margin-top:14px; color:var(--ink-soft); font-size:17px; max-width:48ch; }
+  .center{ text-align:center; } .center .sub{ margin-left:auto; margin-right:auto; }
+
+  .loop{ font-size:10px; font-weight:800; letter-spacing:.08em; color:#fff;
+    background:var(--coffee-2); padding:3px 7px; border-radius:6px; }
+
+  /* ===== WHY CHOOSE : left text, right GIF ===== */
+  .feat-head{ text-align:center; max-width:620px; margin:0 auto 38px; }
+  .feat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .feat{
+    display:flex; align-items:center; gap:20px;
+    background:var(--raised); border:1px solid var(--border-soft);
+    border-radius:var(--r-lg); padding:22px; box-shadow:var(--shadow-sm); }
+  .ftext{ flex:1; }
+  .ftext h3{ font-family:var(--display); font-weight:600; font-size:19px; color:var(--coffee); margin-bottom:8px; }
+  .ftext p{ font-size:14.5px; line-height:1.55; color:var(--ink-soft); }
+  .fgif{
+    flex:none; width:150px; aspect-ratio:1/1; border-radius:var(--r-md);
+    background:var(--coffee-soft); border:1px solid var(--coffee-border);
+    position:relative; overflow:hidden; display:grid; place-items:center;
+    transition:transform .2s ease; }
+  .fgif:hover{ transform:scale(1.03); }
+  .fgif svg{ width:42%; height:42%; color:var(--accent); opacity:.55; }
+  .fgif .loop{ position:absolute; right:8px; top:8px; }
+
+  /* ===== IN ACTION : video + gif grid ===== */
+  .action-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:18px; margin-top:30px; }
+  .video{ position:relative; border-radius:var(--r-xl); overflow:hidden; min-height:330px;
+    background:linear-gradient(135deg,#43301F 0%,#6E5238 55%,#9A7A56 100%);
+    box-shadow:var(--shadow-lg); display:grid; place-items:center; }
+  .video .play{ width:82px; height:82px; border-radius:50%; border:none; cursor:pointer;
+    background:rgba(255,255,255,.96); display:grid; place-items:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.25); transition:transform .2s ease; position:relative; z-index:2; }
+  .video .play:hover{ transform:scale(1.08); }
+  .video .play svg{ width:30px; height:30px; color:var(--coffee-2); margin-left:4px; }
+  .video .vlabel{ position:absolute; left:18px; bottom:18px; color:#fff; font-weight:700; font-size:14px;
+    background:rgba(0,0,0,.26); padding:8px 14px; border-radius:999px; backdrop-filter:blur(4px); }
+  .video .ring{ position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; }
+  .video .ring::after{ content:""; width:82px; height:82px; border-radius:50%;
+    box-shadow:0 0 0 0 rgba(255,255,255,.5); animation:ripple 2s ease-out infinite; }
+  @keyframes ripple{ to{ box-shadow:0 0 0 26px rgba(255,255,255,0) } }
+  .gifs{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .gif{ position:relative; aspect-ratio:1/1; border-radius:var(--r-lg); overflow:hidden;
+    background:var(--coffee-soft); border:1px solid var(--coffee-border);
+    display:grid; place-items:center; transition:transform .2s ease; }
+  .gif:hover{ transform:translateY(-3px) rotate(-1deg); }
+  .gif svg{ width:40%; height:40%; color:var(--accent); opacity:.55; }
+  .gif .tag{ position:absolute; left:10px; bottom:10px; font-size:11px; font-weight:700;
+    color:var(--coffee); background:rgba(255,255,255,.92); padding:4px 9px; border-radius:999px; }
+  .gif .loop{ position:absolute; right:10px; top:10px; }
+
+  /* ===== REVIEWS : big square picture ===== */
+  .reviews{ background:var(--cream-2); border-top:1px solid var(--border-soft);
+            border-bottom:1px solid var(--border-soft); }
+  .rev-head{ text-align:center; max-width:640px; margin:0 auto; }
+  .rev-agg{ display:inline-flex; align-items:center; gap:8px; margin-top:14px;
+    color:var(--ink-soft); font-weight:600; font-size:15px; }
+  .rev-agg .stars{ color:var(--gold); letter-spacing:2px; }
+  .rev-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:38px; }
+  .rcard{ background:var(--raised); border:1px solid var(--border-soft);
+    border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--shadow-sm);
+    display:flex; flex-direction:column; }
+
+  /* the big square photo */
+  .rphoto{ position:relative; width:100%; aspect-ratio:1/1; overflow:hidden; }
+  .rphoto img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .rphoto.ph-1{ background:linear-gradient(135deg,#E2D2BC,#CBB392); }
+  .rphoto.ph-2{ background:linear-gradient(135deg,#E4D4BE,#C7A878); }
+  .rphoto.ph-3{ background:linear-gradient(135deg,#E6D6BE,#D6B98E); }
+  .rphoto .sil{ position:absolute; inset:0; display:grid; place-items:center; color:rgba(67,48,31,.28); }
+  .rphoto .sil svg{ width:64px; height:64px; }
+  .rphoto .pin{ position:absolute; left:12px; bottom:12px; display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; font-weight:700; color:#fff; background:rgba(67,48,31,.55);
+    padding:5px 11px; border-radius:999px; backdrop-filter:blur(3px); }
+
+  .rbody{ padding:18px 20px 22px; display:flex; flex-direction:column; gap:10px; }
+  .rstars{ color:var(--gold); letter-spacing:2px; font-size:14px; }
+  .rtext{ color:var(--ink-soft); font-size:14.5px; line-height:1.55; }
+  .rname{ font-weight:700; font-size:14px; color:var(--coffee); display:flex; align-items:center; gap:7px; }
+  .rname .ck{ width:16px; height:16px; border-radius:50%; background:var(--success);
+    display:grid; place-items:center; flex:none; }
+  .rname .ck svg{ width:10px; height:10px; color:#fff; }
+  .rname small{ font-weight:500; color:var(--ink-soft); }
+
+  @media(max-width:860px){
+    .feat-grid{ grid-template-columns:1fr; }
+    .action-grid{ grid-template-columns:1fr; }
+    .rev-grid{ grid-template-columns:1fr; max-width:420px; margin-left:auto; margin-right:auto; }
+  }
+  @media(max-width:520px){ .feat{ flex-direction:column; align-items:flex-start; } .fgif{ width:100%; } }
+  @media(prefers-reduced-motion:reduce){ *{ animation:none !important; } }
+</style>
+</head>
+<body>
+
+  <!-- ===== WHY CHOOSE COZYCLAW : left text, right gif ===== -->
+  <section>
+    <div class="wrap">
+      <div class="feat-head">
+        <span class="eyebrow">Why choose CozyClaw</span>
+        <h2>Built for cats, made to protect your couch</h2>
+      </div>
+
+      <div class="feat-grid">
+        <div class="feat">
+          <div class="ftext">
+            <h3>Ultra-soft plush comfort</h3>
+            <p>Made with dense, A-grade plush that stays soft wash after wash, giving your cat a warm, sink-in spot they&rsquo;ll choose over the bare sofa.</p>
+          </div>
+          <div class="fgif"><span class="loop">GIF</span>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 16a4 4 0 0 1 .5-7.9 5 5 0 0 1 9.7-1A4 4 0 0 1 17 16z"/></svg>
+          </div>
+        </div>
+
+        <div class="feat">
+          <div class="ftext">
+            <h3>Supportive pillow design</h3>
+            <p>A raised, cushioned edge cradles the head and neck, turning any cushion or windowsill into a proper bed for deeper, comfier naps.</p>
+          </div>
+          <div class="fgif"><span class="loop">GIF</span>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 15c0-3 2-5 5-5h8c3 0 5 2 5 5"/><path d="M3 15v4h18v-4" opacity=".55"/><rect x="7" y="11" width="10" height="3" rx="1.5" opacity=".55"/></svg>
+          </div>
+        </div>
+
+        <div class="feat">
+          <div class="ftext">
+            <h3>Sofa protection &amp; non-slip base</h3>
+            <p>Shields couches from fur and scratches, while the anti-slip backing keeps the mat firmly in place even when your cat lands at full speed.</p>
+          </div>
+          <div class="fgif"><span class="loop">GIF</span>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6z"/></svg>
+          </div>
+        </div>
+
+        <div class="feat">
+          <div class="ftext">
+            <h3>Durable &amp; easy to clean</h3>
+            <p>Strong stitching stands up to daily lounging, and the whole mat is machine washable &mdash; fresh again in minutes, no special care needed.</p>
+          </div>
+          <div class="fgif"><span class="loop">GIF</span>
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="4.4" fill="#F8F1E8"/><circle cx="12" cy="13" r="2.2"/><circle cx="8" cy="6.4" r="1"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SEE IT IN ACTION ===== -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow"><span class="dot"></span> See it in action</span>
+      <h2>Built for a cat who <span class="pop">never sits still</span></h2>
+      <p class="sub">Pounces, zoomies, the dramatic flop &mdash; watch the mat keep up with all of it.</p>
+      <div class="action-grid">
+        <div class="video">
+          <div class="ring"></div>
+          <button class="play" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+          <span class="vlabel">▶ 60-second product tour</span>
+        </div>
+        <div class="gifs">
+          <div class="gif"><span class="loop">GIF</span><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="9" r="1.4"/><circle cx="16" cy="9" r="1.4"/><path d="M12 13c3 0 5 1.8 5 4H7c0-2.2 2-4 5-4z"/></svg><span class="tag">The pounce</span></div>
+          <div class="gif"><span class="loop">GIF</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 14c0-3 3-5 7-5s7 2 7 5v3H5z"/><circle cx="12" cy="7" r="2.4"/></svg><span class="tag">Big stretch</span></div>
+          <div class="gif"><span class="loop">GIF</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 12a8 8 0 0 1 16 0z" opacity=".7"/><circle cx="12" cy="12" r="2.4"/></svg><span class="tag">Zoomies</span></div>
+          <div class="gif"><span class="loop">GIF</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 13c0-3 2.6-5 6-5s6 2 6 5v4H6z"/></svg><span class="tag">Nap o'clock</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REVIEWS : big square pictures ===== -->
+  <section class="reviews">
+    <div class="wrap">
+      <div class="rev-head">
+        <span class="eyebrow">Reviews</span>
+        <h2>15,000+ <span class="pop">Happy Cats &amp; Dogs</span></h2>
+        <div class="rev-agg"><span class="stars">★★★★★</span> 4.9 average from verified pet parents</div>
+      </div>
+
+      <div class="rev-grid">
+        <article class="rcard">
+          <div class="rphoto ph-1">
+            <!-- replace with: <img src="review-mochi.jpg" alt="Mochi on her CozyClaw mat"> -->
+            <span class="sil"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l3 3h8l3-3v9a7 7 0 0 1-14 0z"/></svg></span>
+            <span class="pin">📷 Mochi</span>
+          </div>
+          <div class="rbody">
+            <div class="rstars">★★★★★</div>
+            <p class="rtext">She claimed it within five minutes and hasn&rsquo;t left. The sofa is finally fur-free.</p>
+            <div class="rname"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg></span> Hannah T. <small>· Verified</small></div>
+          </div>
+        </article>
+
+        <article class="rcard">
+          <div class="rphoto ph-2">
+            <!-- replace with: <img src="review-biscuit.jpg" alt="Biscuit on his CozyClaw mat"> -->
+            <span class="sil"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6c1 0 2 1 2 3v2c0 4 3 6 6 6s6-2 6-6V9c0-2 1-3 2-3-1 4-1 5-2 6 0 4-3 7-6 7s-6-3-6-7c-1-1-1-2-2-6z"/></svg></span>
+            <span class="pin">📷 Biscuit</span>
+          </div>
+          <div class="rbody">
+            <div class="rstars">★★★★★</div>
+            <p class="rtext">Tossed it in the wash after a muddy week and it came out like new. Worth every dong.</p>
+            <div class="rname"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg></span> Marcus L. <small>· Verified</small></div>
+          </div>
+        </article>
+
+        <article class="rcard">
+          <div class="rphoto ph-3">
+            <!-- replace with: <img src="review-luna.jpg" alt="Luna on her CozyClaw mat"> -->
+            <span class="sil"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l3 3h8l3-3v9a7 7 0 0 1-14 0z"/></svg></span>
+            <span class="pin">📷 Luna</span>
+          </div>
+          <div class="rbody">
+            <div class="rstars">★★★★★</div>
+            <p class="rtext">Two cats, zero arguments &mdash; they take turns. The bolster edge is their favorite part.</p>
+            <div class="rname"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg></span> Priya R. <small>· Verified</small></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

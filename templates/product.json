@@ -1,237 +1,525 @@
 {
-  "sections": {
-    "main": {
-      "type": "main-product",
-      "blocks": {
-        "title": { "type": "title" },
-        "rating": { "type": "rating" },
-        "benefits": {
-          "type": "ct_benefits",
-          "settings": {
-            "items": "Cloud-soft coral fleece — plush comfort that cushions tired joints.\nRaised bolster edges — a built-in head-rest and a sense of security.\nHelps keep sofas hair-free — gives fur a place that isn't your couch.\nNon-slip base — stays planted on floors and sofas.\nMachine washable — the whole bed washes, fresh in one cycle."
-          }
-        },
-        "price": { "type": "price" },
-        "scarcity": {
-          "type": "scarcity",
-          "settings": { "threshold": 20, "selling_fast_label": "", "social_line": "Ships in 3–7 business days" }
-        },
-        "tier-single": {
-          "type": "ct_tier",
-          "settings": {
-            "tier_name": "Single Cozy Spot",
-            "tier_tag": "",
-            "badge": "",
-            "featured": false,
-            "qty": 1,
-            "save_text": "",
-            "price_now": "",
-            "price_was": "",
-            "opt_label": "Color",
-            "opt_emoji": "🐈"
-          }
-        },
-        "tier-double": {
-          "type": "ct_tier",
-          "settings": {
-            "tier_name": "Double Comfort",
-            "tier_tag": "",
-            "badge": "💎 Best value · free shipping",
-            "featured": true,
-            "qty": 2,
-            "save_text": "",
-            "price_now": "",
-            "price_was": "",
-            "opt_label": "Color",
-            "opt_emoji": "🐈"
-          }
-        },
-        "addon-1": {
-          "type": "addon",
-          "settings": { "badge": "💰 Biggest savings today", "flag_style": "urgency" }
-        },
-        "addon-2": {
-          "type": "addon",
-          "settings": { "badge": "🏆 Best-selling combo", "flag_style": "gold" }
-        },
-        "running-total": {
-          "type": "ct_running_total",
-          "settings": { "label": "Total" }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": { "show_dynamic_checkout": true, "show_gift_card_recipient": true }
-        },
-        "payment_reassurance": {
-          "type": "payment_reassurance",
-          "settings": { "show_icons": true, "secure_line": "🔒 Secure checkout · SSL-encrypted" }
-        },
-        "trust-icons": {
-          "type": "ct_trust_icons",
-          "settings": {
-            "icon_1": "🚚", "label_1": "Fast shipping",
-            "icon_2": "🔒", "label_2": "Secure payments",
-            "icon_3": "💜", "label_3": "Support that cares"
-          }
-        }
-      },
-      "block_order": [
-        "title",
-        "rating",
-        "benefits",
-        "price",
-        "scarcity",
-        "tier-single",
-        "tier-double",
-        "addon-1",
-        "addon-2",
-        "running-total",
-        "buy_buttons",
-        "payment_reassurance",
-        "trust-icons"
-      ],
-      "settings": {
-        "enable_sticky_info": true,
-        "gallery_layout": "thumbnail",
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "mobile_thumbnails": "hide",
-        "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 12,
-        "tier_divider_text": "The more they lounge, the cozier their space — Bundle & Save",
-        "addon_divider_text": "⭐ Limited-time add-on discount ⭐"
-      }
-    },
-    "ct_trust_bar": {
-      "type": "ct-trust-bar",
-      "blocks": {
-        "c1": { "type": "chip", "settings": { "icon": "truck", "icon_color": "purple", "label": "Fast shipping", "sublabel": "Ships in 3–7 days" } },
-        "c2": { "type": "chip", "settings": { "icon": "shield", "icon_color": "green", "label": "Money-back guaranteed", "sublabel": "7-day window" } },
-        "c3": { "type": "chip", "settings": { "icon": "shield", "icon_color": "blue", "label": "Secured payments", "sublabel": "256-bit SSL" } }
-      },
-      "block_order": ["c1", "c2", "c3"],
-      "settings": { "color_scheme": "scheme-1", "padding_top": 16, "padding_bottom": 16 }
-    },
-    "ct_marquee": {
-      "type": "ct-marquee",
-      "blocks": {
-        "m1": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } },
-        "m2": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } },
-        "m3": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } },
-        "m4": { "type": "message", "settings": { "text": "♥ LOVED BY THOUSANDS OF KITTIES" } }
-      },
-      "block_order": ["m1", "m2", "m3", "m4"],
-      "settings": { "speed": 24, "color_scheme": "scheme-1" }
-    },
-    "ct_why": {
-      "type": "ct-use-cases",
-      "blocks": {
-        "u1": { "type": "card", "settings": { "emoji": "☁️", "tag": "Plush", "title": "Ultra-soft plush comfort", "desc": "Made with dense, A-grade plush that stays soft wash after wash, giving your cat a warm, sink-in spot they'll choose over the bare sofa." } },
-        "u2": { "type": "card", "settings": { "emoji": "🛏️", "tag": "Pillow", "title": "Supportive pillow design", "desc": "A raised, cushioned edge cradles the head and neck, turning any cushion or windowsill into a proper bed for deeper, comfier naps." } },
-        "u3": { "type": "card", "settings": { "emoji": "🛡️", "tag": "Protect", "title": "Sofa protection & non-slip base", "desc": "Shields couches from fur and scratches, while the anti-slip backing keeps the mat firmly in place even when your cat lands at full speed." } },
-        "u4": { "type": "card", "settings": { "emoji": "🧺", "tag": "Clean", "title": "Durable & easy to clean", "desc": "Strong stitching stands up to daily lounging, and the whole mat is machine washable — fresh again in minutes, no special care needed." } }
-      },
-      "block_order": ["u1", "u2", "u3", "u4"],
-      "settings": { "kicker": "Why choose CozyClaw", "heading": "Built for cats, made to protect your couch", "layout": "pillars", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
-    },
-    "ct-product-tabs": {
-      "type": "ct-product-tabs",
-      "blocks": {
-        "tab-description": { "type": "tab", "settings": { "heading": "Description", "content_source": "description" } },
-        "tab-specs": { "type": "tab", "settings": { "heading": "Specifications", "content_source": "richtext", "content": "<p><strong>Size:</strong> 31.5 × 35.43 in</p><p><strong>Material:</strong> Polyester plush, PP cotton fill</p><p><strong>Backing:</strong> Non-slip</p><p><strong>Care:</strong> Machine wash, cold & gentle</p><p><strong>Package includes:</strong> 1 × CozyClaw Lounge Mat</p>" } },
-        "tab-shipping": { "type": "tab", "settings": { "heading": "Shipping & Returns", "content_source": "richtext", "content": "<p>Orders are prepared and dispatched within 3–7 business days (Mon–Fri).</p><p>Domestic delivery in 5–15 business days; international 7–20 business days.</p><p>Risk-free 7-day money-back guarantee. Email <a href=\"mailto:support@cozyclaw.com\">support@cozyclaw.com</a> and we'll make it right.</p>" } }
-      },
-      "block_order": ["tab-description", "tab-specs", "tab-shipping"],
-      "settings": { "color_scheme": "scheme-1", "padding_top": 28, "padding_bottom": 28 }
-    },
-    "ct_shipping": {
-      "type": "ct-use-cases",
-      "blocks": {
-        "s1": { "type": "card", "settings": { "emoji": "📦", "tag": "Processing", "title": "3–7 business days", "desc": "Orders are prepared and dispatched within 3–7 business days, Monday–Friday." } },
-        "s2": { "type": "card", "settings": { "emoji": "🚚", "tag": "Domestic", "title": "5–15 business days", "desc": "Delivered within 5–15 business days after processing." } },
-        "s3": { "type": "card", "settings": { "emoji": "🌍", "tag": "International", "title": "7–20 business days", "desc": "Ships worldwide, typically arriving in 7–20 business days." } }
-      },
-      "block_order": ["s1", "s2", "s3"],
-      "settings": { "kicker": "Shipping & guarantee", "heading": "Clear, honest delivery", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
-    },
-    "ct_trust_bar_2": {
-      "type": "ct-trust-bar",
-      "blocks": {
-        "c1": { "type": "chip", "settings": { "icon": "truck", "icon_color": "purple", "label": "Fast shipping", "sublabel": "" } },
-        "c2": { "type": "chip", "settings": { "icon": "clock", "icon_color": "amber", "label": "Support that cares", "sublabel": "" } },
-        "c3": { "type": "chip", "settings": { "icon": "shield", "icon_color": "green", "label": "7-day money-back", "sublabel": "" } },
-        "c4": { "type": "chip", "settings": { "icon": "shield", "icon_color": "blue", "label": "Secured checkout", "sublabel": "" } }
-      },
-      "block_order": ["c1", "c2", "c3", "c4"],
-      "settings": { "color_scheme": "scheme-1", "padding_top": 16, "padding_bottom": 16 }
-    },
-    "ct_reviews": {
-      "type": "ct-reviews",
-      "blocks": {
-        "rv1": { "type": "review", "settings": { "rating": 5, "text": "My cat claimed it the second I put it down and hasn't moved since. The couch underneath finally stays clean.", "author": "Jackie", "meta": "Verified buyer", "verified": true } },
-        "rv2": { "type": "review", "settings": { "rating": 5, "text": "Soft, well-made, and washes up like new. I ordered a second one for the armchair.", "author": "Zinnias", "meta": "Verified buyer", "verified": true } },
-        "rv3": { "type": "review", "settings": { "rating": 4, "text": "Great mat and my cat loves it. It arrived tightly vacuum-sealed and took about a day to fully fluff back out — worth the short wait.", "author": "rlungtha", "meta": "Verified buyer", "verified": true } }
-      },
-      "block_order": ["rv1", "rv2", "rv3"],
-      "settings": { "kicker": "", "heading": "Real cat parents, real results", "rating_number": "4.6", "rating_count": "92% 5-star · 12 five-star, 1 four-star · 13 verified reviews", "layout": "carousel", "color_scheme": "scheme-1", "padding_top": 56, "padding_bottom": 56 }
-    },
-    "ct_final": {
-      "type": "ct-final-cta",
-      "settings": {
-        "eyebrow": "Give them their new favorite spot",
-        "heading": "CozyClaw Lounge Mat",
-        "subheading": "In stock — ships in 3–7 business days. 7-day money-back guarantee.",
-        "button_label": "Choose your bundle →",
-        "button_label_2": "",
-        "show_trust": true,
-        "trust_chips": "Free shipping over $50\n7-day money-back\nSecure checkout\n92% 5-star · 13 reviews",
-        "color_scheme": "scheme-1",
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
-    },
-    "related-products": {
-      "type": "related-products",
-      "settings": {
-        "heading": "You may also like",
-        "heading_size": "h2",
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": true,
-        "columns_mobile": "2",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "ct_sticky_atc": {
-      "type": "ct-sticky-atc",
-      "settings": {
-        "product": "cozy-plush-pet-sofa",
-        "emoji": "",
-        "product_name": "Cozy Plush Pet Sofa",
-        "rating_text": "★★★★★ 92% 5-star · 13 reviews",
-        "button_label": "Add to Cart",
-        "button_link": "/products/cozy-plush-pet-sofa",
-        "color_scheme": "scheme-1"
-      }
-    }
-  },
-  "order": [
-    "main",
-    "ct_trust_bar",
-    "ct_marquee",
-    "ct_why",
-    "ct-product-tabs",
-    "ct_shipping",
-    "ct_trust_bar_2",
-    "ct_reviews",
-    "ct_final",
-    "related-products",
-    "ct_sticky_atc"
-  ]
+    "sections":  {
+                     "main":  {
+                                  "type":  "main-product",
+                                  "blocks":  {
+                                                 "title":  {
+                                                               "type":  "title"
+                                                           },
+                                                 "rating":  {
+                                                                "type":  "rating"
+                                                            },
+                                                 "benefits":  {
+                                                                  "type":  "ct_benefits",
+                                                                  "settings":  {
+                                                                                   "items":  "Cloud-soft coral fleece - plush comfort that cushions tired joints.\nRaised bolster edges - a built-in head-rest and a sense of security.\nHelps keep sofas hair-free - gives fur a place that isn\u0027t your couch.\nNon-slip base - stays planted on floors and sofas.\nMachine washable - the whole bed washes, fresh in one cycle."
+                                                                               }
+                                                              },
+                                                 "tier-single":  {
+                                                                     "type":  "ct_tier",
+                                                                     "settings":  {
+                                                                                      "tier_name":  "Single Cozy Spot",
+                                                                                      "tier_tag":  "",
+                                                                                      "badge":  "",
+                                                                                      "featured":  false,
+                                                                                      "qty":  1,
+                                                                                      "save_text":  "",
+                                                                                      "price_now":  "",
+                                                                                      "price_was":  "",
+                                                                                      "opt_label":  "Color",
+                                                                                      "opt_emoji":  ""
+                                                                                  }
+                                                                 },
+                                                 "tier-double":  {
+                                                                     "type":  "ct_tier",
+                                                                     "settings":  {
+                                                                                      "tier_name":  "Double Comfort",
+                                                                                      "tier_tag":  "",
+                                                                                      "badge":  "Best value - free shipping",
+                                                                                      "featured":  true,
+                                                                                      "qty":  2,
+                                                                                      "save_text":  "",
+                                                                                      "price_now":  "",
+                                                                                      "price_was":  "",
+                                                                                      "opt_label":  "Color",
+                                                                                      "opt_emoji":  ""
+                                                                                  }
+                                                                 },
+                                                 "addon-1":  {
+                                                                 "type":  "addon",
+                                                                 "settings":  {
+                                                                                  "badge":  "Biggest savings today",
+                                                                                  "flag_style":  "urgency"
+                                                                              }
+                                                             },
+                                                 "addon-2":  {
+                                                                 "type":  "addon",
+                                                                 "settings":  {
+                                                                                  "badge":  "Best-selling combo",
+                                                                                  "flag_style":  "gold"
+                                                                              }
+                                                             },
+                                                 "running-total":  {
+                                                                       "type":  "ct_running_total",
+                                                                       "settings":  {
+                                                                                        "label":  "Total"
+                                                                                    }
+                                                                   },
+                                                 "buy_buttons":  {
+                                                                     "type":  "buy_buttons",
+                                                                     "settings":  {
+                                                                                      "show_dynamic_checkout":  true,
+                                                                                      "show_gift_card_recipient":  true
+                                                                                  }
+                                                                 },
+                                                 "payment_reassurance":  {
+                                                                             "type":  "payment_reassurance",
+                                                                             "settings":  {
+                                                                                              "show_icons":  true,
+                                                                                              "secure_line":  "Secure checkout - SSL-encrypted"
+                                                                                          }
+                                                                         },
+                                                 "trust-icons":  {
+                                                                     "type":  "ct_trust_icons",
+                                                                     "settings":  {
+                                                                                      "icon_1":  "",
+                                                                                      "label_1":  "Fast shipping",
+                                                                                      "icon_2":  "",
+                                                                                      "label_2":  "Secure payments",
+                                                                                      "icon_3":  "",
+                                                                                      "label_3":  "Support that cares"
+                                                                                  }
+                                                                 }
+                                             },
+                                  "block_order":  [
+                                                      "title",
+                                                      "rating",
+                                                      "benefits",
+                                                      "tier-single",
+                                                      "tier-double",
+                                                      "addon-1",
+                                                      "addon-2",
+                                                      "running-total",
+                                                      "buy_buttons",
+                                                      "payment_reassurance",
+                                                      "trust-icons"
+                                                  ],
+                                  "settings":  {
+                                                   "enable_sticky_info":  true,
+                                                   "gallery_layout":  "thumbnail",
+                                                   "media_size":  "large",
+                                                   "constrain_to_viewport":  true,
+                                                   "mobile_thumbnails":  "hide",
+                                                   "hide_variants":  true,
+                                                   "enable_video_looping":  false,
+                                                   "padding_top":  36,
+                                                   "padding_bottom":  12,
+                                                   "tier_divider_text":  "The more they lounge, the cozier their space - Bundle \u0026 Save",
+                                                   "addon_divider_text":  "Limited-time add-on discount"
+                                               }
+                              },
+                     "ct_trust_bar":  {
+                                          "type":  "ct-trust-bar",
+                                          "blocks":  {
+                                                         "c1":  {
+                                                                    "type":  "chip",
+                                                                    "settings":  {
+                                                                                     "icon":  "truck",
+                                                                                     "icon_color":  "purple",
+                                                                                     "label":  "Fast shipping",
+                                                                                     "sublabel":  "Ships in 3-7 days"
+                                                                                 }
+                                                                },
+                                                         "c2":  {
+                                                                    "type":  "chip",
+                                                                    "settings":  {
+                                                                                     "icon":  "shield",
+                                                                                     "icon_color":  "green",
+                                                                                     "label":  "30-night risk-free",
+                                                                                     "sublabel":  "Try it at home"
+                                                                                 }
+                                                                },
+                                                         "c3":  {
+                                                                    "type":  "chip",
+                                                                    "settings":  {
+                                                                                     "icon":  "shield",
+                                                                                     "icon_color":  "blue",
+                                                                                     "label":  "Secured payments",
+                                                                                     "sublabel":  "256-bit SSL"
+                                                                                 }
+                                                                }
+                                                     },
+                                          "block_order":  [
+                                                              "c1",
+                                                              "c2",
+                                                              "c3"
+                                                          ],
+                                          "settings":  {
+                                                           "color_scheme":  "scheme-1",
+                                                           "padding_top":  16,
+                                                           "padding_bottom":  16
+                                                       }
+                                      },
+                     "ct_marquee":  {
+                                        "type":  "ct-marquee",
+                                        "blocks":  {
+                                                       "m1":  {
+                                                                  "type":  "message",
+                                                                  "settings":  {
+                                                                                   "text":  "LOVED BY THOUSANDS OF KITTIES"
+                                                                               }
+                                                              },
+                                                       "m2":  {
+                                                                  "type":  "message",
+                                                                  "settings":  {
+                                                                                   "text":  "LOVED BY THOUSANDS OF KITTIES"
+                                                                               }
+                                                              },
+                                                       "m3":  {
+                                                                  "type":  "message",
+                                                                  "settings":  {
+                                                                                   "text":  "LOVED BY THOUSANDS OF KITTIES"
+                                                                               }
+                                                              },
+                                                       "m4":  {
+                                                                  "type":  "message",
+                                                                  "settings":  {
+                                                                                   "text":  "LOVED BY THOUSANDS OF KITTIES"
+                                                                               }
+                                                              }
+                                                   },
+                                        "block_order":  [
+                                                            "m1",
+                                                            "m2",
+                                                            "m3",
+                                                            "m4"
+                                                        ],
+                                        "settings":  {
+                                                         "speed":  24,
+                                                         "color_scheme":  "scheme-1"
+                                                     }
+                                    },
+                     "ct_why":  {
+                                    "type":  "ct-use-cases",
+                                    "blocks":  {
+                                                   "u1":  {
+                                                              "type":  "card",
+                                                              "settings":  {
+                                                                               "emoji":  "",
+                                                                               "tag":  "GIF",
+                                                                               "title":  "Ultra-soft plush comfort",
+                                                                               "desc":  "Made with dense, A-grade plush that stays soft wash after wash, giving your cat a warm, sink-in spot they\u0027ll choose over the bare sofa."
+                                                                           }
+                                                          },
+                                                   "u2":  {
+                                                              "type":  "card",
+                                                              "settings":  {
+                                                                               "emoji":  "",
+                                                                               "tag":  "GIF",
+                                                                               "title":  "Supportive pillow design",
+                                                                               "desc":  "A raised, cushioned edge cradles the head and neck, turning any cushion or windowsill into a proper bed for deeper, comfier naps."
+                                                                           }
+                                                          },
+                                                   "u3":  {
+                                                              "type":  "card",
+                                                              "settings":  {
+                                                                               "emoji":  "",
+                                                                               "tag":  "GIF",
+                                                                               "title":  "Sofa protection \u0026 non-slip base",
+                                                                               "desc":  "Shields couches from fur and scratches, while the anti-slip backing keeps the mat firmly in place even when your cat lands at full speed."
+                                                                           }
+                                                          },
+                                                   "u4":  {
+                                                              "type":  "card",
+                                                              "settings":  {
+                                                                               "emoji":  "",
+                                                                               "tag":  "GIF",
+                                                                               "title":  "Durable \u0026 easy to clean",
+                                                                               "desc":  "Strong stitching stands up to daily lounging, and the whole mat is machine washable - fresh again in minutes, no special care needed."
+                                                                           }
+                                                          }
+                                               },
+                                    "block_order":  [
+                                                        "u1",
+                                                        "u2",
+                                                        "u3",
+                                                        "u4"
+                                                    ],
+                                    "settings":  {
+                                                     "kicker":  "Why choose CozyClaw",
+                                                     "heading":  "Built for cats, made to protect your couch",
+                                                     "layout":  "feature-gifs",
+                                                     "color_scheme":  "scheme-1",
+                                                     "padding_top":  56,
+                                                     "padding_bottom":  56
+                                                 }
+                                },
+                     "ct_video_action":  {
+                                             "type":  "ct-video-reviews",
+                                             "blocks":  {
+                                                            "clip-1":  {
+                                                                           "type":  "clip",
+                                                                           "settings":  {
+                                                                                            "label":  "The pounce",
+                                                                                            "loop_label":  "GIF"
+                                                                                        }
+                                                                       },
+                                                            "clip-2":  {
+                                                                           "type":  "clip",
+                                                                           "settings":  {
+                                                                                            "label":  "Big stretch",
+                                                                                            "loop_label":  "GIF"
+                                                                                        }
+                                                                       },
+                                                            "clip-3":  {
+                                                                           "type":  "clip",
+                                                                           "settings":  {
+                                                                                            "label":  "Zoomies",
+                                                                                            "loop_label":  "GIF"
+                                                                                        }
+                                                                       },
+                                                            "clip-4":  {
+                                                                           "type":  "clip",
+                                                                           "settings":  {
+                                                                                            "label":  "Nap o\u0027clock",
+                                                                                            "loop_label":  "GIF"
+                                                                                        }
+                                                                       }
+                                                        },
+                                             "block_order":  [
+                                                                 "clip-1",
+                                                                 "clip-2",
+                                                                 "clip-3",
+                                                                 "clip-4"
+                                                             ],
+                                             "settings":  {
+                                                              "kicker":  "See it in action",
+                                                              "heading":  "Built for a cat who never sits still",
+                                                              "subheading":  "Pounces, zoomies, the dramatic flop - watch the mat keep up with all of it.",
+                                                              "video_label":  "60-second product tour",
+                                                              "color_scheme":  "scheme-1",
+                                                              "padding_top":  56,
+                                                              "padding_bottom":  56
+                                                          }
+                                         },
+                     "ct-product-tabs":  {
+                                             "type":  "ct-product-tabs",
+                                             "blocks":  {
+                                                            "tab-description":  {
+                                                                                    "type":  "tab",
+                                                                                    "settings":  {
+                                                                                                     "heading":  "Description",
+                                                                                                     "content_source":  "description"
+                                                                                                 }
+                                                                                },
+                                                            "tab-specs":  {
+                                                                              "type":  "tab",
+                                                                              "settings":  {
+                                                                                               "heading":  "Specifications",
+                                                                                               "content_source":  "richtext",
+                                                                                               "content":  "\u003cp\u003e\u003cstrong\u003eSize:\u003c/strong\u003e 31.5 x 35.43 in\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eMaterial:\u003c/strong\u003e Polyester plush, PP cotton fill\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eBacking:\u003c/strong\u003e Non-slip\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eCare:\u003c/strong\u003e Machine wash, cold \u0026amp; gentle\u003c/p\u003e\u003cp\u003e\u003cstrong\u003ePackage includes:\u003c/strong\u003e 1 x CozyClaw Lounge Mat\u003c/p\u003e"
+                                                                                           }
+                                                                          },
+                                                            "tab-shipping":  {
+                                                                                 "type":  "tab",
+                                                                                 "settings":  {
+                                                                                                  "heading":  "Shipping \u0026 Returns",
+                                                                                                  "content_source":  "richtext",
+                                                                                                  "content":  "\u003cp\u003eOrders are prepared and dispatched within 3-7 business days (Mon-Fri).\u003c/p\u003e\u003cp\u003eDomestic delivery in 5-15 business days; international 7-20 business days.\u003c/p\u003e\u003cp\u003e30-night risk-free trial. Email \u003ca href=\"mailto:support@cozyclaw.com\"\u003esupport@cozyclaw.com\u003c/a\u003e and we\u0027ll make it right.\u003c/p\u003e"
+                                                                                              }
+                                                                             }
+                                                        },
+                                             "block_order":  [
+                                                                 "tab-description",
+                                                                 "tab-specs",
+                                                                 "tab-shipping"
+                                                             ],
+                                             "settings":  {
+                                                              "color_scheme":  "scheme-1",
+                                                              "padding_top":  28,
+                                                              "padding_bottom":  28
+                                                          }
+                                         },
+                     "apps":  {
+                                  "type":  "apps",
+                                  "settings":  {
+                                                   "include_margins":  true
+                                               }
+                              },
+                     "ct_shipping":  {
+                                         "type":  "ct-use-cases",
+                                         "blocks":  {
+                                                        "s1":  {
+                                                                   "type":  "card",
+                                                                   "settings":  {
+                                                                                    "emoji":  "",
+                                                                                    "tag":  "Processing",
+                                                                                    "title":  "3-7 business days",
+                                                                                    "desc":  "Orders are prepared and dispatched within 3-7 business days, Monday-Friday."
+                                                                                }
+                                                               },
+                                                        "s2":  {
+                                                                   "type":  "card",
+                                                                   "settings":  {
+                                                                                    "emoji":  "",
+                                                                                    "tag":  "Domestic",
+                                                                                    "title":  "5-15 business days",
+                                                                                    "desc":  "Delivered within 5-15 business days after processing."
+                                                                                }
+                                                               },
+                                                        "s3":  {
+                                                                   "type":  "card",
+                                                                   "settings":  {
+                                                                                    "emoji":  "",
+                                                                                    "tag":  "International",
+                                                                                    "title":  "7-20 business days",
+                                                                                    "desc":  "Ships worldwide, typically arriving in 7-20 business days."
+                                                                                }
+                                                               }
+                                                    },
+                                         "block_order":  [
+                                                             "s1",
+                                                             "s2",
+                                                             "s3"
+                                                         ],
+                                         "settings":  {
+                                                          "kicker":  "Shipping \u0026 guarantee",
+                                                          "heading":  "Clear, honest delivery",
+                                                          "color_scheme":  "scheme-1",
+                                                          "padding_top":  56,
+                                                          "padding_bottom":  56
+                                                      }
+                                     },
+                     "ct_trust_bar_2":  {
+                                            "type":  "ct-trust-bar",
+                                            "blocks":  {
+                                                           "c1":  {
+                                                                      "type":  "chip",
+                                                                      "settings":  {
+                                                                                       "icon":  "truck",
+                                                                                       "icon_color":  "purple",
+                                                                                       "label":  "Fast shipping",
+                                                                                       "sublabel":  ""
+                                                                                   }
+                                                                  },
+                                                           "c2":  {
+                                                                      "type":  "chip",
+                                                                      "settings":  {
+                                                                                       "icon":  "clock",
+                                                                                       "icon_color":  "amber",
+                                                                                       "label":  "Support that cares",
+                                                                                       "sublabel":  ""
+                                                                                   }
+                                                                  },
+                                                           "c3":  {
+                                                                      "type":  "chip",
+                                                                      "settings":  {
+                                                                                       "icon":  "shield",
+                                                                                       "icon_color":  "green",
+                                                                                       "label":  "30-night risk-free",
+                                                                                       "sublabel":  ""
+                                                                                   }
+                                                                  },
+                                                           "c4":  {
+                                                                      "type":  "chip",
+                                                                      "settings":  {
+                                                                                       "icon":  "shield",
+                                                                                       "icon_color":  "blue",
+                                                                                       "label":  "Secured checkout",
+                                                                                       "sublabel":  ""
+                                                                                   }
+                                                                  }
+                                                       },
+                                            "block_order":  [
+                                                                "c1",
+                                                                "c2",
+                                                                "c3",
+                                                                "c4"
+                                                            ],
+                                            "settings":  {
+                                                             "color_scheme":  "scheme-1",
+                                                             "padding_top":  16,
+                                                             "padding_bottom":  16
+                                                         }
+                                        },
+                     "ct_reviews":  {
+                                        "type":  "ct-reviews",
+                                        "blocks":  {
+                                                       "rv1":  {
+                                                                   "type":  "review",
+                                                                   "settings":  {
+                                                                                    "rating":  5,
+                                                                                    "text":  "My cat claimed it the second I put it down and hasn\u0027t moved since. The couch underneath finally stays clean.",
+                                                                                    "author":  "Jackie",
+                                                                                    "meta":  "Verified buyer",
+                                                                                    "verified":  true
+                                                                                }
+                                                               },
+                                                       "rv2":  {
+                                                                   "type":  "review",
+                                                                   "settings":  {
+                                                                                    "rating":  5,
+                                                                                    "text":  "Soft, well-made, and washes up like new. I ordered a second one for the armchair.",
+                                                                                    "author":  "Zinnias",
+                                                                                    "meta":  "Verified buyer",
+                                                                                    "verified":  true
+                                                                                }
+                                                               },
+                                                       "rv3":  {
+                                                                   "type":  "review",
+                                                                   "settings":  {
+                                                                                    "rating":  4,
+                                                                                    "text":  "Great mat and my cat loves it. It arrived tightly vacuum-sealed and took about a day to fully fluff back out - worth the short wait.",
+                                                                                    "author":  "rlungtha",
+                                                                                    "meta":  "Verified buyer",
+                                                                                    "verified":  true
+                                                                                }
+                                                               }
+                                                   },
+                                        "block_order":  [
+                                                            "rv1",
+                                                            "rv2",
+                                                            "rv3"
+                                                        ],
+                                        "settings":  {
+                                                         "kicker":  "",
+                                                         "heading":  "Real cat parents, real results",
+                                                         "rating_number":  "4.6",
+                                                         "rating_count":  "92% 5-star - 12 five-star, 1 four-star - 13 verified reviews",
+                                                         "layout":  "carousel",
+                                                         "color_scheme":  "scheme-1",
+                                                         "padding_top":  56,
+                                                         "padding_bottom":  56
+                                                     }
+                                    },
+                     "related-products":  {
+                                              "type":  "related-products",
+                                              "settings":  {
+                                                               "heading":  "You may also like",
+                                                               "heading_size":  "h2",
+                                                               "columns_desktop":  4,
+                                                               "color_scheme":  "scheme-1",
+                                                               "image_ratio":  "square",
+                                                               "show_secondary_image":  true,
+                                                               "show_vendor":  false,
+                                                               "show_rating":  true,
+                                                               "columns_mobile":  "2",
+                                                               "padding_top":  36,
+                                                               "padding_bottom":  36
+                                                           }
+                                          }
+                 },
+    "order":  [
+                  "main",
+                  "ct_trust_bar",
+                  "ct_marquee",
+                  "ct_why",
+                  "ct_video_action",
+                  "ct-product-tabs",
+                  "apps",
+                  "ct_shipping",
+                  "ct_trust_bar_2",
+                  "ct_reviews",
+                  "related-products"
+              ]
 }

@@ -1,14 +1,127 @@
-/* section-ct-trust-bar.css — full-width inline strip on lavender bg (per cozyclaw-landing.html .trust-strip) */
-.ct-trust-strip{background:var(--ct-accent-subtle);border-top:1px solid var(--ct-border-subtle);border-bottom:1px solid var(--ct-border-subtle)}
-.ct-trust-strip__inner{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px;padding:18px var(--ct-gutter)}
-.ct-trust-item{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:var(--ct-accent-text)}
-.ct-trust-item svg{width:18px;height:18px;stroke:var(--ct-accent);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ct-trust-strip {
+  background: var(--ct-accent-subtle);
+  border-top: 1px solid var(--ct-border-subtle);
+  border-bottom: 1px solid var(--ct-border-subtle);
+}
 
-/* icon-strip — homepage trust strip per cozyclaw-homepage.html §trust-strip */
-.ct-trust-strip .page-width:not(.ct-trust-strip__inner){display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:26px var(--ct-gutter, 24px)}
-.ct-trust-strip__item{display:flex;gap:13px;align-items:center}
-.ct-trust-strip__ic{width:42px;height:42px;border-radius:var(--ct-r-sm);background:var(--ct-bg-raised);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:var(--ct-shadow-xs)}
-.ct-trust-strip__ic svg{width:21px;height:21px;stroke:var(--ct-accent-strong);stroke-width:1.8;fill:none}
-.ct-trust-strip__title{font-size:14.5px;display:block;color:var(--ct-text);font-weight:700;font-family:var(--ct-font-body)}
-.ct-trust-strip__sub{font-size:12.5px;color:var(--ct-text-3);display:block}
-@media(max-width:760px){.ct-trust-strip .page-width:not(.ct-trust-strip__inner){grid-template-columns:1fr 1fr;gap:20px 14px}}
+.ct-trust-strip__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+  padding: 18px var(--ct-gutter);
+}
+
+.ct-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ct-accent-text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ct-trust-item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--ct-accent-strong);
+  fill: currentColor;
+}
+
+.ct-trust-item--green svg {
+  color: var(--ct-success);
+}
+
+.ct-trust-item--green-dark svg {
+  color: var(--ct-success-dark);
+}
+
+.ct-trust-item--gold svg {
+  color: var(--ct-rating);
+}
+
+.ct-trust-strip--icons {
+  background: var(--ct-text);
+  border-color: color-mix(in srgb, var(--ct-bg) 14%, transparent);
+  color: var(--ct-bg);
+}
+
+.ct-trust-strip--icons .page-width:not(.ct-trust-strip__inner) {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 22px var(--ct-gutter, 24px);
+}
+
+.ct-trust-strip__item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.ct-trust-strip__ic {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--ct-bg) 10%, transparent);
+  border-radius: var(--ct-r-md);
+}
+
+.ct-trust-strip__ic svg {
+  width: 24px;
+  height: 24px;
+  color: var(--ct-success-dark);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ct-trust-strip__ic--sage {
+  background: color-mix(in srgb, var(--ct-success-light) 34%, var(--ct-bg) 8%);
+}
+
+.ct-trust-strip__ic--sage svg {
+  color: var(--ct-success-dark);
+}
+
+.ct-trust-strip__ic--green-dark svg {
+  color: var(--ct-success-dark);
+}
+
+.ct-trust-strip__ic--gold svg {
+  color: var(--ct-rating);
+}
+
+.ct-trust-strip__ic--clay svg {
+  color: color-mix(in srgb, var(--ct-urgency) 72%, var(--ct-bg));
+}
+
+.ct-trust-strip__ic--teal svg {
+  color: color-mix(in srgb, var(--ct-success) 72%, var(--ct-accent));
+}
+
+.ct-trust-strip__title {
+  display: block;
+  color: var(--ct-bg);
+  font-family: var(--ct-font-body);
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.ct-trust-strip__sub {
+  display: block;
+  color: color-mix(in srgb, var(--ct-bg) 66%, transparent);
+  font-size: 12.5px;
+}
+
+@media (max-width: 760px) {
+  .ct-trust-strip--icons .page-width:not(.ct-trust-strip__inner) {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 14px;
+  }
+}

@@ -12,16 +12,30 @@
       {%- endif -%}
       <div class="ct-pillars-svg__grid">
         {%- for block in section.blocks -%}
+          {%- liquid
+            assign fa_icon = 'paw'
+            assign icon_tone = 'coffee'
+            case block.settings.icon_svg
+              when 'bed-bolster'
+                assign fa_icon = 'bed'
+                assign icon_tone = 'coffee'
+              when 'shield-couch'
+                assign fa_icon = 'shield-heart'
+                assign icon_tone = 'green'
+              when 'star'
+                assign fa_icon = 'star'
+                assign icon_tone = 'gold'
+              when 'wash-clock'
+                assign fa_icon = 'soap'
+                assign icon_tone = 'green'
+              when 'check-double'
+                assign fa_icon = 'shield-halved'
+                assign icon_tone = 'green-dark'
+            endcase
+          -%}
           <div class="ct-pillars-svg__card" {{ block.shopify_attributes }}>
-            <span class="ct-pillars-svg__ic">
-              {%- case block.settings.icon_svg -%}
-                {%- when 'heart-paw'    -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c5-3 8-6 8-10a4 4 0 00-8-1 4 4 0 00-8 1c0 4 3 7 8 10z"/></svg>
-                {%- when 'bed-bolster'  -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14c0-4 4-6 8-6s8 2 8 6"/><path d="M3 14h18v5H3z"/></svg>
-                {%- when 'shield-couch' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M8 9V6a4 4 0 018 0v3"/></svg>
-                {%- when 'star'         -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l3 6 6 .9-4.5 4.3 1 6.3L12 17l-5.5 3.5 1-6.3L3 9.9 9 9z"/></svg>
-                {%- when 'wash-clock'   -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 109 9"/><path d="M12 7v5l3 2"/></svg>
-                {%- when 'check-double' -%}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7L9 18l-5-5"/><path d="M4 7l3 3"/></svg>
-              {%- endcase -%}
+            <span class="ct-pillars-svg__ic ct-pillars-svg__ic--{{ icon_tone }}">
+              {%- render 'ct-fa-icon', icon: fa_icon -%}
             </span>
             {%- if block.settings.name != blank -%}<h3>{{ block.settings.name }}</h3>{%- endif -%}
             {%- if block.settings.desc != blank -%}<p>{{ block.settings.desc }}</p>{%- endif -%}

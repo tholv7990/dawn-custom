@@ -1,0 +1,259 @@
+/* section-ct-signup-popup.css - 15%-off email capture popup (+ thank-you state).
+   Two states share one backdrop: .is-thankyou hides the signup modal and shows
+   the centered thank-you card with a fireworks canvas behind it.
+   Tokens from snippets/css-variables.liquid. Light-mode only. */
+
+ct-signup-popup { display: contents; }
+
+.ct-signup-popup__backdrop {
+  position: fixed; inset: 0;
+  background: color-mix(in srgb, var(--ct-text) 55%, transparent);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; z-index: 1000;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s var(--ct-ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+              visibility 0.3s, background 0.3s;
+}
+.ct-signup-popup__backdrop.is-open { opacity: 1; visibility: visible; }
+.ct-signup-popup__backdrop.is-thankyou { background: color-mix(in srgb, var(--ct-text) 62%, transparent); }
+
+/* Fireworks canvas - covers the whole backdrop; behind both modals */
+.ct-signup-popup__fx {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s var(--ct-ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+}
+.ct-signup-popup__backdrop.is-thankyou .ct-signup-popup__fx { opacity: 1; }
+
+/* ---- Signup modal (2-col) ---- */
+.ct-signup-popup__modal {
+  position: relative;
+  width: 100%; max-width: 740px;
+  background: var(--ct-bg-raised);
+  border-radius: var(--ct-r-xl);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 0.82fr 1fr;
+  box-shadow: var(--ct-shadow-2xl);
+  transform: translateY(16px) scale(0.97);
+  transition: transform 0.35s var(--ct-ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  z-index: 1;
+}
+.ct-signup-popup__backdrop.is-open .ct-signup-popup__modal { transform: none; }
+.ct-signup-popup__backdrop.is-thankyou .ct-signup-popup__modal { display: none; }
+
+.ct-signup-popup__visual {
+  position: relative;
+  min-height: 440px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ct-accent) 5%, transparent), color-mix(in srgb, var(--ct-accent-strong) 55%, transparent)), var(--ct-bg-surface);
+  background-size: cover;
+  background-position: center;
+  display: flex; align-items: flex-end;
+  padding: 22px;
+}
+
+.ct-signup-popup__disc {
+  background: var(--ct-bg-raised);
+  color: var(--ct-accent-text);
+  font-family: var(--ct-font-display);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 0.95;
+  padding: 14px 18px;
+  border-radius: var(--ct-r-lg);
+  box-shadow: var(--ct-shadow-lg);
+}
+.ct-signup-popup__disc small {
+  display: block;
+  font-family: var(--ct-font-body);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ct-text-3); margin-top: 4px;
+}
+
+.ct-signup-popup__form { padding: 42px 40px; position: relative; }
+
+.ct-signup-popup__x {
+  position: absolute; top: 14px; right: 14px;
+  width: 34px; height: 34px;
+  border-radius: 50%; border: none;
+  background: var(--ct-accent-subtle);
+  color: var(--ct-accent-text);
+  font-size: 18px; line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+  z-index: 2;
+}
+.ct-signup-popup__x:hover { background: var(--ct-accent-border); }
+
+.ct-signup-popup__eyebrow {
+  display: inline-block;
+  font-family: var(--ct-font-mono, var(--ct-font-body));
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ct-accent-text);
+  margin-bottom: 10px;
+}
+
+.ct-signup-popup__h2 {
+  font-family: var(--ct-font-display);
+  font-size: 32px; font-weight: 700;
+  line-height: 1.05; letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  color: var(--ct-text);
+}
+.ct-signup-popup__h2 em { font-style: normal; color: var(--ct-accent); }
+
+.ct-signup-popup__sub {
+  font-family: var(--ct-font-body);
+  font-size: 15.5px;
+  color: var(--ct-text-2);
+  margin: 0 0 22px;
+  line-height: 1.5;
+}
+
+.ct-signup-popup__field { display: flex; flex-direction: column; gap: var(--ct-space-3); }
+.ct-signup-popup__field input[type="email"] {
+  width: 100%;
+  min-height: var(--ct-form-field-height);
+  box-sizing: border-box;
+  padding: 0 var(--ct-form-field-pad-x);
+  font-family: var(--ct-font-body);
+  font-size: 15px;
+  line-height: 1.2;
+  color: var(--ct-text);
+  border: 1.5px solid var(--ct-border);
+  border-radius: var(--ct-r-md);
+  background: var(--ct-bg-raised);
+  appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.ct-signup-popup__field input[type="email"]:focus {
+  outline: none;
+  border-color: var(--ct-accent);
+  box-shadow: 0 0 0 3px var(--ct-accent-glow);
+}
+.ct-signup-popup__field input.is-err {
+  border-color: var(--ct-error);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ct-error) 12%, transparent);
+}
+
+.ct-signup-popup__err {
+  display: none;
+  color: var(--ct-error);
+  font-size: 12.5px;
+}
+.ct-signup-popup__err.is-shown { display: block; }
+
+.ct-signup-popup__cta {
+  width: 100%;
+  min-height: var(--ct-form-field-height);
+  font-family: var(--ct-font-body);
+  font-size: 15px; font-weight: 700;
+  padding: 0 var(--ct-form-field-pad-x);
+  border: none;
+  border-radius: var(--ct-r-pill);
+  background: var(--ct-accent);
+  color: var(--ct-on-accent);
+  cursor: pointer;
+  box-shadow: 0 8px 20px var(--ct-accent-glow);
+  transition: background 0.2s, transform 0.12s;
+  margin-top: 2px;
+}
+.ct-signup-popup__cta:hover { background: var(--ct-accent-strong); transform: translateY(-1px); }
+.ct-signup-popup__cta:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.ct-signup-popup__cta[data-submitting="true"] { cursor: wait; }
+
+.ct-signup-popup__consent {
+  font-size: 11.5px;
+  color: var(--ct-text-3);
+  margin: 14px 0 0;
+  line-height: 1.5;
+}
+.ct-signup-popup__consent a { color: var(--ct-accent-text); }
+
+.ct-signup-popup__nothanks {
+  display: block; width: 100%;
+  text-align: center;
+  background: none; border: none;
+  font-family: var(--ct-font-body);
+  font-size: 12.5px;
+  color: var(--ct-text-3);
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 14px;
+  padding: 6px;
+}
+
+/* ---- Thank-you modal (single column, centered) ---- */
+.ct-signup-popup__thankyou {
+  position: relative;
+  width: 100%; max-width: 440px;
+  background: var(--ct-bg-raised);
+  border-radius: var(--ct-r-xl);
+  padding: 46px 38px 38px;
+  text-align: center;
+  box-shadow: var(--ct-shadow-2xl);
+  transform: translateY(16px) scale(0.96);
+  transition: transform 0.35s var(--ct-ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  display: none;
+  z-index: 1;
+}
+.ct-signup-popup__backdrop.is-thankyou .ct-signup-popup__thankyou { display: block; transform: none; }
+
+.ct-signup-popup__badge {
+  width: 74px; height: 74px;
+  border-radius: 50%;
+  background: var(--ct-accent-subtle);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px;
+  animation: ct-signup-popup-pop 0.5s var(--ct-ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+.ct-signup-popup__badge svg { width: 36px; height: 36px; stroke: var(--ct-accent); stroke-width: 2.4; fill: none; }
+@keyframes ct-signup-popup-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.ct-signup-popup__mailbox {
+  display: flex; align-items: center; gap: 12px;
+  text-align: left;
+  border: 1px solid var(--ct-accent-border);
+  background: var(--ct-accent-subtle);
+  border-radius: var(--ct-r-md);
+  padding: 14px 16px;
+  margin: 20px 0;
+}
+.ct-signup-popup__mailbox svg { width: 26px; height: 26px; stroke: var(--ct-accent); stroke-width: 2; fill: none; flex-shrink: 0; }
+.ct-signup-popup__mailbox span { font-size: 14px; color: var(--ct-text); font-weight: 600; }
+.ct-signup-popup__mailbox span b { color: var(--ct-accent-text); }
+
+.ct-signup-popup__note {
+  font-size: 12px;
+  color: var(--ct-text-3);
+  margin: 0 0 20px;
+}
+
+@media (max-width: 640px) {
+  .ct-signup-popup__modal { grid-template-columns: 1fr; max-width: 420px; }
+  .ct-signup-popup__visual { min-height: 140px; }
+  .ct-signup-popup__form { padding: 34px 26px; }
+  .ct-signup-popup__h2 { font-size: 27px; }
+  .ct-signup-popup__thankyou { padding: 40px 24px 30px; }
+  .ct-signup-popup__thankyou .ct-signup-popup__h2 { font-size: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-signup-popup__backdrop,
+  .ct-signup-popup__modal,
+  .ct-signup-popup__thankyou,
+  .ct-signup-popup__cta { transition: none; }
+  .ct-signup-popup__badge { animation: none; }
+}

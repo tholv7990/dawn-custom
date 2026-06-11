@@ -1,0 +1,119 @@
+{% comment %}
+  CozyClaw cart price breakdown.
+  Uses actual Shopify cart discounts when available, with a clear checkout estimate
+  for the $100+ automatic discount if Shopify has not applied it to cart yet.
+
+  Accepts:
+  - cart: cart object
+  - compact: boolean, drawer layout modifier
+{% endcomment %}
+{%- liquid
+  assign ct_discount_percent = 15
+  capture ct_free_shipping_threshold_raw
+    render 'ct-reward-threshold', key: 'free_shipping'
+  endcapture
+  capture ct_discount_threshold_raw
+    render 'ct-reward-threshold', key: 'discount'
+  endcapture
+  capture ct_reward_thresholds_configured_raw
+    render 'ct-reward-threshold', key: 'configured'
+  endcapture
+  assign ct_free_shipping_threshold = ct_free_shipping_threshold_raw | strip | plus: 0
+  assign ct_discount_threshold = ct_discount_threshold_raw | strip | plus: 0
+  assign ct_reward_thresholds_configured = ct_reward_thresholds_configured_raw | strip
+  assign ct_subtotal = cart.items_subtotal_price
+  assign ct_actual_discount = cart.total_discount | default: 0
+  assign ct_discount = 0
+  assign ct_discount_is_estimate = false
+  assign ct_discount_label = 'Discounts'
+  assign ct_total = cart.total_price
+  assign ct_free_shipping_unlocked = false
+
+  if ct_reward_thresholds_configured == 'true' and ct_subtotal >= ct_free_shipping_threshold
+    assign ct_free_shipping_unlocked = true
+  endif
+
+  if ct_reward_thresholds_configured == 'true' and ct_subtotal >= ct_discount_threshold
+    if ct_actual_discount > 0
+      assign ct_discount = ct_actual_discount
+    else
+      assign ct_discount = ct_subtotal | times: ct_discount_percent | divided_by: 100
+      assign ct_discount_is_estimate = true
+      assign ct_total = ct_subtotal | minus: ct_discount
+    endif
+  elsif ct_actual_discount > 0
+    assign ct_discount = ct_actual_discount
+  endif
+
+  if settings.currency_code_enabled
+    assign ct_subtotal_money = ct_subtotal | money_with_currency
+    assign ct_discount_money = ct_discount | money_with_currency
+    assign ct_total_money = ct_total | money_with_currency
+    assign ct_discount_threshold_money = ct_discount_threshold | money_with_currency
+    assign ct_discount_remaining_money = ct_discount_threshold | minus: ct_subtotal | money_with_currency
+    assign ct_shipping_remaining_money = ct_free_shipping_threshold | minus: ct_subtotal | money_with_currency
+  else
+    assign ct_subtotal_money = ct_subtotal | money
+    assign ct_discount_money = ct_discount | money
+    assign ct_total_money = ct_total | money
+    assign ct_discount_threshold_money = ct_discount_threshold | money
+    assign ct_discount_remaining_money = ct_discount_threshold | minus: ct_subtotal | money
+    assign ct_shipping_remaining_money = ct_free_shipping_threshold | minus: ct_subtotal | money
+  endif
+
+  if ct_reward_thresholds_configured == 'true' and ct_subtotal >= ct_discount_threshold
+    assign ct_discount_label = '15% off - ' | append: ct_discount_threshold_money | append: '+'
+  endif
+-%}
+
+<div class="ct-cart-summary{% if compact %} ct-cart-summary--compact{% endif %}">
+  <div class="ct-cart-summary__rows">
+    <div class="ct-cart-summary__row">
+      <span>Subtotal</span>
+      <strong>{{ ct_subtotal_money }}</strong>
+    </div>
+
+    {%- if ct_discount > 0 -%}
+      <div class="ct-cart-summary__row ct-cart-summary__row--discount">
+        <span>
+          {%- if ct_discount_is_estimate -%}Estimated {% endif -%}
+          {{ ct_discount_label }}
+        </span>
+        <strong>-{{ ct_discount_money }}</strong>
+      </div>
+    {%- elsif ct_reward_thresholds_configured == 'true' and ct_subtotal < ct_discount_threshold -%}
+      <div class="ct-cart-summary__row ct-cart-summary__row--hint">
+        <span>Add {{ ct_discount_remaining_money }} to unlock 15% off</span>
+      </div>
+    {%- endif -%}
+
+    <div class="ct-cart-summary__row ct-cart-summary__row--shipping">
+      <span>Shipping</span>
+      <strong>
+        {%- if ct_free_shipping_unlocked -%}
+          FREE
+        {%- else -%}
+          Calculated at checkout
+        {%- endif -%}
+      </strong>
+    </div>
+  </div>
+
+  <div class="ct-cart-summary__total" role="status">
+    <span>Total today</span>
+    <strong>{{ ct_total_money }}</strong>
+  </div>
+
+  {%- if ct_discount > 0 -%}
+    <p class="ct-cart-summary__note">
+      You save {{ ct_discount_money }}
+      {%- if ct_discount_is_estimate -%} - applied automatically at checkout{%- else -%} - applied{%- endif -%}.
+    </p>
+  {%- elsif ct_free_shipping_unlocked -%}
+    <p class="ct-cart-summary__note">Free shipping unlocked.</p>
+  {%- elsif ct_reward_thresholds_configured != 'true' -%}
+    <p class="ct-cart-summary__note">Rewards calculated at checkout for your market.</p>
+  {%- else -%}
+    <p class="ct-cart-summary__note">Add {{ ct_shipping_remaining_money }} to unlock free shipping.</p>
+  {%- endif -%}
+</div>

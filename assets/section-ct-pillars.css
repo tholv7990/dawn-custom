@@ -4,7 +4,7 @@
 .ct-pillar:hover{box-shadow:var(--ct-shadow-md);transform:translateY(-2px)}
 .ct-pillar__num{font-family:var(--ct-font-mono);font-size:10px;color:var(--ct-text-off);letter-spacing:.1em;margin-bottom:12px}
 .ct-pillar__icon{font-size:32px;margin-bottom:10px}
-.ct-pillar__name{font-size:13px;font-weight:700;color:var(--ct-text);margin-bottom:6px}
+.ct-pillar__name{font-family:var(--ct-font-display);font-size:15px;font-weight:600;line-height:1.15;color:var(--ct-text);margin-bottom:6px}
 .ct-pillar__desc{font-size:11px;color:var(--ct-text-3);line-height:1.5}
 .ct-pillar__quote{font-size:11px;font-style:italic;color:var(--ct-accent-text);margin-top:8px;line-height:1.4}
 @media(max-width:760px){.ct-pillar-grid{grid-template-columns:1fr 1fr}.ct-pillar-grid>*:last-child{grid-column:span 2}}
@@ -13,11 +13,14 @@
 /* pillars-svg — 6 pillars 3-col with SVG icons + hover lift, per cozyclaw-homepage.html §pillars */
 .ct-pillars-svg{padding:56px 0;background:var(--ct-bg-surface)}
 .ct-pillars-svg__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:var(--ct-mw, 1280px);margin:0 auto}
-.ct-pillars-svg__card{background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);padding:28px;transition:transform var(--ct-dur-base, 240ms) var(--ct-ease-out, cubic-bezier(.22,1,.36,1)),box-shadow var(--ct-dur-base, 240ms)}
+.ct-pillars-svg__card{display:grid;grid-template-columns:46px minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:16px;align-items:start;background:var(--ct-bg-raised);border:1px solid var(--ct-border-subtle);border-radius:var(--ct-r-lg);padding:28px;transition:transform var(--ct-dur-base, 240ms) var(--ct-ease-out, cubic-bezier(.22,1,.36,1)),box-shadow var(--ct-dur-base, 240ms)}
 .ct-pillars-svg__card:hover{transform:translateY(-4px);box-shadow:var(--ct-shadow-md)}
-.ct-pillars-svg__ic{width:46px;height:46px;border-radius:var(--ct-r-sm);background:var(--ct-accent-subtle);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.ct-pillars-svg__ic svg{width:23px;height:23px;stroke:var(--ct-accent-strong);stroke-width:1.7;fill:none}
-.ct-pillars-svg__card h3{font-family:var(--ct-font-display);font-size:19px;margin:0 0 8px;color:var(--ct-text)}
+.ct-pillars-svg__ic{grid-row:1 / span 2;width:46px;height:46px;border-radius:var(--ct-r-sm);background:var(--ct-accent-subtle);display:flex;align-items:center;justify-content:center}
+.ct-pillars-svg__ic svg{width:22px;height:22px;color:var(--ct-accent-strong);fill:currentColor}
+.ct-pillars-svg__ic--green svg{color:var(--ct-success)}
+.ct-pillars-svg__ic--green-dark svg{color:var(--ct-success-dark)}
+.ct-pillars-svg__ic--gold svg{color:var(--ct-rating)}
+.ct-pillars-svg__card h3{font-family:var(--ct-font-display);font-size:19px;font-weight:600;line-height:1.15;margin:0 0 8px;color:var(--ct-text)}
 .ct-pillars-svg__card p{font-size:14.5px;color:var(--ct-text-2);margin:0}
 @media(max-width:860px){.ct-pillars-svg__grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.ct-pillars-svg__grid{grid-template-columns:1fr}}

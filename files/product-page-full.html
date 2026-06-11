@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1e7d34">
+<title>Metal Flower Garden Stake — Bird Bath & Pollinator Station</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16181d; --muted:#6b7280; --line:#e7e9ec; --bg:#ffffff; --soft:#f6f8f9;
+  --green:#1e7d34; --green-d:#176a2b; --green-tint:#eef7f0;
+  --teal:#149a98; --teal-tint:#e7f6f5;
+  --sale:#e23a2a; --gold:#f4b400;
+  --r:14px; --r-sm:10px;
+  --shadow:0 8px 26px rgba(20,30,24,.07); --shadow-sm:0 3px 12px rgba(20,30,24,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,h5{font-family:'Poppins',system-ui,sans-serif;font-weight:800;line-height:1.18;letter-spacing:-.01em}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px}
+/* polished image slot */
+.img{background:linear-gradient(135deg,#eef2f1,#e2eae5);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#9bb1a4;font-size:11px;font-weight:600;letter-spacing:.04em;text-align:center;gap:6px;border-radius:var(--r-sm)}
+.img svg{width:26px;height:26px;stroke:#b3c4ba;stroke-width:1.5;fill:none;opacity:.8}
+
+/* announcement */
+.announce{background:#12181c;color:#d4dbdf;font-size:12.5px;font-weight:500;overflow:hidden;white-space:nowrap}
+.announce .t{display:inline-flex;padding:9px 0;animation:scroll 26s linear infinite}
+.announce .t span{display:inline-flex;align-items:center;gap:7px;margin-right:42px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* header */
+.head{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.head .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em}
+.logo b{color:var(--green)}
+.hnav{display:flex;align-items:center;gap:20px;color:var(--muted)}
+.hnav div{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer}
+.hnav svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.7;fill:none}
+.cdot{background:var(--sale);color:#fff;border-radius:50%;width:17px;height:17px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+
+/* product */
+.product{padding:28px 0}
+.pgrid{display:grid;grid-template-columns:1.05fr 1fr;gap:42px;align-items:start}
+@media(max-width:880px){.pgrid{grid-template-columns:1fr;gap:24px}}
+/* gallery */
+.gallery{position:relative}
+@media(min-width:881px){.gallery{position:sticky;top:80px}}
+.gtrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:var(--r);border:1px solid var(--line)}
+.gtrack::-webkit-scrollbar{display:none}
+.gtrack .img{min-width:100%;aspect-ratio:1/1;scroll-snap-align:center;border-radius:0;border:0}
+.garrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.95);
+  border:1px solid var(--line);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:4;font-size:22px;color:var(--ink)}
+.garrow:hover{background:#fff}
+.garrow.prev{left:12px}.garrow.next{right:12px}
+.gbadge{position:absolute;top:13px;left:13px;z-index:4;background:var(--sale);color:#fff;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:6px 11px;border-radius:999px}
+.gdots{display:flex;justify-content:center;gap:7px;margin-top:13px}
+.gdots b{width:8px;height:8px;border-radius:50%;background:#d3d8dc;cursor:pointer;transition:.2s}
+.gdots b.on{background:var(--green);width:22px;border-radius:4px}
+@media(max-width:880px){.garrow{display:none}}
+
+/* buy box */
+.btitle{font-size:clamp(24px,3.2vw,30px);line-height:1.16;margin-bottom:10px}
+.soldby{font-size:13.5px;color:var(--muted);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.soldby .vb{background:#1da1f2;color:#fff;width:16px;height:16px;border-radius:50%;font-size:10px;display:inline-flex;align-items:center;justify-content:center}
+.soldrow{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);margin-bottom:15px;flex-wrap:wrap}
+.soldrow b{color:var(--ink)}
+.stars{color:var(--gold);letter-spacing:1px}
+
+.vbar{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:11px;background:#fbfdfb}
+.vbar .gift{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid #ffe0b8;display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto}
+.vbar .vtext{flex:1;min-width:0}
+.vbar .vt1{font-family:'Poppins';font-weight:700;font-size:13.5px}
+.vbar .vt2{font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:.03em;margin-top:2px}
+.vbar .vclock{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;letter-spacing:1px;flex:0 0 auto;font-size:14px}
+
+.mbar{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 13px;margin-bottom:15px}
+.mbar .flag{font-size:19px;flex:0 0 auto}
+.mbar .mt{flex:1}
+.mbar .mt small{display:block;font-size:9.5px;color:var(--muted);font-weight:800;letter-spacing:.06em}
+.mbar .mt b{font-size:14px}
+.mbar .secure{border:1px solid #bfe3cb;color:var(--green);background:#f1faf4;border-radius:999px;padding:6px 11px;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px;flex:0 0 auto}
+
+.pricerow{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.price{font-family:'Poppins';font-size:27px;font-weight:800;color:var(--green)}
+.was{color:var(--muted);text-decoration:line-through;font-size:17px}
+.savetag{background:var(--sale);color:#fff;font-size:12px;font-weight:800;padding:4px 9px;border-radius:6px;display:inline-flex;align-items:center;gap:4px}
+
+.bsave-h{display:flex;align-items:center;gap:12px;justify-content:center;font-family:'Poppins';font-weight:700;font-size:13px;letter-spacing:.08em;margin-bottom:14px}
+.bsave-h::before,.bsave-h::after{content:"";height:2px;flex:1;max-width:90px;background:var(--green);border-radius:2px}
+
+.tier{position:relative;border:2px solid var(--line);border-radius:12px;padding:14px 14px 14px 42px;margin-bottom:14px;cursor:pointer;background:#fff;transition:.15s}
+.tier:hover{border-color:#bcd6c4}
+.tier.on{border-color:var(--green);background:var(--green-tint)}
+.tier .rad{position:absolute;left:14px;top:16px;width:18px;height:18px;border-radius:50%;border:2px solid #c4ccd2;background:#fff}
+.tier.on .rad{border-color:var(--green);background:radial-gradient(var(--green) 0 5px,#fff 6px)}
+.tier-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.tier-name{font-family:'Poppins';font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dpill{font-size:10.5px;font-weight:700;color:var(--green);border:1px solid var(--green);border-radius:999px;padding:2px 8px}
+.tier-save{font-size:12.5px;color:var(--muted);margin-top:4px}
+.tier-price{text-align:right;flex:0 0 auto}
+.tier-price .now{font-family:'Poppins';font-weight:800;color:var(--green);font-size:16px}
+.tier-price .w{display:block;color:var(--muted);text-decoration:line-through;font-size:12.5px;margin-top:1px}
+.tbadge{position:absolute;top:-11px;right:12px;background:var(--green);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:7px;white-space:nowrap;box-shadow:0 2px 7px rgba(0,0,0,.16)}
+.picks{margin-top:12px;display:none;gap:8px}
+.tier.on .picks{display:grid}
+.pick{display:flex;align-items:center;gap:9px;font-size:13px}
+.pick .lbl{width:24px;font-weight:800}
+.pick select{flex:0 1 160px;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;background:#fff;font-family:inherit}
+
+.atc{width:100%;background:var(--green);color:#fff;border:0;border-radius:12px;padding:16px;font-family:'Poppins';font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:.15s;box-shadow:0 6px 18px rgba(30,125,52,.22)}
+.atc:hover{background:var(--green-d)}
+.atc svg{width:19px;height:19px;stroke:#fff;stroke-width:1.9;fill:none}
+.tmini{display:flex;justify-content:center;gap:18px;margin-top:14px;flex-wrap:wrap}
+.tmini div{font-size:11.5px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:5px}
+
+/* sections */
+section{padding:60px 0}
+.s-h{text-align:center;font-size:clamp(22px,3vw,30px);margin-bottom:10px}
+.s-sub{text-align:center;color:var(--muted);font-size:14.5px;margin:0 auto 30px;max-width:560px}
+.soft{background:var(--soft)}
+
+/* product-info tabs/accordion */
+.tabs{max-width:860px;margin:0 auto;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
+.tabstrip{display:flex;border-bottom:1px solid var(--line);background:#fafbfc}
+.tab{flex:1;border:0;background:none;cursor:pointer;padding:15px 10px;font-family:'Poppins';font-weight:700;font-size:14px;color:var(--muted);border-bottom:3px solid transparent;display:flex;align-items:center;justify-content:center;gap:7px}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--green);border-bottom-color:var(--green);background:#fff}
+.panel{display:none}.panel.on{display:block}
+.m-head{display:none}
+.p-body{padding:24px}
+.spectab{width:100%;border-collapse:collapse;font-size:14px}
+.spectab td{padding:11px 6px;border-top:1px solid var(--line)}
+.spectab tr:first-child td{border-top:0}
+.spectab td:first-child{font-weight:600;width:42%}
+.spectab td:last-child{color:var(--muted)}
+.protlist{display:grid;grid-template-columns:1fr 1fr;gap:16px 26px}
+@media(max-width:560px){.protlist{grid-template-columns:1fr}}
+.protlist div{display:flex;align-items:center;gap:11px;font-size:14px;font-weight:500}
+.protlist .pi{flex:0 0 auto;display:flex}
+.protlist .pi svg{width:23px;height:23px;stroke:var(--teal);stroke-width:1.7;fill:none}
+.blist{list-style:none;display:grid;gap:8px}
+.blist li{font-size:13.5px;color:var(--muted);padding-left:16px;position:relative}
+.blist li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--green)}
+.p-body b{font-size:14px;color:var(--ink)}
+@media(max-width:760px){
+  .tabstrip{display:none}
+  .panel{display:block;border-top:1px solid var(--line)}
+  .panel:first-child{border-top:0}
+  .m-head{display:flex;width:100%;border:0;background:#fff;cursor:pointer;padding:16px 18px;font-family:'Poppins';font-weight:700;font-size:15px;justify-content:space-between;align-items:center;color:var(--ink)}
+  .m-head .cv{color:var(--muted);transition:.2s}
+  .panel.open .m-head .cv{transform:rotate(180deg)}
+  .p-body{display:none;padding:0 18px 18px}
+  .panel.open .p-body{display:block}
+}
+
+/* press marquee */
+.press{overflow:hidden;white-space:nowrap}
+.ptrack{display:inline-flex;align-items:center;animation:scroll 22s linear infinite}
+.ptrack .img{width:120px;height:44px;flex:0 0 auto;margin-right:34px;opacity:.85;font-size:9px}
+
+/* reviews */
+.rev-note{max-width:760px;margin:0 auto 26px;background:var(--green-tint);border:1px solid #cfe8d6;border-radius:12px;padding:14px 18px;font-size:13px;color:var(--green-d);text-align:center}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px;margin:0 auto}
+@media(max-width:820px){.rev-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.rev-grid{grid-template-columns:1fr}}
+.rcard{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
+.rcard .img{height:160px;border-radius:0}
+.rbody{padding:15px}
+.rbody .nm{font-family:'Poppins';font-weight:700;font-size:14px}
+.verified{color:var(--green);font-size:11px;font-weight:600}
+.rbody h5{font-size:14px;margin:7px 0 4px}
+.rbody p{font-size:12.5px;color:var(--muted)}
+
+/* feature blocks */
+.fb{display:grid;grid-template-columns:1fr 1fr;gap:38px;align-items:center;max-width:1000px;margin:0 auto 32px}
+.fb:last-child{margin-bottom:0}.fb.rev .tx{order:2}
+@media(max-width:780px){.fb{grid-template-columns:1fr;gap:18px}.fb.rev .tx{order:0}}
+.fb .img{aspect-ratio:4/3;border:1px solid var(--line)}
+.fb h3{font-size:22px;margin-bottom:11px}
+.fb p{font-size:15px;color:var(--muted)}
+.fb .micro{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.fb .micro span{font-size:12px;font-weight:600;color:var(--green);background:var(--green-tint);border-radius:999px;padding:5px 11px}
+
+/* comparison */
+.cmp{max-width:740px;margin:0 auto;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-sm)}
+.cmp table{width:100%;border-collapse:collapse;font-size:13.5px}
+.cmp th,.cmp td{padding:13px 11px;text-align:center;border-top:1px solid var(--line)}
+.cmp thead th{border-top:0;font-family:'Poppins';font-weight:700}
+.cmp td:first-child,.cmp th:first-child{text-align:left;font-weight:600;color:var(--ink)}
+.cmp .us{background:var(--green-tint)}
+.cmp thead .us{background:var(--green);color:#fff}
+.cmp .y{color:var(--green);font-weight:800}.cmp .n{color:#c2c8cd}
+
+/* trust marquee */
+.tm{background:var(--green);color:#fff;overflow:hidden;white-space:nowrap}
+.tm .t{display:inline-flex;padding:14px 0;animation:scroll 30s linear infinite;font-size:13.5px;font-weight:600}
+.tm .t span{display:inline-flex;align-items:center;gap:7px;margin-right:40px}
+
+/* loved-by video tiles */
+.gard{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:920px;margin:0 auto}
+.gard .vt{position:relative;aspect-ratio:9/16;border-radius:var(--r);overflow:hidden}
+.gard .vt .img{height:100%;border-radius:0}
+.gard .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2}
+.gard .play b{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:20px;color:#16181d;padding-left:4px;box-shadow:0 2px 12px rgba(0,0,0,.22)}
+@media(max-width:760px){.gard{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:74%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.gard::-webkit-scrollbar{display:none}.gard .vt{scroll-snap-align:center}}
+
+/* faq */
+.faq{max-width:740px;margin:0 auto;display:grid;gap:11px}
+.faq details{border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;overflow:hidden}
+.faq summary{list-style:none;cursor:pointer;padding:16px 19px;font-family:'Poppins';font-weight:600;font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pm{color:var(--green);font-size:20px;transition:.2s;flex:0 0 auto}
+.faq details[open] summary .pm{transform:rotate(45deg)}
+.faq .a{padding:0 19px 17px;color:var(--muted);font-size:14px}
+
+/* you may also like */
+.ymal-h{font-size:24px;margin-bottom:20px}
+.ymal{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:880px){.ymal{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}.ymal::-webkit-scrollbar{display:none}.ymal .pcard{scroll-snap-align:start}}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-sm)}
+.pcard .pimg{position:relative;aspect-ratio:1/1}
+.pcard .pimg .img{height:100%;border-radius:0;border:0}
+.pcard .save-b{position:absolute;left:10px;bottom:10px;background:var(--sale);color:#fff;font-size:11px;font-weight:800;padding:4px 9px;border-radius:6px}
+.pcard .pbody{padding:14px;text-align:center;display:flex;flex-direction:column;gap:9px;flex:1}
+.pcard .ptitle{font-size:13.5px;font-weight:600;line-height:1.3}
+.pcard .pprice{font-family:'Poppins';font-weight:800;color:var(--green);font-size:15px}
+.pcard .pprice .pw{color:var(--muted);text-decoration:line-through;font-weight:500;font-size:12px;margin-left:5px;font-family:'Inter'}
+.pcard .pbtn{margin-top:auto;background:var(--green);color:#fff;border:0;border-radius:9px;padding:11px;font-family:'Poppins';font-weight:700;font-size:13.5px;cursor:pointer}
+.pcard .pbtn:hover{background:var(--green-d)}
+
+/* footer */
+.foot{background:#12181c;color:#aeb6bd;padding:52px 0 28px}
+.foot .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;margin-bottom:30px}
+@media(max-width:760px){.foot .cols{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.foot .cols{grid-template-columns:1fr}}
+.foot .logo{color:#fff;font-size:22px;margin-bottom:9px}
+.foot .blurb{font-size:13px;color:#9aa3aa;max-width:250px}
+.foot h5{color:#fff;font-size:13px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:13px;font-weight:700}
+.foot ul{list-style:none;display:grid;gap:9px}
+.foot a{font-size:13.5px;color:#c0c7cd}.foot a:hover{color:#fff}
+.foot .region{border-top:1px solid #232b30;padding-top:20px;font-size:12.5px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.foot .pay{border:1px solid #3a444a;border-radius:5px;padding:2px 8px;font-size:11px;font-weight:800;color:#c0c7cd}
+.foot .copy{font-size:12px;color:#6b757c;margin-top:13px}
+
+/* sticky add-to-cart */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .25s;box-shadow:0 -6px 22px rgba(20,30,24,.08)}
+.sticky.show{transform:translateY(0)}
+.sticky .wrap{display:flex;align-items:center;gap:14px;height:66px}
+.sticky .simg{width:46px;height:46px;flex:0 0 auto}
+.sticky .sname{font-family:'Poppins';font-weight:700;font-size:14px;line-height:1.2}
+.sticky .sprice{font-family:'Poppins';font-weight:800;color:var(--green)}
+.sticky .atc{width:auto;padding:13px 26px;margin-left:auto;box-shadow:none}
+@media(max-width:560px){.sticky .sname{display:none}}
+.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%) translateY(20px);background:#12181c;color:#fff;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:70}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT -->
+<div class="announce"><div class="t" aria-hidden="true">
+  <span>📍 Ships from the US</span><span>↩️ 30-day returns</span><span>🚚 Free shipping over $40</span><span>🛡️ 12-month warranty</span>
+  <span>📍 Ships from the US</span><span>↩️ 30-day returns</span><span>🚚 Free shipping over $40</span><span>🛡️ 12-month warranty</span>
+</div></div>
+
+<!-- HEADER -->
+<header class="head"><div class="wrap">
+  <a href="#" class="logo">Garden<b>Studio</b>™</a>
+  <div class="hnav">
+    <div><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg> Search</div>
+    <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+    <div><svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg> <span class="cdot">0</span></div>
+  </div>
+</div></header>
+
+<!-- PRODUCT -->
+<div class="product" id="buy"><div class="wrap pgrid">
+  <!-- GALLERY -->
+  <div class="gallery">
+    <span class="gbadge">Best Seller</span>
+    <button class="garrow prev" id="gPrev" aria-label="Previous image">‹</button>
+    <button class="garrow next" id="gNext" aria-label="Next image">›</button>
+    <div class="gtrack" id="gtrack">
+      <div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-3 6 5"/></svg>Product photo 1</div>
+      <div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-3 6 5"/></svg>Product photo 2</div>
+      <div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-3 6 5"/></svg>Lifestyle photo</div>
+      <div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-3 6 5"/></svg>Detail / scale</div>
+    </div>
+    <div class="gdots" id="gdots"></div>
+  </div>
+
+  <!-- BUY BOX -->
+  <div class="buy">
+    <h1 class="btitle">Handcrafted Metal Flower Garden Stake — Bird Bath, Bee Station &amp; Garden Décor</h1>
+    <div class="soldby">Sold by GardenStudio <span class="vb">✓</span></div>
+    <div class="soldrow"><b>[4.8]</b> <span class="stars">★</span> <span>([#] reviews) · [#] sold</span></div>
+
+    <div class="vbar">
+      <span class="gift">🎁</span>
+      <div class="vtext"><div class="vt1">GREAT VALUE PACKAGE</div><div class="vt2">🚚 FAST DISPATCH — ORDER BY 6 PM</div></div>
+      <span class="vclock" id="clk">00:00:00</span>
+    </div>
+
+    <div class="mbar">
+      <span class="flag">🇺🇸</span>
+      <div class="mt"><small>SHIPS FROM</small><b>📍 [City, State]</b></div>
+      <span class="secure">🛡️ Secure</span>
+    </div>
+
+    <div class="pricerow">
+      <span class="price">$24.95</span><span class="was">[$39.95]</span><span class="savetag">🏷️ SAVE [38%]</span>
+    </div>
+
+    <div class="bsave-h">BUNDLE &amp; SAVE</div>
+
+    <div class="tier">
+      <span class="rad"></span>
+      <div class="tier-top">
+        <div><div class="tier-name">Buy 1</div><div class="tier-save">Standard</div></div>
+        <div class="tier-price"><span class="now">$24.95</span><span class="w">[$39.95]</span></div>
+      </div>
+      <div class="picks"><div class="pick"><span class="lbl">#1</span><select><option>Choose color…</option><option>Red</option><option>Pink</option><option>Blue</option><option>Yellow</option></select></div></div>
+    </div>
+
+    <div class="tier on">
+      <span class="tbadge">🔥 Most Popular 🔥</span>
+      <span class="rad"></span>
+      <div class="tier-top">
+        <div><div class="tier-name">Buy 2 <span class="dpill">Save 15%</span></div><div class="tier-save">[$21.20] each · free shipping</div></div>
+        <div class="tier-price"><span class="now">$42.40</span><span class="w">[$49.90]</span></div>
+      </div>
+      <div class="picks">
+        <div class="pick"><span class="lbl">#1</span><select><option>Choose color…</option><option>Red</option><option>Pink</option><option>Blue</option></select></div>
+        <div class="pick"><span class="lbl">#2</span><select><option>Choose color…</option><option>Red</option><option>Pink</option><option>Blue</option></select></div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <span class="tbadge">⚡ Flash Sale ⚡</span>
+      <span class="rad"></span>
+      <div class="tier-top">
+        <div><div class="tier-name">Buy 3 <span class="dpill">Save 20%</span></div><div class="tier-save">[$19.96] each · free shipping</div></div>
+        <div class="tier-price"><span class="now">$59.88</span><span class="w">[$74.85]</span></div>
+      </div>
+      <div class="picks">
+        <div class="pick"><span class="lbl">#1</span><select><option>Choose…</option></select></div>
+        <div class="pick"><span class="lbl">#2</span><select><option>Choose…</option></select></div>
+        <div class="pick"><span class="lbl">#3</span><select><option>Choose…</option></select></div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <span class="tbadge">🎁 Best Value Set 🎁</span>
+      <span class="rad"></span>
+      <div class="tier-top">
+        <div><div class="tier-name">Buy 4 <span class="dpill">Save 25% · VIP</span></div><div class="tier-save">[$18.71] each · free shipping</div></div>
+        <div class="tier-price"><span class="now">$74.85</span><span class="w">[$99.80]</span></div>
+      </div>
+      <div class="picks">
+        <div class="pick"><span class="lbl">#1</span><select><option>Choose…</option></select></div>
+        <div class="pick"><span class="lbl">#2</span><select><option>Choose…</option></select></div>
+        <div class="pick"><span class="lbl">#3</span><select><option>Choose…</option></select></div>
+        <div class="pick"><span class="lbl">#4</span><select><option>Choose…</option></select></div>
+      </div>
+    </div>
+
+    <button class="atc" id="addCart"><svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg> Add to cart</button>
+    <div class="tmini"><div>🔒 Secure checkout</div><div>↩️ 30-day returns</div><div>🚚 Tracked shipping</div></div>
+  </div>
+</div></div>
+
+<!-- PRODUCT INFO TABS/ACCORDION -->
+<section>
+  <div class="wrap">
+    <div class="tabs" id="infoTabs">
+      <div class="tabstrip" role="tablist">
+        <button class="tab on" data-i="0">⚙️ Specifications</button>
+        <button class="tab" data-i="1">🛡️ Protection</button>
+        <button class="tab" data-i="2">✓ Why Buy</button>
+        <button class="tab" data-i="3">🚚 Shipping &amp; Returns</button>
+      </div>
+
+      <div class="panel on open" data-i="0">
+        <button class="m-head">⚙️ Specifications <span class="cv">⌄</span></button>
+        <div class="p-body"><table class="spectab">
+          <tr><td>Product type</td><td>3-in-1 garden stake (bird bath · bee station · décor)</td></tr>
+          <tr><td>Material</td><td>Powder-coated metal, weather-resistant finish</td></tr>
+          <tr><td>Flower bowl</td><td>Approx. 6 in / 15 cm across, ~2 in / 5 cm deep</td></tr>
+          <tr><td>Overall height</td><td>Approx. 24 in / 60 cm above ground</td></tr>
+          <tr><td>Installation</td><td>Push-in ground stake — no tools required</td></tr>
+          <tr><td>Best placement</td><td>Flower beds, borders, planters, patios &amp; lawns</td></tr>
+          <tr><td>Care</td><td>Rinse, refill &amp; refresh as needed</td></tr>
+        </table></div>
+      </div>
+
+      <div class="panel" data-i="1">
+        <button class="m-head">🛡️ Protection Package <span class="cv">⌄</span></button>
+        <div class="p-body"><div class="protlist">
+          <div><span class="pi"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span> Secure payment</div>
+          <div><span class="pi"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span> Delivery commitment</div>
+          <div><span class="pi"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/></svg></span> Data privacy</div>
+          <div><span class="pi"><svg viewBox="0 0 24 24"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/></svg></span> 24/7 support</div>
+          <div><span class="pi"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 12l2.2 2.2L15.5 9.5"/></svg></span> Money-back guarantee</div>
+          <div><span class="pi"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span> Easy returns &amp; refunds</div>
+        </div></div>
+      </div>
+
+      <div class="panel" data-i="2">
+        <button class="m-head">✓ Why Buy From Us <span class="cv">⌄</span></button>
+        <div class="p-body"><ul class="blist">
+          <li>30-day no-hassle returns — send it back if it's not right.</li>
+          <li>12-month warranty against manufacturing defects.</li>
+          <li>Free tracked shipping on qualifying orders.</li>
+          <li>Secure checkout — card, PayPal &amp; Shop Pay.</li>
+          <li>Friendly support that replies within one business day.</li>
+        </ul></div>
+      </div>
+
+      <div class="panel" data-i="3">
+        <button class="m-head">🚚 Shipping &amp; Returns <span class="cv">⌄</span></button>
+        <div class="p-body">
+          <b>Shipping</b>
+          <ul class="blist" style="margin-top:6px">
+            <li>Processing: 1–2 business days.</li>
+            <li>Tracked delivery; estimate shown at checkout.</li>
+            <li>Free shipping over $40.</li>
+          </ul>
+          <b style="display:block;margin-top:12px">Returns</b>
+          <ul class="blist" style="margin-top:6px">
+            <li>30-day return window.</li>
+            <li>Item in clean, resellable condition.</li>
+            <li>Email [support@yourbrand.com] to start a return.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS MARQUEE -->
+<section style="padding:34px 0">
+  <div class="wrap">
+    <p class="s-sub" style="margin-bottom:18px">Trusted by gardeners &amp; backed by</p>
+    <div class="press"><div class="ptrack" aria-hidden="true">
+      <div class="img">LOGO</div><div class="img">LOGO</div><div class="img">LOGO</div><div class="img">LOGO</div><div class="img">LOGO</div>
+      <div class="img">LOGO</div><div class="img">LOGO</div><div class="img">LOGO</div><div class="img">LOGO</div><div class="img">LOGO</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="soft">
+  <div class="wrap">
+    <span class="s-sub" style="display:block;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">From real customers</span>
+    <h2 class="s-h">What gardeners are saying</h2>
+    <div class="rev-note">Verified reviews only — this block is wired for your Judge.me widget. Real ratings &amp; customer photos render here once published.</div>
+    <div class="rev-grid">
+      <div class="rcard"><div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/></svg>Customer photo</div><div class="rbody"><div class="nm">[Customer name]</div><span class="verified">● Verified Buyer</span><div class="stars">★★★★★</div><h5>[Review title]</h5><p>[Real review text loads from Judge.me]</p></div></div>
+      <div class="rcard"><div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/></svg>Customer photo</div><div class="rbody"><div class="nm">[Customer name]</div><span class="verified">● Verified Buyer</span><div class="stars">★★★★★</div><h5>[Review title]</h5><p>[Real review text loads from Judge.me]</p></div></div>
+      <div class="rcard"><div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/></svg>Customer photo</div><div class="rbody"><div class="nm">[Customer name]</div><span class="verified">● Verified Buyer</span><div class="stars">★★★★★</div><h5>[Review title]</h5><p>[Real review text loads from Judge.me]</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE BLOCKS -->
+<section>
+  <div class="wrap">
+    <div class="fb">
+      <div class="tx">
+        <h3>Bring any corner of the garden to life</h3>
+        <p>A handcrafted metal flower that turns a quiet flower bed, border or patio into a little highlight — glossy petals that catch the light and a bowl that doubles as a water station for birds and pollinators.</p>
+        <div class="micro"><span>3-in-1 use</span><span>Stake &amp; go</span></div>
+      </div>
+      <div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-3 6 5"/></svg>Lifestyle image</div>
+    </div>
+    <div class="fb rev">
+      <div class="tx">
+        <h3>A glossy finish that catches the light</h3>
+        <p>The weather-resistant coating keeps its color through sun and rain, and the curved petals reflect daylight so the piece adds a bit of movement and shine to the whole space.</p>
+        <div class="micro"><span>Weather-resistant</span><span>Glossy finish</span></div>
+      </div>
+      <div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-3 6 5"/></svg>Detail image</div>
+    </div>
+    <div class="fb">
+      <div class="tx">
+        <h3>A gift gardeners actually love</h3>
+        <p>Practical and pretty in one — a thoughtful pick for birthdays, housewarmings or the holidays for anyone who likes to potter about the garden and watch the birds.</p>
+        <div class="micro"><span>Gift-ready</span><span>No tools</span></div>
+      </div>
+      <div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-3 6 5"/></svg>Gift image</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="soft">
+  <div class="wrap">
+    <h2 class="s-h">Why choose GardenStudio</h2>
+    <p class="s-sub">An honest look against the alternatives people usually consider.</p>
+    <div class="cmp"><table>
+      <thead><tr><th></th><th class="us">GardenStudio ★</th><th>Large bird bath</th><th>Plastic décor</th></tr></thead>
+      <tbody>
+        <tr><td>3-in-1 use</td><td class="us y">✓</td><td class="n">✕</td><td class="n">✕</td></tr>
+        <tr><td>Bird bath</td><td class="us y">✓</td><td class="y">✓</td><td class="n">✕</td></tr>
+        <tr><td>Bee &amp; pollinator station</td><td class="us y">✓</td><td class="n">✕</td><td class="n">✕</td></tr>
+        <tr><td>Easy stake-and-go setup</td><td class="us y">✓</td><td class="n">Heavy</td><td class="y">✓</td></tr>
+        <tr><td>Fits small spaces</td><td class="us y">✓</td><td class="n">✕</td><td class="y">✓</td></tr>
+        <tr><td>Metal, weather-resistant</td><td class="us y">✓</td><td class="n">Stone</td><td class="n">✕</td></tr>
+        <tr><td>Gift-friendly</td><td class="us y">✓</td><td class="n">✕</td><td class="y">✓</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- TRUST MARQUEE -->
+<div class="tm"><div class="t" aria-hidden="true">
+  <span>✅ Loved by gardeners</span><span>🚚 Free shipping over $40</span><span>🔒 Secure payment</span><span>🛡️ 30-day money-back</span>
+  <span>✅ Loved by gardeners</span><span>🚚 Free shipping over $40</span><span>🔒 Secure payment</span><span>🛡️ 30-day money-back</span>
+</div></div>
+
+<!-- LOVED BY -->
+<section>
+  <div class="wrap">
+    <h2 class="s-h">Loved by gardeners everywhere</h2>
+    <p class="s-sub">Short clips of the stake in real gardens.</p>
+    <div class="gard">
+      <div class="vt"><div class="img"></div><span class="play"><b>▶</b></span></div>
+      <div class="vt"><div class="img"></div><span class="play"><b>▶</b></span></div>
+      <div class="vt"><div class="img"></div><span class="play"><b>▶</b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="soft">
+  <div class="wrap">
+    <h2 class="s-h">Questions, answered</h2>
+    <p class="s-sub">&nbsp;</p>
+    <div class="faq">
+      <details open><summary>Is it weather-resistant? <span class="pm">+</span></summary><div class="a">Yes — it's made from metal with a protective finish built to handle sun, rain and wind outdoors through the seasons.</div></details>
+      <details><summary>How tall is the stake? <span class="pm">+</span></summary><div class="a">About 24 inches (60 cm) above ground, so it sits nicely among flowers and garden plants.</div></details>
+      <details><summary>How big is the flower bowl? <span class="pm">+</span></summary><div class="a">Roughly 6 inches (15 cm) across and about 2 inches (5 cm) deep.</div></details>
+      <details><summary>Can it hold water for birds and bees? <span class="pm">+</span></summary><div class="a">Yes. The bowl catches rainwater or holds a small amount you pour in, so birds and pollinators can drink. A few pebbles in the bowl give bees a safe landing spot.</div></details>
+      <details><summary>Is it easy to install? <span class="pm">+</span></summary><div class="a">Very — just push the pointed stake into soil, a bed or a planter. No tools or assembly needed.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- YOU MAY ALSO LIKE -->
+<section>
+  <div class="wrap">
+    <h2 class="ymal-h">You may also like</h2>
+    <div class="ymal">
+      <div class="pcard"><div class="pimg"><div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/></svg></div><span class="save-b">🏷️ SAVE 50%</span></div><div class="pbody"><div class="ptitle">[Related product 1]</div><div class="pprice">From $17.98 <span class="pw">$35.99</span></div><button class="pbtn">Choose options</button></div></div>
+      <div class="pcard"><div class="pimg"><div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/></svg></div></div><div class="pbody"><div class="ptitle">[Related product 2]</div><div class="pprice">From $9.99</div><button class="pbtn">Choose options</button></div></div>
+      <div class="pcard"><div class="pimg"><div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/></svg></div></div><div class="pbody"><div class="ptitle">[Related product 3]</div><div class="pprice">From $11.99</div><button class="pbtn">Choose options</button></div></div>
+      <div class="pcard"><div class="pimg"><div class="img"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/></svg></div><span class="save-b">🏷️ SAVE 50%</span></div><div class="pbody"><div class="ptitle">[Related product 4]</div><div class="pprice">$19.99 <span class="pw">$39.99</span></div><button class="pbtn">Add to cart</button></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot"><div class="wrap">
+  <div class="cols">
+    <div><div class="logo">Garden<b style="color:var(--green)">Studio</b>™</div><p class="blurb">Handcrafted garden accents that bring color, birds and life to any outdoor space.</p></div>
+    <div><h5>Info</h5><ul><li><a href="#">Company profile</a></li><li><a href="#">Contact</a></li><li><a href="#">FAQ</a></li><li><a href="#">Terms of service</a></li></ul></div>
+    <div><h5>Customer service</h5><ul><li><a href="#">Privacy policy</a></li><li><a href="#">Returns &amp; refunds</a></li><li><a href="#">Shipping &amp; delivery</a></li><li><a href="#">Order tracking</a></li></ul></div>
+    <div><h5>Contact us</h5><ul><li><a href="#">[support@yourbrand.com]</a></li><li><a href="#">[Business address]</a></li></ul></div>
+  </div>
+  <div class="region"><span>United States (USD $)</span><span class="pay">VISA</span><span class="pay">MC</span><span class="pay">AMEX</span><span class="pay">PAYPAL</span><span class="pay">SHOP PAY</span></div>
+  <p class="copy">© 2026 GardenStudio™. All rights reserved.</p>
+</div></footer>
+
+<!-- STICKY -->
+<div class="sticky" id="sticky"><div class="wrap">
+  <div class="img simg"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="9" cy="11" r="2"/></svg></div>
+  <div><div class="sname">Metal Flower Garden Stake</div><span class="sprice">From $24.95</span></div>
+  <button class="atc" id="stickyAdd">Add to cart</button>
+</div></div>
+
+<div class="toast" id="toast">Added to cart ✓</div>
+
+<script>
+(function(){
+  var $=function(s,c){return (c||document).querySelector(s)};
+  var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+  /* gallery */
+  var track=$('#gtrack'), dotsBox=$('#gdots'), slides=$$('#gtrack .img');
+  slides.forEach(function(_,i){var b=document.createElement('b');if(i===0)b.className='on';
+    b.addEventListener('click',function(){track.scrollTo({left:track.clientWidth*i,behavior:'smooth'})});dotsBox.appendChild(b)});
+  var dots=$$('#gdots b');
+  track.addEventListener('scroll',function(){var i=Math.round(track.scrollLeft/track.clientWidth);
+    dots.forEach(function(d,j){d.classList.toggle('on',j===i)})},{passive:true});
+  function go(d){var i=Math.round(track.scrollLeft/track.clientWidth)+d;i=Math.max(0,Math.min(slides.length-1,i));
+    track.scrollTo({left:track.clientWidth*i,behavior:'smooth'})}
+  $('#gPrev').addEventListener('click',function(){go(-1)});
+  $('#gNext').addEventListener('click',function(){go(1)});
+
+  /* tabs (desktop) + accordion (mobile) */
+  var box=$('#infoTabs'), tabs=$$('.tab',box), panels=$$('.panel',box);
+  tabs.forEach(function(t){t.addEventListener('click',function(){var i=t.dataset.i;
+    tabs.forEach(function(x){x.classList.toggle('on',x===t)});
+    panels.forEach(function(p){p.classList.toggle('on',p.dataset.i===i)})})});
+  $$('.m-head',box).forEach(function(h){h.addEventListener('click',function(){h.parentElement.classList.toggle('open')})});
+
+  /* bundle tier select */
+  var tiers=$$('.tier');
+  tiers.forEach(function(t){t.addEventListener('click',function(e){if(e.target.tagName==='SELECT')return;
+    tiers.forEach(function(x){x.classList.remove('on')});t.classList.add('on')})});
+
+  /* honest countdown — to next 6 PM daily cutoff */
+  var clk=$('#clk');
+  function tick(){var now=new Date(),c=new Date();c.setHours(18,0,0,0);if(now>=c)c.setDate(c.getDate()+1);
+    var s=Math.floor((c-now)/1000),h=s/3600|0,m=s%3600/60|0,x=s%60;
+    clk.textContent=[h,m,x].map(function(n){return(n<10?'0':'')+n}).join(':')}
+  tick();setInterval(tick,1000);
+
+  /* add to cart (demo) */
+  var count=0,toast=$('#toast');
+  function add(){count++;$('.cdot').textContent=count;toast.classList.add('show');
+    setTimeout(function(){toast.classList.remove('show')},1600)}
+  $('#addCart').addEventListener('click',add);
+  $('#stickyAdd').addEventListener('click',add);
+
+  /* sticky bar */
+  var buy=$('#buy'),sticky=$('#sticky');
+  window.addEventListener('scroll',function(){sticky.classList.toggle('show',buy.getBoundingClientRect().bottom<0)},{passive:true});
+})();
+</script>
+</body>
+</html>

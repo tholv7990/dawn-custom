@@ -28,6 +28,7 @@ Our Minimals sections follow one shape. Copy an existing `ct-*` section and keep
 ## Shared CSS primitives (`assets/ct-sections.css`)
 
 - **`.ct-card`** — card surface base: `bg-raised` + border + radius. Add it to any card element; set shadow/padding/hover in your own `section-ct-*.css`.
+- **`.ct-media`** + **`.ct-media--contain`** / **`.ct-media--cover`** — shared media fit helpers for CT content cards. Use `contain` when uploaded image/video content must remain fully visible; use `cover` for intentional thumbnail/hero crops.
 - **`.ct-btn`** family — `.ct-btn` + `--primary` / `--outlined` / `--soft`, and `--sm` / `--lg` / `--full`.
 - **`.ct-eyebrow`**, **`.ct-kicker`**, **`.ct-section-head*`** — headings.
 - **`.ct-trust-row`** / **`.ct-trust-chip`**, **`.ct-rating-row`** / **`.ct-stars`** / **`.ct-rating-count`**, **`.ct-grid-3`**.

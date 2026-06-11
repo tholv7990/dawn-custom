@@ -242,6 +242,11 @@ if (!customElements.get('product-info')) {
       updateMedia(html, variantFeaturedMediaId) {
         if (!variantFeaturedMediaId) return;
 
+        const ctProductGallery = this.querySelector('ct-product-gallery');
+        if (ctProductGallery?.setActiveMedia) {
+          ctProductGallery.setActiveMedia(variantFeaturedMediaId);
+        }
+
         const mediaGallerySource = this.querySelector('media-gallery ul');
         const mediaGalleryDestination = html.querySelector(`media-gallery ul`);
 

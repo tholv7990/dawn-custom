@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CozyClaw — Cart Rewards Bar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F7F2E9;--paper:#FFFDF8;--panel:#EFE7D7;--groove:#E7DCC6;
+  --espresso:#2A201A;--coffee:#5A3E2B;--muted:#8a7c68;--line:#E2D7C2;
+  --coral:#D9543F;
+  --green:#5C9E5E;--green-deep:#3F7A45;--green-soft:#E9F2E7;
+  --ff-disp:'Fraunces',Georgia,serif;--ff-body:'Hanken Grotesk',system-ui,sans-serif;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--espresso);font-family:var(--ff-body);-webkit-font-smoothing:antialiased}
+.stage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 18px}
+
+/* ===== rewards card ===== */
+.rewards{width:100%;max-width:540px;background:var(--paper);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:0 8px 24px rgba(42,32,26,.07);padding:22px 24px 24px}
+.rw-eyebrow{display:flex;align-items:center;gap:7px;font-size:.72rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.rw-eyebrow svg{width:15px;height:15px;color:var(--green)}
+.rw-msg{font-family:var(--ff-disp);font-weight:600;font-size:1.12rem;line-height:1.25;margin:0 0 22px;letter-spacing:-.01em}
+.rw-msg .amt{color:var(--coral);font-family:var(--ff-body);font-weight:700}
+.rw-msg .ok{color:var(--green-deep)}
+
+/* track */
+.rw-bar-wrap{position:relative;height:30px;display:flex;align-items:center;margin:0 4px}
+.rw-bar{position:relative;width:100%;height:12px;background:var(--groove);border-radius:99px;overflow:hidden}
+.rw-fill{position:absolute;inset:0 auto 0 0;width:0%;border-radius:99px;
+  background:linear-gradient(90deg,#7FBA80,var(--green));transition:width .4s cubic-bezier(.4,0,.2,1)}
+.rw-node{position:absolute;top:50%;transform:translate(-50%,-50%);z-index:2}
+.rw-dot{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;
+  background:var(--panel);border:1px solid var(--line);color:var(--muted);
+  transition:background .3s,box-shadow .3s,color .3s,border-color .3s}
+.rw-dot svg{width:15px;height:15px}
+.rw-node.reached .rw-dot{background:var(--green);border-color:var(--green);color:#fff;
+  box-shadow:0 0 0 5px var(--green-soft)}
+
+/* labels under track */
+.rw-labels{position:relative;height:42px;margin-top:12px}
+.rw-label{position:absolute;display:flex;flex-direction:column;gap:1px;max-width:46%}
+.rw-label .price{font-weight:700;font-size:.9rem;color:var(--espresso)}
+.rw-label .desc{font-size:.76rem;color:var(--muted);line-height:1.2}
+.rw-label.reached .desc{color:var(--green-deep);font-weight:600}
+.rw-label.l50{left:50%;transform:translateX(-50%);text-align:center;align-items:center}
+.rw-label.l100{right:0;text-align:right;align-items:flex-end}
+
+/* demo control (remove when wiring to real cart) */
+.rw-demo{margin-top:22px;padding-top:18px;border-top:1px dashed var(--line)}
+.rw-demo label{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--muted);margin-bottom:9px}
+.rw-demo label b{color:var(--espresso);font-size:.95rem}
+.rw-demo input[type=range]{width:100%;accent-color:var(--green);height:4px}
+.rw-hint{font-size:.7rem;color:#a99a85;margin:9px 0 0;text-align:center}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="rewards" id="rewards">
+    <p class="rw-eyebrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      Cart rewards
+    </p>
+    <p class="rw-msg" id="rwMsg"></p>
+
+    <div class="rw-bar-wrap">
+      <div class="rw-bar"><div class="rw-fill" id="rwFill"></div></div>
+
+      <div class="rw-node" id="node50" style="left:50%">
+        <span class="rw-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h14v11H1z"/><path d="M15 8h4l3 3v4h-7z"/><circle cx="5.5" cy="18" r="1.7"/><circle cx="17.5" cy="18" r="1.7"/></svg>
+        </span>
+      </div>
+
+      <div class="rw-node" id="node100" style="left:100%">
+        <span class="rw-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5 5 19"/><circle cx="7.5" cy="7.5" r="2.3"/><circle cx="16.5" cy="16.5" r="2.3"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="rw-labels">
+      <div class="rw-label l50" id="lab50"><span class="price">$50.00</span><span class="desc">Free shipping</span></div>
+      <div class="rw-label l100" id="lab100"><span class="price">$100.00</span><span class="desc">+ 15% off</span></div>
+    </div>
+
+    <!-- DEMO ONLY: drag to preview. Delete this block in production. -->
+    <div class="rw-demo">
+      <label>Preview cart total <b id="rwVal">$0.00</b></label>
+      <input type="range" id="rwSlider" min="0" max="150" value="0" step="1">
+      <p class="rw-hint">Demo slider — in your store this reads the real cart total</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var FREE_SHIP = 50;   // free shipping threshold
+var DISCOUNT  = 100;  // free shipping + 15% off threshold
+var SCALE     = 100;  // bar represents $0 → $100
+
+var fill  = document.getElementById('rwFill');
+var msg   = document.getElementById('rwMsg');
+var n50   = document.getElementById('node50');
+var n100  = document.getElementById('node100');
+var l50   = document.getElementById('lab50');
+var l100  = document.getElementById('lab100');
+
+function money(n){ return '$' + n.toFixed(2); }
+
+function render(total){
+  // fill
+  fill.style.width = Math.min(total / SCALE, 1) * 100 + '%';
+
+  // milestone states
+  var ship = total >= FREE_SHIP;
+  var disc = total >= DISCOUNT;
+  n50.classList.toggle('reached', ship);
+  l50.classList.toggle('reached', ship);
+  n100.classList.toggle('reached', disc);
+  l100.classList.toggle('reached', disc);
+
+  // message
+  if (disc){
+    msg.innerHTML = '<span class="ok">🎉 You\u2019ve unlocked free shipping + 15% off!</span>';
+  } else if (ship){
+    msg.innerHTML = '<span class="ok">\u2713 Free shipping unlocked.</span> Add <span class="amt">'
+      + money(DISCOUNT - total) + '</span> more for <b>15% off</b>.';
+  } else {
+    msg.innerHTML = 'Add <span class="amt">' + money(FREE_SHIP - total)
+      + '</span> to get <b>free shipping</b>.';
+  }
+}
+
+/* ---- DEMO slider (remove in production) ---- */
+var slider = document.getElementById('rwSlider');
+var valOut = document.getElementById('rwVal');
+slider.addEventListener('input', function(){
+  var t = parseFloat(this.value);
+  valOut.textContent = money(t);
+  render(t);
+});
+
+/* ---- PRODUCTION: read the real Shopify cart total ----
+   Shopify stores totals in cents. Use Liquid or the Cart AJAX API:
+
+   // Liquid (in a section):  render({{ cart.total_price | divided_by: 100.0 }});
+
+   // or live via the Cart API (updates as items change):
+   fetch('/cart.js').then(function(r){return r.json();})
+     .then(function(c){ render(c.total_price / 100); });
+*/
+
+render(0); // initial state
+</script>
+</body>
+</html>

@@ -42,6 +42,7 @@
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'ct-product-gallery.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
@@ -73,12 +74,36 @@
     >
   {%- endif -%}
 
-  {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+  {%- liquid
+    assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
+    if section.settings.media_size == 'large'
+      assign media_width = 0.65
+    elsif section.settings.media_size == 'medium'
+      assign media_width = 0.55
+    elsif section.settings.media_size == 'small'
+      assign media_width = 0.45
+    endif
+  -%}
   <div class="page-width">
     {% render 'ct-breadcrumb' %}
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
-        {% render 'product-media-gallery', variant_images: variant_images %}
+        {% render 'ct-product-gallery',
+          product: product,
+          wrapper_class: 'ct-main-product-gallery',
+          carousel_class: 'ct-main-product-gallery__carousel',
+          track_class: 'ct-main-product-gallery__track',
+          slide_class: 'ct-main-product-gallery__slide',
+          dots_class: 'ct-main-product-gallery__dots',
+          dot_class: 'ct-main-product-gallery__dot',
+          arrow_class: 'ct-main-product-gallery__arrow',
+          prev_class: 'ct-main-product-gallery__arrow--prev',
+          next_class: 'ct-main-product-gallery__arrow--next',
+          enable_desktop_drag: false,
+          render_product_media: true,
+          media_width: media_width,
+          variant_images: variant_images
+        %}
       </div>
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <section
@@ -497,8 +522,30 @@
                       {%- if clean != blank -%}
                         {%- assign parts = clean | split: '—' -%}
                         {%- if parts.size < 2 -%}{%- assign parts = clean | split: ' - ' -%}{%- endif -%}
+                        {%- liquid
+                          assign clean_downcase = clean | downcase
+                          assign fa_icon = 'circle-check'
+                          assign icon_tone = 'green'
+                          if clean_downcase contains 'cloud' or clean_downcase contains 'soft' or clean_downcase contains 'coral' or clean_downcase contains 'fleece'
+                            assign fa_icon = 'paw'
+                            assign icon_tone = 'coffee'
+                          elsif clean_downcase contains 'raised' or clean_downcase contains 'bolster' or clean_downcase contains 'edge'
+                            assign fa_icon = 'bed'
+                            assign icon_tone = 'coffee'
+                          elsif clean_downcase contains 'sofa' or clean_downcase contains 'hair'
+                            assign fa_icon = 'couch'
+                            assign icon_tone = 'green'
+                          elsif clean_downcase contains 'non-slip' or clean_downcase contains 'base'
+                            assign fa_icon = 'shield-heart'
+                            assign icon_tone = 'green-dark'
+                          elsif clean_downcase contains 'wash' or clean_downcase contains 'clean'
+                            assign fa_icon = 'soap'
+                            assign icon_tone = 'green'
+                          endif
+                          assign icon_class = 'ct-benefits__check ct-benefits__check--' | append: icon_tone
+                        -%}
                         <li>
-                          <svg class="ct-benefits__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          {%- render 'ct-fa-icon', icon: fa_icon, class: icon_class -%}
                           <span><b>{{ parts[0] | strip }}</b>{% if parts[1] != blank %} <span class="ct-benefits__desc">— {{ parts[1] | strip }}</span>{% endif %}</span>
                         </li>
                       {%- endif -%}
@@ -515,8 +562,17 @@
                 {% comment %}theme-check-enable UndefinedObject{% endcomment %}
               {%- when 'ct_running_total' -%}
                 <div class="ct-running-total" data-bundle-total-wrap {{ block.shopify_attributes }}>
-                  <span class="ct-running-total__label">{{ block.settings.label | default: 'Total' }}</span>
-                  <strong class="ct-running-total__val" data-bundle-total>—</strong>
+                  <div class="ct-running-total__rows" data-bundle-total-rows></div>
+                  <div class="ct-running-total__final">
+                    <div class="ct-running-total__copy">
+                      <span class="ct-running-total__label">{{ block.settings.label | default: 'Total' }}</span>
+                      <span class="ct-running-total__discount" data-bundle-discount-note></span>
+                    </div>
+                    <div class="ct-running-total__amount">
+                      <span class="ct-running-total__was" data-bundle-total-was hidden></span>
+                      <strong class="ct-running-total__val" data-bundle-total>-</strong>
+                    </div>
+                  </div>
                 </div>
               {%- when 'ct_trust_icons' -%}
                 {%- render 'ct-trust-icons', block: block -%}
@@ -576,7 +632,7 @@
                 </div>
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
-                  <div class="rating-wrapper">
+                  <div class="rating-wrapper" {{ block.shopify_attributes }}>
                     {% liquid
                       assign rating_decimal = 0
                       assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
@@ -610,6 +666,11 @@
                         {{ 'accessibility.total_reviews' | t -}}
                       </span>
                     </p>
+                  </div>
+                {%- elsif block.settings.fallback_rating_text != blank -%}
+                  <div class="rating-wrapper ct-rating-wrapper--fallback" {{ block.shopify_attributes }}>
+                    <span class="ct-stars" aria-hidden="true">★★★★★</span>
+                    <span class="rating-count caption">{{ block.settings.fallback_rating_text }}</span>
                   </div>
                 {%- endif -%}
               {%- when 'complementary' -%}
@@ -803,7 +864,6 @@
 
     {%- if product.media.size > 0 -%}
       <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
-      <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
     {%- if first_3d_model -%}
@@ -814,15 +874,88 @@
     {%- endif -%}
 
     {%- liquid
-      if product.selected_or_first_available_variant.featured_media
-        assign seo_media = product.selected_or_first_available_variant.featured_media
-      else
-        assign seo_media = product.featured_media
+      assign schema_variant = product.selected_or_first_available_variant
+      assign schema_price = schema_variant.price | divided_by: 100.0
+      assign schema_currency = cart.currency.iso_code | default: localization.country.currency.iso_code | default: shop.currency
+      assign schema_availability = 'https://schema.org/OutOfStock'
+      if product.available
+        assign schema_availability = 'https://schema.org/InStock'
       endif
+      assign schema_sku = schema_variant.sku | default: schema_variant.id
+      assign schema_brand = product.vendor | default: shop.name
+      assign schema_rating = product.metafields.reviews.rating.value
+      assign schema_rating_count = product.metafields.reviews.rating_count.value | default: product.metafields.reviews.rating_count
+      assign schema_rating_count_number = schema_rating_count | plus: 0
     -%}
 
     <script type="application/ld+json">
-      {{ product | structured_data }}
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "@id": {{ canonical_url | append: '#product' | json }},
+        "name": {{ product.title | json }},
+        "description": {{ product.description | strip_html | strip_newlines | json }},
+        "brand": {
+          "@type": "Brand",
+          "name": {{ schema_brand | json }}
+        },
+        "sku": {{ schema_sku | json }},
+        "image": [
+          {%- for image in product.images -%}
+            {{ image | image_url: width: 1200 | prepend: 'https:' | json }}{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ],
+        "offers": {
+          "@type": "Offer",
+          "price": {{ schema_price | json }},
+          "priceCurrency": {{ schema_currency | json }},
+          "availability": {{ schema_availability | json }},
+          "itemCondition": "https://schema.org/NewCondition",
+          "url": {{ canonical_url | json }},
+          "sku": {{ schema_sku | json }},
+          "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "value": 0,
+              "currency": {{ schema_currency | json }}
+            },
+            "shippingDestination": {
+              "@type": "DefinedRegion",
+              "addressCountry": "US"
+            },
+            "deliveryTime": {
+              "@type": "ShippingDeliveryTime",
+              "handlingTime": {
+                "@type": "QuantitativeValue",
+                "minValue": 3,
+                "maxValue": 7,
+                "unitCode": "DAY"
+              },
+              "transitTime": {
+                "@type": "QuantitativeValue",
+                "minValue": 5,
+                "maxValue": 15,
+                "unitCode": "DAY"
+              }
+            }
+          },
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "US",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 30
+          }
+        }{%- if schema_rating != blank and schema_rating_count_number > 0 -%},
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": {{ schema_rating.rating | json }},
+          "reviewCount": {{ schema_rating_count_number | json }},
+          "bestRating": {{ schema_rating.scale_max | default: 5 | json }},
+          "worstRating": {{ schema_rating.scale_min | default: 1 | json }}
+        }
+        {%- endif %}
+      }
     </script>
   </div>
 </product-info>
@@ -1050,9 +1183,9 @@
         { "type": "text", "id": "badge", "label": "Top-right ribbon (optional)", "info": "e.g. 💎 Best value · free shipping" },
         { "type": "checkbox", "id": "featured", "label": "Featured (active by default)", "default": false },
         { "type": "range", "id": "qty", "label": "Items in this tier", "min": 1, "max": 4, "step": 1, "default": 1, "info": "How many variant selects show on this card (= line items added to cart)." },
-        { "type": "text", "id": "save_text", "label": "Savings line (optional)", "info": "e.g. You save $9.00" },
-        { "type": "text", "id": "price_now", "label": "Tier price (display)", "default": "$35.97" },
-        { "type": "text", "id": "price_was", "label": "Tier was-price (display, optional)", "default": "$44.97" },
+        { "type": "text", "id": "save_text", "label": "Savings line (optional)" },
+        { "type": "text", "id": "price_now", "label": "Tier price (display)" },
+        { "type": "text", "id": "price_was", "label": "Tier was-price (display, optional)" },
         { "type": "text", "id": "opt_label", "label": "Option label", "default": "Color" },
         { "type": "text", "id": "opt_emoji", "label": "Option-row icon", "default": "🐈" }
       ]
@@ -1373,6 +1506,13 @@
         {
           "type": "paragraph",
           "content": "t:sections.main-product.blocks.rating.settings.paragraph.content"
+        },
+        {
+          "type": "text",
+          "id": "fallback_rating_text",
+          "label": "Fallback rating text",
+          "default": "92% 5-star · 13 reviews",
+          "info": "Shown when Shopify review metafields are empty."
         }
       ]
     },
@@ -2422,6 +2562,17 @@
       "id": "enable_video_looping",
       "default": false,
       "label": "t:sections.main-product.settings.enable_video_looping.label"
+    },
+    {
+      "type": "range",
+      "id": "automatic_discount_percent",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "label": "Automatic bundle discount percent",
+      "default": 15,
+      "info": "Display estimate only. Match this to the Shopify automatic discount: $100+ cart subtotal."
     },
     {
       "type": "header",

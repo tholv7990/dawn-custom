@@ -1,9 +1,9 @@
 {% comment %}
-  snippets/css-variables.liquid — the ONLY file that changes per brand.
+  snippets/css-variables.liquid - the ONLY file that changes per brand.
   Emits CozyClaw --ct-* tokens + @font-face for self-hosted Public Sans + DM Mono.
   Fraunces (display serif) loads from Google Fonts in layout/theme.liquid.
   Rendered inside theme.liquid's reset style block, so it outputs raw CSS only
-  (no style wrapper). Plain-text comments only — never Liquid tags inside CSS comments.
+  (no style wrapper). Plain-text comments only - never Liquid tags inside CSS comments.
 {% endcomment %}
 {%- comment -%} Body & mono fonts self-hosted (woff2 in assets/); display serif from Google Fonts {%- endcomment -%}
 @font-face {
@@ -31,59 +31,61 @@
 :root { color-scheme: only light; }
 html { color-scheme: only light; forced-color-adjust: none; }
 body {
-  background: #FAF8FD !important;
-  color: #2A2433 !important;
+  background: var(--ct-bg) !important;
+  color: var(--ct-text) !important;
   letter-spacing: normal !important;
   overflow-x: hidden;
 }
 
 :root {
-  /* Warm lavender canvas */
-  --ct-bg:#FAF8FD; --ct-bg-surface:#FCFAFE; --ct-bg-raised:#FFFFFF;
-  --ct-bg-control:rgba(120,100,160,.08); --ct-bg-control-h:rgba(120,100,160,.16);
-  --ct-bg-overlay:rgba(42,36,51,.80);
+  /* Warm cream canvas */
+  --ct-bg:#F7F2E9; --ct-bg-surface:#FFFDF8; --ct-bg-raised:#FFFDF8;
+  --ct-bg-control:rgba(110,80,55,.08); --ct-bg-control-h:rgba(110,80,55,.16);
+  --ct-bg-overlay:rgba(42,32,26,.80);
 
   /* Warm text */
-  --ct-text:#2A2433; --ct-text-2:#645A75; --ct-text-3:#938AA6; --ct-text-off:#BCB2CC;
+  --ct-text:#2A201A; --ct-text-2:#5A3E2B; --ct-text-3:#8A745D; --ct-text-off:#BCA98F;
+  --ct-espresso:#2A201A; --ct-footer-bg:#1d1611;
 
-  /* Purple-tinted borders */
-  --ct-border:rgba(120,100,160,.30); --ct-border-strong:rgba(120,100,160,.20);
-  --ct-border-subtle:rgba(120,100,160,.14); --ct-border-faint:rgba(120,100,160,.07);
+  /* Warm neutral borders */
+  --ct-border:#E2D7C2; --ct-border-strong:rgba(110,80,55,.20);
+  --ct-border-subtle:rgba(110,80,55,.14); --ct-border-faint:rgba(110,80,55,.07);
 
   /* Warm shadows */
-  --ct-shadow-xs:0 1px 2px rgba(80,60,120,.12);
-  --ct-shadow-sm:0 4px 10px rgba(80,60,120,.12);
-  --ct-shadow-md:0 8px 20px rgba(80,60,120,.14);
-  --ct-shadow-lg:0 16px 36px rgba(80,60,120,.16);
-  --ct-shadow-2xl:0 26px 56px rgba(80,60,120,.20);
+  --ct-shadow-xs:0 1px 2px rgba(80,55,30,.12);
+  --ct-shadow-sm:0 4px 10px rgba(80,55,30,.12);
+  --ct-shadow-md:0 8px 20px rgba(80,55,30,.14);
+  --ct-shadow-lg:0 16px 36px rgba(80,55,30,.16);
+  --ct-shadow-2xl:0 26px 56px rgba(80,55,30,.20);
 
-  /* Accent — CozyClaw purple */
-  --ct-accent: {{ settings.color_accent | default: '#6D3FC4' }};
-  --ct-accent-strong: {{ settings.color_accent_hover | default: '#552C9E' }};
+  /* Accent - CozyClaw dark coffee */
+  --ct-accent: {{ settings.color_accent | default: '#5A3E2B' }};
+  --ct-accent-strong: {{ settings.color_accent_hover | default: '#43301F' }};
   {%- comment -%} RGB triples for Dawn's --color-* vars, which use rgb()/rgba() (hex would break them) {%- endcomment -%}
   --ct-accent-rgb: {{ settings.color_accent.red }},{{ settings.color_accent.green }},{{ settings.color_accent.blue }};
   --ct-accent-strong-rgb: {{ settings.color_accent_hover.red }},{{ settings.color_accent_hover.green }},{{ settings.color_accent_hover.blue }};
-  --ct-accent-text:#532C9C; --ct-accent-subtle:#EFE7FB; --ct-accent-border:#C9B2EE;
-  --ct-accent-glow:rgba(109,63,196,.24);
+  --ct-accent-text:#5A3E2B; --ct-accent-subtle:#EFE7D7; --ct-accent-border:#E2D7C2;
+  --ct-accent-glow:rgba(90,62,43,.24);
 
-  /* Status */
-  --ct-urgency:#D9433A;
+  /* Status commerce signals - deliberately separate from brand */
+  --ct-urgency:#B23A2E;
   --ct-success:#5B9A6B; --ct-success-dark:#3F7B4D; --ct-success-light:#DAF0E0;
-  --ct-warning:#E8A93C; --ct-warning-dark:#A6791C; --ct-warning-light:#FBF1D9;
-  --ct-error:#D9433A; --ct-error-dark:#A82E26; --ct-error-light:#FCE0DD;
+  --ct-warning:#E0A53B; --ct-warning-dark:#A6791C; --ct-warning-light:#FBF1D9;
+  --ct-error:#B23A2E; --ct-error-dark:#8C2C22; --ct-error-light:#FCE0DD;
 
   /* Commerce */
-  --ct-price:#2A2433; --ct-price-was:#9E94AE; --ct-price-save:#532C9C;
-  --ct-badge-sale:#D9433A; --ct-badge-new:#6D3FC4; --ct-badge-best:#E8A93C;
-  --ct-stock-in:#5B9A6B; --ct-stock-low:#E8A93C; --ct-stock-out:#938AA6;
-  --ct-rating:#E8A93C; --ct-rating-empty:#E5DDF2; --ct-touch:48px;
+  --ct-price:#2A201A; --ct-price-was:#A8978A; --ct-price-save:#5A3E2B;
+  --ct-badge-sale:#B23A2E; --ct-badge-new:#5A3E2B; --ct-badge-best:#E0A53B;
+  --ct-stock-in:#5B9A6B; --ct-stock-low:#E0A53B; --ct-stock-out:#9C8B7C;
+  --ct-rating:#E0A53B; --ct-rating-empty:#EFE2D4; --ct-touch:48px;
+  --ct-swatch-coffee:#7B5A3E; --ct-swatch-oatmeal:#E4D8C4; --ct-swatch-black:#25211D; --ct-swatch-grey:#B8B3AA;
 
-  /* Radius — soft & cozy */
+  /* Radius - soft and cozy */
   --ct-r-sm:6px;
   --ct-r-md: {{ settings.border_radius | default: 12 }}px;
   --ct-r-lg:18px; --ct-r-xl:24px; --ct-r-pill:9999px;
 
-  /* Type — Fraunces display serif, Public Sans body, DM Mono kickers */
+  /* Type - Fraunces display serif, Public Sans body, DM Mono kickers */
   --ct-font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --ct-font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
   --ct-font-body: 'Public Sans', system-ui, sans-serif;
@@ -104,7 +106,34 @@ body {
   --ct-space-5:32px; --ct-space-6:48px; --ct-space-7:80px; --ct-space-8:128px;
 
   --ct-mw: {{ settings.page_width | default: 1120 }}px; --ct-gutter:24px; --ct-gutter-m:16px;
-  --ct-focus:0 0 0 2px #FAF8FD, 0 0 0 4px #532C9C;
+  --ct-on-accent:#fff;
+  --ct-product-layout-width:var(--ct-mw);
+  --ct-product-layout-gap:var(--ct-space-6);
+  --ct-product-layout-media:minmax(0, 1.05fr);
+  --ct-product-layout-buy:minmax(0, 0.95fr);
+  --ct-product-sticky-top:90px;
+  --ct-product-button-height:54px;
+  --ct-product-pill-button-height:56px;
+  --ct-product-button-radius:13px;
+  --ct-product-form-gap:11px;
+  --ct-product-details-offset:56px;
+  --ct-form-field-height:56px;
+  --ct-form-field-pad-x:18px;
+  --ct-scarcity-border:#ffe2a8;
+  --ct-scarcity-track:#fce3ae;
+  --ct-gallery-arrow-size:44px;
+  --ct-gallery-icon-size:20px;
+  --ct-gallery-dot-size:8px;
+  --ct-gallery-dot-active-width:24px;
+  --ct-gallery-dot-gap:var(--ct-space-2);
+  --ct-gallery-heart-size:42px;
+  --ct-gallery-control-inset:14px;
+  --ct-gallery-badge-inset:16px;
+  --ct-gallery-dots-offset:16px;
+  --ct-gallery-badge-font:11px;
+  --ct-gallery-badge-pad-y:7px;
+  --ct-gallery-badge-pad-x:13px;
+  --ct-focus:0 0 0 2px var(--ct-bg), 0 0 0 4px var(--ct-accent-text);
 
   --ct-dur-fast:120ms; --ct-dur-base:240ms; --ct-dur-slow:480ms;
   --ct-ease-out:cubic-bezier(.22,1,.36,1);

@@ -1,0 +1,21 @@
+{% comment %}
+  CozyClaw rating stars.
+
+  Accepts:
+  - rating: number of filled stars, defaults to 5
+  - class: optional class string
+{% endcomment %}
+{%- liquid
+  assign filled_stars = rating | default: 5 | plus: 0
+  assign star_class = class | default: ''
+-%}
+
+<span class="ct-stars {{ star_class }}" aria-hidden="true">
+  {%- for index in (1..5) -%}
+    {%- if index <= filled_stars -%}
+      {% render 'ct-fa-icon', icon: 'star' %}
+    {%- else -%}
+      {% render 'ct-fa-icon', icon: 'star', class: 'ct-fa-icon--empty' %}
+    {%- endif -%}
+  {%- endfor -%}
+</span>

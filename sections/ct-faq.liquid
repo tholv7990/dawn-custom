@@ -1,5 +1,6 @@
 {{ 'ct-sections.css' | asset_url | stylesheet_tag }}
 {{ 'section-ct-faq.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ct-accordion.js' | asset_url }}" defer="defer"></script>
 
 {% render 'ct-section-padding', section: section %}
 
@@ -46,7 +47,7 @@
     {
       "name": "CT FAQ",
       "blocks": [
-        { "type": "item", "settings": { "question": "What size is the CozyClaw Mat?" } },
+        { "type": "item", "settings": { "question": "What size is the CozyClaw™ Mat?" } },
         { "type": "item", "settings": { "question": "What size should I choose?" } },
         { "type": "item", "settings": { "question": "What is the warranty and return policy?" } }
       ]

@@ -11,7 +11,7 @@
 
   function formatMoney(cents) {
     if (window.Shopify && typeof Shopify.formatMoney === 'function') {
-      var fmt = (window.theme && window.theme.moneyFormat) || '${{amount}}';
+      var fmt = window.theme && window.theme.moneyFormat;
       try { return Shopify.formatMoney(cents, fmt); } catch (e) {}
     }
     return '$' + (Number(cents) / 100).toFixed(2);
@@ -20,6 +20,7 @@
   function toggle(card) {
     var pressed = card.getAttribute('aria-pressed') === 'true';
     card.setAttribute('aria-pressed', pressed ? 'false' : 'true');
+    if (typeof window.ctRecomputeBundleTotal === 'function') window.ctRecomputeBundleTotal();
   }
 
   function bindCard(card) {
@@ -43,6 +44,8 @@
       card.dataset.variantId = opt.value;
       var price = Number(opt.dataset.price || 0);
       var compare = Number(opt.dataset.compare || 0);
+      card.dataset.price = price;
+      card.dataset.compare = compare;
       var nowEl = card.querySelector('[data-addon-now]');
       var wasEl = card.querySelector('[data-addon-was]');
       var saveEl = card.querySelector('[data-addon-save]');
@@ -54,6 +57,7 @@
         if (wasEl) { wasEl.textContent = ''; wasEl.hidden = true; }
         if (saveEl) saveEl.textContent = '';
       }
+      if (typeof window.ctRecomputeBundleTotal === 'function') window.ctRecomputeBundleTotal();
     });
   }
 
