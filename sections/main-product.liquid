@@ -15,7 +15,6 @@
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
-  {{ 'section-ct-pdp.css' | asset_url | stylesheet_tag }}
 
   {% unless product.has_only_default_variant %}
     {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
@@ -42,7 +41,7 @@
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-  <script src="{{ 'ct-product-gallery.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
@@ -76,34 +75,11 @@
 
   {%- liquid
     assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
-    if section.settings.media_size == 'large'
-      assign media_width = 0.65
-    elsif section.settings.media_size == 'medium'
-      assign media_width = 0.55
-    elsif section.settings.media_size == 'small'
-      assign media_width = 0.45
-    endif
   -%}
   <div class="page-width">
-    {% render 'ct-breadcrumb' %}
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
-        {% render 'ct-product-gallery',
-          product: product,
-          wrapper_class: 'ct-main-product-gallery',
-          carousel_class: 'ct-main-product-gallery__carousel',
-          track_class: 'ct-main-product-gallery__track',
-          slide_class: 'ct-main-product-gallery__slide',
-          dots_class: 'ct-main-product-gallery__dots',
-          dot_class: 'ct-main-product-gallery__dot',
-          arrow_class: 'ct-main-product-gallery__arrow',
-          prev_class: 'ct-main-product-gallery__arrow--prev',
-          next_class: 'ct-main-product-gallery__arrow--next',
-          enable_desktop_drag: false,
-          render_product_media: true,
-          media_width: media_width,
-          variant_images: variant_images
-        %}
+        {% render 'product-media-gallery', variant_images: variant_images %}
       </div>
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <section
@@ -513,69 +489,30 @@
                   show_pickup_availability: true
                 -%}
               {%- when 'addon' -%}
-              {%- when 'ct_benefits' -%}
+              {%- when 'gardenstudio_benefits' -%}
                 {%- assign benefit_lines = block.settings.items | newline_to_br | split: '<br />' -%}
                 {%- if benefit_lines.size > 0 -%}
-                  <ul class="ct-benefits" {{ block.shopify_attributes }}>
+                  <ul class="gs-benefits" {{ block.shopify_attributes }}>
                     {%- for line in benefit_lines -%}
                       {%- assign clean = line | strip | strip_newlines -%}
                       {%- if clean != blank -%}
-                        {%- assign parts = clean | split: '—' -%}
-                        {%- if parts.size < 2 -%}{%- assign parts = clean | split: ' - ' -%}{%- endif -%}
+                        {%- assign parts = clean | split: ' - ' -%}
                         {%- liquid
                           assign clean_downcase = clean | downcase
-                          assign fa_icon = 'circle-check'
                           assign icon_tone = 'green'
-                          if clean_downcase contains 'cloud' or clean_downcase contains 'soft' or clean_downcase contains 'coral' or clean_downcase contains 'fleece'
-                            assign fa_icon = 'paw'
-                            assign icon_tone = 'coffee'
-                          elsif clean_downcase contains 'raised' or clean_downcase contains 'bolster' or clean_downcase contains 'edge'
-                            assign fa_icon = 'bed'
-                            assign icon_tone = 'coffee'
-                          elsif clean_downcase contains 'sofa' or clean_downcase contains 'hair'
-                            assign fa_icon = 'couch'
-                            assign icon_tone = 'green'
-                          elsif clean_downcase contains 'non-slip' or clean_downcase contains 'base'
-                            assign fa_icon = 'shield-heart'
+                          if clean_downcase contains 'stake' or clean_downcase contains 'soil' or clean_downcase contains 'planter'
                             assign icon_tone = 'green-dark'
-                          elsif clean_downcase contains 'wash' or clean_downcase contains 'clean'
-                            assign fa_icon = 'soap'
-                            assign icon_tone = 'green'
                           endif
-                          assign icon_class = 'ct-benefits__check ct-benefits__check--' | append: icon_tone
+                          assign icon_class = 'gs-benefits__check gs-benefits__check--' | append: icon_tone
                         -%}
                         <li>
-                          {%- render 'ct-fa-icon', icon: fa_icon, class: icon_class -%}
-                          <span><b>{{ parts[0] | strip }}</b>{% if parts[1] != blank %} <span class="ct-benefits__desc">— {{ parts[1] | strip }}</span>{% endif %}</span>
+                          <span class="{{ icon_class }}" aria-hidden="true">&#10003;</span>
+                          <span><b>{{ parts[0] | strip }}</b>{% if parts[1] != blank %} <span class="gs-benefits__desc">- {{ parts[1] | strip }}</span>{% endif %}</span>
                         </li>
                       {%- endif -%}
                     {%- endfor -%}
                   </ul>
                 {%- endif -%}
-              {%- when 'ct_tier' -%}
-                {% comment %}theme-check-disable UndefinedObject{% endcomment %}
-                {%- unless ct_tiers_done -%}
-                  {%- assign ct_tiers_done = true -%}
-                  {%- render 'ct-bundle-tiers', section: section, product: product -%}
-                  {%- render 'ct-addons', section: section, product: product, product_form_id: product_form_id -%}
-                {%- endunless -%}
-                {% comment %}theme-check-enable UndefinedObject{% endcomment %}
-              {%- when 'ct_running_total' -%}
-                <div class="ct-running-total" data-bundle-total-wrap {{ block.shopify_attributes }}>
-                  <div class="ct-running-total__rows" data-bundle-total-rows></div>
-                  <div class="ct-running-total__final">
-                    <div class="ct-running-total__copy">
-                      <span class="ct-running-total__label">{{ block.settings.label | default: 'Total' }}</span>
-                      <span class="ct-running-total__discount" data-bundle-discount-note></span>
-                    </div>
-                    <div class="ct-running-total__amount">
-                      <span class="ct-running-total__was" data-bundle-total-was hidden></span>
-                      <strong class="ct-running-total__val" data-bundle-total>-</strong>
-                    </div>
-                  </div>
-                </div>
-              {%- when 'ct_trust_icons' -%}
-                {%- render 'ct-trust-icons', block: block -%}
               {%- when 'scarcity' -%}
                 {%- liquid
                   assign ct_var = product.selected_or_first_available_variant
@@ -594,7 +531,6 @@
                     assign ct_pct = 100
                   endif
                 -%}
-                <script src="{{ 'ct-scarcity.js' | asset_url }}" defer="defer"></script>
                 <ct-scarcity id="Scarcity-{{ section.id }}" data-section="{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   {%- if ct_show_scarcity -%}
                     <div class="ct-scarcity">
@@ -1170,56 +1106,12 @@
       ]
     },
     {
-      "type": "ct_tier",
-      "name": "Bundle tier",
-      "limit": 4,
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "A tier card in the bundle picker. The first ct_tier block rendered starts the tier group; subsequent ct_tier blocks join it. Selecting a tier makes its variant picker(s) visible; on add-to-cart, the active tier's variants are added in one POST."
-        },
-        { "type": "text", "id": "tier_name", "label": "Tier name", "default": "Single" },
-        { "type": "text", "id": "tier_tag", "label": "Inline tag (optional)", "info": "e.g. Save 20%" },
-        { "type": "text", "id": "badge", "label": "Top-right ribbon (optional)", "info": "e.g. 💎 Best value · free shipping" },
-        { "type": "checkbox", "id": "featured", "label": "Featured (active by default)", "default": false },
-        { "type": "range", "id": "qty", "label": "Items in this tier", "min": 1, "max": 4, "step": 1, "default": 1, "info": "How many variant selects show on this card (= line items added to cart)." },
-        { "type": "text", "id": "save_text", "label": "Savings line (optional)" },
-        { "type": "text", "id": "price_now", "label": "Tier price (display)" },
-        { "type": "text", "id": "price_was", "label": "Tier was-price (display, optional)" },
-        { "type": "text", "id": "opt_label", "label": "Option label", "default": "Color" },
-        { "type": "text", "id": "opt_emoji", "label": "Option-row icon", "default": "🐈" }
-      ]
-    },
-    {
-      "type": "ct_running_total",
-      "name": "Running total",
+      "type": "gardenstudio_benefits",
+      "name": "GardenStudio benefits checklist",
       "limit": 1,
       "settings": [
-        { "type": "paragraph", "content": "Live total = active tier's variants + checked add-ons. Updates as the customer changes selections. Place this block right above buy_buttons." },
-        { "type": "text", "id": "label", "label": "Label", "default": "Total" }
-      ]
-    },
-    {
-      "type": "ct_benefits",
-      "name": "Benefits checklist",
-      "limit": 1,
-      "settings": [
-        { "type": "paragraph", "content": "5-item checkmark list shown high on the PDP info column. One per line: 'Title — description' (use an em dash). The em dash separates the bold title from the lighter description." },
-        { "type": "textarea", "id": "items", "label": "Benefits (one per line)", "default": "Cloud-soft coral fleece — plush comfort that cushions tired joints.\nRaised bolster edges — a built-in head-rest and a sense of security.\nHelps keep sofas hair-free — gives fur a place that isn't your couch.\nNon-slip base — stays planted on floors and sofas.\nMachine washable — the whole bed washes, fresh in one cycle." }
-      ]
-    },
-    {
-      "type": "ct_trust_icons",
-      "name": "Trust icons (3-up)",
-      "limit": 1,
-      "settings": [
-        { "type": "paragraph", "content": "Three circular icon + label tiles under the ATC button (matches the PDP design's buy-box bottom strip). Leave a label blank to hide that slot." },
-        { "type": "text", "id": "icon_1", "label": "Icon 1", "default": "🚚" },
-        { "type": "text", "id": "label_1", "label": "Label 1", "default": "Fast shipping" },
-        { "type": "text", "id": "icon_2", "label": "Icon 2", "default": "🔒" },
-        { "type": "text", "id": "label_2", "label": "Label 2", "default": "Secure payments" },
-        { "type": "text", "id": "icon_3", "label": "Icon 3", "default": "💜" },
-        { "type": "text", "id": "label_3", "label": "Label 3", "default": "Support that cares" }
+        { "type": "paragraph", "content": "5-item checkmark list shown high on the PDP info column. One per line: 'Title - description'. The hyphen separates the bold title from the lighter description." },
+        { "type": "textarea", "id": "items", "label": "Benefits (one per line)", "default": "Weather-resistant metal - built for sun, rain and wind outdoors.\nBird bath bowl - holds a small drink station for garden visitors.\nPollinator friendly - add pebbles for bees and butterflies.\nStake-and-go setup - pushes directly into soil or planters.\nGift-ready decor - a practical accent for gardeners and bird lovers." }
       ]
     },
     {

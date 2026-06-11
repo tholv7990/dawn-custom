@@ -1,55 +1,82 @@
 {
-  "name": "t:sections.header.name",
-  "type": "header",
-  "sections": {
-    "ct_announce": {
-      "type": "ct-announce",
-      "settings": {
-        "display": "static-row",
-        "dismissible": false,
-        "rotate_seconds": 4,
-        "color_scheme": "scheme-1"
-      },
-      "blocks": {
-        "m1": {
-          "type": "message",
-          "settings": {
-            "text": "15% off your first order when you join the litter",
-            "link": "#signup-popup"
-          }
-        },
-        "m2": {
-          "type": "message",
-          "settings": {
-            "text": "Free shipping over $50"
-          }
-        },
-        "m3": {
-          "type": "message",
-          "settings": {
-            "text": "30-night cozy trial"
-          }
-        }
-      },
-      "block_order": ["m1", "m2", "m3"]
-    },
-    "header": {
-      "type": "header",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "logo_position": "middle-left",
-        "menu": "main-menu",
-        "menu_type_desktop": "dropdown",
-        "sticky_header_type": "always",
-        "show_line_separator": true,
-        "enable_country_selector": false,
-        "enable_language_selector": false,
-        "mobile_logo_position": "center",
-        "margin_bottom": 0,
-        "padding_top": 12,
-        "padding_bottom": 12
-      }
-    }
-  },
-  "order": ["ct_announce", "header"]
+    "name":  "Header",
+    "type":  "header",
+    "sections":  {
+                     "gs_announcement_bars":  {
+                                                  "type":  "gs-announcement-bars",
+                                                  "blocks":  {
+                                                                 "top_phone":  {
+                                                                                   "type":  "top_message",
+                                                                                   "settings":  {
+                                                                                                    "icon":  "Phone",
+                                                                                                    "text":  "(214) 555-5937"
+                                                                                                }
+                                                                               },
+                                                                 "top_care":  {
+                                                                                  "type":  "top_message",
+                                                                                  "settings":  {
+                                                                                                   "icon":  "Care",
+                                                                                                   "text":  "24/7 online support"
+                                                                                               }
+                                                                              },
+                                                                 "top_email":  {
+                                                                                   "type":  "top_message",
+                                                                                   "settings":  {
+                                                                                                    "icon":  "Email",
+                                                                                                    "text":  "support@gardenstudio.site"
+                                                                                                }
+                                                                               },
+                                                                 "bottom_ship":  {
+                                                                                     "type":  "bottom_message",
+                                                                                     "settings":  {
+                                                                                                      "icon":  "Ships",
+                                                                                                      "text":  "from trusted warehouses"
+                                                                                                  }
+                                                                                 },
+                                                                 "bottom_returns":  {
+                                                                                        "type":  "bottom_message",
+                                                                                        "settings":  {
+                                                                                                         "icon":  "Returns",
+                                                                                                         "text":  "30-day returns"
+                                                                                                     }
+                                                                                    },
+                                                                 "bottom_free":  {
+                                                                                     "type":  "bottom_message",
+                                                                                     "settings":  {
+                                                                                                      "icon":  "Free",
+                                                                                                      "text":  "shipping over $40"
+                                                                                                  }
+                                                                                 },
+                                                                 "bottom_warranty":  {
+                                                                                         "type":  "bottom_message",
+                                                                                         "settings":  {
+                                                                                                          "icon":  "Warranty",
+                                                                                                          "text":  "12-month warranty"
+                                                                                                      }
+                                                                                     }
+                                                             },
+                                                  "block_order":  [
+                                                                      "top_phone",
+                                                                      "top_care",
+                                                                      "top_email",
+                                                                      "bottom_ship",
+                                                                      "bottom_returns",
+                                                                      "bottom_free",
+                                                                      "bottom_warranty"
+                                                                  ],
+                                                  "settings":  {
+
+                                                               }
+                                              },
+                     "header":  {
+                                    "type":  "header",
+                                    "settings":  {
+                                                     "logo_width":  180
+                                                 }
+                                }
+                 },
+    "order":  [
+                  "gs_announcement_bars",
+                  "header"
+              ]
 }

@@ -1,0 +1,135 @@
+<section class="gs-scope gs-section gs-soft" data-gs-info id="specifications">
+  <div class="gs-wrap">
+    <div class="gs-tabs">
+      <div class="gs-tabs__strip" role="tablist">
+        <button type="button" class="gs-tab is-active" data-gs-tab="0">Specifications</button>
+        <button type="button" class="gs-tab" data-gs-tab="1">Protection</button>
+        <button type="button" class="gs-tab" data-gs-tab="2">Why Buy</button>
+        <button type="button" class="gs-tab" data-gs-tab="3">Shipping &amp; Returns</button>
+      </div>
+
+      <div class="gs-panel is-active is-open" data-gs-panel="0">
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Specifications <span>⌄</span></button>
+        <div class="gs-panel__body">
+          <p class="gs-section-sub" style="text-align:left;margin:0 0 14px;max-width:none">Complete product details for your GardenStudio&trade; garden stake.</p>
+          <table class="gs-spec-table">
+            <tbody>
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'spec' -%}
+                  <tr {{ block.shopify_attributes }}>
+                    <td>{{ block.settings.label }}</td>
+                    <td>
+                      {%- if block.settings.star -%}<span class="gs-spec-star">&starf;</span>{%- endif -%}
+                      <span class="{% if block.settings.highlight %}gs-green-text{% endif %}">{{ block.settings.value }}</span>
+                      {%- if block.settings.badge != blank -%}
+                        <span class="gs-badge gs-badge--{{ block.settings.badge_tone }}">{{ block.settings.badge }}</span>
+                      {%- endif -%}
+                    </td>
+                  </tr>
+                {%- endif -%}
+              {%- endfor -%}
+            </tbody>
+          </table>
+          <p class="gs-tip"><b>Tip:</b> For bees &amp; butterflies, add a few small pebbles inside the bowl to create a safer landing spot. Place the stake in firm soil for the best stability.</p>
+        </div>
+      </div>
+
+      <div class="gs-panel" data-gs-panel="1">
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Protection Package <span>⌄</span></button>
+        <div class="gs-panel__body">
+          <div class="gs-protection">
+            <div><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg> Secure payment</div>
+            <div><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg> Delivery commitment</div>
+            <div><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/></svg> Data privacy</div>
+            <div><svg viewBox="0 0 24 24"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/></svg> 24/7 support</div>
+            <div><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 12l2.2 2.2L15.5 9.5"/></svg> Money-back guarantee</div>
+            <div><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg> Easy returns &amp; refunds</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gs-panel" data-gs-panel="2">
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Why Buy From Us <span>⌄</span></button>
+        <div class="gs-panel__body">
+          <ul class="gs-bullet-list">
+            <li><b>Worry-free purchase</b> &mdash; our 100% guarantee.</li>
+            <li><b>30-day easy returns</b> &mdash; not happy? Send it back, no questions asked.</li>
+            <li><b>12-month warranty</b> &mdash; covers manufacturing defects.</li>
+            <li><b>Free tracked shipping</b> &mdash; fast, trackable delivery to your door.</li>
+            <li><b>Secure checkout</b> &mdash; SSL encrypted; card, PayPal &amp; Shop Pay.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="gs-panel" data-gs-panel="3">
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Shipping &amp; Returns <span>⌄</span></button>
+        <div class="gs-panel__body">
+          <b>Shipping</b>
+          <ul class="gs-bullet-list" style="margin-top:6px">
+            <li>Processing: 1&ndash;2 business days.</li>
+            <li>Delivery: 7&ndash;15 business days (US, CA, UK, EU).</li>
+            <li>Tracked shipping on all orders.</li>
+          </ul>
+          <b style="display:block;margin-top:12px">Returns &amp; refunds</b>
+          <ul class="gs-bullet-list" style="margin-top:6px">
+            <li>30-day return window.</li>
+            <li>Item unused &amp; in original packaging.</li>
+            <li>Email support@gardenstudio.site to request a return.</li>
+          </ul>
+          <b style="display:block;margin-top:12px">Warranty</b>
+          <ul class="gs-bullet-list" style="margin-top:6px">
+            <li>1-year limited warranty.</li>
+            <li>Covers manufacturer defects.</li>
+            <li>Excludes accidental or water damage.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GS product info",
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Specification row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Product type" },
+        { "type": "text", "id": "value", "label": "Value", "default": "Metal flower garden stake" },
+        { "type": "checkbox", "id": "highlight", "label": "Green highlight", "default": false },
+        { "type": "checkbox", "id": "star", "label": "Show star", "default": false },
+        { "type": "text", "id": "badge", "label": "Badge" },
+        { "type": "select", "id": "badge_tone", "label": "Badge tone", "options": [
+          { "value": "green", "label": "Green" },
+          { "value": "teal", "label": "Teal" },
+          { "value": "yellow", "label": "Yellow" }
+        ], "default": "green" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GS product info",
+      "blocks": [
+        { "type": "spec", "settings": { "label": "Product type", "value": "Metal flower garden stake", "highlight": true } },
+        { "type": "spec", "settings": { "label": "Main use", "value": "Bird bath, bee station & garden decor", "badge": "Decor/Easy", "badge_tone": "green" } },
+        { "type": "spec", "settings": { "label": "Material", "value": "Weather-resistant metal", "highlight": true, "star": true } },
+        { "type": "spec", "settings": { "label": "Flower design", "value": "Hand-applied glossy petals" } },
+        { "type": "spec", "settings": { "label": "Flower diameter", "value": "Approx. 6 in / 15 cm" } },
+        { "type": "spec", "settings": { "label": "Bowl depth", "value": "Approx. 2 in / 5 cm", "badge": "Visible", "badge_tone": "teal" } },
+        { "type": "spec", "settings": { "label": "Overall height", "value": "Approx. 24 in / 60 cm", "highlight": true } },
+        { "type": "spec", "settings": { "label": "Installation", "value": "Push directly into soil or planter" } },
+        { "type": "spec", "settings": { "label": "Tools needed", "value": "None" } },
+        { "type": "spec", "settings": { "label": "Outdoor use", "value": "Built for sun, rain and wind", "highlight": true, "star": true } },
+        { "type": "spec", "settings": { "label": "Best placement", "value": "Borders, flower beds, patios and planters" } },
+        { "type": "spec", "settings": { "label": "Wildlife use", "value": "Small birds, bees, butterflies & pollinators" } },
+        { "type": "spec", "settings": { "label": "Finish", "value": "Glossy hand-applied color", "badge": "Shine", "badge_tone": "yellow" } },
+        { "type": "spec", "settings": { "label": "Care", "value": "Easy to rinse, refill & refresh" } },
+        { "type": "spec", "settings": { "label": "Gift idea", "value": "Great for gardeners & bird lovers", "star": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

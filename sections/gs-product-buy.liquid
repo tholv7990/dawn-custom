@@ -1,0 +1,298 @@
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign gs_product = product
+  if gs_product == blank
+    assign gs_product = section.settings.product
+  endif
+  assign selected_variant = gs_product.selected_or_first_available_variant
+  assign compare_price = selected_variant.compare_at_price
+  assign current_price = selected_variant.price
+  assign save_percent = 0
+  if compare_price > current_price
+    assign save_amount = compare_price | minus: current_price
+    assign save_percent = save_amount | times: 100 | divided_by: compare_price
+  endif
+  assign rating_value = blank
+  assign rating_count = blank
+  if gs_product.metafields.reviews.rating.value != blank
+    assign rating_value = gs_product.metafields.reviews.rating.value.rating
+    assign rating_count = gs_product.metafields.reviews.rating_count.value
+  endif
+  assign sold_count = gs_product.metafields.custom.sold_count.value
+  assign origin_text = gs_product.metafields.custom.origin_text.value | default: section.settings.origin_text
+-%}
+
+<section class="gs-scope gs-product" data-gs-product data-gs-buy id="product">
+  <div class="gs-wrap gs-product__grid">
+    <div class="gs-gallery">
+      <span class="gs-gallery__badge">{{ section.settings.gallery_badge }}</span>
+      <button type="button" class="gs-gallery__arrow gs-gallery__arrow--prev" data-gs-gallery-prev aria-label="Previous image">&lsaquo;</button>
+      <div class="gs-gallery__track" data-gs-gallery-track>
+        {%- if gs_product != blank and gs_product.media.size > 0 -%}
+          {%- for media in gs_product.media -%}
+            <button
+              type="button"
+              class="gs-gallery__slide gs-media-slot"
+              data-gs-slide
+              data-gs-gallery-open
+              data-gs-full-image="{{ media.preview_image | image_url: width: 2200 }}"
+              aria-label="Open product image {{ forloop.index }}"
+            >
+              {%- if media.preview_image != blank -%}
+                {%- if forloop.first -%}
+                  {{
+                    media.preview_image
+                    | image_url: width: 1200
+                    | image_tag:
+                      loading: 'eager',
+                      fetchpriority: 'high',
+                      widths: '480, 720, 1000, 1200',
+                      sizes: '(max-width: 880px) 100vw, 48vw',
+                      alt: media.preview_image.alt | default: gs_product.title | escape
+                  }}
+                {%- else -%}
+                  {{
+                    media.preview_image
+                    | image_url: width: 1200
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '480, 720, 1000, 1200',
+                      sizes: '(max-width: 880px) 100vw, 48vw',
+                      alt: media.preview_image.alt | default: gs_product.title | escape
+                  }}
+                {%- endif -%}
+              {%- endif -%}
+            </button>
+          {%- endfor -%}
+        {%- elsif section.settings.fallback_image != blank -%}
+          <button
+            type="button"
+            class="gs-gallery__slide gs-media-slot"
+            data-gs-slide
+            data-gs-gallery-open
+            data-gs-full-image="{{ section.settings.fallback_image | image_url: width: 2200 }}"
+            aria-label="Open product image"
+          >
+            {{
+              section.settings.fallback_image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'eager',
+                widths: '480, 720, 1000, 1200',
+                sizes: '(max-width: 880px) 100vw, 48vw',
+                alt: 'Product image'
+            }}
+          </button>
+        {%- else -%}
+          {% render 'gs-media-slot', class: 'gs-gallery__slide', label: 'Product image', ratio: '1 / 1' %}
+        {%- endif -%}
+      </div>
+      <button type="button" class="gs-gallery__arrow gs-gallery__arrow--next" data-gs-gallery-next aria-label="Next image">&rsaquo;</button>
+      <div class="gs-gallery__dots" data-gs-gallery-dots aria-label="Product image navigation"></div>
+    </div>
+
+    <div class="gs-buy">
+      <h2 class="gs-buy__title">
+        {%- if gs_product != blank -%}
+          {{ gs_product.title | escape }}
+        {%- else -%}
+          {{ section.settings.title }}
+        {%- endif -%}
+      </h2>
+      <div class="gs-soldby">Sold by GardenStudio <span class="gs-soldby__check">&#10003;</span></div>
+      <div class="gs-rating-row">
+        <b>{{ rating_value | default: section.settings.fallback_rating }}</b>
+        <span class="gs-stars" aria-hidden="true">&starf;</span>
+        <span>
+          {%- if rating_count != blank -%}
+            ({{ rating_count }})
+          {%- else -%}
+            {{ section.settings.fallback_review_count }}
+          {%- endif -%}
+        </span>
+        <span>
+          {%- if sold_count != blank -%}
+            {{ sold_count }} have been sold.
+          {%- else -%}
+            {{ section.settings.fallback_sold_text }}
+          {%- endif -%}
+        </span>
+      </div>
+
+      <div class="gs-value-bar">
+        <span class="gs-value-bar__icon" aria-hidden="true">&#127873;</span>
+        <div class="gs-value-bar__copy">
+          <div class="gs-value-bar__title">{{ section.settings.value_title }}</div>
+          <div class="gs-value-bar__sub"><span aria-hidden="true">&#128666;</span> {{ section.settings.value_subtitle }}</div>
+        </div>
+        <span class="gs-countdown" data-gs-countdown>00:00:00</span>
+      </div>
+
+      <div class="gs-made-bar">
+        <span class="gs-made-bar__flag" aria-hidden="true"><span></span></span>
+        <span class="visually-hidden">United States</span>
+        <div class="gs-made-bar__text">
+          <small>{{ section.settings.origin_label }}</small>
+          <b>
+            <span class="gs-inline-icon" aria-hidden="true">{{ 'icon-map-pin.svg' | inline_asset_content }}</span>
+            {{ origin_text }}
+          </b>
+        </div>
+        <span class="gs-secure-pill">
+          <span class="gs-inline-icon" aria-hidden="true">{{ 'icon-shopify.svg' | inline_asset_content }}</span>
+          Shopify Secure
+        </span>
+      </div>
+
+      {%- if gs_product != blank -%}
+        <div class="gs-price-row">
+          <span class="gs-price" data-gs-main-price>{{ current_price | money }}</span>
+          {%- if compare_price > current_price -%}
+            <s class="gs-was" data-gs-main-was>{{ compare_price | money }}</s>
+            <span class="gs-save-tag" data-gs-main-save>SAVE {{ save_percent }}%</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="gs-bundle-heading">{{ section.settings.bundle_heading }}</div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tier' -%}
+          {%- liquid
+            assign tier_price = current_price | times: block.settings.quantity
+            assign tier_compare = compare_price | times: block.settings.quantity
+            assign tier_save_percent = 0
+            if tier_compare > tier_price
+              assign tier_save = tier_compare | minus: tier_price
+              assign tier_save_percent = tier_save | times: 100 | divided_by: tier_compare
+            endif
+          -%}
+          <div
+            class="gs-tier{% if forloop.first %} is-active{% endif %}"
+            data-gs-tier
+            data-quantity="{{ block.settings.quantity }}"
+            data-price="{% if gs_product != blank %}{{ tier_price | money }}{% endif %}"
+            data-compare-price="{% if tier_compare > tier_price %}{{ tier_compare | money }}{% endif %}"
+            data-save="{% if tier_save_percent > 0 %}SAVE {{ tier_save_percent }}%{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <span class="gs-tier__radio" aria-hidden="true"></span>
+            {%- if block.settings.badge != blank -%}<span class="gs-tier__badge">{{ block.settings.badge }}</span>{%- endif -%}
+            <div class="gs-tier__top">
+              <div>
+                <div class="gs-tier__name">{{ block.settings.title }} <span class="gs-tier__pill">{{ block.settings.pill }}</span></div>
+                <div class="gs-tier__save">{{ block.settings.subtitle }}</div>
+              </div>
+              <div class="gs-tier__price">
+                {%- if gs_product != blank -%}
+                  <strong>{{ tier_price | money }}</strong>
+                {%- endif -%}
+                {%- if tier_compare > tier_price -%}
+                  <s>{{ tier_compare | money }}</s>
+                {%- endif -%}
+              </div>
+            </div>
+            <div class="gs-tier__picks">
+              {%- for i in (1..block.settings.quantity) -%}
+                <label class="gs-pick">
+                  <span class="gs-pick__label">#{{ i }}</span>
+                  <select aria-label="Choose color for unit {{ i }}">
+                    {%- for variant in gs_product.variants -%}
+                      <option value="{{ variant.id }}" {% if variant.id == selected_variant.id %}selected{% endif %}>{{ variant.title }}</option>
+                    {%- endfor -%}
+                  </select>
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if gs_product != blank -%}
+        <product-form class="product-form" data-hide-errors="true" data-section-id="{{ section.id }}" data-gs-product-form>
+          {%- assign gs_product_form_id = 'gs-product-form-' | append: section.id -%}
+          {%- form 'product', gs_product, id: gs_product_form_id, class: 'form' -%}
+            <input type="hidden" name="id" value="{{ selected_variant.id }}" class="product-variant-id">
+            <input type="hidden" name="quantity" value="1" data-gs-quantity>
+            <button type="submit" name="add" class="gs-atc"{% unless selected_variant.available %} disabled{% endunless %}>
+              <span>{% if selected_variant.available %}{{ section.settings.button_label }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+              {%- render 'loading-spinner' -%}
+            </button>
+          {%- endform -%}
+        </product-form>
+      {%- else -%}
+        <button type="button" class="gs-atc" disabled>Select a product</button>
+      {%- endif -%}
+
+      <div class="gs-trust-mini">
+        <div>
+          <span class="gs-trust-mini__icon" aria-hidden="true">&#128274;</span>
+          Secure checkout
+        </div>
+        <div>
+          <span class="gs-trust-mini__icon" aria-hidden="true">&#8617;</span>
+          30-day returns
+        </div>
+        <div>
+          <span class="gs-trust-mini__icon" aria-hidden="true">&#128666;</span>
+          Tracked shipping
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="gs-lightbox" data-gs-lightbox hidden>
+    <button type="button" class="gs-lightbox__backdrop" data-gs-lightbox-close aria-label="Close product image"></button>
+    <div class="gs-lightbox__dialog" role="dialog" aria-modal="true" aria-label="Product image preview">
+      <button type="button" class="gs-lightbox__close" data-gs-lightbox-close aria-label="Close product image">&times;</button>
+      <button type="button" class="gs-lightbox__arrow gs-lightbox__arrow--prev" data-gs-lightbox-prev aria-label="Previous product image">&lsaquo;</button>
+      <div class="gs-lightbox__stage" data-gs-lightbox-stage></div>
+      <button type="button" class="gs-lightbox__arrow gs-lightbox__arrow--next" data-gs-lightbox-next aria-label="Next product image">&rsaquo;</button>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GS product buy",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Homepage product fallback" },
+    { "type": "image_picker", "id": "fallback_image", "label": "Fallback gallery image" },
+    { "type": "text", "id": "gallery_badge", "label": "Gallery badge", "default": "SAVE TODAY" },
+    { "type": "text", "id": "title", "label": "Fallback title", "default": "GardenStudio product" },
+    { "type": "text", "id": "fallback_rating", "label": "Fallback rating text", "default": "4.8" },
+    { "type": "text", "id": "fallback_review_count", "label": "Fallback review count text", "default": "(1.8K)" },
+    { "type": "text", "id": "fallback_sold_text", "label": "Fallback sold text", "default": "3.2K have been sold." },
+    { "type": "text", "id": "value_title", "label": "Value title", "default": "Great Value Package" },
+    { "type": "text", "id": "value_subtitle", "label": "Value subtitle", "default": "Fast 7-day U.S. shipping" },
+    { "type": "text", "id": "origin_label", "label": "Origin label", "default": "SHIPS FROM" },
+    { "type": "text", "id": "origin_text", "label": "Origin text", "default": "Dallas, TX" },
+    { "type": "text", "id": "bundle_heading", "label": "Bundle heading", "default": "BUNDLE & SAVE" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Tier",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Single Garden Accent" },
+        { "type": "text", "id": "pill", "label": "Pill", "default": "Bundle" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "One flower stake for a favorite corner" },
+        { "type": "text", "id": "badge", "label": "Badge" },
+        { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 4, "step": 1, "default": 1 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GS product buy",
+      "blocks": [
+        { "type": "tier", "settings": { "title": "Buy 1", "pill": "Starter", "subtitle": "One flower stake for a favorite corner", "quantity": 1 } },
+        { "type": "tier", "settings": { "title": "Buy 2", "pill": "Bundle", "subtitle": "Frame both sides of a path or patio", "badge": "&#128293; Most Popular &#128293;", "quantity": 2 } },
+        { "type": "tier", "settings": { "title": "Buy 3", "pill": "Bundle", "subtitle": "Build a colorful garden cluster", "badge": "&#9889; Flash Sale &#9889;", "quantity": 3 } },
+        { "type": "tier", "settings": { "title": "Buy 4", "pill": "Bundle", "subtitle": "Gift-ready set for gardeners", "badge": "&#127873; Best Value Offer &#127873;", "quantity": 4 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

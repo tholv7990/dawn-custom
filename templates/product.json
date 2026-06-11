@@ -1,525 +1,685 @@
 {
     "sections":  {
-                     "main":  {
-                                  "type":  "main-product",
-                                  "blocks":  {
-                                                 "title":  {
-                                                               "type":  "title"
-                                                           },
-                                                 "rating":  {
-                                                                "type":  "rating"
-                                                            },
-                                                 "benefits":  {
-                                                                  "type":  "ct_benefits",
-                                                                  "settings":  {
-                                                                                   "items":  "Cloud-soft coral fleece - plush comfort that cushions tired joints.\nRaised bolster edges - a built-in head-rest and a sense of security.\nHelps keep sofas hair-free - gives fur a place that isn\u0027t your couch.\nNon-slip base - stays planted on floors and sofas.\nMachine washable - the whole bed washes, fresh in one cycle."
-                                                                               }
-                                                              },
-                                                 "tier-single":  {
-                                                                     "type":  "ct_tier",
-                                                                     "settings":  {
-                                                                                      "tier_name":  "Single Cozy Spot",
-                                                                                      "tier_tag":  "",
-                                                                                      "badge":  "",
-                                                                                      "featured":  false,
-                                                                                      "qty":  1,
-                                                                                      "save_text":  "",
-                                                                                      "price_now":  "",
-                                                                                      "price_was":  "",
-                                                                                      "opt_label":  "Color",
-                                                                                      "opt_emoji":  ""
-                                                                                  }
-                                                                 },
-                                                 "tier-double":  {
-                                                                     "type":  "ct_tier",
-                                                                     "settings":  {
-                                                                                      "tier_name":  "Double Comfort",
-                                                                                      "tier_tag":  "",
-                                                                                      "badge":  "Best value - free shipping",
-                                                                                      "featured":  true,
-                                                                                      "qty":  2,
-                                                                                      "save_text":  "",
-                                                                                      "price_now":  "",
-                                                                                      "price_was":  "",
-                                                                                      "opt_label":  "Color",
-                                                                                      "opt_emoji":  ""
-                                                                                  }
-                                                                 },
-                                                 "addon-1":  {
-                                                                 "type":  "addon",
-                                                                 "settings":  {
-                                                                                  "badge":  "Biggest savings today",
-                                                                                  "flag_style":  "urgency"
-                                                                              }
-                                                             },
-                                                 "addon-2":  {
-                                                                 "type":  "addon",
-                                                                 "settings":  {
-                                                                                  "badge":  "Best-selling combo",
-                                                                                  "flag_style":  "gold"
-                                                                              }
-                                                             },
-                                                 "running-total":  {
-                                                                       "type":  "ct_running_total",
-                                                                       "settings":  {
-                                                                                        "label":  "Total"
-                                                                                    }
-                                                                   },
-                                                 "buy_buttons":  {
-                                                                     "type":  "buy_buttons",
-                                                                     "settings":  {
-                                                                                      "show_dynamic_checkout":  true,
-                                                                                      "show_gift_card_recipient":  true
-                                                                                  }
-                                                                 },
-                                                 "payment_reassurance":  {
-                                                                             "type":  "payment_reassurance",
-                                                                             "settings":  {
-                                                                                              "show_icons":  true,
-                                                                                              "secure_line":  "Secure checkout - SSL-encrypted"
-                                                                                          }
-                                                                         },
-                                                 "trust-icons":  {
-                                                                     "type":  "ct_trust_icons",
-                                                                     "settings":  {
-                                                                                      "icon_1":  "",
-                                                                                      "label_1":  "Fast shipping",
-                                                                                      "icon_2":  "",
-                                                                                      "label_2":  "Secure payments",
-                                                                                      "icon_3":  "",
-                                                                                      "label_3":  "Support that cares"
-                                                                                  }
-                                                                 }
-                                             },
-                                  "block_order":  [
-                                                      "title",
-                                                      "rating",
-                                                      "benefits",
-                                                      "tier-single",
-                                                      "tier-double",
-                                                      "addon-1",
-                                                      "addon-2",
-                                                      "running-total",
-                                                      "buy_buttons",
-                                                      "payment_reassurance",
-                                                      "trust-icons"
-                                                  ],
-                                  "settings":  {
-                                                   "enable_sticky_info":  true,
-                                                   "gallery_layout":  "thumbnail",
-                                                   "media_size":  "large",
-                                                   "constrain_to_viewport":  true,
-                                                   "mobile_thumbnails":  "hide",
-                                                   "hide_variants":  true,
-                                                   "enable_video_looping":  false,
-                                                   "padding_top":  36,
-                                                   "padding_bottom":  12,
-                                                   "tier_divider_text":  "The more they lounge, the cozier their space - Bundle \u0026 Save",
-                                                   "addon_divider_text":  "Limited-time add-on discount"
-                                               }
-                              },
-                     "ct_trust_bar":  {
-                                          "type":  "ct-trust-bar",
-                                          "blocks":  {
-                                                         "c1":  {
-                                                                    "type":  "chip",
-                                                                    "settings":  {
-                                                                                     "icon":  "truck",
-                                                                                     "icon_color":  "purple",
-                                                                                     "label":  "Fast shipping",
-                                                                                     "sublabel":  "Ships in 3-7 days"
-                                                                                 }
-                                                                },
-                                                         "c2":  {
-                                                                    "type":  "chip",
-                                                                    "settings":  {
-                                                                                     "icon":  "shield",
-                                                                                     "icon_color":  "green",
-                                                                                     "label":  "30-night risk-free",
-                                                                                     "sublabel":  "Try it at home"
-                                                                                 }
-                                                                },
-                                                         "c3":  {
-                                                                    "type":  "chip",
-                                                                    "settings":  {
-                                                                                     "icon":  "shield",
-                                                                                     "icon_color":  "blue",
-                                                                                     "label":  "Secured payments",
-                                                                                     "sublabel":  "256-bit SSL"
-                                                                                 }
-                                                                }
-                                                     },
-                                          "block_order":  [
-                                                              "c1",
-                                                              "c2",
-                                                              "c3"
-                                                          ],
-                                          "settings":  {
-                                                           "color_scheme":  "scheme-1",
-                                                           "padding_top":  16,
-                                                           "padding_bottom":  16
-                                                       }
-                                      },
-                     "ct_marquee":  {
-                                        "type":  "ct-marquee",
-                                        "blocks":  {
-                                                       "m1":  {
-                                                                  "type":  "message",
-                                                                  "settings":  {
-                                                                                   "text":  "LOVED BY THOUSANDS OF KITTIES"
-                                                                               }
-                                                              },
-                                                       "m2":  {
-                                                                  "type":  "message",
-                                                                  "settings":  {
-                                                                                   "text":  "LOVED BY THOUSANDS OF KITTIES"
-                                                                               }
-                                                              },
-                                                       "m3":  {
-                                                                  "type":  "message",
-                                                                  "settings":  {
-                                                                                   "text":  "LOVED BY THOUSANDS OF KITTIES"
-                                                                               }
-                                                              },
-                                                       "m4":  {
-                                                                  "type":  "message",
-                                                                  "settings":  {
-                                                                                   "text":  "LOVED BY THOUSANDS OF KITTIES"
-                                                                               }
-                                                              }
-                                                   },
-                                        "block_order":  [
-                                                            "m1",
-                                                            "m2",
-                                                            "m3",
-                                                            "m4"
-                                                        ],
-                                        "settings":  {
-                                                         "speed":  24,
-                                                         "color_scheme":  "scheme-1"
-                                                     }
-                                    },
-                     "ct_why":  {
-                                    "type":  "ct-use-cases",
-                                    "blocks":  {
-                                                   "u1":  {
-                                                              "type":  "card",
-                                                              "settings":  {
-                                                                               "emoji":  "",
-                                                                               "tag":  "GIF",
-                                                                               "title":  "Ultra-soft plush comfort",
-                                                                               "desc":  "Made with dense, A-grade plush that stays soft wash after wash, giving your cat a warm, sink-in spot they\u0027ll choose over the bare sofa."
-                                                                           }
-                                                          },
-                                                   "u2":  {
-                                                              "type":  "card",
-                                                              "settings":  {
-                                                                               "emoji":  "",
-                                                                               "tag":  "GIF",
-                                                                               "title":  "Supportive pillow design",
-                                                                               "desc":  "A raised, cushioned edge cradles the head and neck, turning any cushion or windowsill into a proper bed for deeper, comfier naps."
-                                                                           }
-                                                          },
-                                                   "u3":  {
-                                                              "type":  "card",
-                                                              "settings":  {
-                                                                               "emoji":  "",
-                                                                               "tag":  "GIF",
-                                                                               "title":  "Sofa protection \u0026 non-slip base",
-                                                                               "desc":  "Shields couches from fur and scratches, while the anti-slip backing keeps the mat firmly in place even when your cat lands at full speed."
-                                                                           }
-                                                          },
-                                                   "u4":  {
-                                                              "type":  "card",
-                                                              "settings":  {
-                                                                               "emoji":  "",
-                                                                               "tag":  "GIF",
-                                                                               "title":  "Durable \u0026 easy to clean",
-                                                                               "desc":  "Strong stitching stands up to daily lounging, and the whole mat is machine washable - fresh again in minutes, no special care needed."
-                                                                           }
-                                                          }
-                                               },
-                                    "block_order":  [
-                                                        "u1",
-                                                        "u2",
-                                                        "u3",
-                                                        "u4"
-                                                    ],
-                                    "settings":  {
-                                                     "kicker":  "Why choose CozyClaw",
-                                                     "heading":  "Built for cats, made to protect your couch",
-                                                     "layout":  "feature-gifs",
-                                                     "color_scheme":  "scheme-1",
-                                                     "padding_top":  56,
-                                                     "padding_bottom":  56
-                                                 }
-                                },
-                     "ct_video_action":  {
-                                             "type":  "ct-video-reviews",
-                                             "blocks":  {
-                                                            "clip-1":  {
-                                                                           "type":  "clip",
-                                                                           "settings":  {
-                                                                                            "label":  "The pounce",
-                                                                                            "loop_label":  "GIF"
-                                                                                        }
-                                                                       },
-                                                            "clip-2":  {
-                                                                           "type":  "clip",
-                                                                           "settings":  {
-                                                                                            "label":  "Big stretch",
-                                                                                            "loop_label":  "GIF"
-                                                                                        }
-                                                                       },
-                                                            "clip-3":  {
-                                                                           "type":  "clip",
-                                                                           "settings":  {
-                                                                                            "label":  "Zoomies",
-                                                                                            "loop_label":  "GIF"
-                                                                                        }
-                                                                       },
-                                                            "clip-4":  {
-                                                                           "type":  "clip",
-                                                                           "settings":  {
-                                                                                            "label":  "Nap o\u0027clock",
-                                                                                            "loop_label":  "GIF"
-                                                                                        }
-                                                                       }
-                                                        },
-                                             "block_order":  [
-                                                                 "clip-1",
-                                                                 "clip-2",
-                                                                 "clip-3",
-                                                                 "clip-4"
-                                                             ],
-                                             "settings":  {
-                                                              "kicker":  "See it in action",
-                                                              "heading":  "Built for a cat who never sits still",
-                                                              "subheading":  "Pounces, zoomies, the dramatic flop - watch the mat keep up with all of it.",
-                                                              "video_label":  "60-second product tour",
-                                                              "color_scheme":  "scheme-1",
-                                                              "padding_top":  56,
-                                                              "padding_bottom":  56
-                                                          }
-                                         },
-                     "ct-product-tabs":  {
-                                             "type":  "ct-product-tabs",
-                                             "blocks":  {
-                                                            "tab-description":  {
-                                                                                    "type":  "tab",
-                                                                                    "settings":  {
-                                                                                                     "heading":  "Description",
-                                                                                                     "content_source":  "description"
-                                                                                                 }
-                                                                                },
-                                                            "tab-specs":  {
-                                                                              "type":  "tab",
-                                                                              "settings":  {
-                                                                                               "heading":  "Specifications",
-                                                                                               "content_source":  "richtext",
-                                                                                               "content":  "\u003cp\u003e\u003cstrong\u003eSize:\u003c/strong\u003e 31.5 x 35.43 in\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eMaterial:\u003c/strong\u003e Polyester plush, PP cotton fill\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eBacking:\u003c/strong\u003e Non-slip\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eCare:\u003c/strong\u003e Machine wash, cold \u0026amp; gentle\u003c/p\u003e\u003cp\u003e\u003cstrong\u003ePackage includes:\u003c/strong\u003e 1 x CozyClaw Lounge Mat\u003c/p\u003e"
-                                                                                           }
-                                                                          },
-                                                            "tab-shipping":  {
-                                                                                 "type":  "tab",
-                                                                                 "settings":  {
-                                                                                                  "heading":  "Shipping \u0026 Returns",
-                                                                                                  "content_source":  "richtext",
-                                                                                                  "content":  "\u003cp\u003eOrders are prepared and dispatched within 3-7 business days (Mon-Fri).\u003c/p\u003e\u003cp\u003eDomestic delivery in 5-15 business days; international 7-20 business days.\u003c/p\u003e\u003cp\u003e30-night risk-free trial. Email \u003ca href=\"mailto:support@cozyclaw.com\"\u003esupport@cozyclaw.com\u003c/a\u003e and we\u0027ll make it right.\u003c/p\u003e"
-                                                                                              }
-                                                                             }
-                                                        },
-                                             "block_order":  [
-                                                                 "tab-description",
-                                                                 "tab-specs",
-                                                                 "tab-shipping"
-                                                             ],
-                                             "settings":  {
-                                                              "color_scheme":  "scheme-1",
-                                                              "padding_top":  28,
-                                                              "padding_bottom":  28
-                                                          }
-                                         },
-                     "apps":  {
-                                  "type":  "apps",
-                                  "settings":  {
-                                                   "include_margins":  true
-                                               }
-                              },
-                     "ct_shipping":  {
-                                         "type":  "ct-use-cases",
-                                         "blocks":  {
-                                                        "s1":  {
-                                                                   "type":  "card",
-                                                                   "settings":  {
-                                                                                    "emoji":  "",
-                                                                                    "tag":  "Processing",
-                                                                                    "title":  "3-7 business days",
-                                                                                    "desc":  "Orders are prepared and dispatched within 3-7 business days, Monday-Friday."
-                                                                                }
-                                                               },
-                                                        "s2":  {
-                                                                   "type":  "card",
-                                                                   "settings":  {
-                                                                                    "emoji":  "",
-                                                                                    "tag":  "Domestic",
-                                                                                    "title":  "5-15 business days",
-                                                                                    "desc":  "Delivered within 5-15 business days after processing."
-                                                                                }
-                                                               },
-                                                        "s3":  {
-                                                                   "type":  "card",
-                                                                   "settings":  {
-                                                                                    "emoji":  "",
-                                                                                    "tag":  "International",
-                                                                                    "title":  "7-20 business days",
-                                                                                    "desc":  "Ships worldwide, typically arriving in 7-20 business days."
-                                                                                }
-                                                               }
-                                                    },
-                                         "block_order":  [
-                                                             "s1",
-                                                             "s2",
-                                                             "s3"
-                                                         ],
-                                         "settings":  {
-                                                          "kicker":  "Shipping \u0026 guarantee",
-                                                          "heading":  "Clear, honest delivery",
-                                                          "color_scheme":  "scheme-1",
-                                                          "padding_top":  56,
-                                                          "padding_bottom":  56
-                                                      }
-                                     },
-                     "ct_trust_bar_2":  {
-                                            "type":  "ct-trust-bar",
+                     "gs_product_buy":  {
+                                            "type":  "gs-product-buy",
+                                            "settings":  {
+                                                             "product":  "metal-flower-garden-stake",
+                                                             "gallery_badge":  "SAVE TODAY",
+                                                             "title":  "GardenStudio product",
+                                                             "value_title":  "Great Value Package",
+                                                             "value_subtitle":  "Fast 7-day U.S. shipping",
+                                                             "origin_label":  "SHIPS FROM",
+                                                             "origin_text":  "Dallas, TX",
+                                                             "bundle_heading":  "BUNDLE \u0026 SAVE",
+                                                             "button_label":  "Add to cart",
+                                                             "fallback_rating":  "4.8",
+                                                             "fallback_review_count":  "(1.8K)",
+                                                             "fallback_sold_text":  "3.2K have been sold."
+                                                         },
                                             "blocks":  {
-                                                           "c1":  {
-                                                                      "type":  "chip",
-                                                                      "settings":  {
-                                                                                       "icon":  "truck",
-                                                                                       "icon_color":  "purple",
-                                                                                       "label":  "Fast shipping",
-                                                                                       "sublabel":  ""
-                                                                                   }
-                                                                  },
-                                                           "c2":  {
-                                                                      "type":  "chip",
-                                                                      "settings":  {
-                                                                                       "icon":  "clock",
-                                                                                       "icon_color":  "amber",
-                                                                                       "label":  "Support that cares",
-                                                                                       "sublabel":  ""
-                                                                                   }
-                                                                  },
-                                                           "c3":  {
-                                                                      "type":  "chip",
-                                                                      "settings":  {
-                                                                                       "icon":  "shield",
-                                                                                       "icon_color":  "green",
-                                                                                       "label":  "30-night risk-free",
-                                                                                       "sublabel":  ""
-                                                                                   }
-                                                                  },
-                                                           "c4":  {
-                                                                      "type":  "chip",
-                                                                      "settings":  {
-                                                                                       "icon":  "shield",
-                                                                                       "icon_color":  "blue",
-                                                                                       "label":  "Secured checkout",
-                                                                                       "sublabel":  ""
-                                                                                   }
-                                                                  }
+                                                           "tier_1":  {
+                                                                          "type":  "tier",
+                                                                          "settings":  {
+                                                                                           "title":  "Buy 1",
+                                                                                           "pill":  "Starter",
+                                                                                           "subtitle":  "One flower stake for a favorite corner",
+                                                                                           "badge":  "",
+                                                                                           "quantity":  1
+                                                                                       }
+                                                                      },
+                                                           "tier_2":  {
+                                                                          "type":  "tier",
+                                                                          "settings":  {
+                                                                                           "title":  "Buy 2",
+                                                                                           "pill":  "Bundle",
+                                                                                           "subtitle":  "Frame both sides of a path or patio",
+                                                                                           "badge":  "&#128293; Most Popular &#128293;",
+                                                                                           "quantity":  2
+                                                                                       }
+                                                                      },
+                                                           "tier_3":  {
+                                                                          "type":  "tier",
+                                                                          "settings":  {
+                                                                                           "title":  "Buy 3",
+                                                                                           "pill":  "Bundle",
+                                                                                           "subtitle":  "Build a colorful garden cluster",
+                                                                                           "badge":  "&#9889; Flash Sale &#9889;",
+                                                                                           "quantity":  3
+                                                                                       }
+                                                                      },
+                                                           "tier_4":  {
+                                                                          "type":  "tier",
+                                                                          "settings":  {
+                                                                                           "title":  "Buy 4",
+                                                                                           "pill":  "Bundle",
+                                                                                           "subtitle":  "Gift-ready set for gardeners",
+                                                                                           "badge":  "&#127873; Best Value Offer &#127873;",
+                                                                                           "quantity":  4
+                                                                                       }
+                                                                      }
                                                        },
                                             "block_order":  [
-                                                                "c1",
-                                                                "c2",
-                                                                "c3",
-                                                                "c4"
+                                                                "tier_1",
+                                                                "tier_2",
+                                                                "tier_3",
+                                                                "tier_4"
+                                                            ]
+                                        },
+                     "gs_product_info":  {
+                                             "type":  "gs-product-info",
+                                             "blocks":  {
+                                                            "spec_1":  {
+                                                                           "type":  "spec",
+                                                                           "settings":  {
+                                                                                            "label":  "Product type",
+                                                                                            "value":  "Metal flower garden stake",
+                                                                                            "highlight":  true,
+                                                                                            "star":  false,
+                                                                                            "badge":  "",
+                                                                                            "badge_tone":  "green"
+                                                                                        }
+                                                                       },
+                                                            "spec_2":  {
+                                                                           "type":  "spec",
+                                                                           "settings":  {
+                                                                                            "label":  "Main use",
+                                                                                            "value":  "Bird bath, bee station \u0026 garden decor",
+                                                                                            "highlight":  false,
+                                                                                            "star":  false,
+                                                                                            "badge":  "Decor/Easy",
+                                                                                            "badge_tone":  "green"
+                                                                                        }
+                                                                       },
+                                                            "spec_3":  {
+                                                                           "type":  "spec",
+                                                                           "settings":  {
+                                                                                            "label":  "Material",
+                                                                                            "value":  "Weather-resistant metal",
+                                                                                            "highlight":  true,
+                                                                                            "star":  true,
+                                                                                            "badge":  "",
+                                                                                            "badge_tone":  "green"
+                                                                                        }
+                                                                       },
+                                                            "spec_4":  {
+                                                                           "type":  "spec",
+                                                                           "settings":  {
+                                                                                            "label":  "Flower design",
+                                                                                            "value":  "Hand-applied glossy petals",
+                                                                                            "highlight":  false,
+                                                                                            "star":  false,
+                                                                                            "badge":  "",
+                                                                                            "badge_tone":  "green"
+                                                                                        }
+                                                                       },
+                                                            "spec_5":  {
+                                                                           "type":  "spec",
+                                                                           "settings":  {
+                                                                                            "label":  "Flower diameter",
+                                                                                            "value":  "Approx. 6 in / 15 cm",
+                                                                                            "highlight":  false,
+                                                                                            "star":  false,
+                                                                                            "badge":  "",
+                                                                                            "badge_tone":  "green"
+                                                                                        }
+                                                                       },
+                                                            "spec_6":  {
+                                                                           "type":  "spec",
+                                                                           "settings":  {
+                                                                                            "label":  "Bowl depth",
+                                                                                            "value":  "Approx. 2 in / 5 cm",
+                                                                                            "highlight":  false,
+                                                                                            "star":  false,
+                                                                                            "badge":  "Visible",
+                                                                                            "badge_tone":  "teal"
+                                                                                        }
+                                                                       },
+                                                            "spec_7":  {
+                                                                           "type":  "spec",
+                                                                           "settings":  {
+                                                                                            "label":  "Overall height",
+                                                                                            "value":  "Approx. 24 in / 60 cm",
+                                                                                            "highlight":  true,
+                                                                                            "star":  false,
+                                                                                            "badge":  "",
+                                                                                            "badge_tone":  "green"
+                                                                                        }
+                                                                       },
+                                                            "spec_8":  {
+                                                                           "type":  "spec",
+                                                                           "settings":  {
+                                                                                            "label":  "Installation",
+                                                                                            "value":  "Push directly into soil or planter",
+                                                                                            "highlight":  false,
+                                                                                            "star":  false,
+                                                                                            "badge":  "",
+                                                                                            "badge_tone":  "green"
+                                                                                        }
+                                                                       },
+                                                            "spec_9":  {
+                                                                           "type":  "spec",
+                                                                           "settings":  {
+                                                                                            "label":  "Tools needed",
+                                                                                            "value":  "None",
+                                                                                            "highlight":  false,
+                                                                                            "star":  false,
+                                                                                            "badge":  "",
+                                                                                            "badge_tone":  "green"
+                                                                                        }
+                                                                       },
+                                                            "spec_10":  {
+                                                                            "type":  "spec",
+                                                                            "settings":  {
+                                                                                             "label":  "Outdoor use",
+                                                                                             "value":  "Built for sun, rain and wind",
+                                                                                             "highlight":  true,
+                                                                                             "star":  true,
+                                                                                             "badge":  "",
+                                                                                             "badge_tone":  "green"
+                                                                                         }
+                                                                        },
+                                                            "spec_11":  {
+                                                                            "type":  "spec",
+                                                                            "settings":  {
+                                                                                             "label":  "Best placement",
+                                                                                             "value":  "Borders, flower beds, patios and planters",
+                                                                                             "highlight":  false,
+                                                                                             "star":  false,
+                                                                                             "badge":  "",
+                                                                                             "badge_tone":  "green"
+                                                                                         }
+                                                                        },
+                                                            "spec_12":  {
+                                                                            "type":  "spec",
+                                                                            "settings":  {
+                                                                                             "label":  "Wildlife use",
+                                                                                             "value":  "Small birds, bees, butterflies \u0026 pollinators",
+                                                                                             "highlight":  false,
+                                                                                             "star":  false,
+                                                                                             "badge":  "",
+                                                                                             "badge_tone":  "green"
+                                                                                         }
+                                                                        },
+                                                            "spec_13":  {
+                                                                            "type":  "spec",
+                                                                            "settings":  {
+                                                                                             "label":  "Finish",
+                                                                                             "value":  "Glossy hand-applied color",
+                                                                                             "highlight":  false,
+                                                                                             "star":  false,
+                                                                                             "badge":  "Shine",
+                                                                                             "badge_tone":  "yellow"
+                                                                                         }
+                                                                        },
+                                                            "spec_14":  {
+                                                                            "type":  "spec",
+                                                                            "settings":  {
+                                                                                             "label":  "Care",
+                                                                                             "value":  "Easy to rinse, refill \u0026 refresh",
+                                                                                             "highlight":  false,
+                                                                                             "star":  false,
+                                                                                             "badge":  "",
+                                                                                             "badge_tone":  "green"
+                                                                                         }
+                                                                        },
+                                                            "spec_15":  {
+                                                                            "type":  "spec",
+                                                                            "settings":  {
+                                                                                             "label":  "Gift idea",
+                                                                                             "value":  "Great for gardeners \u0026 bird lovers",
+                                                                                             "highlight":  false,
+                                                                                             "star":  true,
+                                                                                             "badge":  "",
+                                                                                             "badge_tone":  "green"
+                                                                                         }
+                                                                        }
+                                                        },
+                                             "block_order":  [
+                                                                 "spec_1",
+                                                                 "spec_2",
+                                                                 "spec_3",
+                                                                 "spec_4",
+                                                                 "spec_5",
+                                                                 "spec_6",
+                                                                 "spec_7",
+                                                                 "spec_8",
+                                                                 "spec_9",
+                                                                 "spec_10",
+                                                                 "spec_11",
+                                                                 "spec_12",
+                                                                 "spec_13",
+                                                                 "spec_14",
+                                                                 "spec_15"
+                                                             ],
+                                             "settings":  {
+
+                                                          }
+                                         },
+                     "gs_brand_strip":  {
+                                            "type":  "gs-brand-strip",
+                                            "blocks":  {
+                                                           "brand_1":  {
+                                                                           "type":  "brand",
+                                                                           "settings":  {
+                                                                                            "logo_style":  "gma",
+                                                                                            "text":  "Good Morning America"
+                                                                                        }
+                                                                       },
+                                                           "brand_2":  {
+                                                                           "type":  "brand",
+                                                                           "settings":  {
+                                                                                            "logo_style":  "shape",
+                                                                                            "text":  "Shape"
+                                                                                        }
+                                                                       },
+                                                           "brand_3":  {
+                                                                           "type":  "brand",
+                                                                           "settings":  {
+                                                                                            "logo_style":  "wired",
+                                                                                            "text":  "WIRED"
+                                                                                        }
+                                                                       },
+                                                           "brand_4":  {
+                                                                           "type":  "brand",
+                                                                           "settings":  {
+                                                                                            "logo_style":  "bbc",
+                                                                                            "text":  "BBC"
+                                                                                        }
+                                                                       },
+                                                           "brand_5":  {
+                                                                           "type":  "brand",
+                                                                           "settings":  {
+                                                                                            "logo_style":  "usatoday",
+                                                                                            "text":  "USA Today"
+                                                                                        }
+                                                                       }
+                                                       },
+                                            "block_order":  [
+                                                                "brand_1",
+                                                                "brand_2",
+                                                                "brand_3",
+                                                                "brand_4",
+                                                                "brand_5"
                                                             ],
                                             "settings":  {
-                                                             "color_scheme":  "scheme-1",
-                                                             "padding_top":  16,
-                                                             "padding_bottom":  16
+                                                             "speed":  60
                                                          }
                                         },
-                     "ct_reviews":  {
-                                        "type":  "ct-reviews",
+                     "gs_reviews":  {
+                                        "type":  "gs-reviews",
                                         "blocks":  {
-                                                       "rv1":  {
-                                                                   "type":  "review",
-                                                                   "settings":  {
-                                                                                    "rating":  5,
-                                                                                    "text":  "My cat claimed it the second I put it down and hasn\u0027t moved since. The couch underneath finally stays clean.",
-                                                                                    "author":  "Jackie",
-                                                                                    "meta":  "Verified buyer",
-                                                                                    "verified":  true
-                                                                                }
-                                                               },
-                                                       "rv2":  {
-                                                                   "type":  "review",
-                                                                   "settings":  {
-                                                                                    "rating":  5,
-                                                                                    "text":  "Soft, well-made, and washes up like new. I ordered a second one for the armchair.",
-                                                                                    "author":  "Zinnias",
-                                                                                    "meta":  "Verified buyer",
-                                                                                    "verified":  true
-                                                                                }
-                                                               },
-                                                       "rv3":  {
-                                                                   "type":  "review",
-                                                                   "settings":  {
-                                                                                    "rating":  4,
-                                                                                    "text":  "Great mat and my cat loves it. It arrived tightly vacuum-sealed and took about a day to fully fluff back out - worth the short wait.",
-                                                                                    "author":  "rlungtha",
-                                                                                    "meta":  "Verified buyer",
-                                                                                    "verified":  true
-                                                                                }
-                                                               }
+                                                       "review_1":  {
+                                                                        "type":  "review",
+                                                                        "settings":  {
+                                                                                         "name":  "Sarah Jenkins",
+                                                                                         "verified":  true,
+                                                                                         "rating":  5,
+                                                                                         "title":  "Beautiful and so easy!",
+                                                                                         "body":  "I am totally obsessed with this addition to my yard! It took me literally two seconds to push it into my flower bed, and the local bees are already drinking from it."
+                                                                                     }
+                                                                    },
+                                                       "review_2":  {
+                                                                        "type":  "review",
+                                                                        "settings":  {
+                                                                                         "name":  "Marcus Thorne",
+                                                                                         "verified":  true,
+                                                                                         "rating":  5,
+                                                                                         "title":  "Hummingbirds love it!",
+                                                                                         "body":  "I bought this for my backyard and it has been a total game-changer. Super easy to rinse clean and it looks absolutely amazing near our porch."
+                                                                                     }
+                                                                    },
+                                                       "review_3":  {
+                                                                        "type":  "review",
+                                                                        "settings":  {
+                                                                                         "name":  "Elena Rossi",
+                                                                                         "verified":  true,
+                                                                                         "rating":  5,
+                                                                                         "title":  "Perfect for my tiny patio",
+                                                                                         "body":  "Such a brilliant little water station for urban spaces. It adds a cute pop of color and the butterflies are constantly stopping by."
+                                                                                     }
+                                                                    },
+                                                       "review_4":  {
+                                                                        "type":  "review",
+                                                                        "settings":  {
+                                                                                         "name":  "David Miller",
+                                                                                         "verified":  true,
+                                                                                         "rating":  5,
+                                                                                         "title":  "High quality and gorgeous",
+                                                                                         "body":  "This completely exceeded my expectations. It survived a huge rainstorm without rust and feels like a premium garden piece."
+                                                                                     }
+                                                                    },
+                                                       "review_5":  {
+                                                                        "type":  "review",
+                                                                        "settings":  {
+                                                                                         "name":  "Chloe Dubois",
+                                                                                         "verified":  true,
+                                                                                         "rating":  5,
+                                                                                         "title":  "A fantastic gift idea",
+                                                                                         "body":  "I gifted this to my mother for her birthday and she was thrilled. It is gorgeous, practical, and brightens up her whole garden."
+                                                                                     }
+                                                                    }
                                                    },
                                         "block_order":  [
-                                                            "rv1",
-                                                            "rv2",
-                                                            "rv3"
+                                                            "review_1",
+                                                            "review_2",
+                                                            "review_3",
+                                                            "review_4",
+                                                            "review_5"
                                                         ],
                                         "settings":  {
-                                                         "kicker":  "",
-                                                         "heading":  "Real cat parents, real results",
-                                                         "rating_number":  "4.6",
-                                                         "rating_count":  "92% 5-star - 12 five-star, 1 four-star - 13 verified reviews",
-                                                         "layout":  "carousel",
-                                                         "color_scheme":  "scheme-1",
-                                                         "padding_top":  56,
-                                                         "padding_bottom":  56
+                                                         "eyebrow":  "From real customers",
+                                                         "heading":  "What gardeners are saying"
                                                      }
                                     },
-                     "related-products":  {
-                                              "type":  "related-products",
+                     "gs_feature_blocks":  {
+                                               "type":  "gs-feature-blocks",
+                                               "settings":  {
+                                                                "heading":  "&#129419; &#127969; Bring Your Garden to Life with an Everlasting Bloom! &#128161; &#128038; &#10084;&#65039;",
+                                                                "subheading":  "&#128293;More than 28,000 likes from Facebook users, 25,000 orders in two years!"
+                                                            },
+                                               "blocks":  {
+                                                              "feature_1":  {
+                                                                                "type":  "feature",
+                                                                                "settings":  {
+                                                                                                 "heading":  "Bring any corner of the garden to life",
+                                                                                                 "body":  "A handcrafted metal flower that turns a quiet flower bed, border or patio into a little highlight - glossy petals that catch the light and a bowl that doubles as a water station for birds and pollinators.",
+                                                                                                 "image_label":  "Lifestyle image",
+                                                                                                 "tag_1":  "3-in-1 use",
+                                                                                                 "tag_2":  "Stake \u0026 go",
+                                                                                                 "image_side":  "right"
+                                                                                             }
+                                                                            },
+                                                              "feature_2":  {
+                                                                                "type":  "feature",
+                                                                                "settings":  {
+                                                                                                 "heading":  "A glossy finish that catches the light",
+                                                                                                 "body":  "The weather-resistant coating keeps its color through sun and rain, and the curved petals reflect daylight so the piece adds a bit of movement and shine to the whole space.",
+                                                                                                 "image_label":  "Detail image",
+                                                                                                 "tag_1":  "Weather-resistant",
+                                                                                                 "tag_2":  "Glossy finish",
+                                                                                                 "image_side":  "left"
+                                                                                             }
+                                                                            },
+                                                              "feature_3":  {
+                                                                                "type":  "feature",
+                                                                                "settings":  {
+                                                                                                 "heading":  "A gift gardeners actually love",
+                                                                                                 "body":  "Practical and pretty in one - a thoughtful pick for birthdays, housewarmings or the holidays for anyone who likes to potter about the garden and watch the birds.",
+                                                                                                 "image_label":  "Gift image",
+                                                                                                 "tag_1":  "Gift-ready",
+                                                                                                 "tag_2":  "No tools",
+                                                                                                 "image_side":  "right"
+                                                                                             }
+                                                                            }
+                                                          },
+                                               "block_order":  [
+                                                                   "feature_1",
+                                                                   "feature_2",
+                                                                   "feature_3"
+                                                               ]
+                                           },
+                     "gs_comparison":  {
+                                           "type":  "gs-comparison",
+                                           "settings":  {
+
+                                                        },
+                                           "blocks":  {
+                                                          "cmp_1":  {
+                                                                        "type":  "row",
+                                                                        "settings":  {
+                                                                                         "feature":  "3-in-1 use",
+                                                                                         "us":  "Yes",
+                                                                                         "alt_1":  "No",
+                                                                                         "alt_1_good":  false,
+                                                                                         "alt_2":  "No",
+                                                                                         "alt_2_good":  false
+                                                                                     }
+                                                                    },
+                                                          "cmp_2":  {
+                                                                        "type":  "row",
+                                                                        "settings":  {
+                                                                                         "feature":  "Bird bath",
+                                                                                         "us":  "Yes",
+                                                                                         "alt_1":  "Yes",
+                                                                                         "alt_1_good":  true,
+                                                                                         "alt_2":  "No",
+                                                                                         "alt_2_good":  false
+                                                                                     }
+                                                                    },
+                                                          "cmp_3":  {
+                                                                        "type":  "row",
+                                                                        "settings":  {
+                                                                                         "feature":  "Bee \u0026 pollinator station",
+                                                                                         "us":  "Yes",
+                                                                                         "alt_1":  "No",
+                                                                                         "alt_1_good":  false,
+                                                                                         "alt_2":  "No",
+                                                                                         "alt_2_good":  false
+                                                                                     }
+                                                                    },
+                                                          "cmp_4":  {
+                                                                        "type":  "row",
+                                                                        "settings":  {
+                                                                                         "feature":  "Easy stake-and-go setup",
+                                                                                         "us":  "Yes",
+                                                                                         "alt_1":  "Heavy",
+                                                                                         "alt_1_good":  false,
+                                                                                         "alt_2":  "Yes",
+                                                                                         "alt_2_good":  true
+                                                                                     }
+                                                                    },
+                                                          "cmp_5":  {
+                                                                        "type":  "row",
+                                                                        "settings":  {
+                                                                                         "feature":  "Fits small spaces",
+                                                                                         "us":  "Yes",
+                                                                                         "alt_1":  "No",
+                                                                                         "alt_1_good":  false,
+                                                                                         "alt_2":  "Yes",
+                                                                                         "alt_2_good":  true
+                                                                                     }
+                                                                    },
+                                                          "cmp_6":  {
+                                                                        "type":  "row",
+                                                                        "settings":  {
+                                                                                         "feature":  "Metal, weather-resistant",
+                                                                                         "us":  "Yes",
+                                                                                         "alt_1":  "Stone",
+                                                                                         "alt_1_good":  false,
+                                                                                         "alt_2":  "No",
+                                                                                         "alt_2_good":  false
+                                                                                     }
+                                                                    },
+                                                          "cmp_7":  {
+                                                                        "type":  "row",
+                                                                        "settings":  {
+                                                                                         "feature":  "Gift-friendly",
+                                                                                         "us":  "Yes",
+                                                                                         "alt_1":  "No",
+                                                                                         "alt_1_good":  false,
+                                                                                         "alt_2":  "Yes",
+                                                                                         "alt_2_good":  true
+                                                                                     }
+                                                                    }
+                                                      },
+                                           "block_order":  [
+                                                               "cmp_1",
+                                                               "cmp_2",
+                                                               "cmp_3",
+                                                               "cmp_4",
+                                                               "cmp_5",
+                                                               "cmp_6",
+                                                               "cmp_7"
+                                                           ]
+                                       },
+                     "gs_trust_marquee":  {
+                                              "type":  "gs-trust-marquee",
+                                              "blocks":  {
+                                                             "trust_1":  {
+                                                                             "type":  "message",
+                                                                             "settings":  {
+                                                                                              "text":  "Loved by gardeners",
+                                                                                              "icon":  "\u0026#10003;"
+                                                                                          }
+                                                                         },
+                                                             "trust_2":  {
+                                                                             "type":  "message",
+                                                                             "settings":  {
+                                                                                              "text":  "Free shipping over $40",
+                                                                                              "icon":  "\u0026#128666;"
+                                                                                          }
+                                                                         },
+                                                             "trust_3":  {
+                                                                             "type":  "message",
+                                                                             "settings":  {
+                                                                                              "text":  "Secure payment",
+                                                                                              "icon":  "\u0026#128737;"
+                                                                                          }
+                                                                         },
+                                                             "trust_4":  {
+                                                                             "type":  "message",
+                                                                             "settings":  {
+                                                                                              "text":  "30-day money-back",
+                                                                                              "icon":  "\u0026#8634;"
+                                                                                          }
+                                                                         }
+                                                         },
+                                              "block_order":  [
+                                                                  "trust_1",
+                                                                  "trust_2",
+                                                                  "trust_3",
+                                                                  "trust_4"
+                                                              ],
                                               "settings":  {
-                                                               "heading":  "You may also like",
-                                                               "heading_size":  "h2",
-                                                               "columns_desktop":  4,
-                                                               "color_scheme":  "scheme-1",
-                                                               "image_ratio":  "square",
-                                                               "show_secondary_image":  true,
-                                                               "show_vendor":  false,
-                                                               "show_rating":  true,
-                                                               "columns_mobile":  "2",
-                                                               "padding_top":  36,
-                                                               "padding_bottom":  36
+                                                               "speed":  60
                                                            }
-                                          }
+                                          },
+                     "gs_video_gallery":  {
+                                              "type":  "gs-video-gallery",
+                                              "blocks":  {
+                                                             "video_1":  {
+                                                                             "type":  "video",
+                                                                             "settings":  {
+
+                                                                                          }
+                                                                         },
+                                                             "video_2":  {
+                                                                             "type":  "video",
+                                                                             "settings":  {
+
+                                                                                          }
+                                                                         },
+                                                             "video_3":  {
+                                                                             "type":  "video",
+                                                                             "settings":  {
+
+                                                                                          }
+                                                                         }
+                                                         },
+                                              "block_order":  [
+                                                                  "video_1",
+                                                                  "video_2",
+                                                                  "video_3"
+                                                              ],
+                                              "settings":  {
+                                                              "heading":  "Loved by gardeners everywhere"
+                                                           }
+                                          },
+                     "gs_faq":  {
+                                    "type":  "gs-faq",
+                                    "settings":  {
+                                                     "heading":  "Questions, answered"
+                                                 },
+                                    "blocks":  {
+                                                   "faq_1":  {
+                                                                 "type":  "item",
+                                                                 "settings":  {
+                                                                                  "question":  "Is it weather-resistant?",
+                                                                                  "answer":  "Yes - it is made from metal with a protective finish built to handle sun, rain and wind outdoors through the seasons."
+                                                                              }
+                                                             },
+                                                   "faq_2":  {
+                                                                 "type":  "item",
+                                                                 "settings":  {
+                                                                                  "question":  "How tall is the stake?",
+                                                                                  "answer":  "About 24 inches (60 cm) above ground, so it sits nicely among flowers and garden plants."
+                                                                              }
+                                                             },
+                                                   "faq_3":  {
+                                                                 "type":  "item",
+                                                                 "settings":  {
+                                                                                  "question":  "How big is the flower bowl?",
+                                                                                  "answer":  "Roughly 6 inches (15 cm) across and about 2 inches (5 cm) deep."
+                                                                              }
+                                                             },
+                                                   "faq_4":  {
+                                                                 "type":  "item",
+                                                                 "settings":  {
+                                                                                  "question":  "Can it hold water for birds and bees?",
+                                                                                  "answer":  "Yes. The bowl catches rainwater or holds a small amount you pour in, so birds and pollinators can drink. A few pebbles in the bowl give bees a safe landing spot."
+                                                                              }
+                                                             },
+                                                   "faq_5":  {
+                                                                 "type":  "item",
+                                                                 "settings":  {
+                                                                                  "question":  "Is it easy to install?",
+                                                                                  "answer":  "Very - just push the pointed stake into soil, a bed or a planter. No tools or assembly needed."
+                                                                              }
+                                                             }
+                                               },
+                                    "block_order":  [
+                                                        "faq_1",
+                                                        "faq_2",
+                                                        "faq_3",
+                                                        "faq_4",
+                                                        "faq_5"
+                                                    ]
+                                },
+                     "gs_related_products":  {
+                                                 "type":  "gs-related-products",
+                                                 "settings":  {
+                                                                  "heading":  "You may also like",
+                                                                  "products":  [
+
+                                                                               ]
+                                                              }
+                                             },
+                     "gs_email_signup":  {
+                                             "type":  "gs-email-signup",
+                                             "settings":  {
+                                                              "eyebrow":  "JOIN THE LIST",
+                                                              "heading":  "15% off your first order",
+                                                              "body":  "Join the list and we\u0027ll email your 15% code, plus first dibs on new colors \u0026 designs. No spam - unsubscribe anytime.",
+                                                              "placeholder":  "you@email.com",
+                                                              "button_label":  "Send my code",
+                                                              "disclaimer":  "We\u0027ll email your code - 15% off your first order, any size - one discount per order - offers don\u0027t combine",
+                                                              "thanks_eyebrow":  "YOU\u0027RE ON THE LIST",
+                                                              "thanks_heading":  "Thank you for signing up!",
+                                                              "thanks_body":  "You just made our day. Welcome to the garden club - we\u0027re so glad you and your garden are here.",
+                                                              "thanks_message":  "Your 15% off code is on its way - check your inbox to claim it.",
+                                                              "thanks_note":  "Don\u0027t see it in a minute? Peek in your spam or promotions folder.",
+                                                              "thanks_button_label":  "Start shopping"
+                                                          }
+                                         },
+                     "gs_sticky_atc":  {
+                                           "type":  "gs-sticky-atc",
+                                           "settings":  {
+                                                            "product":  "metal-flower-garden-stake"
+                                                        }
+                                       }
                  },
     "order":  [
-                  "main",
-                  "ct_trust_bar",
-                  "ct_marquee",
-                  "ct_why",
-                  "ct_video_action",
-                  "ct-product-tabs",
-                  "apps",
-                  "ct_shipping",
-                  "ct_trust_bar_2",
-                  "ct_reviews",
-                  "related-products"
+                  "gs_product_buy",
+                  "gs_product_info",
+                  "gs_brand_strip",
+                  "gs_reviews",
+                  "gs_feature_blocks",
+                  "gs_comparison",
+                  "gs_trust_marquee",
+                  "gs_video_gallery",
+                  "gs_faq",
+                  "gs_related_products",
+                  "gs_email_signup",
+                  "gs_sticky_atc"
               ]
 }

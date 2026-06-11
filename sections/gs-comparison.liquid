@@ -1,0 +1,70 @@
+<section class="gs-scope gs-section gs-soft">
+  <div class="gs-wrap">
+    <h2 class="gs-section-heading">
+      Why choose
+      {% render 'gs-brandmark' %}
+    </h2>
+    <div class="gs-compare">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="gs-us">
+              {% render 'gs-brandmark', inverse: true %}
+            </th>
+            <th>Large bird bath</th>
+            <th>Plastic decor</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <td>{{ block.settings.feature }}</td>
+              <td class="gs-us gs-yes">{{ block.settings.us }}</td>
+              <td class="{% if block.settings.alt_1_good %}gs-yes{% else %}gs-no{% endif %}">
+                {{ block.settings.alt_1 }}
+              </td>
+              <td class="{% if block.settings.alt_2_good %}gs-yes{% else %}gs-no{% endif %}">
+                {{ block.settings.alt_2 }}
+              </td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "GS comparison",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature", "default": "3-in-1 use" },
+        { "type": "text", "id": "us", "label": "Us", "default": "Yes" },
+        { "type": "text", "id": "alt_1", "label": "Alternative 1", "default": "No" },
+        { "type": "checkbox", "id": "alt_1_good", "label": "Alternative 1 positive", "default": false },
+        { "type": "text", "id": "alt_2", "label": "Alternative 2", "default": "No" },
+        { "type": "checkbox", "id": "alt_2_good", "label": "Alternative 2 positive", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GS comparison",
+      "blocks": [
+        { "type": "row", "settings": { "feature": "3-in-1 use", "us": "Yes", "alt_1": "No", "alt_2": "No" } },
+        { "type": "row", "settings": { "feature": "Bird bath", "us": "Yes", "alt_1": "Yes", "alt_1_good": true, "alt_2": "No" } },
+        { "type": "row", "settings": { "feature": "Bee & pollinator station", "us": "Yes", "alt_1": "No", "alt_2": "No" } },
+        { "type": "row", "settings": { "feature": "Easy stake-and-go setup", "us": "Yes", "alt_1": "Heavy", "alt_2": "Yes", "alt_2_good": true } },
+        { "type": "row", "settings": { "feature": "Fits small spaces", "us": "Yes", "alt_1": "No", "alt_2": "Yes", "alt_2_good": true } },
+        { "type": "row", "settings": { "feature": "Metal, weather-resistant", "us": "Yes", "alt_1": "Stone", "alt_2": "No" } },
+        { "type": "row", "settings": { "feature": "Gift-friendly", "us": "Yes", "alt_1": "No", "alt_2": "Yes", "alt_2_good": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

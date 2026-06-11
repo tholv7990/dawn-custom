@@ -1,115 +1,116 @@
-{{ 'section-ct-footer.css' | asset_url | stylesheet_tag }}
 {{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
+{%- assign footer_email = section.settings.contact_email | strip -%}
+{%- assign footer_address = section.settings.contact_address | strip -%}
+{%- assign footer_address_link = section.settings.contact_address_link | default: '/pages/contact' -%}
+{%- assign footer_logo = section.settings.logo | default: settings.logo -%}
+{%- assign footer_logo_width = section.settings.logo_width | default: settings.logo_width | default: 170 -%}
+{%- assign footer_logo_sizes = footer_logo_width | append: 'px' -%}
+{%- assign footer_logo_style = 'width: ' | append: footer_logo_width | append: 'px' -%}
+{%- assign footer_logo_alt = shop.name | default: 'GardenStudio' | escape -%}
 
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
-
-<footer class="ct-footer section-{{ section.id }}-padding">
-  <div class="page-width">
-    <div class="ct-footer__grid">
-      <div class="ct-footer__brand-col">
-        <a href="{{ routes.root_url }}" class="ct-footer__logo" aria-label="CozyClaw home">
-          {% render 'ct-logo',
-            image: section.settings.footer_logo,
-            class: 'ct-footer__logo-img',
-            width: 180,
-            sizes: '180px',
-            fallback: 'cozyclaw-logo-reversed.svg'
-          %}
+<footer class="gs-scope gs-foot" role="contentinfo">
+  <div class="gs-wrap">
+    <div class="gs-foot__cols">
+      <div>
+        <a class="gs-logo" href="{{ routes.root_url }}" aria-label="{{ footer_logo_alt }} home">
+          {%- if footer_logo != blank -%}
+            {{
+              footer_logo
+              | image_url: width: 340
+              | image_tag:
+                loading: 'lazy',
+                widths: '120, 170, 220, 280, 340',
+                sizes: footer_logo_sizes,
+                alt: footer_logo_alt,
+                style: footer_logo_style
+            }}
+          {%- endif -%}
         </a>
-        <p>Founded to help pet parents make their dogs' and cats' everyday lives a little cozier &mdash; one well-made product at a time.</p>
-        <address class="ct-footer__contact">
-          <span>509 Byrum Rd, Chaparral, NM 88081, United States</span>
-          <a href="mailto:support@cozyclaw.com">support@cozyclaw.com</a>
-        </address>
+        <p class="gs-foot__blurb">Handcrafted garden accents that bring color, birds and life to any outdoor space.</p>
       </div>
-
-      <nav class="ct-footer__col" aria-label="Shop">
-        <h5>Shop</h5>
+      <nav aria-label="Info">
+        <h5>Info</h5>
         <ul>
-          <li><a href="/products/cozy-plush-pet-sofa">Cozy Plush Pet Sofa</a></li>
-          <li><a href="{{ routes.root_url }}#bundle">Bundle &amp; Save</a></li>
-          <li><a href="{{ routes.root_url }}#reviews">Reviews</a></li>
-          <li><a href="{{ routes.root_url }}#video">Why It Works</a></li>
-          <li><a href="{{ blogs.news.url | default: '/blogs/news' }}">Blog</a></li>
+          <li><a href="/blogs/news">Blog</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+          <li><a href="{{ routes.root_url }}#faq">FAQ</a></li>
+          <li>{% render 'gs-policy-link', policy: shop.terms_of_service, label: 'Terms of service', fallback_url: '/policies/terms-of-service' %}</li>
         </ul>
       </nav>
-
-      <nav class="ct-footer__col" aria-label="Help">
-        <h5>Help</h5>
+      <nav aria-label="Customer service">
+        <h5>Customer service</h5>
         <ul>
-          <li>{% render 'ct-policy-link', policy: shop.shipping_policy, label: 'Shipping Policy', fallback_url: '/policies/shipping-policy' %}</li>
-          <li>{% render 'ct-policy-link', policy: shop.refund_policy, label: 'Returns & 30-Night Guarantee', fallback_url: '/policies/refund-policy' %}</li>
-          <li><a href="/pages/contact">Contact Us</a></li>
+          <li>{% render 'gs-policy-link', policy: shop.privacy_policy, label: 'Privacy policy', fallback_url: '/policies/privacy-policy' %}</li>
+          <li>{% render 'gs-policy-link', policy: shop.refund_policy, label: 'Returns & refunds', fallback_url: '/policies/refund-policy' %}</li>
+          <li>{% render 'gs-policy-link', policy: shop.shipping_policy, label: 'Shipping & delivery', fallback_url: '/policies/shipping-policy' %}</li>
+          <li><a href="/pages/order-tracking">Order tracking</a></li>
         </ul>
       </nav>
-
-      <nav class="ct-footer__col" aria-label="Legal">
-        <h5>Legal</h5>
+      <nav aria-label="Contact us">
+        <h5>Contact us</h5>
         <ul>
-          <li>{% render 'ct-policy-link', policy: shop.privacy_policy, label: 'Privacy Policy', fallback_url: '/policies/privacy-policy' %}</li>
-          <li>{% render 'ct-policy-link', policy: shop.terms_of_service, label: 'Terms of Service', fallback_url: '/policies/terms-of-service' %}</li>
-          <li>{% render 'ct-policy-link', policy: shop.refund_policy, label: 'Refund & Return Policy', fallback_url: '/policies/refund-policy' %}</li>
+          {%- if footer_email != blank -%}
+            <li><a href="mailto:{{ footer_email | escape }}">{{ footer_email | escape }}</a></li>
+          {%- endif -%}
+          {%- if footer_address != blank -%}
+            <li><a href="{{ footer_address_link }}">{{ footer_address | escape }}</a></li>
+          {%- endif -%}
         </ul>
       </nav>
     </div>
 
-    <div class="ct-footer__bottom">
-      <span class="ct-footer__copyright">
-        &copy; {{ 'now' | date: '%Y' }} CozyClaw<span class="ct-footer__tm">&#8482;</span>. All rights reserved.
-      </span>
+    <div class="gs-foot__region">
+      <span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})</span>
       {%- if shop.enabled_payment_types.size > 0 -%}
-        <ul class="ct-footer__pays list list-payment" role="list" aria-label="Accepted payment methods">
+        <ul class="list list-payment" role="list" aria-label="Accepted payment methods">
           {%- for type in shop.enabled_payment_types -%}
-            <li class="list-payment__item">
-              {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-            </li>
+            <li class="list-payment__item">{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
           {%- endfor -%}
         </ul>
+      {%- else -%}
+        <span class="gs-pay">VISA</span><span class="gs-pay">MC</span><span class="gs-pay">AMEX</span><span class="gs-pay">PAYPAL</span><span class="gs-pay">SHOP PAY</span>
       {%- endif -%}
     </div>
+    <p class="gs-foot__copy">&copy; {{ 'now' | date: '%Y' }} GardenStudio&trade;. All rights reserved.</p>
   </div>
 </footer>
 
 {% schema %}
 {
-  "name": "CT footer",
+  "name": "GS footer",
   "settings": [
     {
       "type": "image_picker",
-      "id": "footer_logo",
-      "label": "Footer logo"
+      "id": "logo",
+      "label": "Logo"
     },
     {
       "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 2,
+      "id": "logo_width",
+      "min": 80,
+      "max": 240,
+      "step": 10,
       "unit": "px",
-      "label": "Padding top",
-      "default": 54
+      "label": "Logo width",
+      "default": 170
     },
     {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 2,
-      "unit": "px",
-      "label": "Padding bottom",
-      "default": 30
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact email",
+      "default": "support@gardenstudio.site"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_address",
+      "label": "Contact address",
+      "default": "7450 Hunnicut Rd, Dallas, TX 75227, United States"
+    },
+    {
+      "type": "url",
+      "id": "contact_address_link",
+      "label": "Address link"
     }
   ]
 }

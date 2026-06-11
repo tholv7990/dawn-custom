@@ -1,0 +1,9 @@
+{%- liquid
+  assign modifier = ''
+  if inverse
+    assign modifier = ' gs-brandmark--inverse'
+  endif
+-%}
+<span class="gs-brandmark{{ modifier }}">
+  <span class="gs-brandmark__garden">Garden</span><span class="gs-brandmark__studio">Studio</span><sup>&trade;</sup>
+</span>

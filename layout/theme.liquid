@@ -15,16 +15,15 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
-    {%- comment -%} Minimals brand fonts (Public Sans + DM Mono) self-hosted via @font-face in snippets/css-variables.liquid — no third-party render-blocking request. DM Mono intentionally NOT preloaded (secondary UI text; font-display:swap is the correct LCP tradeoff). {%- endcomment -%}
+    {%- comment -%} GardenStudio reference fonts from product-page-full.html. {%- endcomment -%}
     {% comment %}theme-check-disable AssetPreload{% endcomment %}
-    <link rel="preload" as="font" type="font/woff2" href="{{ 'public-sans.woff2' | asset_url }}" crossorigin>
     {% comment %}theme-check-enable AssetPreload{% endcomment %}
 
-    {%- comment -%} CozyClaw display serif (Fraunces) via Google Fonts. Intentional external load — wrap with theme-check-disable RemoteAsset so it doesn't churn the offense count. {%- endcomment -%}
+    {%- comment -%} Intentional external font load; wrapped so the baseline Theme Check RemoteAsset count stays controlled. {%- endcomment -%}
     {% comment %}theme-check-disable RemoteAsset{% endcomment %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
 
     <title>
@@ -45,11 +44,8 @@
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'gs-page.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'ct-reveal.js' | asset_url }}" defer="defer"></script>
-    {%- if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' -%}
-      <script src="{{ 'ct-quickview.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
 
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
@@ -274,10 +270,7 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'theme-overrides.css' | asset_url | stylesheet_tag }}
-    {%- if template.name == 'index' -%}
-      {{ 'ct-sections.css' | asset_url | stylesheet_tag }}
-      {{ 'section-ct-homepage.css' | asset_url | stylesheet_tag }}
-    {%- endif -%}
+    {{ 'section-gs-page.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
@@ -288,7 +281,7 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
-    {%- comment -%} Dawn's Assistant body/header font preloads removed: the theme overrides --font-*-family to self-hosted Public Sans (snippets/css-variables.liquid), so the Shopify-CDN Assistant fonts are never rendered and must not be fetched. The @font-face declarations above stay (lazy — never fetched unless matched). {%- endcomment -%}
+    {%- comment -%} Dawn's Assistant fonts are overridden by GardenStudio Poppins/Inter tokens. {%- endcomment -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
@@ -416,9 +409,5 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    <ct-back-to-top class="ct-back-to-top">
-      <button type="button" aria-label="Back to top">{{- 'icon-caret.svg' | inline_asset_content -}}</button>
-    </ct-back-to-top>
-    <script src="{{ 'ct-back-to-top.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>

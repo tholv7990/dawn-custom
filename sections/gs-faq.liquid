@@ -1,0 +1,22 @@
+<section class="gs-scope gs-section gs-soft" id="faq">
+  <div class="gs-wrap">
+    <h2 class="gs-section-heading">{{ section.settings.heading }}</h2>
+    <p class="gs-section-sub">&nbsp;</p>
+    <div class="gs-faq">
+      {%- for block in section.blocks -%}
+        <details {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question }} <span class="gs-faq__plus">+</span></summary>
+          <div class="gs-faq__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "GS FAQ",
+  "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Questions, answered" }],
+  "blocks": [{ "type": "item", "name": "Item", "settings": [{ "type": "text", "id": "question", "label": "Question", "default": "Is it weather-resistant?" }, { "type": "textarea", "id": "answer", "label": "Answer", "default": "Yes - it's made from metal with a protective finish built to handle sun, rain and wind outdoors through the seasons." }] }],
+  "presets": [{ "name": "GS FAQ", "blocks": [{ "type": "item", "settings": { "question": "Is it weather-resistant?", "answer": "Yes - it's made from metal with a protective finish built to handle sun, rain and wind outdoors through the seasons." } }, { "type": "item", "settings": { "question": "How tall is the stake?", "answer": "About 24 inches (60 cm) above ground, so it sits nicely among flowers and garden plants." } }, { "type": "item", "settings": { "question": "How big is the flower bowl?", "answer": "Roughly 6 inches (15 cm) across and about 2 inches (5 cm) deep." } }, { "type": "item", "settings": { "question": "Can it hold water for birds and bees?", "answer": "Yes. The bowl catches rainwater or holds a small amount you pour in, so birds and pollinators can drink. A few pebbles in the bowl give bees a safe landing spot." } }, { "type": "item", "settings": { "question": "Is it easy to install?", "answer": "Very - just push the pointed stake into soil, a bed or a planter. No tools or assembly needed." } }] }]
+}
+{% endschema %}

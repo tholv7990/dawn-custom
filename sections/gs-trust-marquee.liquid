@@ -1,0 +1,56 @@
+<div class="gs-scope gs-trust-marquee">
+  <div class="gs-marquee-track" style="--gs-marquee-duration: {{ section.settings.speed }}s;">
+    {%- for repeat in (1..2) -%}
+      <div class="gs-marquee-set"{% if repeat > 1 %} aria-hidden="true"{% endif %}>
+      {%- for block in section.blocks -%}
+        <span{% if repeat == 1 %} {{ block.shopify_attributes }}{% endif %}>
+          {%- if block.settings.icon != blank -%}
+            <b aria-hidden="true">
+              {%- case block.settings.icon -%}
+                {%- when '&#10003;', '✓', 'check' -%}
+                  {{ 'icon-checkmark.svg' | inline_asset_content }}
+                {%- when '&#128666;', 'truck' -%}
+                  {{ 'icon-truck.svg' | inline_asset_content }}
+                {%- when '&#128737;', 'shield', 'lock' -%}
+                  {{ 'icon-padlock.svg' | inline_asset_content }}
+                {%- when '&#8634;', 'return' -%}
+                  {{ 'icon-return.svg' | inline_asset_content }}
+                {%- else -%}
+                  {{ block.settings.icon }}
+              {%- endcase -%}
+            </b>
+          {%- endif -%}
+          {{ block.settings.text }}
+        </span>
+      {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "GS trust marquee",
+  "settings": [{ "type": "range", "id": "speed", "label": "Speed", "min": 30, "max": 90, "step": 5, "default": 60 }],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon", "default": "&#10003;" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Loved by gardeners" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GS trust marquee",
+      "blocks": [
+        { "type": "message", "settings": { "icon": "&#10003;", "text": "Loved by gardeners" } },
+        { "type": "message", "settings": { "icon": "&#128666;", "text": "Free shipping over $40" } },
+        { "type": "message", "settings": { "icon": "&#128737;", "text": "Secure payment" } },
+        { "type": "message", "settings": { "icon": "&#8634;", "text": "30-day money-back" } }
+      ]
+    }
+  ]
+}{% endschema %}
+

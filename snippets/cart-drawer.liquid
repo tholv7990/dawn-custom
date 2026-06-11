@@ -7,8 +7,6 @@
 
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'ct-sections.css' | asset_url | stylesheet_tag }}
-{{ 'section-ct-cart.css' | asset_url | stylesheet_tag }}
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
@@ -77,58 +75,6 @@
           </span>
         </button>
       </div>
-      {%- if cart != empty -%}
-        {%- liquid
-          capture ct_free_shipping_threshold_raw
-            render 'ct-reward-threshold', key: 'free_shipping'
-          endcapture
-          capture ct_discount_threshold_raw
-            render 'ct-reward-threshold', key: 'discount'
-          endcapture
-          capture ct_reward_thresholds_configured_raw
-            render 'ct-reward-threshold', key: 'configured'
-          endcapture
-          assign ct_free_shipping_threshold = ct_free_shipping_threshold_raw | strip | plus: 0
-          assign ct_discount_threshold = ct_discount_threshold_raw | strip | plus: 0
-          assign ct_reward_thresholds_configured = ct_reward_thresholds_configured_raw | strip
-          assign ct_cart_subtotal = cart.items_subtotal_price
-          assign ct_free_shipping_progress = 0
-          if ct_reward_thresholds_configured == 'true'
-            assign ct_free_shipping_progress = ct_cart_subtotal | times: 100 | divided_by: ct_discount_threshold | at_most: 100
-          endif
-          assign ct_discount_remaining = ct_discount_threshold | minus: ct_cart_subtotal
-          assign ct_shipping_remaining = ct_free_shipping_threshold | minus: ct_cart_subtotal
-          if settings.currency_code_enabled
-            assign ct_free_shipping_threshold_money = ct_free_shipping_threshold | money_with_currency
-            assign ct_discount_remaining_money = ct_discount_remaining | money_with_currency
-            assign ct_shipping_remaining_money = ct_shipping_remaining | money_with_currency
-          else
-            assign ct_free_shipping_threshold_money = ct_free_shipping_threshold | money
-            assign ct_discount_remaining_money = ct_discount_remaining | money
-            assign ct_shipping_remaining_money = ct_shipping_remaining | money
-          endif
-        -%}
-        <div class="ct-cart__bar">
-          {%- if ct_reward_thresholds_configured != 'true' -%}
-            <p class="ct-cart__bar-text">Rewards calculated at checkout for your market.</p>
-          {%- elsif ct_cart_subtotal >= ct_discount_threshold -%}
-            <p class="ct-cart__bar-text ct-cart__bar-text--reached">15% off and free shipping unlocked.</p>
-          {%- elsif ct_cart_subtotal >= ct_free_shipping_threshold -%}
-            <p class="ct-cart__bar-text ct-cart__bar-text--reached">
-              Free shipping unlocked. Add {{ ct_discount_remaining_money }} to unlock 15% off.
-            </p>
-          {%- else -%}
-            <p class="ct-cart__bar-text">
-              Add {{ ct_shipping_remaining_money }} to unlock free shipping.
-            </p>
-          {%- endif -%}
-          {%- if ct_reward_thresholds_configured == 'true' -%}
-            <div class="ct-cart__bar-track">
-              <div class="ct-cart__bar-fill" style="width:{{ ct_free_shipping_progress }}%"></div>
-            </div>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
       <cart-drawer-items
         {% if cart == empty %}
           class=" is-empty"
@@ -548,41 +494,6 @@
         `cart-drawer-items.is-empty + .drawer__footer { display:none }`. Any element added
         here MUST be guarded by `if cart != empty` (as below) to preserve that.
       {%- endcomment -%}
-      {%- if cart != empty and settings.cart_drawer_collection != blank -%}
-        {%- assign ct_upsell_product = blank -%}
-        {%- for ct_p in settings.cart_drawer_collection.products -%}
-          {%- assign ct_in_cart = false -%}
-          {%- for ct_item in cart.items -%}
-            {%- if ct_item.product_id == ct_p.id -%}{%- assign ct_in_cart = true -%}{%- break -%}{%- endif -%}
-          {%- endfor -%}
-          {%- if ct_in_cart == false and ct_p.available -%}
-            {%- assign ct_upsell_product = ct_p -%}
-            {%- break -%}
-          {%- endif -%}
-        {%- endfor -%}
-        <div class="ct-cart__upsell" data-ct-upsell>
-          {%- if ct_upsell_product != blank -%}
-            {%- assign ct_upsell_variant = ct_upsell_product.selected_or_first_available_variant -%}
-            <div class="ct-cart__upsell-head">You might also like</div>
-            <div class="ct-cart__upsell-card">
-              {%- if ct_upsell_product.featured_image != blank -%}
-                <img class="ct-cart__upsell-img" src="{{ ct_upsell_product.featured_image | image_url: width: 120 }}" alt="{{ ct_upsell_product.featured_image.alt | escape }}" width="60" height="60" loading="lazy">
-              {%- endif -%}
-              <div class="ct-cart__upsell-info">
-                <div class="ct-cart__upsell-name">{{ ct_upsell_product.title | escape }}</div>
-                <div class="ct-cart__upsell-price">
-                  {%- if settings.currency_code_enabled -%}
-                    {{ ct_upsell_variant.price | money_with_currency }}
-                  {%- else -%}
-                    {{ ct_upsell_variant.price | money }}
-                  {%- endif -%}
-                </div>
-              </div>
-              {% render 'ct-add-to-cart', product: ct_upsell_product, variant: ct_upsell_variant, label: 'Add', btn_class: 'ct-btn ct-btn--soft ct-btn--sm', form_id: 'ct-upsell-form', section_id: 'cart-drawer-upsell', form_class: 'ct-cart__upsell-form' %}
-            </div>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
@@ -608,7 +519,24 @@
         <!-- Subtotals -->
 
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
-          {%- render 'ct-cart-summary', cart: cart, compact: true -%}
+          <div>
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                {%- for discount in cart.cart_level_discount_applications -%}
+                  <li class="discounts__discount discounts__discount--end">
+                    {{- 'icon-discount.svg' | inline_asset_content -}}
+                    {{ discount.title | escape }}
+                    (-{{ discount.total_allocated_amount | money }})
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+
+          <div class="totals" role="status">
+            <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
+            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+          </div>
 
           <small class="tax-note caption-large rte">
             {%- if cart.duties_included and cart.taxes_included -%}
@@ -652,18 +580,6 @@
         </div>
 
         <!-- CTAs -->
-
-        {%- if cart != empty -%}
-          <div class="ct-cart__trust">
-            <span>Secure checkout</span>
-            {%- if ct_reward_thresholds_configured == 'true' -%}
-              <span>Free shipping at {{ ct_free_shipping_threshold_money }}+</span>
-            {%- else -%}
-              <span>Rewards calculated at checkout</span>
-            {%- endif -%}
-            <span>90-day returns</span>
-          </div>
-        {%- endif -%}
 
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <button

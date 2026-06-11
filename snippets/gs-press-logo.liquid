@@ -1,0 +1,48 @@
+{%- liquid
+  assign logo = logo | default: 'text'
+  assign label = label | default: 'Brand logo'
+-%}
+
+{%- case logo -%}
+  {%- when 'gma' -%}
+    <svg class="gs-press-logo gs-press-logo--gma" viewBox="0 0 180 70" role="img" aria-label="{{ label | escape }}">
+      <text x="90" y="22" text-anchor="middle">GOOD</text>
+      <text x="90" y="42" text-anchor="middle">MORNING</text>
+      <text x="90" y="62" text-anchor="middle">AMERICA</text>
+    </svg>
+  {%- when 'shape' -%}
+    <svg class="gs-press-logo gs-press-logo--shape" viewBox="0 0 180 70" role="img" aria-label="{{ label | escape }}">
+      <text x="90" y="49" text-anchor="middle">SHAPE</text>
+    </svg>
+  {%- when 'wired' -%}
+    <svg class="gs-press-logo gs-press-logo--wired" viewBox="0 0 240 70" role="img" aria-label="{{ label | escape }}">
+      <rect x="14" y="13" width="42" height="44"></rect>
+      <rect x="63" y="13" width="26" height="44"></rect>
+      <rect x="96" y="13" width="42" height="44"></rect>
+      <rect x="145" y="13" width="42" height="44"></rect>
+      <rect x="194" y="13" width="32" height="44"></rect>
+      <text x="35" y="47" text-anchor="middle">W</text>
+      <text x="76" y="47" text-anchor="middle">I</text>
+      <text x="117" y="47" text-anchor="middle">R</text>
+      <text x="166" y="47" text-anchor="middle">E</text>
+      <text x="210" y="47" text-anchor="middle">D</text>
+    </svg>
+  {%- when 'bbc' -%}
+    <svg class="gs-press-logo gs-press-logo--bbc" viewBox="0 0 190 70" role="img" aria-label="{{ label | escape }}">
+      <rect x="18" y="15" width="45" height="42"></rect>
+      <rect x="72" y="15" width="45" height="42"></rect>
+      <rect x="126" y="15" width="45" height="42"></rect>
+      <text x="40.5" y="48" text-anchor="middle">B</text>
+      <text x="94.5" y="48" text-anchor="middle">B</text>
+      <text x="148.5" y="48" text-anchor="middle">C</text>
+    </svg>
+  {%- when 'usatoday' -%}
+    <svg class="gs-press-logo gs-press-logo--usatoday" viewBox="0 0 190 70" role="img" aria-label="{{ label | escape }}">
+      <circle cx="39" cy="27" r="14"></circle>
+      <path d="M16 17h45M12 22h50M10 27h52M12 32h50M17 37h42"></path>
+      <text x="108" y="31" text-anchor="middle">USA</text>
+      <text x="108" y="55" text-anchor="middle">TODAY</text>
+    </svg>
+  {%- else -%}
+    <span>{{ label }}</span>
+{%- endcase -%}

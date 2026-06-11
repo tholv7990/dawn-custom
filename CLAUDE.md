@@ -14,6 +14,12 @@ around the homepage rebuild, PDP galleries, cart rewards bar, signup popup,
 footer, structured data, encoding issues, Theme Check baseline, and zip
 packaging. Treat it as the working memory for this project.
 
+Before investigating or fixing any bug, especially when the user says
+"fixing bug", "fix bug", "bug", "not running", or shows a broken UI screenshot,
+read `.codex/skills/shopify-liquid-theme-bugfix/SKILL.md` first. Treat its
+pre-fix checklist, render-path mapping, root-cause discipline, validation
+matrix, and response template as mandatory for Shopify Liquid bugfix work.
+
 ## Design rule — follow the reference 100%, never add extras
 
 The CozyClaw design files in `files/` are the **single source of visual truth**:
@@ -33,6 +39,22 @@ The CozyClaw design files in `files/` are the **single source of visual truth**:
 
 Past failure that drove this rule: an earlier session built the homepage as a Minimals-style merchandising layout (best-sellers + stats + compare + BA + FAQ + email) that bore no resemblance to the CozyClaw landing reference — and the brand-swap was incomplete because the `settings_schema.json` `color_accent` default still said `#00A76F` (Minimals green) while `css-variables.liquid` carried a `| default: '#6D3FC4'` filter that never fired. The whole storefront rendered green CTAs over a lavender canvas. Don't repeat either mistake.
 
+## New design port preflight
+
+Before converting any new HTML design into Liquid, read the "New Design Port
+Failure Modes" section in `docs/cozyclaw-implementation-memory.md`. The repeated
+bugs are: stale JSON/customizer state rendering old sections, duplicate section
+types forcing renames, Dawn or previous-design CSS winning the cascade,
+Shopify's `#shopify-section-*` wrappers breaking standalone selectors, missing
+schema defaults causing blank content, unscoped JS failing in the theme editor,
+cropped media slots, fabricated demo content leaking into production, and
+mojibake from copied reference text.
+
+Treat those as implementation blockers, not cleanup notes. Update template JSON,
+section schema defaults, `settings_schema.json`, and `settings_data.json`
+together when a design changes. Scope CSS/JS to the section or design root, and
+bind commerce data from Shopify objects instead of JSON strings.
+
 ## Commands
 
 All development goes through the [Shopify CLI](https://shopify.dev/docs/themes/tools/cli) (run from the theme root):
@@ -45,6 +67,8 @@ shopify theme pull      # download theme from a store
 ```
 
 There is no unit-test suite. CI (`.github/workflows/ci.yml`) runs **Theme Check** and **Lighthouse** (performance budgets) on every push — match those locally before pushing. Theme Check config lives in `.theme-check.yml` (`MatchingTranslations` and `TemplateLength` are intentionally disabled).
+
+**Theme zip packaging.** On Windows, do **not** use `Compress-Archive` for the final Shopify upload zip; it can write backslash entry paths such as `layout\theme.liquid`, which Shopify rejects as "missing template layout/theme.liquid". Build the archive with explicit forward-slash relative entry names and verify the raw entry list contains `layout/theme.liquid` exactly and contains no `\` path separators before handing off the zip.
 
 Formatting is Prettier (`.prettierrc.json`): `printWidth: 120`, single quotes in JS, **double quotes in `.liquid`**. Liquid files are formatted/linted by the Shopify Theme Check VS Code extension on save; JS by Prettier on save.
 

@@ -1,0 +1,51 @@
+<section class="gs-scope gs-section" id="video">
+  <div class="gs-wrap">
+    <h2 class="gs-section-heading">{{ section.settings.heading }}</h2>
+    <div class="gs-video-grid" data-gs-carousel="videos">
+      {%- for block in section.blocks -%}
+        {%- assign has_video = false -%}
+        {%- assign media_ratio = '9 / 16' -%}
+        {%- if block.settings.video != blank -%}
+          {%- assign has_video = true -%}
+          {%- if block.settings.video.aspect_ratio != blank -%}
+            {%- assign media_ratio = block.settings.video.aspect_ratio -%}
+          {%- endif -%}
+        {%- elsif block.settings.poster != blank and block.settings.poster.aspect_ratio != blank -%}
+          {%- assign media_ratio = block.settings.poster.aspect_ratio -%}
+        {%- endif -%}
+        <div
+          class="gs-video-card{% if has_video %} gs-video-card--has-video{% endif %}"
+          style="aspect-ratio: {{ media_ratio }}"
+          data-gs-slide
+          {{ block.shopify_attributes }}
+        >
+          {% render 'gs-media-slot', image: block.settings.poster, video: block.settings.video, label: 'Video', ratio: media_ratio %}
+          {%- unless has_video -%}
+            <span class="gs-play" aria-hidden="true"><b>&#9654;</b></span>
+          {%- endunless -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="gs-dots" data-gs-dots="videos"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GS video gallery",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Loved by gardeners everywhere" }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video" },
+        { "type": "image_picker", "id": "poster", "label": "Poster image fallback" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "GS video gallery", "blocks": [{ "type": "video" }, { "type": "video" }, { "type": "video" }] }]
+}
+{% endschema %}

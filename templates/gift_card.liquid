@@ -129,7 +129,11 @@
 
     <main>
       <div class="gift-card__image-wrapper">
-        {% render 'ct-logo', class: 'gift-card__image', width: 570, sizes: '570px', loading: 'eager' %}
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 570 | image_tag: class: 'gift-card__image', sizes: '570px', loading: 'eager', alt: shop.name }}
+        {%- else -%}
+          <span class="h1">{{ shop.name }}</span>
+        {%- endif -%}
       </div>
       <h2>{{ shop.name }}</h2>
       <div class="gift-card__text-wrapper">

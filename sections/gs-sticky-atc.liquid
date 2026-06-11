@@ -1,0 +1,55 @@
+{%- liquid
+  assign gs_product = product
+  if gs_product == blank
+    assign gs_product = section.settings.product
+  endif
+  assign selected_variant = gs_product.selected_or_first_available_variant
+-%}
+<div class="gs-scope" data-gs-sticky-root>
+  <div class="gs-sticky" data-gs-sticky>
+    <div class="gs-wrap gs-sticky__wrap">
+      {% render 'gs-media-slot', image: gs_product.featured_image, class: 'gs-sticky__img', label: 'Product', ratio: '1 / 1' %}
+      <div class="gs-sticky__meta">
+        <div class="gs-sticky__name">{% if gs_product != blank %}{{ gs_product.title | escape }}{% else %}Select a product{% endif %}</div>
+        {%- if gs_product != blank -%}
+          <span class="gs-sticky__price">{{ selected_variant.price | money }}</span>
+        {%- endif -%}
+      </div>
+      {%- if gs_product != blank -%}
+        <product-form class="product-form{% if gs_product.has_only_default_variant %} gs-sticky__form--single{% endif %}" data-hide-errors="true" data-section-id="{{ section.id }}" data-gs-product-form>
+          {%- assign gs_sticky_form_id = 'gs-sticky-form-' | append: section.id -%}
+          {%- form 'product', gs_product, id: gs_sticky_form_id, class: 'form' -%}
+            {%- if gs_product.has_only_default_variant -%}
+              <input type="hidden" name="id" value="{{ selected_variant.id }}" class="product-variant-id">
+            {%- else -%}
+              <label class="visually-hidden" for="GS-Sticky-Variant-{{ section.id }}">Choose variant</label>
+              <select id="GS-Sticky-Variant-{{ section.id }}" name="id" class="gs-sticky__variant product-variant-id" data-gs-sticky-variant>
+                {%- for variant in gs_product.variants -%}
+                  <option
+                    value="{{ variant.id }}"
+                    data-price="{{ variant.price | money }}"
+                    {% if variant.id == selected_variant.id %}selected{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                  >
+                    {{ variant.title }}{% unless variant.available %} - {{ 'products.product.sold_out' | t }}{% endunless %}
+                  </option>
+                {%- endfor -%}
+              </select>
+            {%- endif -%}
+            <button type="submit" name="add" class="gs-atc"{% unless selected_variant.available %} disabled{% endunless %}><span>Add to cart</span>{% render 'loading-spinner' %}</button>
+          {%- endform -%}
+        </product-form>
+      {%- else -%}
+        <button class="gs-atc" type="button" disabled>Select a product</button>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="gs-toast" data-gs-toast>Added to cart &#10003;</div>
+</div>
+{% schema %}
+{
+  "name": "GS sticky add to cart",
+  "settings": [{ "type": "product", "id": "product", "label": "Homepage product fallback" }],
+  "presets": [{ "name": "GS sticky add to cart" }]
+}
+{% endschema %}

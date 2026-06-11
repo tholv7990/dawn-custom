@@ -20,6 +20,76 @@ Primary references:
 Use `--ct-*` tokens from `snippets/css-variables.liquid`. Avoid one-off local
 CSS values unless the token does not exist and a new token is genuinely needed.
 
+## New Design Port Failure Modes
+
+When converting a fresh HTML design into Liquid, assume the preview is the sum of
+section code, JSON template state, saved global settings, merchant customizer
+state, Dawn's wrappers, and Dawn's CSS/JS. The bugs below have repeated enough
+that they are now preflight checks.
+
+- **Old or wrong sections render:** template JSON still references old section
+  IDs/types, or live customizer state was saved over the code. Rewrite the
+  relevant `templates/*.json` `sections` and `order` arrays to match the
+  reference top-to-bottom. If home and product are meant to match, update both in
+  the same change and keep the same ordered section types/settings.
+- **A new design "only works after renaming sections":** two section files or
+  JSON instances are doing the same visual job. Use one stable section type per
+  visual block. Do not leave duplicate legacy section types in the active
+  template. Prefer additive `layout`/`style` variants only when the section is
+  intentionally shared and the default branch remains unchanged.
+- **The page looks like Dawn or a previous design:** inherited base CSS, old
+  section CSS, stale global color settings, or generic selectors are winning.
+  Scope new design CSS under a section/root class, load section CSS from the
+  section that needs it, and keep `config/settings_schema.json` defaults in sync
+  with `config/settings_data.json`. Do not rely on Liquid `default` filters for
+  stale schema defaults.
+- **Full-width bands or spacing break after porting HTML:** Shopify injects a
+  `#shopify-section-*` wrapper around every section, so selectors like
+  `body > section`, `section + section`, and `:first-child` from standalone HTML
+  are fragile. Re-establish full-bleed backgrounds, padding, and borders inside
+  each section wrapper.
+- **Fresh install renders blank/lorem/old copy:** schema defaults and shipped
+  JSON were not both fully populated. Every setting default should match the
+  reference, and every intended value should also be written into the JSON
+  template. Product data is the exception: price, compare-at price, availability,
+  title, images, variants, and rating bind from `product`.
+- **Interactions work in static HTML but not in Shopify/editor:** JS queries the
+  whole document, binds IDs that duplicate across sections, or does not re-init
+  after `shopify:section:load`. Scope queries to the section root, guard custom
+  elements with `customElements.get`, and unsubscribe pub/sub listeners in
+  `disconnectedCallback`.
+- **Ticker/announcement bars drift from the HTML:** do not let Liquid repeat
+  messages four times and then let JS clone them again. For reference-style
+  scrolling announcement bars, render two identical server-side sets and animate
+  the track with CSS. Keep saved `sections/header-group.json` icon/text values
+  in sync with the section defaults.
+- **Images crop or resize cards unexpectedly:** standalone demo slots often hide
+  this. Reuse shared media/gallery snippets where possible and keep product,
+  feature, review, video, and related-product media in fixed-ratio slots with
+  `object-fit: contain` unless the reference explicitly requires cover.
+- **Demo content leaks into production:** never ship fabricated reviews,
+  ratings, sales counts, stats, press logos, fake timers, fake thresholds, or
+  placeholder money as live product data. Placeholder review blocks are allowed
+  only when visibly bracketed/empty and not emitted as structured data.
+- **Template JSON keeps fake commerce data alive:** after removing hardcoded
+  money or product strings from a section schema, also remove the saved values
+  from active JSON templates. For GardenStudio/CozyClaw product surfaces,
+  bundle tier prices, compare-at prices, save labels, product title, product
+  media, availability, selected variant, sticky ATC price, related-product
+  prices, and review ratings must come from Shopify product/metafield data or
+  render as an empty/configure state. Never leave fallback `$...` values in
+  template JSON.
+- **Encoding damage becomes visible:** normalize copied reference text before it
+  enters Liquid/JSON. Use entities such as `&trade;`, `&mdash;`, `&ndash;`,
+  `&starf;`, `&#10003;`, and `&#10005;` where that is safer than storing fragile
+  symbols in JSON settings.
+- **Shopify rejects the theme zip as missing `layout/theme.liquid`:** Windows
+  `Compress-Archive` can store entries with backslashes (`layout\theme.liquid`),
+  which looks correct after local normalization but is not a valid Shopify theme
+  archive. Build release zips entry-by-entry with forward-slash relative paths,
+  then verify the raw archive entry list contains `layout/theme.liquid` exactly
+  and no entry contains `\`.
+
 Recent token additions that should be reused:
 
 - Product layout:
@@ -46,9 +116,11 @@ Recent token additions that should be reused:
   `2 errors`. Do not let the count rise.
 - Use:
   `shopify.cmd theme check 2>&1 | Select-String "offenses","errors"`
-- Rebuild `Dawn-Codex-15.4.1.zip` after user-facing theme changes.
+- Rebuild `gardenstudio-codex-v1.zip` after user-facing theme changes.
 - The zip must contain theme root folders directly, especially
   `layout/theme.liquid`. Do not zip the parent folder.
+- Verify the raw zip entries use forward slashes, not Windows backslashes:
+  `layout/theme.liquid` must exist exactly, and no entry should contain `\`.
 - Zip only Shopify theme folders: `assets`, `config`, `layout`, `locales`,
   `sections`, `snippets`, `templates`.
 
@@ -239,6 +311,10 @@ Current behavior requirements:
 - Popup must support swipe on mobile and arrow/keyboard navigation on desktop.
 - Popup backdrop should be opaque enough that the underlying page/gallery does
   not show through as a duplicate/weird background.
+- Lightbox dialogs should not add a white fixed-width canvas behind
+  `object-fit: contain` images. Use a transparent dialog/stage and put any
+  shadow/radius on the image itself, otherwise portrait product images show
+  strange pale side bars.
 - Main PDP, non-bundle PDP, and landing/homepage should share the same gallery
   component instead of three independent implementations.
 - For main PDP product media, full-size image data must exist even when

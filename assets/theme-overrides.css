@@ -64,11 +64,11 @@ h3, .h3 { font-size: var(--ct-text-lg); font-weight: var(--ct-fw-semi); }
   background: transparent;
 }
 
-/* ---- CozyClaw wordmark in header (when no logo image uploaded) ---- */
+/* ---- Legacy wordmark fallback styles (when no logo image uploaded) ---- */
 .ct-brand{font-family:var(--ct-font-display);font-weight:700;letter-spacing:-.01em;color:var(--ct-text)}
 .ct-brand__paw{color:var(--ct-accent-text)}
 
-/* ---- Global CozyClaw header: cream blurred bar from homepage reference ---- */
+/* ---- Global header glass bar ---- */
 .shopify-section-header-sticky .header-wrapper,
 .header-wrapper {
   background: color-mix(in srgb, var(--ct-bg) 92%, transparent);

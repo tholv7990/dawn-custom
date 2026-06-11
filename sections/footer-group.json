@@ -5,18 +5,12 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "padding_top": 54,
-        "padding_bottom": 30
-      }
-    },
-    "ct_signup_popup": {
-      "type": "ct-signup-popup",
-      "settings": {
-        "enable": true,
-        "delay_seconds": 5,
-        "frequency_days": 1
+        "logo_width": 170,
+        "contact_email": "support@gardenstudio.site",
+        "contact_address": "7450 Hunnicut Rd, Dallas, TX 75227, United States",
+        "contact_address_link": "/pages/contact"
       }
     }
   },
-  "order": ["footer", "ct_signup_popup"]
+  "order": ["footer"]
 }
