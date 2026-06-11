@@ -31,9 +31,9 @@
                                                                           "type":  "tier",
                                                                           "settings":  {
                                                                                            "title":  "Buy 2",
-                                                                                           "pill":  "Bundle",
+                                                                                           "pill":  "Discount 20%",
                                                                                            "subtitle":  "Frame both sides of a path or patio",
-                                                                                           "badge":  "&#128293; Most Popular &#128293;",
+                                                                                           "badge":  "&#128293; MOST POPULAR &#128293;",
                                                                                            "quantity":  2
                                                                                        }
                                                                       },
@@ -41,9 +41,9 @@
                                                                           "type":  "tier",
                                                                           "settings":  {
                                                                                            "title":  "Buy 3",
-                                                                                           "pill":  "Bundle",
+                                                                                           "pill":  "Discount 25%",
                                                                                            "subtitle":  "Build a colorful garden cluster",
-                                                                                           "badge":  "&#9889; Flash Sale &#9889;",
+                                                                                           "badge":  "&#9889; FLASH SALE &#9889;",
                                                                                            "quantity":  3
                                                                                        }
                                                                       },
@@ -51,9 +51,9 @@
                                                                           "type":  "tier",
                                                                           "settings":  {
                                                                                            "title":  "Buy 4",
-                                                                                           "pill":  "Bundle",
+                                                                                           "pill":  "Discount 30% - VIP Free Shipping",
                                                                                            "subtitle":  "Gift-ready set for gardeners",
-                                                                                           "badge":  "&#127873; Best Value Offer &#127873;",
+                                                                                           "badge":  "&#127873; BEST VALUE OFFER &#127873;",
                                                                                            "quantity":  4
                                                                                        }
                                                                       }

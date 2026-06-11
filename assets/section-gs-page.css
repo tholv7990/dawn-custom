@@ -860,6 +860,16 @@
   white-space: nowrap;
 }
 
+.gs-secure-pill .gs-inline-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .gs-price-row {
   display: flex;
   align-items: center;
@@ -967,11 +977,13 @@
 
 .gs-tier__pill {
   font-size: 10.5px;
+  line-height: 1.15;
   font-weight: 800;
   color: var(--gs-green);
   border: 1px solid var(--gs-green);
   border-radius: 999px;
   padding: 2px 8px;
+  white-space: nowrap;
 }
 
 .gs-tier__save {
@@ -1002,7 +1014,7 @@
 
 .gs-tier__badge {
   position: absolute;
-  top: -11px;
+  top: -13px;
   right: 12px;
   display: inline-flex;
   align-items: center;
@@ -1010,11 +1022,11 @@
   background: var(--gs-green);
   color: var(--gs-white);
   max-width: calc(100% - 24px);
-  min-height: 23px;
-  font-size: clamp(10px, 2.4vw, 11px);
+  min-height: 27px;
+  font-size: clamp(12px, 2.4vw, 14px);
   line-height: 1;
   font-weight: 800;
-  padding: 4px 11px;
+  padding: 6px 13px;
   border-radius: 7px;
   white-space: nowrap;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.16);
@@ -2436,11 +2448,11 @@
   }
 
   .gs-tier__badge {
-    top: -10px;
+    top: -12px;
     right: 8px;
     max-width: calc(100% - 52px);
-    padding-inline: 8px;
-    font-size: 10px;
+    padding-inline: 10px;
+    font-size: 11px;
   }
 
   .gs-email-signup__inner {
