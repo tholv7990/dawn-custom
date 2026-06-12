@@ -1,3 +1,5 @@
+{%- assign support_email = section.settings.support_email | strip -%}
+
 <section class="gs-scope gs-section gs-soft" data-gs-info id="specifications">
   <div class="gs-wrap">
     <div class="gs-tabs">
@@ -9,9 +11,9 @@
       </div>
 
       <div class="gs-panel is-active is-open" data-gs-panel="0">
-        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Specifications <span>⌄</span></button>
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Specifications <span>&#8964;</span></button>
         <div class="gs-panel__body">
-          <p class="gs-section-sub" style="text-align:left;margin:0 0 14px;max-width:none">Complete product details for your GardenStudio&trade; garden stake.</p>
+          <p class="gs-section-sub" style="text-align:left;margin:0 0 14px;max-width:none">Complete product details for your Pollinook&trade; garden stake.</p>
           <table class="gs-spec-table">
             <tbody>
               {%- for block in section.blocks -%}
@@ -35,7 +37,7 @@
       </div>
 
       <div class="gs-panel" data-gs-panel="1">
-        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Protection Package <span>⌄</span></button>
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Protection Package <span>&#8964;</span></button>
         <div class="gs-panel__body">
           <div class="gs-protection">
             <div><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg> Secure payment</div>
@@ -49,7 +51,7 @@
       </div>
 
       <div class="gs-panel" data-gs-panel="2">
-        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Why Buy From Us <span>⌄</span></button>
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Why Buy From Us <span>&#8964;</span></button>
         <div class="gs-panel__body">
           <ul class="gs-bullet-list">
             <li><b>Worry-free purchase</b> &mdash; our 100% guarantee.</li>
@@ -62,7 +64,7 @@
       </div>
 
       <div class="gs-panel" data-gs-panel="3">
-        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Shipping &amp; Returns <span>⌄</span></button>
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Shipping &amp; Returns <span>&#8964;</span></button>
         <div class="gs-panel__body">
           <b>Shipping</b>
           <ul class="gs-bullet-list" style="margin-top:6px">
@@ -74,7 +76,9 @@
           <ul class="gs-bullet-list" style="margin-top:6px">
             <li>30-day return window.</li>
             <li>Item unused &amp; in original packaging.</li>
-            <li>Email support@gardenstudio.site to request a return.</li>
+            {%- if support_email != blank -%}
+              <li>Email {{ support_email | escape }} to request a return.</li>
+            {%- endif -%}
           </ul>
           <b style="display:block;margin-top:12px">Warranty</b>
           <ul class="gs-bullet-list" style="margin-top:6px">
@@ -91,6 +95,14 @@
 {% schema %}
 {
   "name": "GS product info",
+  "settings": [
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support email",
+      "default": "support@pollinook.site"
+    }
+  ],
   "blocks": [
     {
       "type": "spec",

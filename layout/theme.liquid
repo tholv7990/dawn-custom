@@ -15,7 +15,7 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
-    {%- comment -%} GardenStudio reference fonts from product-page-full.html. {%- endcomment -%}
+    {%- comment -%} Pollinook reference fonts from product-page-full.html. {%- endcomment -%}
     {% comment %}theme-check-disable AssetPreload{% endcomment %}
     {% comment %}theme-check-enable AssetPreload{% endcomment %}
 
@@ -281,7 +281,7 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
-    {%- comment -%} Dawn's Assistant fonts are overridden by GardenStudio Poppins/Inter tokens. {%- endcomment -%}
+    {%- comment -%} Dawn's Assistant fonts are overridden by Pollinook Poppins/Inter tokens. {%- endcomment -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}

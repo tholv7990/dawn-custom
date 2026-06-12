@@ -1,13 +1,14 @@
 {{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
 
 {%- assign footer_email = section.settings.contact_email | strip -%}
+{%- assign footer_phone = section.settings.contact_phone | strip -%}
 {%- assign footer_address = section.settings.contact_address | strip -%}
 {%- assign footer_address_link = section.settings.contact_address_link | default: '/pages/contact' -%}
 {%- assign footer_logo = section.settings.logo | default: settings.logo -%}
 {%- assign footer_logo_width = section.settings.logo_width | default: settings.logo_width | default: 170 -%}
 {%- assign footer_logo_sizes = footer_logo_width | append: 'px' -%}
 {%- assign footer_logo_style = 'width: ' | append: footer_logo_width | append: 'px' -%}
-{%- assign footer_logo_alt = shop.name | default: 'GardenStudio' | escape -%}
+{%- assign footer_logo_alt = shop.name | default: 'Pollinook' | escape -%}
 
 <footer class="gs-scope gs-foot" role="contentinfo">
   <div class="gs-wrap">
@@ -25,9 +26,11 @@
                 alt: footer_logo_alt,
                 style: footer_logo_style
             }}
+          {%- else -%}
+            <span class="gs-logo__text">Pollinook<sup>&trade;</sup></span>
           {%- endif -%}
         </a>
-        <p class="gs-foot__blurb">Handcrafted garden accents that bring color, birds and life to any outdoor space.</p>
+        <p class="gs-foot__blurb">Pollinator + nook, garden accents that bring color, birds and life to any outdoor space.</p>
       </div>
       <nav aria-label="Info">
         <h5>Info</h5>
@@ -53,6 +56,9 @@
           {%- if footer_email != blank -%}
             <li><a href="mailto:{{ footer_email | escape }}">{{ footer_email | escape }}</a></li>
           {%- endif -%}
+          {%- if footer_phone != blank -%}
+            <li><a href="tel:{{ footer_phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | escape }}">{{ footer_phone | escape }}</a></li>
+          {%- endif -%}
           {%- if footer_address != blank -%}
             <li><a href="{{ footer_address_link }}">{{ footer_address | escape }}</a></li>
           {%- endif -%}
@@ -72,7 +78,7 @@
         <span class="gs-pay">VISA</span><span class="gs-pay">MC</span><span class="gs-pay">AMEX</span><span class="gs-pay">PAYPAL</span><span class="gs-pay">SHOP PAY</span>
       {%- endif -%}
     </div>
-    <p class="gs-foot__copy">&copy; {{ 'now' | date: '%Y' }} GardenStudio&trade;. All rights reserved.</p>
+    <p class="gs-foot__copy">&copy; {{ 'now' | date: '%Y' }} Pollinook&trade;. All rights reserved.</p>
   </div>
 </footer>
 
@@ -99,7 +105,13 @@
       "type": "text",
       "id": "contact_email",
       "label": "Contact email",
-      "default": "support@gardenstudio.site"
+      "default": "support@pollinook.site"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Contact phone",
+      "default": "(214) 555-5937"
     },
     {
       "type": "textarea",

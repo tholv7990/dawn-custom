@@ -310,6 +310,21 @@
   object-fit: contain;
 }
 
+.gs-logo__text {
+  color: var(--gs-ink);
+  font-family: var(--ct-font-heading);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.gs-logo__text sup {
+  color: var(--gs-green);
+  font-size: 0.5em;
+  margin-left: 2px;
+  vertical-align: super;
+}
+
 .gs-head__nav {
   display: flex;
   align-items: center;

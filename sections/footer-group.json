@@ -6,7 +6,8 @@
       "type": "footer",
       "settings": {
         "logo_width": 170,
-        "contact_email": "support@gardenstudio.site",
+        "contact_email": "support@pollinook.site",
+        "contact_phone": "(214) 555-5937",
         "contact_address": "7450 Hunnicut Rd, Dallas, TX 75227, United States",
         "contact_address_link": "/pages/contact"
       }

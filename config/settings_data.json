@@ -3,8 +3,8 @@
   "presets": {
     "Default": {
       "logo_width": 90,
-      "color_accent": "#1e7d34",
-      "color_accent_hover": "#176a2b",
+      "color_accent": "#E0A92E",
+      "color_accent_hover": "#3F5743",
       "border_radius": 12,
       "ct_reward_thresholds_by_currency": "USD:5000,10000",
       "ct_free_shipping_threshold_cents": "5000",
@@ -15,9 +15,9 @@
             "background": "#FFFFFF",
             "background_gradient": "",
             "text": "#16181D",
-            "button": "#1E7D34",
+            "button": "#E0A92E",
             "button_label": "#FFFFFF",
-            "secondary_button_label": "#176A2B",
+            "secondary_button_label": "#3F5743",
             "shadow": "#16181D"
           }
         },

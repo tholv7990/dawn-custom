@@ -1,6 +1,6 @@
 {%- comment -%}
   Keep Dawn header utility snippets referenced for Theme Check while the active
-  GardenStudio header uses a minimal reference layout.
+  Pollinook header uses a minimal reference layout.
 {%- endcomment -%}
 {%- if false -%}
   {% render 'header-drawer' %}
@@ -12,7 +12,7 @@
 {%- assign header_logo_width = section.settings.logo_width | default: settings.logo_width | default: 180 -%}
 {%- assign header_logo_sizes = header_logo_width | append: 'px' -%}
 {%- assign header_logo_style = 'width: ' | append: header_logo_width | append: 'px' -%}
-{%- assign header_logo_alt = shop.name | default: 'GardenStudio' | escape -%}
+{%- assign header_logo_alt = shop.name | default: 'Pollinook' | escape -%}
 
 <header class="gs-scope gs-head" role="banner">
   <div class="gs-wrap gs-head__wrap">
@@ -32,6 +32,8 @@
             alt: header_logo_alt,
             style: header_logo_style
         }}
+      {%- else -%}
+        <span class="gs-logo__text">Pollinook<sup>&trade;</sup></span>
       {%- endif -%}
     </a>
     <nav class="gs-head__links" aria-label="Page navigation">
@@ -77,6 +79,8 @@
                 alt: header_logo_alt,
                 style: header_logo_style
             }}
+          {%- else -%}
+            <span class="gs-logo__text">Pollinook<sup>&trade;</sup></span>
           {%- endif -%}
         </a>
         <button type="button" class="gs-mobile-menu__close" data-gs-menu-close aria-label="Close menu">&times;</button>
@@ -115,7 +119,7 @@
     },
     {
       "type": "paragraph",
-      "content": "GardenStudio reference header. Logo, search, account and cart are bound to Shopify routes."
+      "content": "Pollinook reference header. Logo, search, account and cart are bound to Shopify routes."
     }
   ]
 }

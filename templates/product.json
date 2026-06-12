@@ -5,7 +5,7 @@
                                             "settings":  {
                                                              "product":  "metal-flower-garden-stake",
                                                              "gallery_badge":  "SAVE TODAY",
-                                                             "title":  "GardenStudio product",
+                                                             "title":  "Pollinook product",
                                                              "value_title":  "Great Value Package",
                                                              "value_subtitle":  "Fast 7-day U.S. shipping",
                                                              "origin_label":  "SHIPS FROM",
@@ -251,9 +251,9 @@
                                                                  "spec_14",
                                                                  "spec_15"
                                                              ],
-                                             "settings":  {
-
-                                                          }
+                                            "settings":  {
+                                                             "support_email":  "support@pollinook.site"
+                                                         }
                                          },
                      "gs_brand_strip":  {
                                             "type":  "gs-brand-strip",
