@@ -302,7 +302,7 @@
                                                                 "brand_5"
                                                             ],
                                             "settings":  {
-                                                             "speed":  60
+                                                             "speed":  30
                                                          }
                                         },
                      "gs_reviews":  {
@@ -551,7 +551,7 @@
                                                                   "trust_4"
                                                               ],
                                               "settings":  {
-                                                               "speed":  60
+                                                               "speed":  30
                                                            }
                                           },
                      "gs_video_gallery":  {

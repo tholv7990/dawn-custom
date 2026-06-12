@@ -4,6 +4,10 @@
     assign gs_product = section.settings.product
   endif
   assign selected_variant = gs_product.selected_or_first_available_variant
+  assign selected_save_percent = 0
+  if selected_variant != blank and selected_variant.compare_at_price > selected_variant.price
+    assign selected_save_percent = selected_variant.compare_at_price | minus: selected_variant.price | times: 100 | divided_by: selected_variant.compare_at_price
+  endif
 -%}
 <div class="gs-scope" data-gs-sticky-root>
   <div class="gs-sticky" data-gs-sticky>
@@ -12,7 +16,12 @@
       <div class="gs-sticky__meta">
         <div class="gs-sticky__name">{% if gs_product != blank %}{{ gs_product.title | escape }}{% else %}Select a product{% endif %}</div>
         {%- if gs_product != blank -%}
-          <span class="gs-sticky__price">{{ selected_variant.price | money }}</span>
+          <span class="gs-sticky__price-row">
+            <span class="gs-sticky__price">{{ selected_variant.price | money }}</span>
+            <span class="gs-sticky__save"{% if selected_save_percent <= 0 %} hidden{% endif %} data-gs-sticky-save>
+              SAVE {{ selected_save_percent }}%
+            </span>
+          </span>
         {%- endif -%}
       </div>
       {%- if gs_product != blank -%}
@@ -28,6 +37,7 @@
                   <option
                     value="{{ variant.id }}"
                     data-price="{{ variant.price | money }}"
+                    data-save="{% if variant.compare_at_price > variant.price %}SAVE {{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price }}%{% endif %}"
                     {% if variant.id == selected_variant.id %}selected{% endif %}
                     {% unless variant.available %}disabled{% endunless %}
                   >

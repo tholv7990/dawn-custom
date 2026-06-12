@@ -289,7 +289,12 @@
       select.addEventListener('change', function () {
         var option = select.options[select.selectedIndex];
         var price = bar.querySelector('.gs-sticky__price');
+        var save = bar.querySelector('[data-gs-sticky-save]');
         if (option && price && option.dataset.price) price.textContent = option.dataset.price;
+        if (option && save) {
+          save.textContent = option.dataset.save || '';
+          save.hidden = !option.dataset.save;
+        }
       });
     });
     window.addEventListener(

@@ -1,29 +1,33 @@
 <div class="gs-scope">
   <div class="gs-announce gs-announce--top">
     <div class="gs-announce__track">
-      {%- for repeat in (1..2) -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'top_message' -%}
-            <span{% if repeat == 1 %} {{ block.shopify_attributes }}{% else %} aria-hidden="true"{% endif %}>
-              {%- if block.settings.icon != blank -%}<b aria-hidden="true">{{ block.settings.icon }}</b>{%- endif -%}
-              {{ block.settings.text }}
-            </span>
-          {%- endif -%}
-        {%- endfor -%}
+      {%- for repeat in (1..6) -%}
+        <div class="gs-announce__set"{% if repeat > 1 %} aria-hidden="true"{% endif %}>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'top_message' -%}
+              <span{% if repeat == 1 %} {{ block.shopify_attributes }}{% endif %}>
+                {%- if block.settings.icon != blank -%}<b aria-hidden="true">{{ block.settings.icon }}</b>{%- endif -%}
+                {{ block.settings.text }}
+              </span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
       {%- endfor -%}
     </div>
   </div>
   <div class="gs-announce gs-announce--green">
     <div class="gs-announce__track">
-      {%- for repeat in (1..2) -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'bottom_message' -%}
-            <span{% if repeat == 1 %} {{ block.shopify_attributes }}{% else %} aria-hidden="true"{% endif %}>
-              {%- if block.settings.icon != blank -%}<b aria-hidden="true">{{ block.settings.icon }}</b>{%- endif -%}
-              {{ block.settings.text }}
-            </span>
-          {%- endif -%}
-        {%- endfor -%}
+      {%- for repeat in (1..6) -%}
+        <div class="gs-announce__set"{% if repeat > 1 %} aria-hidden="true"{% endif %}>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'bottom_message' -%}
+              <span{% if repeat == 1 %} {{ block.shopify_attributes }}{% endif %}>
+                {%- if block.settings.icon != blank -%}<b aria-hidden="true">{{ block.settings.icon }}</b>{%- endif -%}
+                {{ block.settings.text }}
+              </span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
       {%- endfor -%}
     </div>
   </div>

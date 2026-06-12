@@ -1,6 +1,6 @@
 <section class="gs-scope gs-brand-strip">
   <div class="gs-marquee-track" style="--gs-marquee-duration: {{ section.settings.speed }}s;">
-    {%- for repeat in (1..2) -%}
+    {%- for repeat in (1..6) -%}
       <div class="gs-marquee-set"{% if repeat > 1 %} aria-hidden="true"{% endif %}>
       {%- for block in section.blocks -%}
         <span class="gs-brand-strip__item"{% if repeat == 1 %} {{ block.shopify_attributes }}{% endif %}>
@@ -28,7 +28,7 @@
 {% schema %}
 {
   "name": "GS brand strip",
-  "settings": [{ "type": "range", "id": "speed", "label": "Speed", "min": 30, "max": 90, "step": 5, "default": 60 }],
+  "settings": [{ "type": "range", "id": "speed", "label": "Speed", "min": 30, "max": 90, "step": 5, "default": 30 }],
   "blocks": [
     {
       "type": "brand",
