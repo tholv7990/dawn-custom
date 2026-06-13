@@ -1,0 +1,300 @@
+{%- liquid
+  assign threshold = settings.ct_free_shipping_threshold_cents | times: 1
+-%}
+{%- if threshold > 0 -%}
+  {% render 'ct-section-padding', section: section %}
+
+  {%- liquid
+    assign current = cart.total_price
+    assign remaining = threshold | minus: current
+    if remaining < 0
+      assign remaining = 0
+    endif
+
+    assign pct = current | times: 100 | divided_by: threshold
+    if pct > 100
+      assign pct = 100
+    endif
+    if pct < 0
+      assign pct = 0
+    endif
+
+    assign achieved = false
+    if current >= threshold
+      assign achieved = true
+    endif
+
+    assign remaining_money = remaining | money
+    assign away_message = section.settings.away_text | replace: '[amount]', remaining_money
+    assign achieved_message = section.settings.achieved_text
+
+    if achieved
+      assign message = achieved_message
+    else
+      assign message = away_message
+    endif
+
+    assign is_empty = false
+    if cart.item_count == 0
+      assign is_empty = true
+    endif
+  -%}
+
+  {%- unless is_empty and section.settings.show_when_empty == false -%}
+    <section
+      class="ct-fsb gs-scope section-{{ section.id }}-padding{% if achieved %} ct-fsb--achieved{% endif %}"
+      id="ct-fsb-{{ section.id }}"
+      data-threshold="{{ threshold }}"
+      data-current="{{ current }}"
+      data-away-template="{{ section.settings.away_text | escape }}"
+      data-achieved-text="{{ section.settings.achieved_text | escape }}"
+      data-money-format="{{ shop.money_format | escape }}"
+    >
+      <div class="gs-wrap">
+        <div class="ct-fsb__inner">
+          <p class="ct-fsb__message" data-fsb-message aria-live="polite">
+            {%- if achieved -%}
+              {% render 'ct-icon', name: 'success' %}
+            {%- else -%}
+              {% render 'ct-icon', name: 'truck' %}
+            {%- endif -%}
+            <span data-fsb-text>{{ message | escape }}</span>
+          </p>
+          <div
+            class="ct-fsb__track"
+            data-fsb-track
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="{{ pct }}"
+          >
+            <span class="ct-fsb__fill" data-fsb-fill style="width:{{ pct }}%;"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% style %}
+      .ct-fsb .ct-fsb__inner {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ct-space-3);
+        padding: var(--ct-pad-tight);
+        background: var(--ct-bg-raised);
+        border: 1px solid var(--ct-border);
+        border-radius: var(--ct-r-lg);
+        box-shadow: var(--ct-shadow-sm);
+      }
+
+      .ct-fsb .ct-fsb__message {
+        display: flex;
+        align-items: center;
+        gap: var(--ct-space-2);
+        margin: 0;
+        color: var(--ct-text);
+        font-size: var(--ct-text-sm);
+        font-weight: var(--ct-fw-medium);
+        line-height: 1.4;
+      }
+
+      .ct-fsb .ct-fsb__message .ct-icon {
+        display: inline-flex;
+        flex: none;
+        width: 20px;
+        height: 20px;
+        color: var(--ct-action);
+      }
+
+      .ct-fsb .ct-fsb__message .ct-icon svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .ct-fsb.ct-fsb--achieved .ct-fsb__message {
+        color: var(--ct-success);
+      }
+
+      .ct-fsb.ct-fsb--achieved .ct-fsb__message .ct-icon {
+        color: var(--ct-success);
+      }
+
+      .ct-fsb .ct-fsb__track {
+        position: relative;
+        width: 100%;
+        height: 8px;
+        overflow: hidden;
+        background: var(--ct-bg-control);
+        border: 1px solid var(--ct-border);
+        border-radius: var(--ct-r-pill);
+      }
+
+      .ct-fsb .ct-fsb__fill {
+        display: block;
+        height: 100%;
+        min-width: 0;
+        background: var(--ct-action);
+        border-radius: var(--ct-r-pill);
+        transition: width var(--ct-dur-base) var(--ct-ease-out);
+      }
+
+      .ct-fsb.ct-fsb--achieved .ct-fsb__fill {
+        background: var(--ct-success);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .ct-fsb .ct-fsb__fill {
+          transition: none;
+        }
+      }
+    {% endstyle %}
+
+    <script>
+      (function () {
+        var root = document.getElementById('ct-fsb-{{ section.id }}');
+        if (!root || root.dataset.ready === 'true') return;
+        root.dataset.ready = 'true';
+
+        var threshold = parseInt(root.getAttribute('data-threshold'), 10);
+        if (isNaN(threshold) || threshold <= 0) return;
+
+        var fill = root.querySelector('[data-fsb-fill]');
+        var track = root.querySelector('[data-fsb-track]');
+        var textEl = root.querySelector('[data-fsb-text]');
+        var awayTemplate = root.getAttribute('data-away-template') || '';
+        var achievedText = root.getAttribute('data-achieved-text') || '';
+
+        function cartUrl() {
+          var routes = window.Shopify && window.Shopify.routes;
+          var rootPath = (routes && routes.root) || '/';
+          return rootPath + 'cart.js';
+        }
+
+        var moneyFormat = root.getAttribute('data-money-format') || '';
+
+        function formatMoney(cents) {
+          // Server-rendered money is authoritative; this is a best-effort client format.
+          if (moneyFormat && window.Shopify && typeof window.Shopify.formatMoney === 'function') {
+            try {
+              return window.Shopify.formatMoney(cents, moneyFormat);
+            } catch (e) {
+              /* fall through */
+            }
+          }
+          return (cents / 100).toFixed(2);
+        }
+
+        function update(current) {
+          if (typeof current !== 'number' || isNaN(current)) return;
+
+          var pct = Math.round((current * 100) / threshold);
+          if (pct > 100) pct = 100;
+          if (pct < 0) pct = 0;
+
+          if (fill) fill.style.width = pct + '%';
+          if (track) track.setAttribute('aria-valuenow', String(pct));
+
+          var achieved = current >= threshold;
+          root.classList.toggle('ct-fsb--achieved', achieved);
+
+          if (!textEl) return;
+          if (achieved) {
+            textEl.textContent = achievedText;
+          } else {
+            var remaining = threshold - current;
+            if (remaining < 0) remaining = 0;
+            textEl.textContent = awayTemplate.replace('[amount]', formatMoney(remaining));
+          }
+        }
+
+        function refresh() {
+          try {
+            fetch(cartUrl(), { headers: { Accept: 'application/json' } })
+              .then(function (res) {
+                return res.json();
+              })
+              .then(function (cart) {
+                if (cart && typeof cart.total_price === 'number') {
+                  update(cart.total_price);
+                }
+              })
+              .catch(function () {
+                /* progressive enhancement: keep server-rendered state */
+              });
+          } catch (e) {
+            /* no-op */
+          }
+        }
+
+        if (window.subscribe && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.cartUpdate) {
+          window.subscribe(window.PUB_SUB_EVENTS.cartUpdate, function (event) {
+            if (event && event.cartData && typeof event.cartData.total_price === 'number') {
+              update(event.cartData.total_price);
+            } else {
+              refresh();
+            }
+          });
+        }
+      })();
+    </script>
+  {%- endunless -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Free shipping bar",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Set the free shipping threshold in Theme settings. The bar stays hidden until a threshold is configured."
+    },
+    {
+      "type": "text",
+      "id": "away_text",
+      "label": "Progress message",
+      "info": "Use [amount] where the remaining total should appear.",
+      "default": "You are [amount] away from free shipping"
+    },
+    {
+      "type": "text",
+      "id": "achieved_text",
+      "label": "Unlocked message",
+      "default": "You have unlocked free shipping!"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show when cart is empty",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Free shipping bar"
+    }
+  ]
+}
+{% endschema %}
