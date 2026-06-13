@@ -483,6 +483,8 @@
                   {% render 'ct-size-chart', section_id: section.id, block: block %}
                 {%- when 'custom_field' -%}
                   {% render 'ct-product-field', product_form_id: product_form_id, section_id: section.id, block: block %}
+                {%- when 'gift_offer' -%}
+                  {% render 'ct-gift-offer', section_id: section.id, block: block %}
               {%- endcase -%}
             {%- endfor -%}
             <a
@@ -819,6 +821,21 @@
         { "type": "range", "id": "maxlength", "label": "Max length", "min": 20, "max": 500, "step": 10, "default": 120 },
         { "type": "range", "id": "rows", "label": "Text area rows", "min": 2, "max": 8, "step": 1, "default": 3 },
         { "type": "text", "id": "help_text", "label": "Help text" }
+      ]
+    },
+    {
+      "type": "gift_offer",
+      "name": "Automatic free gift",
+      "limit": 1,
+      "settings": [
+        { "type": "product", "id": "gift_product", "label": "Gift product" },
+        { "type": "text", "id": "threshold_cents", "label": "Qualifying threshold", "default": "0", "info": "Qualifying cart total (excluding the gift) in the shop currency subunits (e.g. cents). 0 = always add the gift." },
+        { "type": "text", "id": "locked_text", "label": "Locked message", "default": "Spend [amount] more for a free gift", "info": "Use [amount] where the remaining total appears." },
+        { "type": "text", "id": "unlocked_text", "label": "Unlocked message", "default": "Free gift added to your cart!" },
+        { "type": "checkbox", "id": "show_bar", "label": "Show progress bar", "default": true },
+        { "type": "checkbox", "id": "show_gift_preview", "label": "Show gift preview", "default": true },
+        { "type": "text", "id": "gift_eyebrow", "label": "Gift eyebrow", "default": "Free gift" },
+        { "type": "textarea", "id": "note", "label": "Note", "default": "Create an automatic discount in admin that makes this product free so it checks out at no charge." }
       ]
     },
     {

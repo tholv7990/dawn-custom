@@ -1,0 +1,86 @@
+{%- comment -%}
+  Automatic free gift — W3.T04. Shared snippet for the `gift_offer` block in
+  main-product / featured-product. Progress UI + the <ct-gift-engine> element
+  (oscillation-safe auto add/remove). Server-renders the initial qualifying
+  state for a no-JS fallback. The gift is added at its normal price; the
+  merchant zeroes it with an automatic discount in admin (G-05 — no synthesized
+  pricing).
+
+  Accepts: section_id, block
+{%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign gift_product = s.gift_product
+  assign gift_variant = gift_product.selected_or_first_available_variant
+  assign threshold = s.threshold_cents | times: 1
+
+  assign qualifying = cart.total_price
+  for line in cart.items
+    if line.properties._ct_gift == 'true'
+      assign qualifying = qualifying | minus: line.final_line_price
+    endif
+  endfor
+  if qualifying < 0
+    assign qualifying = 0
+  endif
+
+  assign unlocked = false
+  if threshold == 0
+    assign unlocked = true
+  elsif qualifying >= threshold
+    assign unlocked = true
+  endif
+
+  assign remaining = threshold | minus: qualifying
+  if remaining < 0
+    assign remaining = 0
+  endif
+  assign remaining_money = remaining | money
+  assign locked_message = s.locked_text | default: 'Spend [amount] more for a free gift' | replace: '[amount]', remaining_money
+  assign unlocked_message = s.unlocked_text | default: 'Free gift added to your cart!'
+  assign pct = 0
+  if threshold > 0
+    assign pct = qualifying | times: 100 | divided_by: threshold
+    if pct > 100
+      assign pct = 100
+    endif
+  endif
+-%}
+{%- if gift_product != blank and gift_variant != blank -%}
+  {{ 'component-ct-gift-offer.css' | asset_url | stylesheet_tag }}
+  <ct-gift-engine
+    class="ct-gift-offer{% if unlocked %} ct-gift-offer--unlocked{% endif %}"
+    data-gift-variant="{{ gift_variant.id }}"
+    data-threshold="{{ threshold }}"
+    data-locked-template="{{ s.locked_text | default: 'Spend [amount] more for a free gift' | escape }}"
+    data-unlocked-text="{{ unlocked_message | escape }}"
+    data-money-format="{{ shop.money_format | escape }}"
+    {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
+  >
+    {%- if s.show_gift_preview -%}
+      <div class="ct-gift-offer__preview">
+        {% render 'ct-media-slot', image: gift_variant.featured_media.preview_image | default: gift_product.featured_image, class: 'ct-gift-offer__img', label: gift_product.title, alt: gift_product.title, ratio: '1 / 1' %}
+        <div class="ct-gift-offer__preview-text">
+          <span class="ct-gift-offer__gift-name">{{ gift_product.title | escape }}</span>
+          {%- if s.gift_eyebrow != blank -%}<span class="ct-gift-offer__eyebrow">{{ s.gift_eyebrow | escape }}</span>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="ct-gift-offer__status" role="status" aria-live="polite">
+      <p class="ct-gift-offer__text" data-gift-status-text>
+        {%- if unlocked -%}{{ unlocked_message | escape }}{%- else -%}{{ locked_message | escape }}{%- endif -%}
+      </p>
+      {%- if s.show_bar -%}
+        <div class="ct-gift-offer__track">
+          <i class="ct-gift-offer__bar" data-gift-bar style="width: {{ pct }}%"></i>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if s.note != blank -%}
+      <p class="ct-gift-offer__note">{{ s.note | escape }}</p>
+    {%- endif -%}
+  </ct-gift-engine>
+  <script src="{{ 'ct-gift-engine.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

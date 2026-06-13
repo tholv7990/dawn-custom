@@ -1,0 +1,90 @@
+/* Automatic free gift offer — W3.T04. Token-only. */
+.ct-gift-offer {
+  display: block;
+  padding: var(--ct-space-4);
+  background: var(--ct-trust-tint);
+  border: 1px solid var(--ct-card-border);
+  border-radius: var(--ct-r-md);
+}
+
+.ct-gift-offer--unlocked {
+  background: var(--ct-success-light);
+  border-color: var(--ct-trust);
+}
+
+.ct-gift-offer__preview {
+  display: flex;
+  align-items: center;
+  gap: var(--ct-space-3);
+  margin-bottom: var(--ct-space-3);
+}
+
+.ct-gift-offer__img {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ct-r-sm);
+  overflow: hidden;
+}
+
+.ct-gift-offer__preview-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ct-space-1);
+  min-width: 0;
+}
+
+.ct-gift-offer__gift-name {
+  font-size: var(--ct-text-sm);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-text);
+}
+
+.ct-gift-offer__eyebrow {
+  font-size: var(--ct-text-xs);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-trust);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ct-gift-offer__text {
+  margin: 0;
+  font-size: var(--ct-text-sm);
+  font-weight: var(--ct-fw-medium);
+  color: var(--ct-text);
+}
+
+.ct-gift-offer--unlocked .ct-gift-offer__text {
+  color: var(--ct-success-dark);
+  font-weight: var(--ct-fw-semi);
+}
+
+.ct-gift-offer__track {
+  margin-top: var(--ct-space-2);
+  height: 8px;
+  background: var(--ct-bg-control);
+  border-radius: var(--ct-r-pill);
+  overflow: hidden;
+}
+
+.ct-gift-offer__bar {
+  display: block;
+  height: 100%;
+  background: var(--ct-trust);
+  border-radius: var(--ct-r-pill);
+  transition: width var(--ct-dur-base) var(--ct-ease-out);
+}
+
+.ct-gift-offer__note {
+  margin: var(--ct-space-2) 0 0;
+  font-size: var(--ct-text-xs);
+  color: var(--ct-text-3);
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-gift-offer__bar {
+    transition: none;
+  }
+}

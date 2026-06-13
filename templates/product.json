@@ -123,6 +123,17 @@
             "placeholder": "Write your message",
             "required": false
           }
+        },
+        "gift_offer": {
+          "type": "gift_offer",
+          "settings": {
+            "gift_product": "womens-minimalist-casual-chic-denim-jacket-vest",
+            "threshold_cents": "100000",
+            "locked_text": "Spend [amount] more for a free gift",
+            "unlocked_text": "Free gift added!",
+            "show_bar": true,
+            "show_gift_preview": true
+          }
         }
       },
       "block_order": [
@@ -141,7 +152,8 @@
         "shipping_estimate",
         "discount_code",
         "size_chart",
-        "custom_field"
+        "custom_field",
+        "gift_offer"
       ],
       "settings": {}
     },
