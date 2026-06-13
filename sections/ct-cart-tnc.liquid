@@ -1,0 +1,257 @@
+{% render 'ct-section-padding', section: section %}
+
+{%- liquid
+  assign required = section.settings.required
+  assign cb_id = 'ct-cart-tnc-cb-' | append: section.id
+  assign desc_id = 'ct-cart-tnc-desc-' | append: section.id
+-%}
+
+<section
+  class="ct-cart-tnc gs-scope section-{{ section.id }}-padding"
+  id="ct-cart-tnc-{{ section.id }}"
+  data-ct-cart-tnc
+  data-required="{% if required %}true{% else %}false{% endif %}"
+>
+  <div class="gs-wrap">
+    <div class="ct-cart-tnc__inner">
+      <label class="ct-cart-tnc__label" for="{{ cb_id }}">
+        <input
+          type="checkbox"
+          class="ct-cart-tnc__checkbox"
+          id="{{ cb_id }}"
+          name="ct-cart-tnc-agree"
+          data-ct-cart-tnc-checkbox
+          {% if required %}aria-describedby="{{ desc_id }}" required{% endif %}
+        >
+        <span class="ct-cart-tnc__text">{{ section.settings.text }}</span>
+      </label>
+      {%- if required -%}
+        <p class="ct-cart-tnc__hint" id="{{ desc_id }}" aria-live="polite">
+          {{ section.settings.required_hint | escape }}
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ct-cart-tnc .ct-cart-tnc__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ct-space-2);
+    padding: var(--ct-pad-tight);
+    background: var(--ct-bg-raised);
+    border: 1px solid var(--ct-border);
+    border-radius: var(--ct-r-lg);
+    box-shadow: var(--ct-shadow-sm);
+  }
+
+  .ct-cart-tnc .ct-cart-tnc__label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ct-space-3);
+    margin: 0;
+    cursor: pointer;
+    color: var(--ct-text);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-medium);
+    line-height: 1.5;
+  }
+
+  .ct-cart-tnc .ct-cart-tnc__checkbox {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    margin-top: var(--ct-space-1);
+    accent-color: var(--ct-action);
+    cursor: pointer;
+  }
+
+  .ct-cart-tnc .ct-cart-tnc__checkbox:focus-visible {
+    outline: var(--ct-ring);
+    outline-offset: 2px;
+    border-radius: var(--ct-r-sm);
+  }
+
+  .ct-cart-tnc .ct-cart-tnc__text {
+    color: var(--ct-text);
+  }
+
+  .ct-cart-tnc .ct-cart-tnc__text a {
+    color: var(--ct-action);
+    font-weight: var(--ct-fw-semi);
+    text-underline-offset: 2px;
+  }
+
+  .ct-cart-tnc .ct-cart-tnc__text a:hover {
+    color: var(--ct-action-hover);
+  }
+
+  .ct-cart-tnc .ct-cart-tnc__hint {
+    margin: 0;
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-xs);
+    font-weight: var(--ct-fw-normal);
+    line-height: 1.4;
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.getElementById('ct-cart-tnc-{{ section.id }}');
+    if (!root || root.dataset.ready === 'true') return;
+    root.dataset.ready = 'true';
+
+    var required = root.getAttribute('data-required') === 'true';
+    var checkbox = root.querySelector('[data-ct-cart-tnc-checkbox]');
+
+    // If the gate is not required or the checkbox is missing, never touch checkout.
+    if (!required || !checkbox) return;
+
+    function findCheckoutButton() {
+      var form =
+        (checkbox.closest && checkbox.closest('form#cart')) ||
+        document.querySelector('form#cart') ||
+        document;
+      var btn =
+        form.querySelector('button[name="checkout"]') ||
+        form.querySelector('#checkout') ||
+        form.querySelector('a[href*="checkout"]');
+      if (!btn && form !== document) {
+        btn =
+          document.querySelector('button[name="checkout"]') ||
+          document.querySelector('#checkout') ||
+          document.querySelector('a[href*="checkout"]');
+      }
+      return btn;
+    }
+
+    function applyState() {
+      var btn;
+      try {
+        btn = findCheckoutButton();
+      } catch (e) {
+        return;
+      }
+      if (!btn) return;
+
+      var allow = checkbox.checked;
+      try {
+        if (allow) {
+          if ('disabled' in btn) btn.disabled = false;
+          btn.removeAttribute('disabled');
+          btn.removeAttribute('aria-disabled');
+          if (btn.dataset) delete btn.dataset.ctTncBlocked;
+        } else {
+          if ('disabled' in btn) btn.disabled = true;
+          btn.setAttribute('disabled', 'disabled');
+          btn.setAttribute('aria-disabled', 'true');
+          if (btn.dataset) btn.dataset.ctTncBlocked = 'true';
+        }
+      } catch (e) {
+        /* fail open: do not block checkout if state cannot be applied */
+      }
+    }
+
+    // Block link-based checkout buttons (<a>) while unchecked.
+    function guardClick(event) {
+      try {
+        if (!checkbox.checked) {
+          var target = event.target && event.target.closest ? event.target.closest('a[href*="checkout"], button[name="checkout"], #checkout') : null;
+          if (target && target.dataset && target.dataset.ctTncBlocked === 'true') {
+            event.preventDefault();
+            event.stopPropagation();
+            if (checkbox.focus) checkbox.focus();
+          }
+        }
+      } catch (e) {
+        /* no-op */
+      }
+    }
+
+    checkbox.addEventListener('change', applyState);
+    document.addEventListener('click', guardClick, true);
+
+    // Re-apply after cart section re-renders (Section Rendering API swaps nodes).
+    function refreshAfterCart() {
+      try {
+        applyState();
+      } catch (e) {
+        /* no-op */
+      }
+    }
+
+    if (window.subscribe && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.cartUpdate) {
+      try {
+        window.subscribe(window.PUB_SUB_EVENTS.cartUpdate, refreshAfterCart);
+      } catch (e) {
+        /* no-op */
+      }
+    }
+
+    // Initial server-rendered state: checkbox starts unchecked, so gate is closed.
+    applyState();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cart terms gate",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Adds a terms-and-conditions checkbox to the cart page. When required, the checkout button stays disabled until the shopper checks the box."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Agreement text",
+      "info": "You can add a link to your policy page.",
+      "default": "<p>I agree to the terms and conditions.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "required",
+      "label": "Require agreement before checkout",
+      "info": "Disables the checkout button until the box is checked.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "required_hint",
+      "label": "Requirement hint",
+      "default": "Please accept the terms and conditions to continue to checkout."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart terms gate"
+    }
+  ]
+}
+{% endschema %}

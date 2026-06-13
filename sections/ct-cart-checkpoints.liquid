@@ -1,0 +1,455 @@
+{% render 'ct-section-padding', section: section %}
+
+{%- liquid
+  assign current = cart.total_price
+
+  assign highest = 0
+  for block in section.blocks
+    assign t = block.settings.threshold_cents | times: 1
+    if t > highest
+      assign highest = t
+    endif
+  endfor
+
+  assign reached_count = 0
+  for block in section.blocks
+    assign t = block.settings.threshold_cents | times: 1
+    if current >= t
+      assign reached_count = reached_count | plus: 1
+    endif
+  endfor
+
+  assign fill_pct = 0
+  if highest > 0
+    assign fill_pct = current | times: 100 | divided_by: highest
+    if fill_pct > 100
+      assign fill_pct = 100
+    endif
+    if fill_pct < 0
+      assign fill_pct = 0
+    endif
+  endif
+
+  assign total_blocks = section.blocks.size
+-%}
+
+<section
+  class="ct-checkpoints gs-scope section-{{ section.id }}-padding"
+  id="ct-checkpoints-{{ section.id }}"
+  data-current="{{ current }}"
+  data-highest="{{ highest }}"
+>
+  <div class="gs-wrap">
+    <div class="ct-checkpoints__panel">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ct-checkpoints__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      <p class="ct-checkpoints__summary" data-checkpoints-summary aria-live="polite">
+        {{- reached_count }} / {{ total_blocks }}
+        {%- if reached_count == 1 %} reward unlocked{% else %} rewards unlocked{% endif -%}
+      </p>
+
+      {%- if total_blocks > 0 and highest > 0 -%}
+        <div class="ct-checkpoints__track-wrap">
+          <div
+            class="ct-checkpoints__track"
+            data-checkpoints-track
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="{{ fill_pct }}"
+          >
+            <span class="ct-checkpoints__fill" data-checkpoints-fill style="width:{{ fill_pct }}%;"></span>
+          </div>
+
+          <ul class="ct-checkpoints__markers" role="list">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign m_threshold = block.settings.threshold_cents | times: 1
+                assign m_reached = false
+                if current >= m_threshold
+                  assign m_reached = true
+                endif
+                assign m_pos = 0
+                if highest > 0
+                  assign m_pos = m_threshold | times: 100 | divided_by: highest
+                  if m_pos > 100
+                    assign m_pos = 100
+                  endif
+                  if m_pos < 0
+                    assign m_pos = 0
+                  endif
+                endif
+              -%}
+              <li
+                class="ct-checkpoints__marker{% if m_reached %} is-reached{% endif %}"
+                data-checkpoints-marker
+                data-threshold="{{ m_threshold }}"
+                style="left:{{ m_pos }}%;"
+                {{ block.shopify_attributes }}
+              >
+                <span class="ct-checkpoints__node">
+                  {% render 'ct-icon', name: block.settings.icon, class: 'ct-icon ct-checkpoints__icon' %}
+                </span>
+                <span class="ct-checkpoints__caption">
+                  <span class="ct-checkpoints__amount">{{ m_threshold | money }}</span>
+                  <span class="ct-checkpoints__label">{{ block.settings.label | escape }}</span>
+                  <span class="ct-checkpoints__reached" data-checkpoints-reached-text>
+                    {{- block.settings.reached_text | escape -}}
+                  </span>
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- else -%}
+        <p class="ct-checkpoints__empty">Add milestone blocks with spend thresholds to display reward progress.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ct-checkpoints .ct-checkpoints__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ct-space-4);
+    padding: var(--ct-pad-tight);
+    background: var(--ct-card-bg);
+    border: 1px solid var(--ct-card-border);
+    border-radius: var(--ct-r-lg);
+    box-shadow: var(--ct-shadow-sm);
+  }
+
+  .ct-checkpoints .ct-checkpoints__heading {
+    margin: 0;
+    color: var(--ct-text);
+    font-size: var(--ct-h4);
+    font-weight: var(--ct-fw-semi);
+    line-height: 1.2;
+  }
+
+  .ct-checkpoints .ct-checkpoints__summary {
+    margin: 0;
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-medium);
+    line-height: 1.4;
+  }
+
+  .ct-checkpoints .ct-checkpoints__track-wrap {
+    position: relative;
+    padding-top: var(--ct-space-2);
+    padding-bottom: var(--ct-space-9);
+  }
+
+  .ct-checkpoints .ct-checkpoints__track {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: var(--ct-bg-control);
+    border: 1px solid var(--ct-border);
+    border-radius: var(--ct-r-pill);
+  }
+
+  .ct-checkpoints .ct-checkpoints__fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    display: block;
+    height: 100%;
+    min-width: 0;
+    max-width: 100%;
+    background: var(--ct-action);
+    border-radius: var(--ct-r-pill);
+    transition: width var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-checkpoints .ct-checkpoints__markers {
+    position: absolute;
+    inset: 0 0 auto 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ct-checkpoints .ct-checkpoints__marker {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ct-space-2);
+    width: 96px;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .ct-checkpoints .ct-checkpoints__node {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--ct-text-3);
+    background: var(--ct-bg-raised);
+    border: 1px solid var(--ct-border-strong);
+    border-radius: var(--ct-r-pill);
+    box-shadow: var(--ct-shadow-sm);
+    transition: color var(--ct-dur-base) var(--ct-ease-out),
+      border-color var(--ct-dur-base) var(--ct-ease-out),
+      background-color var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-checkpoints .ct-checkpoints__icon {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+  }
+
+  .ct-checkpoints .ct-checkpoints__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ct-checkpoints .ct-checkpoints__caption {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ct-space-1);
+  }
+
+  .ct-checkpoints .ct-checkpoints__amount {
+    color: var(--ct-price);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-semi);
+    line-height: 1.2;
+  }
+
+  .ct-checkpoints .ct-checkpoints__label {
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-xs);
+    font-weight: var(--ct-fw-medium);
+    line-height: 1.3;
+  }
+
+  .ct-checkpoints .ct-checkpoints__reached {
+    display: none;
+    color: var(--ct-success);
+    font-size: var(--ct-text-xs);
+    font-weight: var(--ct-fw-semi);
+    line-height: 1.3;
+  }
+
+  .ct-checkpoints .ct-checkpoints__marker.is-reached .ct-checkpoints__node {
+    color: var(--ct-on-accent);
+    background: var(--ct-success);
+    border-color: var(--ct-success);
+  }
+
+  .ct-checkpoints .ct-checkpoints__marker.is-reached .ct-checkpoints__reached {
+    display: block;
+  }
+
+  .ct-checkpoints .ct-checkpoints__empty {
+    margin: 0;
+    color: var(--ct-text-3);
+    font-size: var(--ct-text-sm);
+    line-height: 1.4;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ct-checkpoints .ct-checkpoints__fill,
+    .ct-checkpoints .ct-checkpoints__node {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.getElementById('ct-checkpoints-{{ section.id }}');
+    if (!root || root.dataset.ready === 'true') return;
+    root.dataset.ready = 'true';
+
+    var highest = parseInt(root.getAttribute('data-highest'), 10);
+    if (isNaN(highest) || highest <= 0) return;
+
+    var fill = root.querySelector('[data-checkpoints-fill]');
+    var track = root.querySelector('[data-checkpoints-track]');
+    var summary = root.querySelector('[data-checkpoints-summary]');
+    var markers = root.querySelectorAll('[data-checkpoints-marker]');
+
+    function cartUrl() {
+      var routes = window.Shopify && window.Shopify.routes;
+      var rootPath = (routes && routes.root) || '/';
+      return rootPath + 'cart.js';
+    }
+
+    function update(current) {
+      if (typeof current !== 'number' || isNaN(current)) return;
+
+      var pct = Math.round((current * 100) / highest);
+      if (pct > 100) pct = 100;
+      if (pct < 0) pct = 0;
+
+      if (fill) fill.style.width = pct + '%';
+      if (track) track.setAttribute('aria-valuenow', String(pct));
+
+      var reached = 0;
+      var i;
+      for (i = 0; i < markers.length; i++) {
+        var threshold = parseInt(markers[i].getAttribute('data-threshold'), 10);
+        if (isNaN(threshold)) continue;
+        var isReached = current >= threshold;
+        markers[i].classList.toggle('is-reached', isReached);
+        if (isReached) reached++;
+      }
+
+      if (summary) {
+        var noun = reached === 1 ? ' reward unlocked' : ' rewards unlocked';
+        summary.textContent = reached + ' / ' + markers.length + noun;
+      }
+    }
+
+    function refresh() {
+      try {
+        fetch(cartUrl(), { headers: { Accept: 'application/json' } })
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (cart) {
+            if (cart && typeof cart.total_price === 'number') {
+              update(cart.total_price);
+            }
+          })
+          .catch(function () {
+            /* progressive enhancement: keep server-rendered state */
+          });
+      } catch (e) {
+        /* no-op */
+      }
+    }
+
+    if (window.subscribe && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.cartUpdate) {
+      window.subscribe(window.PUB_SUB_EVENTS.cartUpdate, function (event) {
+        if (event && event.cartData && typeof event.cartData.total_price === 'number') {
+          update(event.cartData.total_price);
+        } else {
+          refresh();
+        }
+      });
+    } else {
+      document.addEventListener('cart:refresh', refresh);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cart reward checkpoints",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Rewards progress"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add a milestone block for each reward tier. Thresholds are in the shop currency subunits (for example 5000 = 50.00)."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "milestone",
+      "name": "Milestone",
+      "settings": [
+        {
+          "type": "text",
+          "id": "threshold_cents",
+          "label": "Spend threshold (subunits)",
+          "info": "Amount in shop-currency subunits. For example 5000 = 50.00.",
+          "default": "0"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Reward"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Icon key, for example check, truck, gift, lock, star.",
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "reached_text",
+          "label": "Unlocked text",
+          "default": "Unlocked!"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart reward checkpoints",
+      "blocks": [
+        {
+          "type": "milestone",
+          "settings": {
+            "threshold_cents": "2500",
+            "label": "Free gift",
+            "icon": "gift",
+            "reached_text": "Unlocked!"
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "threshold_cents": "5000",
+            "label": "Free shipping",
+            "icon": "truck",
+            "reached_text": "Unlocked!"
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "threshold_cents": "10000",
+            "label": "VIP discount",
+            "icon": "star",
+            "reached_text": "Unlocked!"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
