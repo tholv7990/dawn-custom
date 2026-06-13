@@ -105,6 +105,15 @@
             "show_copy": true,
             "auto_apply": true
           }
+        },
+        "size_chart": {
+          "type": "size_chart",
+          "settings": {
+            "trigger_label": "Size guide",
+            "heading": "Size guide",
+            "source": "richtext",
+            "content": "<table><thead><tr><th>Size</th><th>Chest</th></tr></thead><tbody><tr><th>S</th><td>36in</td></tr><tr><th>M</th><td>40in</td></tr></tbody></table>"
+          }
         }
       },
       "block_order": [
@@ -121,7 +130,8 @@
         "bundle",
         "product_upsells",
         "shipping_estimate",
-        "discount_code"
+        "discount_code",
+        "size_chart"
       ],
       "settings": {}
     },
