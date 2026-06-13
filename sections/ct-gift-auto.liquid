@@ -1,0 +1,461 @@
+{%- liquid
+  assign gift_product = section.settings.gift_product
+-%}
+{%- if gift_product != blank -%}
+  {% render 'ct-section-padding', section: section %}
+
+  {%- liquid
+    assign gift_variant = gift_product.selected_or_first_available_variant
+
+    assign threshold = section.settings.threshold_cents | times: 1
+    assign current = cart.total_price
+
+    comment
+      Qualifying total excludes the gift line: subtract any line carrying _ct_gift.
+    endcomment
+    assign qualifying = current
+    for line in cart.items
+      assign flag = line.properties._ct_gift
+      if flag == 'true'
+        assign qualifying = qualifying | minus: line.final_line_price
+      endif
+    endfor
+    if qualifying < 0
+      assign qualifying = 0
+    endif
+
+    assign unlocked = false
+    if threshold == 0
+      assign unlocked = true
+    elsif qualifying >= threshold
+      assign unlocked = true
+    endif
+
+    assign remaining = threshold | minus: qualifying
+    if remaining < 0
+      assign remaining = 0
+    endif
+    assign remaining_money = remaining | money
+
+    assign locked_message = section.settings.locked_text | replace: '[amount]', remaining_money
+  -%}
+
+  <section
+    class="ct-gift-auto gs-scope section-{{ section.id }}-padding{% if unlocked %} ct-gift-auto--unlocked{% endif %}"
+    id="ct-gift-auto-{{ section.id }}"
+    data-section-id="{{ section.id }}"
+    data-gift-variant="{{ gift_variant.id }}"
+    data-threshold="{{ threshold | times: 1 }}"
+    data-locked-template="{{ section.settings.locked_text | escape }}"
+    data-unlocked-text="{{ section.settings.unlocked_text | escape }}"
+    data-money-format="{{ shop.money_format | escape }}"
+  >
+    <div class="gs-wrap">
+      <div class="ct-gift-auto__inner">
+        <div class="ct-gift-auto__card">
+          {% render 'ct-media-slot',
+            image: gift_variant.featured_media.preview_image | default: gift_product.featured_image,
+            class: 'ct-gift-auto__media',
+            label: gift_product.title,
+            alt: gift_product.title
+          %}
+          <div class="ct-gift-auto__card-body">
+            <p class="ct-gift-auto__product-title">{{ gift_product.title | escape }}</p>
+          </div>
+        </div>
+
+        <div class="ct-gift-auto__detail">
+          <p
+            class="ct-gift-auto__status{% if unlocked %} ct-gift-auto__status--unlocked{% endif %}"
+            data-gift-status
+            aria-live="polite"
+          >
+            <span data-gift-status-text>
+              {%- if unlocked -%}
+                {{ section.settings.unlocked_text | escape }}
+              {%- else -%}
+                {{ locked_message | escape }}
+              {%- endif -%}
+            </span>
+          </p>
+
+          {%- if section.settings.note != blank -%}
+            <p class="ct-gift-auto__note">{{ section.settings.note | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- style -%}
+    .ct-gift-auto {
+      background: var(--ct-bg);
+      color: var(--ct-text);
+    }
+    .ct-gift-auto .gs-wrap {
+      max-width: var(--ct-mw);
+      margin: 0 auto;
+    }
+    .ct-gift-auto__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--ct-space-6);
+      padding: var(--ct-space-7);
+      background: var(--ct-card-bg);
+      border: 1px solid var(--ct-card-border);
+      border-radius: var(--ct-r-lg);
+      box-shadow: var(--ct-shadow-sm);
+    }
+    .ct-gift-auto__card {
+      flex: 0 0 auto;
+      width: 160px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--ct-space-3);
+      background: var(--ct-bg-raised);
+      border: 1px solid var(--ct-border);
+      border-radius: var(--ct-r-md);
+      overflow: hidden;
+    }
+    .ct-gift-auto__media {
+      width: 100%;
+    }
+    .ct-gift-auto__card-body {
+      padding: var(--ct-space-3) var(--ct-space-4) var(--ct-space-4);
+    }
+    .ct-gift-auto__product-title {
+      margin: 0;
+      font-size: var(--ct-text-sm);
+      font-weight: var(--ct-fw-semi);
+      line-height: 1.3;
+      color: var(--ct-text);
+    }
+    .ct-gift-auto__detail {
+      flex: 1 1 280px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--ct-space-4);
+    }
+    .ct-gift-auto__status {
+      margin: 0;
+      font-size: var(--ct-text-base);
+      font-weight: var(--ct-fw-medium);
+      line-height: 1.45;
+      color: var(--ct-text-2);
+    }
+    .ct-gift-auto__status--unlocked {
+      color: var(--ct-success);
+      font-weight: var(--ct-fw-semi);
+    }
+    .ct-gift-auto__note {
+      margin: 0;
+      font-size: var(--ct-text-xs);
+      line-height: 1.5;
+      color: var(--ct-text-3);
+    }
+    @media screen and (max-width: 749px) {
+      .ct-gift-auto__inner {
+        padding: var(--ct-space-5);
+      }
+      .ct-gift-auto__card {
+        width: 120px;
+      }
+    }
+  {%- endstyle -%}
+
+  <script>
+    (function () {
+      var SECTION_ID = '{{ section.id }}';
+
+      // Module-scoped re-entrancy guard shared across this section's instances.
+      // Prevents the add/remove the engine itself performs from triggering a
+      // second evaluation (which is what would cause an add/remove oscillation).
+      var busy = false;
+
+      function init(root) {
+        if (!root || root.dataset.ready === 'true') return;
+        root.dataset.ready = 'true';
+
+        var statusEl = root.querySelector('[data-gift-status]');
+        var statusText = root.querySelector('[data-gift-status-text]');
+
+        var giftVariantId = parseInt(root.getAttribute('data-gift-variant'), 10);
+        var threshold = parseInt(root.getAttribute('data-threshold'), 10);
+        if (isNaN(threshold)) threshold = 0;
+        var lockedTemplate = root.getAttribute('data-locked-template') || '';
+        var unlockedText = root.getAttribute('data-unlocked-text') || '';
+        var moneyFormat = root.getAttribute('data-money-format') || '';
+
+        // If there is no usable gift variant, do nothing at all.
+        if (!giftVariantId || isNaN(giftVariantId)) return;
+
+        var reduceMotion =
+          window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        void reduceMotion;
+
+        function routeRoot() {
+          var routes = window.Shopify && window.Shopify.routes;
+          return (routes && routes.root) || '/';
+        }
+
+        function formatMoney(cents) {
+          if (moneyFormat && window.Shopify && typeof window.Shopify.formatMoney === 'function') {
+            try {
+              return window.Shopify.formatMoney(cents, moneyFormat);
+            } catch (e) {
+              /* fall through */
+            }
+          }
+          return (cents / 100).toFixed(2);
+        }
+
+        function setUnlockedUI(unlocked, remaining) {
+          root.classList.toggle('ct-gift-auto--unlocked', unlocked);
+          if (statusEl) statusEl.classList.toggle('ct-gift-auto__status--unlocked', unlocked);
+          if (!statusText) return;
+          if (unlocked) {
+            statusText.textContent = unlockedText;
+          } else {
+            statusText.textContent = lockedTemplate.replace('[amount]', formatMoney(remaining));
+          }
+        }
+
+        function cartSections() {
+          return ['cart-drawer', 'cart-icon-bubble'];
+        }
+
+        // Best-effort refresh of Dawn's cart UI from a returned add/change payload.
+        function renderCart(data) {
+          try {
+            var cartEl =
+              document.querySelector('cart-notification') ||
+              document.querySelector('cart-drawer');
+            if (cartEl && typeof cartEl.renderContents === 'function') {
+              cartEl.renderContents(data);
+            }
+          } catch (e) {
+            /* fail silent */
+          }
+        }
+
+        function addGift() {
+          var endpoint = routeRoot() + 'cart/add.js';
+          var body = {
+            id: giftVariantId,
+            quantity: 1,
+            properties: { _ct_gift: 'true' },
+            sections: cartSections(),
+            sections_url: window.location.pathname,
+          };
+          return fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(body),
+          })
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (data) {
+              renderCart(data);
+            });
+        }
+
+        function removeGift(lineKey) {
+          var endpoint = routeRoot() + 'cart/change.js';
+          var body = {
+            id: lineKey,
+            quantity: 0,
+            sections: cartSections(),
+            sections_url: window.location.pathname,
+          };
+          return fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(body),
+          })
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (data) {
+              renderCart(data);
+            });
+        }
+
+        // Locate the gift line by its _ct_gift property, NOT by variant id alone.
+        function findGiftLine(cart) {
+          if (!cart || !cart.items) return null;
+          for (var i = 0; i < cart.items.length; i++) {
+            var line = cart.items[i];
+            var props = line && line.properties;
+            if (props && props._ct_gift === 'true') {
+              return line;
+            }
+          }
+          return null;
+        }
+
+        function evaluate() {
+          // Ignore re-entrant calls: the cart change we just made fires cartUpdate,
+          // and acting on it again is exactly what creates an oscillation loop.
+          if (busy) return;
+
+          try {
+            fetch(routeRoot() + 'cart.js', { headers: { Accept: 'application/json' } })
+              .then(function (res) {
+                return res.json();
+              })
+              .then(function (cart) {
+                if (busy) return;
+                if (!cart || typeof cart.total_price !== 'number') return;
+
+                var giftLine = findGiftLine(cart);
+                var giftPresent = giftLine !== null;
+
+                // Qualifying total excludes the gift's own line price.
+                var qualifying = cart.total_price;
+                if (giftPresent && typeof giftLine.final_line_price === 'number') {
+                  qualifying -= giftLine.final_line_price;
+                }
+                if (qualifying < 0) qualifying = 0;
+
+                var eligible = threshold === 0 || qualifying >= threshold;
+                var remaining = threshold - qualifying;
+                if (remaining < 0) remaining = 0;
+
+                setUnlockedUI(eligible, remaining);
+
+                // Decide the single corrective action, if any.
+                if (eligible && !giftPresent) {
+                  busy = true;
+                  addGift()
+                    .catch(function () {
+                      /* fail silent */
+                    })
+                    .then(function () {
+                      busy = false;
+                    });
+                } else if (!eligible && giftPresent) {
+                  busy = true;
+                  removeGift(giftLine.key)
+                    .catch(function () {
+                      /* fail silent */
+                    })
+                    .then(function () {
+                      busy = false;
+                    });
+                }
+                // Otherwise: already in the correct state, do nothing (idempotent).
+              })
+              .catch(function () {
+                /* fail silent */
+              });
+          } catch (e) {
+            /* fail silent */
+          }
+        }
+
+        function debounce(fn, wait) {
+          var t;
+          return function () {
+            clearTimeout(t);
+            t = setTimeout(fn, wait);
+          };
+        }
+
+        var debouncedEvaluate = debounce(evaluate, 350);
+
+        // Subscribe to Dawn cart updates; coalesce bursts via the debounce.
+        if (window.subscribe && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.cartUpdate) {
+          window.subscribe(window.PUB_SUB_EVENTS.cartUpdate, debouncedEvaluate);
+        }
+
+        // One evaluation on load. No polling timer.
+        evaluate();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+          init(document.getElementById('ct-gift-auto-' + SECTION_ID));
+        });
+      } else {
+        init(document.getElementById('ct-gift-auto-' + SECTION_ID));
+      }
+
+      document.addEventListener('shopify:section:load', function (event) {
+        if (event.detail && event.detail.sectionId === SECTION_ID) {
+          init(document.getElementById('ct-gift-auto-' + SECTION_ID));
+        }
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Automatic free gift",
+  "settings": [
+    {
+      "type": "product",
+      "id": "gift_product",
+      "label": "Gift product"
+    },
+    {
+      "type": "text",
+      "id": "threshold_cents",
+      "label": "Qualifying threshold",
+      "info": "Qualifying cart total (excluding the gift) in the shop currency subunits, for example cents. Use 0 to always add the gift.",
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "locked_text",
+      "label": "Locked message",
+      "info": "Use [amount] where the remaining total should appear.",
+      "default": "Spend [amount] more for a free gift"
+    },
+    {
+      "type": "text",
+      "id": "unlocked_text",
+      "label": "Unlocked message",
+      "default": "A free gift has been added to your cart!"
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Note",
+      "info": "Explain the discount requirement to merchants.",
+      "default": "The gift is added at its normal price. Create an automatic discount in admin that makes this product free so it checks out at no charge."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Automatic free gift"
+    }
+  ]
+}
+{% endschema %}
