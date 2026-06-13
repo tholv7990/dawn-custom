@@ -1,0 +1,235 @@
+{% render 'ct-section-padding', section: section %}
+
+{%- liquid
+  assign processing_days = section.settings.processing_days | default: 0
+  assign transit_min = section.settings.transit_min | default: 0
+  assign transit_max = section.settings.transit_max | default: 0
+
+  assign min_total = processing_days | plus: transit_min
+  assign max_total = processing_days | plus: transit_max
+
+  assign min_secs = min_total | times: 86400
+  assign max_secs = max_total | times: 86400
+
+  assign now_ts = 'now' | date: '%s'
+  assign earliest_ts = now_ts | plus: min_secs
+  assign latest_ts = now_ts | plus: max_secs
+
+  assign earliest_date = earliest_ts | date: '%b %-d'
+  assign latest_date = latest_ts | date: '%b %-d'
+-%}
+
+<section class="gs-scope ct-ship-est section-{{ section.id }}-padding">
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading ct-ship-est__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="ct-ship-est__band">
+      {%- if section.settings.icon != blank -%}
+        <span class="ct-ship-est__icon">
+          {% render 'ct-icon', name: section.settings.icon, class: 'ct-icon ct-ship-est__icon-svg' %}
+        </span>
+      {%- endif -%}
+
+      <div class="ct-ship-est__body">
+        {%- if section.settings.show_dates and earliest_date != blank and latest_date != blank -%}
+          <p class="ct-ship-est__window">
+            <span class="ct-ship-est__window-label">{{ 'Estimated delivery' | escape }}:</span>
+            <time class="ct-ship-est__date" datetime="{{ earliest_ts | date: '%Y-%m-%d' }}">{{ earliest_date }}</time>
+            <span class="ct-ship-est__sep" aria-hidden="true">&ndash;</span>
+            <time class="ct-ship-est__date" datetime="{{ latest_ts | date: '%Y-%m-%d' }}">{{ latest_date }}</time>
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.note != blank -%}
+          <p class="ct-ship-est__note">{{ section.settings.note | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ct-ship-est .gs-wrap {
+    margin-inline: auto;
+  }
+
+  .ct-ship-est__heading {
+    margin-bottom: var(--ct-space-5);
+    text-align: center;
+  }
+
+  .ct-ship-est__band {
+    display: flex;
+    align-items: center;
+    gap: var(--ct-space-4);
+    padding: var(--ct-pad-tight);
+    background-color: var(--ct-bg-surface);
+    border: 1px solid var(--ct-border);
+    border-radius: var(--ct-r-lg);
+    box-shadow: var(--ct-shadow-sm);
+  }
+
+  .ct-ship-est__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    color: var(--ct-action);
+    background-color: var(--ct-action-tint);
+    border-radius: var(--ct-r-pill);
+  }
+
+  .ct-ship-est__icon-svg {
+    display: inline-flex;
+    width: 22px;
+    height: 22px;
+  }
+
+  .ct-ship-est__icon-svg svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ct-ship-est__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ct-space-1);
+    min-width: 0;
+  }
+
+  .ct-ship-est__window {
+    margin: 0;
+    font-size: var(--ct-body-size);
+    font-weight: var(--ct-fw-semi);
+    line-height: var(--ct-leading-tight);
+    color: var(--ct-text);
+  }
+
+  .ct-ship-est__window-label {
+    color: var(--ct-text-2);
+    font-weight: var(--ct-fw-medium);
+  }
+
+  .ct-ship-est__date {
+    color: var(--ct-text);
+    font-weight: var(--ct-fw-bold);
+  }
+
+  .ct-ship-est__sep {
+    margin-inline: var(--ct-space-1);
+    color: var(--ct-text-3);
+  }
+
+  .ct-ship-est__note {
+    margin: 0;
+    font-size: var(--ct-text-sm);
+    line-height: var(--ct-leading-base);
+    color: var(--ct-text-2);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ct-ship-est__band {
+      align-items: flex-start;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Shipping estimate",
+  "settings": [
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Icon name",
+      "info": "e.g. truck, box, lock, check, leaf",
+      "default": "truck"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Fast, tracked shipping"
+    },
+    {
+      "type": "header",
+      "content": "Delivery timing"
+    },
+    {
+      "type": "range",
+      "id": "processing_days",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "d",
+      "label": "Processing days",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "transit_min",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "d",
+      "label": "Minimum transit days",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "transit_max",
+      "min": 1,
+      "max": 60,
+      "step": 1,
+      "unit": "d",
+      "label": "Maximum transit days",
+      "default": 7
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dates",
+      "label": "Show estimated delivery dates",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Note",
+      "default": "Order today to get it sooner."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shipping estimate"
+    }
+  ]
+}
+{% endschema %}
