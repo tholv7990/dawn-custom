@@ -9,9 +9,20 @@
 
 ## TL;DR
 
-The foundation (W0 Repair + WD Data Reset) is **done**. W1 (token/CSS refactor) is **~55% done** —
-the emitter, audit tooling, de-branding, presets, and CI guards are in place, but **token retrofit,
-skin-panel token emission, CSS file-split, and `.gs-scope` retirement remain**. W2–W6 are **not started**.
+The foundation (W0 Repair + WD Data Reset) is **done**. W1 (token/CSS refactor): the emitter,
+audit tooling, de-branding, presets, CI guards, **and the L3 component-token + typography +
+reveal emission (W1.T05–T08)** are now in place; what remains is the **visual-regression lane** —
+px/breakpoint retrofit (T10/T11), CSS file-split (T12), `theme-overrides.css` triage (T13),
+`.gs-scope` retirement (T14), light-lock OFF-state verify (T03), override partial (T17). The
+**W2 shared-primitive layer is complete (T01–T09)**. W3–W6 are not started.
+
+> **Progress log (headless-safe lane, branch `custom-theme`):**
+> - **Chunk A** `e1e3a09` — W1.E2 token emission (`--ct-btn/input/pill/dropdown/qty/swatch/arrow/dot/card/drawer/popup/badge-*`, `--ct-h1…h6`, `--ct-reveal-*`) + dev `ct-styleguide` section.
+> - **Chunk B** — deferred: the valuable CSS split is a visual-regression task (distributed `@media` cascade), not headless-safe.
+> - **Chunk C** `9adba31` — W2 primitives: `ct-icon`, `ct-rating-stars`, `ct-price-tokens` (+JS), `<ct-copy-button>`, `<ct-countdown-timer>`, `ct-reveal.js`, `ct-toast.js`.
+> - **Chunk D** `9adf2e4` — W2 complete: `<ct-carousel>`, `ct-upsell-card` (Dawn `<product-form>` pipeline).
+> - Every chunk verified: `node qa/ct-qa.mjs` green (no new token findings) + Theme Check 0 offenses. All additive — no live-template rendering changed.
+> - **Remaining headless-safe odds-and-ends:** W1.T17 color-scheme partial, W6.T04 security panel (default-off), WD.T08 `ct-sticky-atc` metafield fallback, W1.T04 document the `--gs-` freeze.
 
 **Two assessor claims were wrong and are corrected here:** (1) there is **no `!important`** in the
 emitter — the old light-lock paint is already removed; (2) the typography/buttons/pills/inputs/cards/
