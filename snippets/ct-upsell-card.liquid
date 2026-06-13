@@ -28,6 +28,11 @@
     if show_variant and product.has_only_default_variant == false
       assign ct_multi = true
     endif
+    if button_label != blank
+      assign ct_atc_label = button_label
+    else
+      assign ct_atc_label = 'products.product.add_to_cart' | t
+    endif
   -%}
   <div class="ct-upsell ct-upsell--{{ ct_layout }}">
     <a class="ct-upsell__media-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
@@ -67,7 +72,7 @@
             class="ct-upsell__atc button button--full-width"
             {% unless ct_variant.available %}aria-disabled="true" disabled{% endunless %}
           >
-            <span>{{ button_label | default: 'Add to cart' }}</span>
+            <span>{{ ct_atc_label }}</span>
             {% render 'loading-spinner' %}
           </button>
         {%- endform -%}

@@ -27,6 +27,7 @@
     data-ct-bundle-line
     data-qty="{{ bl_qty }}"
     data-unit-cents="{{ bl_variant.price }}"
+    data-compare-cents="{{ bl_variant.compare_at_price | default: 0 }}"
   >
     <div class="ct-bundle__media">
       {% render 'ct-media-slot', image: product.featured_image, class: 'ct-bundle__media-img', ratio: '1 / 1', label: product.title %}

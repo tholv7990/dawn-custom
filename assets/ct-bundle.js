@@ -55,7 +55,10 @@ if (!customElements.get('ct-bundle')) {
         return {
           id: Number(ctrl.value),
           unit: parseInt(line.dataset.unitCents, 10) || 0,
-          compare: 0,
+          // Read the server-rendered compare-at for single-variant / variant-select-off
+          // lines so the on-connect recompute() reproduces the Liquid compare_total
+          // instead of zeroing the savings of an on-sale line (e.g. the main product).
+          compare: parseInt(line.dataset.compareCents, 10) || 0,
           available: ctrl.getAttribute('data-available') === 'true',
         };
       }

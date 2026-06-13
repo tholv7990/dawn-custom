@@ -104,7 +104,8 @@ if (!customElements.get('ct-sticky-atc')) {
         if (this.saveEl) {
           var save = '';
           if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-            save = Math.round(((variant.compare_at_price - variant.price) * 100) / variant.compare_at_price).toString();
+            // Floor to match the Liquid divided_by server render (no 1% snap on variant change).
+            save = Math.floor(((variant.compare_at_price - variant.price) * 100) / variant.compare_at_price).toString();
           }
           this.applySave(save);
         }

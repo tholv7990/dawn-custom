@@ -220,7 +220,8 @@ if (!customElements.get('ct-quantity-breaks')) {
             var compareTotal = compareCents * qty;
             if (compareEl) compareEl.textContent = this.formatMoney(compareTotal);
             if (saveEl) {
-              var pct = Math.round(((compareTotal - total) * 100) / compareTotal);
+              // Floor to match the Liquid divided_by server render (no 1% snap on variant change).
+              var pct = Math.floor(((compareTotal - total) * 100) / compareTotal);
               var label = (saveEl.textContent || '').replace(/\d+%?\s*$/, '').trim();
               saveEl.textContent = (label ? label + ' ' : '') + pct + '%';
             }
