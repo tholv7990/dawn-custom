@@ -27,7 +27,7 @@ Custom storefront work lives in `ct-*` files. The old `gs-*` section, snippet, a
 ## Schema Rules
 
 - Include a preset for every custom section unless the section is only rendered as part of a fixed group.
-- Use neutral defaults. Do not seed fake ratings, sold counts, discount promises, shipping thresholds, warranty claims, real-looking addresses, or third-party brand names. Cart reward thresholds must stay blank until the merchant configures real store rules.
+- Use neutral defaults. Do not seed fake ratings, sold counts, discount promises, shipping thresholds, warranty claims, real-looking addresses, or third-party brand names. Cart reward threshold settings must use `0` as the disabled default until the merchant configures real store rules.
 - Keep commerce values bound to Shopify objects: `product.price`, `compare_at_price`, variants, availability, media, and metafields.
 - Add padding settings with `padding_top` and `padding_bottom` when the section participates in normal document flow. Fixed bars and sticky viewport UI must be documented as exemptions in `qa/ct-section-schema-audit.mjs`.
 

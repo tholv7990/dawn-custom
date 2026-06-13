@@ -49,7 +49,7 @@ Global brand settings are neutral:
 
 - `color_accent`: `#111827`
 - `color_accent_hover`: `#374151`
-- cart reward thresholds: blank until the merchant configures real rules
+- cart reward thresholds: all reward threshold fields use `0` as disabled until the merchant configures real rules
 
 Keep `config/settings_schema.json` and `config/settings_data.json` in sync for
 watched settings. `qa/ct-settings-sync.mjs` guards that relationship.

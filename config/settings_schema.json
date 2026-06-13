@@ -1513,22 +1513,22 @@
         "type": "textarea",
         "id": "ct_reward_thresholds_by_currency",
         "label": "Reward thresholds by currency",
-        "info": "One line per currency: ISO:free_shipping,discount. Values are Shopify money subunits for that active market. Missing non-shop currencies fail closed and are calculated at checkout.",
-        "default": ""
+        "info": "One line per currency: ISO:free_shipping,discount. Use 0 to disable until real store rules are configured. Values are Shopify money subunits for that active market. Missing non-shop currencies fail closed and are calculated at checkout.",
+        "default": "0"
       },
       {
         "type": "text",
         "id": "ct_free_shipping_threshold_cents",
         "label": "Free shipping threshold",
-        "info": "Shop-currency fallback only. For other active currencies, add a currency-map line or market metafield.",
-        "default": ""
+        "info": "Shop-currency fallback only. Use 0 to disable until real store rules are configured. For other active currencies, add a currency-map line or market metafield.",
+        "default": "0"
       },
       {
         "type": "text",
         "id": "ct_discount_threshold_cents",
         "label": "Discount threshold",
-        "info": "Shop-currency fallback only. For other active currencies, add a currency-map line or market metafield.",
-        "default": ""
+        "info": "Shop-currency fallback only. Use 0 to disable until real store rules are configured. For other active currencies, add a currency-map line or market metafield.",
+        "default": "0"
       }
     ]
   }

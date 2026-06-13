@@ -90,5 +90,5 @@ The deprecated legacy token alias stylesheet has been removed. Live storefront C
 
 `ct-crlf-audit` records current line-ending debt and fails only when future changes add more CRLF line endings. Current baseline:
 
-- CRLF line endings: 31,688
+- CRLF line endings: 31,669
 - Files with CRLF: 86

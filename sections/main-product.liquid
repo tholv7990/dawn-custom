@@ -567,6 +567,7 @@
                   {%- endif -%}
                 </div>
               {%- when 'rating' -%}
+                {%- assign fallback_rating_text = block.settings.fallback_rating_text | strip -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper" {{ block.shopify_attributes }}>
                     {% liquid
@@ -603,10 +604,10 @@
                       </span>
                     </p>
                   </div>
-                {%- elsif block.settings.fallback_rating_text != blank -%}
+                {%- elsif fallback_rating_text != blank and fallback_rating_text != '-' -%}
                   <div class="rating-wrapper ct-rating-wrapper--fallback" {{ block.shopify_attributes }}>
-                    <span class="ct-stars" aria-hidden="true">★★★★★</span>
-                    <span class="rating-count caption">{{ block.settings.fallback_rating_text }}</span>
+                    <span class="ct-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <span class="rating-count caption">{{ fallback_rating_text }}</span>
                   </div>
                 {%- endif -%}
               {%- when 'complementary' -%}
@@ -1371,8 +1372,8 @@
           "type": "text",
           "id": "fallback_rating_text",
           "label": "Fallback rating text",
-          "default": "",
-          "info": "Shown when Shopify review metafields are empty."
+          "default": "-",
+          "info": "Shown when Shopify review metafields are empty. Keep '-' to hide the fallback."
         }
       ]
     },

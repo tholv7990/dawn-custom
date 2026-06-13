@@ -8,9 +8,9 @@
       "border_radius": 12,
       "glass_opacity": 0.9,
       "ct_force_light_mode": true,
-      "ct_reward_thresholds_by_currency": "",
-      "ct_free_shipping_threshold_cents": "",
-      "ct_discount_threshold_cents": "",
+      "ct_reward_thresholds_by_currency": "0",
+      "ct_free_shipping_threshold_cents": "0",
+      "ct_discount_threshold_cents": "0",
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -200,9 +200,9 @@
       "border_radius": 12,
       "glass_opacity": 0.9,
       "ct_force_light_mode": true,
-      "ct_reward_thresholds_by_currency": "",
-      "ct_free_shipping_threshold_cents": "",
-      "ct_discount_threshold_cents": "",
+      "ct_reward_thresholds_by_currency": "0",
+      "ct_free_shipping_threshold_cents": "0",
+      "ct_discount_threshold_cents": "0",
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -392,9 +392,9 @@
       "border_radius": 12,
       "glass_opacity": 0.9,
       "ct_force_light_mode": true,
-      "ct_reward_thresholds_by_currency": "",
-      "ct_free_shipping_threshold_cents": "",
-      "ct_discount_threshold_cents": "",
+      "ct_reward_thresholds_by_currency": "0",
+      "ct_free_shipping_threshold_cents": "0",
+      "ct_discount_threshold_cents": "0",
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -584,9 +584,9 @@
       "border_radius": 12,
       "glass_opacity": 0.9,
       "ct_force_light_mode": true,
-      "ct_reward_thresholds_by_currency": "",
-      "ct_free_shipping_threshold_cents": "",
-      "ct_discount_threshold_cents": "",
+      "ct_reward_thresholds_by_currency": "0",
+      "ct_free_shipping_threshold_cents": "0",
+      "ct_discount_threshold_cents": "0",
       "color_schemes": {
         "scheme-1": {
           "settings": {
