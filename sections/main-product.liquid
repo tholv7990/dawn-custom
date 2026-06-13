@@ -812,6 +812,8 @@
                 {% render 'ct-discount-code', section_id: section.id, block: block %}
               {%- when 'size_chart' -%}
                 {% render 'ct-size-chart', section_id: section.id, block: block %}
+              {%- when 'custom_field' -%}
+                {% render 'ct-product-field', product_form_id: product_form_id, section_id: section.id, block: block %}
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -1205,6 +1207,31 @@
         { "type": "page", "id": "page", "label": "Page (source = Page)" },
         { "type": "image_picker", "id": "image", "label": "Image (source = Image)" },
         { "type": "text", "id": "close_label", "label": "Close button label", "default": "Close" }
+      ]
+    },
+    {
+      "type": "custom_field",
+      "name": "Custom field",
+      "settings": [
+        { "type": "paragraph", "content": "Adds a line-item property to this product (e.g. engraving, gift message). Add one block per field." },
+        { "type": "text", "id": "label", "label": "Field label / property name", "default": "Add a note" },
+        {
+          "type": "select",
+          "id": "field_type",
+          "label": "Field type",
+          "default": "text",
+          "options": [
+            { "value": "text", "label": "Text" },
+            { "value": "textarea", "label": "Text area" },
+            { "value": "checkbox", "label": "Checkbox" }
+          ]
+        },
+        { "type": "text", "id": "placeholder", "label": "Placeholder" },
+        { "type": "text", "id": "checkbox_value", "label": "Checkbox value", "default": "Yes", "info": "Saved as the property value when checked." },
+        { "type": "checkbox", "id": "required", "label": "Required", "default": false },
+        { "type": "range", "id": "maxlength", "label": "Max length", "min": 20, "max": 500, "step": 10, "default": 120 },
+        { "type": "range", "id": "rows", "label": "Text area rows", "min": 2, "max": 8, "step": 1, "default": 3 },
+        { "type": "text", "id": "help_text", "label": "Help text" }
       ]
     },
     {

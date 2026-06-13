@@ -114,6 +114,15 @@
             "source": "richtext",
             "content": "<table><thead><tr><th>Size</th><th>Chest</th></tr></thead><tbody><tr><th>S</th><td>36in</td></tr><tr><th>M</th><td>40in</td></tr></tbody></table>"
           }
+        },
+        "custom_field": {
+          "type": "custom_field",
+          "settings": {
+            "label": "Gift message",
+            "field_type": "textarea",
+            "placeholder": "Write your message",
+            "required": false
+          }
         }
       },
       "block_order": [
@@ -131,7 +140,8 @@
         "product_upsells",
         "shipping_estimate",
         "discount_code",
-        "size_chart"
+        "size_chart",
+        "custom_field"
       ],
       "settings": {}
     },

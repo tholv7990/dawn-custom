@@ -1,0 +1,69 @@
+{%- comment -%}
+  Custom product field — W3.T08. Shared snippet for the multi-instance
+  `custom_field` block in main-product / featured-product. Renders a line-item
+  property input associated with the host product form via the `form`
+  attribute, so Dawn's product-form serializes it into cart/add.js and it
+  lands on the cart line (G-07). Native HTML5 `required` gates the add — no
+  form-submit interception.
+
+  Accepts: product_form_id, section_id, block
+{%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign label = s.label | strip
+  assign field_type = s.field_type | default: 'text'
+  assign uid = section_id | append: '-' | append: block.id
+  assign prop_name = 'properties[' | append: label | append: ']'
+-%}
+{%- if label != blank and product_form_id != blank -%}
+  {{ 'component-ct-product-field.css' | asset_url | stylesheet_tag }}
+  <div class="ct-product-field ct-product-field--{{ field_type }}"{% if block != blank %} {{ block.shopify_attributes }}{% endif %}>
+    {%- if field_type == 'checkbox' -%}
+      <label class="ct-product-field__check" for="CtField-{{ uid }}">
+        <input
+          type="checkbox"
+          id="CtField-{{ uid }}"
+          class="ct-product-field__checkbox"
+          name="{{ prop_name }}"
+          form="{{ product_form_id }}"
+          value="{{ s.checkbox_value | default: 'Yes' | escape }}"
+          {% if s.required %}required{% endif %}
+        >
+        <span class="ct-product-field__check-label">
+          {{ label | escape }}{% if s.required %} <span class="ct-product-field__req" aria-hidden="true">*</span>{% endif %}
+        </span>
+      </label>
+    {%- else -%}
+      <label class="ct-product-field__label" for="CtField-{{ uid }}">
+        {{ label | escape }}{% if s.required %} <span class="ct-product-field__req" aria-hidden="true">*</span>{% endif %}
+      </label>
+      {%- if field_type == 'textarea' -%}
+        <textarea
+          id="CtField-{{ uid }}"
+          class="ct-product-field__input ct-product-field__textarea"
+          name="{{ prop_name }}"
+          form="{{ product_form_id }}"
+          rows="{{ s.rows | default: 3 }}"
+          maxlength="{{ s.maxlength | default: 250 }}"
+          placeholder="{{ s.placeholder | escape }}"
+          {% if s.required %}required aria-required="true"{% endif %}
+        ></textarea>
+      {%- else -%}
+        <input
+          type="text"
+          id="CtField-{{ uid }}"
+          class="ct-product-field__input"
+          name="{{ prop_name }}"
+          form="{{ product_form_id }}"
+          maxlength="{{ s.maxlength | default: 120 }}"
+          placeholder="{{ s.placeholder | escape }}"
+          {% if s.required %}required aria-required="true"{% endif %}
+        >
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if s.help_text != blank -%}
+      <p class="ct-product-field__help">{{ s.help_text | escape }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

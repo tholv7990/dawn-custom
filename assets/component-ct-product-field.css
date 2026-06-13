@@ -1,0 +1,75 @@
+/* Custom product field — W3.T08. Token-only. */
+.ct-product-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ct-space-2);
+}
+
+.ct-product-field__label {
+  font-size: var(--ct-text-sm);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-text);
+}
+
+.ct-product-field__req {
+  color: var(--ct-error);
+}
+
+.ct-product-field__input {
+  width: 100%;
+  min-height: var(--ct-touch);
+  padding: var(--ct-space-3) var(--ct-space-4);
+  color: var(--ct-text);
+  font-size: var(--ct-body-size);
+  background: var(--ct-bg-control);
+  border: 1px solid var(--ct-border);
+  border-radius: var(--ct-r-md);
+  transition: border-color var(--ct-dur-base) var(--ct-ease-out);
+}
+
+.ct-product-field__textarea {
+  min-height: auto;
+  resize: vertical;
+}
+
+.ct-product-field__input::placeholder {
+  color: var(--ct-text-3);
+}
+
+.ct-product-field__input:focus {
+  outline: none;
+  border-color: var(--ct-action-border);
+  box-shadow: var(--ct-ring);
+}
+
+.ct-product-field__input:user-invalid {
+  border-color: var(--ct-error);
+}
+
+.ct-product-field__check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ct-space-3);
+  cursor: pointer;
+}
+
+.ct-product-field__checkbox {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin-top: var(--ct-space-1);
+  accent-color: var(--ct-action);
+}
+
+.ct-product-field__check-label {
+  font-size: var(--ct-text-sm);
+  color: var(--ct-text);
+  line-height: 1.4;
+}
+
+.ct-product-field__help {
+  margin: 0;
+  font-size: var(--ct-text-xs);
+  color: var(--ct-text-3);
+  line-height: 1.5;
+}
