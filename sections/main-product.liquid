@@ -1265,7 +1265,7 @@
         { "type": "paragraph", "content": "Score + count bind to the product's reviews metafields. The fallbacks below show only when no metafield is present (no fabricated numbers)." },
         { "type": "text", "id": "fallback_score", "label": "Fallback score", "info": "e.g. 4.7 — shown only if no review metafield exists." },
         { "type": "text", "id": "fallback_count", "label": "Fallback review count" },
-        { "type": "range", "id": "scale_max", "label": "Star scale max", "min": 5, "max": 10, "step": 5, "default": 5 },
+        { "type": "select", "id": "scale_max", "label": "Star scale max", "default": "5", "options": [{ "value": "5", "label": "5" }, { "value": "10", "label": "10" }] },
         { "type": "text", "id": "count_prefix", "label": "Count prefix", "default": "from" },
         { "type": "text", "id": "count_suffix", "label": "Count suffix", "default": "reviews" },
         { "type": "header", "content": "Highlighted quotes (enter real, verified reviews)" },
