@@ -88,13 +88,14 @@
           -%}
           {%- if s[qtext] != blank -%}
             <li class="ct-reviews-showcase__quote">
-              {%- assign qr = s[qrating] | default: scale_max -%}
+              {%- comment -%} Quote ratings are capped at 5 in the schema — use a fixed 5-scale, NOT the aggregate scale_max (which can be 10 from a metafield). {%- endcomment -%}
+              {%- assign qr = s[qrating] | default: 5 -%}
               <div
                 class="rating"
                 role="img"
-                aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: qr, rating_max: scale_max }}"
+                aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: qr, rating_max: 5 }}"
               >
-                <span aria-hidden="true" class="rating-star" style="--rating: {{ qr }}; --rating-max: {{ scale_max }}; --rating-decimal: 0;"></span>
+                <span aria-hidden="true" class="rating-star" style="--rating: {{ qr }}; --rating-max: 5; --rating-decimal: 0;"></span>
               </div>
               <blockquote class="ct-reviews-showcase__quote-text">{{ s[qtext] | escape }}</blockquote>
               <div class="ct-reviews-showcase__quote-by">
