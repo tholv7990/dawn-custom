@@ -1,0 +1,64 @@
+{%- comment -%}
+  Cart free-shipping progress bar (W4.T02) for the cart drawer + cart page.
+
+  Server-rendered INSIDE Dawn's section-refreshed region (cart-drawer-items /
+  main-cart-items), so it re-computes on every add/remove/qty change with NO
+  custom JS — zero CLS, fail-open, no client money math. Renders nothing when
+  the threshold setting is unset (0) or the cart is empty.
+
+  The host (drawer / cart-items) must load component-ct-cart-progress.css ONCE,
+  outside the refreshed region, so the stylesheet isn't re-injected per refresh.
+
+  Reads the global `cart` + `settings` objects. No params.
+{%- endcomment -%}
+{%- liquid
+  assign threshold = settings.ct_free_shipping_threshold_cents | times: 1
+  assign is_empty = false
+  if cart.item_count == 0
+    assign is_empty = true
+  endif
+-%}
+{%- if threshold > 0 and is_empty == false -%}
+  {%- liquid
+    assign current = cart.total_price
+    assign remaining = threshold | minus: current
+    if remaining < 0
+      assign remaining = 0
+    endif
+    assign pct = current | times: 100 | divided_by: threshold
+    if pct > 100
+      assign pct = 100
+    endif
+    if pct < 0
+      assign pct = 0
+    endif
+    assign achieved = false
+    if current >= threshold
+      assign achieved = true
+    endif
+    assign remaining_money = remaining | money
+  -%}
+  <div
+    class="ct-cart-progress{% if achieved %} ct-cart-progress--achieved{% endif %}"
+    data-ct-cart-progress
+  >
+    <p class="ct-cart-progress__message" aria-live="polite">
+      {%- if achieved -%}
+        {% render 'ct-icon', name: 'success' %}
+        <span>{{ 'sections.cart.ct_free_shipping_unlocked' | t }}</span>
+      {%- else -%}
+        {% render 'ct-icon', name: 'truck' %}
+        <span>{{ 'sections.cart.ct_free_shipping_progress_html' | t: amount: remaining_money }}</span>
+      {%- endif -%}
+    </p>
+    <div
+      class="ct-cart-progress__track"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ pct }}"
+    >
+      <span class="ct-cart-progress__fill" style="width: {{ pct }}%;"></span>
+    </div>
+  </div>
+{%- endif -%}
