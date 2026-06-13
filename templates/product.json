@@ -37,6 +37,17 @@
         "share": {
           "type": "share",
           "settings": {}
+        },
+        "sticky_atc": {
+          "type": "sticky_atc",
+          "settings": {
+            "show_image": true,
+            "show_title": true,
+            "show_price": true,
+            "show_save_badge": true,
+            "button_label": "Add to cart",
+            "save_label": "Save"
+          }
         }
       },
       "block_order": [
@@ -47,7 +58,8 @@
         "quantity_selector",
         "buy_buttons",
         "description",
-        "share"
+        "share",
+        "sticky_atc"
       ],
       "settings": {}
     },

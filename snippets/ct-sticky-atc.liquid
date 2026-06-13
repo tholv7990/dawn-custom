@@ -1,0 +1,126 @@
+{%- comment -%}
+  Sticky add-to-cart bar — W3.T02. Shared snippet, dual-mode:
+  - REUSE mode  (pass product_form_id): the ATC button submits the host
+    product form via the form= attribute — no duplicate <product-form>,
+    stays on Dawn's commerce pipeline (G-07). Used by the main-product /
+    featured-product `sticky_atc` block.
+  - STANDALONE mode (omit product_form_id): renders its own <product-form>.
+    Used by the funnel/landing `ct-sticky-atc` section where there is no
+    host buy box to attach to.
+
+  Accepts:
+    product           {Product}  required (host product, or block fallback)
+    product_form_id   {String}   optional — present => reuse mode
+    section_id        {String}   required (for unique ids + variantChange match)
+    block             {Block}    optional — settings + shopify_attributes
+{%- endcomment -%}
+{%- liquid
+  assign sticky_product = product
+  if sticky_product == blank and block != blank
+    assign sticky_product = block.settings.product
+  endif
+  assign sticky_variant = sticky_product.selected_or_first_available_variant
+  assign sticky_save = 0
+  if sticky_variant.compare_at_price > sticky_variant.price
+    assign sticky_save = sticky_variant.compare_at_price | minus: sticky_variant.price | times: 100 | divided_by: sticky_variant.compare_at_price
+  endif
+  assign s = block.settings
+  assign reuse_form = false
+  if product_form_id != blank
+    assign reuse_form = true
+  endif
+  assign sticky_btn_label = s.button_label | default: 'Add to cart'
+  assign sticky_save_label = s.save_label | default: 'Save'
+  assign sticky_show_image = true
+  assign sticky_show_title = true
+  assign sticky_show_price = true
+  assign sticky_show_save = true
+  if block != blank
+    assign sticky_show_image = s.show_image
+    assign sticky_show_title = s.show_title
+    assign sticky_show_price = s.show_price
+    assign sticky_show_save = s.show_save_badge
+  endif
+-%}
+{%- if sticky_product != blank -%}
+  {{ 'component-ct-sticky-atc.css' | asset_url | stylesheet_tag }}
+  <ct-sticky-atc
+    class="ct-sticky-atc"
+    data-section-id="{{ section_id }}"
+    {% if reuse_form %}data-form-id="{{ product_form_id }}"{% endif %}
+    {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
+  >
+    <div class="ct-sticky-atc__inner page-width">
+      {%- if sticky_show_image -%}
+        {% render 'ct-media-slot', image: sticky_product.featured_image, class: 'ct-sticky-atc__img', label: sticky_product.title, ratio: '1 / 1' %}
+      {%- endif -%}
+      <div class="ct-sticky-atc__meta">
+        {%- if sticky_show_title -%}
+          <span class="ct-sticky-atc__title">{{ sticky_product.title | escape }}</span>
+        {%- endif -%}
+        {%- if sticky_show_price -%}
+          <span class="ct-sticky-atc__price-row">
+            <span class="ct-sticky-atc__price" data-ct-sticky-price>{{ sticky_variant.price | money }}</span>
+            {%- if sticky_show_save -%}
+              <span class="ct-sticky-atc__save" data-ct-sticky-save{% if sticky_save <= 0 %} hidden{% endif %}>{{ sticky_save_label | escape }} {{ sticky_save }}%</span>
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </div>
+
+      {%- if reuse_form -%}
+        <button
+          type="submit"
+          name="add"
+          form="{{ product_form_id }}"
+          class="ct-sticky-atc__btn button button--primary"
+          data-ct-sticky-add
+          {% unless sticky_variant.available %}disabled{% endunless %}
+        >
+          <span data-ct-sticky-btn-text>{{ sticky_btn_label | escape }}</span>
+          {% render 'loading-spinner' %}
+        </button>
+      {%- else -%}
+        <product-form class="product-form ct-sticky-atc__form" data-hide-errors="true" data-section-id="{{ section_id }}">
+          {%- assign sticky_form_id = 'ct-sticky-form-' | append: section_id -%}
+          {%- form 'product', sticky_product, id: sticky_form_id, class: 'form' -%}
+            {%- if sticky_product.has_only_default_variant -%}
+              <input type="hidden" name="id" value="{{ sticky_variant.id }}" class="product-variant-id">
+            {%- else -%}
+              <label class="visually-hidden" for="CtStickyVariant-{{ section_id }}">{{ sticky_product.title | escape }}</label>
+              <select
+                id="CtStickyVariant-{{ section_id }}"
+                name="id"
+                class="ct-sticky-atc__variant product-variant-id"
+                data-ct-sticky-variant
+              >
+                {%- for variant in sticky_product.variants -%}
+                  <option
+                    value="{{ variant.id }}"
+                    data-price="{{ variant.price | money }}"
+                    data-save="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price }}{% endif %}"
+                    {% if variant.id == sticky_variant.id %}selected{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                  >
+                    {{ variant.title }}{% unless variant.available %} - {{ 'products.product.sold_out' | t }}{% endunless %}
+                  </option>
+                {%- endfor -%}
+              </select>
+            {%- endif -%}
+            <button
+              type="submit"
+              name="add"
+              class="ct-sticky-atc__btn button button--primary"
+              data-ct-sticky-add
+              {% unless sticky_variant.available %}disabled{% endunless %}
+            >
+              <span data-ct-sticky-btn-text>{{ sticky_btn_label | escape }}</span>
+              {% render 'loading-spinner' %}
+            </button>
+          {%- endform -%}
+        </product-form>
+      {%- endif -%}
+    </div>
+  </ct-sticky-atc>
+  <script src="{{ 'ct-sticky-atc.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

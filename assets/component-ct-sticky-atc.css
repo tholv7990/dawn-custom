@@ -1,0 +1,109 @@
+/* Sticky add-to-cart bar — W3.T02. Token-only; reveal via .ct-sticky-atc--visible. */
+.ct-sticky-atc {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  padding-top: var(--ct-space-3);
+  padding-bottom: var(--ct-space-3);
+  background: var(--ct-glass-bg);
+  border-top: 1px solid var(--ct-border);
+  box-shadow: var(--ct-shadow-bottom);
+  backdrop-filter: blur(10px);
+  transform: translateY(110%);
+  transition: transform var(--ct-dur-base) var(--ct-ease-out);
+  will-change: transform;
+}
+
+.ct-sticky-atc--visible {
+  transform: translateY(0);
+}
+
+.ct-sticky-atc__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--ct-space-4);
+}
+
+.ct-sticky-atc__img {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--ct-r-sm);
+  overflow: hidden;
+}
+
+.ct-sticky-atc__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ct-space-1);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.ct-sticky-atc__title {
+  font-size: var(--ct-text-sm);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ct-sticky-atc__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ct-space-2);
+}
+
+.ct-sticky-atc__price {
+  font-size: var(--ct-text-md);
+  font-weight: var(--ct-fw-bold);
+  color: var(--ct-price);
+}
+
+.ct-sticky-atc__save {
+  font-size: var(--ct-text-xs);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-savings);
+}
+
+.ct-sticky-atc__save[hidden] {
+  display: none;
+}
+
+.ct-sticky-atc__form {
+  flex: 0 0 auto;
+}
+
+.ct-sticky-atc__variant {
+  max-width: 40%;
+}
+
+.ct-sticky-atc__btn {
+  flex: 0 0 auto;
+  margin: 0;
+  min-height: var(--ct-touch);
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 749px) {
+  .ct-sticky-atc__inner {
+    gap: var(--ct-space-3);
+  }
+
+  .ct-sticky-atc__img {
+    display: none;
+  }
+
+  .ct-sticky-atc__btn {
+    flex: 1 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-sticky-atc {
+    transition: none;
+  }
+}
