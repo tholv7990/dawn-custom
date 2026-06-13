@@ -60,6 +60,16 @@ Enable: **Theme settings → Cart upsells → Show an upsell rail** ✓ + pick 2
 - [ ] With blocks added, the storefront cart still **adds/updates/removes/checks out** (the `.cart-drawer__footer` + `#CartDrawer-Checkout` still present).
 - [ ] ⚠️ If you remove the Subtotal or Checkout block in the editor, those elements disappear — keep both unless intentionally replacing them.
 
+## 6. Cart-level free gift (W4.T04)
+Enable: **Theme settings → Cart free gift → Enable an automatic free gift** ✓ + pick a **Gift product** + set **Gift threshold** = e.g. `7500` ($75). (Add an automatic discount in admin to zero the gift's price.)
+- [ ] Below $75: drawer shows "Spend $X more for a free gift" + progress bar; the gift is **not** in the cart.
+- [ ] Cross $75 → the gift **auto-adds** to the cart (one only), copy switches to "Free gift added…".
+- [ ] Drop below $75 (remove/reduce items) → the gift **auto-removes**.
+- [ ] No oscillation/double-add under rapid qty changes; the gift's own price never counts toward the threshold.
+- [ ] **Add a product from a PDP** (external add) → the gift logic still works afterward (the actor-handoff fix).
+- [ ] Sold-out gift product → no request loop (it just stays locked). Empty cart → bar hidden.
+- [ ] Turn the setting OFF → no gift logic anywhere; the PDP `gift_offer` block (if used) still works independently.
+
 ---
 
 ## Cross-cutting

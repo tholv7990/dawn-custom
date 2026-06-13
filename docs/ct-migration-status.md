@@ -20,7 +20,7 @@ reviews-showcase, savings-line — additive, no Dawn commerce-logic edits); the 
 and **W6 overlays** are built. The **W4 cart system is ~85% done** (drawer blockification, free-shipping bar,
 upsell rail, TnC gate + discount field, cart-page parity — all shipped + adversarially reviewed; only the
 low-value multi-tier checkpoints / cart-gift leftovers remain). What remains is the **preview-gated lane**:
-Dawn-core buy-box edits + media-gallery blockification (W3.T09/T10), **W6.T02 mega-menu / W6.T05 RTL**, and the
+Dawn-core buy-box edits + media-gallery blockification (W3.T09/T10), **W6.T05 RTL sweep** (W6.T02 mega-menu is Dawn-native), and the
 **W1 visual-regression lane** — these need a working `shopify theme dev` render + screenshot baselines. The
 batched `--only theme push` workaround now reliably lands code on the preview theme despite the earlier
 sustained-transfer `ECONNRESET`.
@@ -123,15 +123,19 @@ T09 Dawn-core price-in-button + variant-picker + buy-buttons upgrades · T10 Med
 T01 **Drawer blockification** ✅ — `sections/cart-drawer.liquid` is now a `{% section %}` block host (footer = subtotal/discount/terms/checkout/custom_liquid blocks, reorderable, editor `test_mode`), with a **verbatim no-block fallback** so the storefront never regresses and **post-loop guards** keeping `.cart-drawer__footer` + `#CartDrawer-Checkout` un-droppable (3-lens review, 3 fixes) ·
 T02 **Free-shipping progress bar** ✅ (server-rendered inside the refreshed region, no JS, drawer + page) ·
 T03 **Cart upsell rail** ✅ (exclude-in-cart, G-07 `ct-upsell-card` add, self-prunes on add) ·
+T04 **Cart-level automatic free gift** ✅ (global counterpart of the PDP `gift_offer`; reuses the oscillation-safe `<ct-gift-engine>` with a new singleton actor-guard so a global cart-gift + a PDP gift block can't fight; focused review, 3 fixes incl. a replaceWith re-mount actor dead-state and a sold-out-422 retry loop) ·
 T05 **TnC checkout gate** ✅ (drawer + page + dynamic Shop Pay buttons; aria-disabled + capture guard, never touches native `disabled`; consent resets on empty cart; 3-lens review, 6 fixes incl. two false-open leaks) + **discount field** ✅ (native discount link) ·
 T06 **Cart-page parity** ✅ (all four mirrored onto `main-cart-footer`/`main-cart-items`).
-All `ct-qa` + Theme-Check 0-offenses green. QA steps in `docs/ct-cart-qa-checklist.md`.
-**🔒 Remaining (low value, optional):** T02b multi-tier checkpoints bar (free-shipping bar already covers the core reward UX) · T04 cart-level conditional gift (the PDP `gift_offer` block + `ct-gift-engine` already exist). Needs preview for interaction QA.
+All `ct-qa` + Theme-Check 0-offenses green. QA steps in `docs/ct-cart-qa-checklist.md`. **W4 now ~95%.**
+**Remaining (low value, optional):** T02b multi-tier checkpoints bar (the free-shipping bar already covers the core reward UX; the standalone `ct-cart-checkpoints` section exists but isn't drawer-integrated). Needs preview for interaction QA.
 
 ### W5 — Section library — **mostly ⬜; bases exist**
 T01 social-proof 🟡 (`ct-reviews`, `ct-brand-strip`) · T02 tickers 🟡 (`ct-trust-marquee`, `ct-announcement-bars`) · T03 comparison 🟡 (`ct-comparison`) · T05 builders 🟡 (`ct-feature-blocks` + Dawn natives) · T06 forms 🟡 (`ct-email-signup`, `ct-faq`, `contact-form`) · T04 hotspots/heroes ⬜. All 🔒.
 
-### W6 — Nav, overlays, hardening — **all ⬜** (header sticky modes, mega-menu, promo-popup, security panel, RTL sweep, a11y/perf hardening). Mostly 🔒 (T04 security panel ⚙️).
+### W6 — Nav, overlays, hardening — **partial**
+T01 header sticky modes ✅ · T03 promo-popup / scroll-to-top / cookie-bar ✅ · T04 security panel ✅ (⚙️, default-off) ·
+**T02 mega-menu ✅ (Dawn-native)** — the restored Dawn 15.4.1 header already ships full mega-menu support: set `menu_type_desktop: 'mega'` in the header section + structure the nav linklist with nested children; `header.liquid` renders `header-mega-menu` + loads `component-mega-menu.css`. Per the "use native Shopify elements" principle, no custom build needed (Shrine's image/promo-panel mega-menu blocks would be the only DELTA, and that's an "extra" beyond the reference). ·
+**🔒 Remaining:** T05 RTL sweep (logical-property conversion — LTR-safe but needs an RTL render to verify) · a11y/perf hardening pass. Need preview.
 
 ---
 
