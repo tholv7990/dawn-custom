@@ -26,7 +26,15 @@ px/breakpoint retrofit (T10/T11), CSS file-split (T12), `theme-overrides.css` tr
 > - **Chunk G** — G-03: seeded neutral preset blocks for ct-product-buy / ct-reviews / ct-feature-blocks / ct-comparison (drag-in now shows a complete default).
 > - **Chunk H** — **W1.T12**: split `section-ct-page.css` (2,510 lines) into `section-ct-base.css` + `section-ct-components.css` + `section-ct-responsive.css`, loaded in that order. Cut at depth-0 boundaries; **concat === original verified byte-for-byte** → guaranteed zero visual change. Token allowlist re-keyed (192 px → 17/155/20). Per-section/per-template loading (the payload-reduction optimization) is the visual-lane follow-up.
 > - Every chunk verified: `node qa/ct-qa.mjs` green (no new token findings) + Theme Check 0 offenses. All additive — no live-template rendering changed (security feature is inert at its default; landing template is opt-in; CSS split is byte-identical).
-> - **Remaining work** (W1 px/breakpoint retrofit, `theme-overrides.css` triage, `.gs-scope` retirement, per-section CSS loading; W3–W6 commerce) changes live rendering and should be visually verified on a Shopify dev store before merge.
+> - **Autonomous build push (23 net-new sections, all `node qa/ct-qa.mjs` + Theme Check 0-offenses clean):**
+>   - **W5 section library COMPLETE (14):** ct-pricing-table, ct-steps, ct-stats, ct-icon-columns, ct-timeline, ct-tabs, ct-before-after, ct-cta-banner, ct-accordion, ct-quote, ct-hero, ct-hotspots, ct-divider, ct-gallery.
+>   - **W3 support (3):** ct-trust-bar (native `payment_type_svg_tag`), ct-shipping-estimate (Liquid date-window), ct-size-chart.
+>   - **W6 overlays (3):** ct-promo-popup (timed, `request.design_mode`-safe, localStorage cap), ct-scroll-to-top, ct-cookie-bar.
+>   - **Commerce-display (3):** ct-product-upsells, ct-collection-grid, ct-featured-product-cta (add-to-cart via the existing ct-upsell-card / Dawn product-form; deferred scripts).
+>   - **W1.T18 (partial):** `lighthouserc.json` budgets wired to the existing CI Lighthouse action.
+>   - **Bug fixes:** button ghost-frame (`--buttons-radius` sync), cart-notification corner sync.
+>   - All token-only CSS, neutral presets/defaults, 0 brand/proof; interactive sections use idempotent, section-scoped, reduced-motion-aware IIFE scripts.
+> - **Genuinely-blocked remainder** (needs a product on the store and/or rendered visual verification, so not safely doable headless): the cart-mutating W3 blocks (bundle/gifts) + their `main-product` registration, the **W4 cart system** (drawer blockification, progress/gift/discount), **W6 header sticky modes + mega-menu** (edits the custom header), the **W1 visual lane** (T03/T10/T11/T13/T14 — px/breakpoint retrofit, overrides triage, `.gs-scope` retirement), **W6.T05 RTL**, and **W0.T03** LF normalization (disruptive vs the CRLF baseline).
 
 **Two assessor claims were wrong and are corrected here:** (1) there is **no `!important`** in the
 emitter — the old light-lock paint is already removed; (2) the typography/buttons/pills/inputs/cards/
