@@ -1,0 +1,26 @@
+{
+  "color-literal": {
+    "assets/base.css": 10,
+    "sections/main-product.liquid": 4
+  },
+  "important": {
+    "assets/base.css": 15,
+    "assets/component-cart-drawer.css": 10,
+    "assets/component-image-with-text.css": 1,
+    "assets/component-menu-drawer.css": 3,
+    "assets/quick-add.css": 1,
+    "assets/section-footer.css": 1,
+    "assets/section-image-banner.css": 1,
+    "assets/section-main-product.css": 7,
+    "assets/section-password.css": 1,
+    "assets/theme-overrides.css": 2
+  },
+  "px-spacing-type-literal": {
+    "assets/base.css": 1,
+    "assets/component-cart-drawer.css": 1,
+    "assets/customer.css": 1,
+    "assets/quick-order-list.css": 2,
+    "assets/section-ct-page.css": 192,
+    "assets/theme-overrides.css": 14
+  }
+}

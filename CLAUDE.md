@@ -20,6 +20,16 @@ read `.codex/skills/shopify-liquid-theme-bugfix/SKILL.md` first. Treat its
 pre-fix checklist, render-path mapping, root-cause discipline, validation
 matrix, and response template as mandatory for Shopify Liquid bugfix work.
 
+## Agent operating mode
+
+When the user gives an implementation task, keep working until the task is
+complete and validated. Do not pause just to report progress, ask whether to
+continue, or wait for confirmation between obvious next steps. Stop only when
+user approval/access is required (for example Shopify login, network/download
+approval, destructive git/file operations, or credentials), when a product or
+design decision cannot be inferred safely from local context, or when a blocking
+error repeats after reasonable investigation.
+
 ## Design rule — follow the reference 100%, never add extras
 
 The CozyClaw design files in `files/` are the **single source of visual truth**:

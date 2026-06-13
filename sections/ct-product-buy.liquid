@@ -1,4 +1,5 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{% render 'ct-section-padding', section: section %}
 
 {%- liquid
   assign gs_product = product
@@ -19,14 +20,18 @@
     assign rating_value = gs_product.metafields.reviews.rating.value.rating
     assign rating_count = gs_product.metafields.reviews.rating_count.value
   endif
-  assign sold_count = gs_product.metafields.custom.sold_count.value
   assign origin_text = gs_product.metafields.custom.origin_text.value | default: section.settings.origin_text
+  assign display_rating = rating_value | default: section.settings.fallback_rating | strip
+  assign display_review_count = rating_count | default: section.settings.fallback_review_count | strip
+  assign display_sold_text = section.settings.fallback_sold_text | strip
 -%}
 
-<section class="gs-scope gs-product" data-gs-product data-gs-buy id="product">
+<section class="gs-scope gs-product section-{{ section.id }}-padding" data-gs-product data-gs-buy id="product">
   <div class="gs-wrap gs-product__grid">
     <div class="gs-gallery">
-      <span class="gs-gallery__badge">{{ section.settings.gallery_badge }}</span>
+      {%- if section.settings.gallery_badge != blank -%}
+        <span class="gs-gallery__badge">{{ section.settings.gallery_badge }}</span>
+      {%- endif -%}
       <button type="button" class="gs-gallery__arrow gs-gallery__arrow--prev" data-gs-gallery-prev aria-label="Previous image">&lsaquo;</button>
       <div class="gs-gallery__track" data-gs-gallery-track>
         {%- if gs_product != blank and gs_product.media.size > 0 -%}
@@ -85,7 +90,7 @@
             }}
           </button>
         {%- else -%}
-          {% render 'gs-media-slot', class: 'gs-gallery__slide', label: 'Product image', ratio: '1 / 1' %}
+          {% render 'ct-media-slot', class: 'gs-gallery__slide', label: 'Product image', ratio: '1 / 1' %}
         {%- endif -%}
       </div>
       <button type="button" class="gs-gallery__arrow gs-gallery__arrow--next" data-gs-gallery-next aria-label="Next image">&rsaquo;</button>
@@ -100,55 +105,47 @@
           {{ section.settings.title }}
         {%- endif -%}
       </h2>
-      <div class="gs-soldby">Sold by Pollinook <span class="gs-soldby__check">&#10003;</span></div>
-      <div class="gs-rating-row">
-        <b>{{ rating_value | default: section.settings.fallback_rating }}</b>
-        <span class="gs-stars" aria-hidden="true">&starf;</span>
-        <span>
-          {%- if rating_count != blank -%}
-            ({{ rating_count }})
-          {%- else -%}
-            {{ section.settings.fallback_review_count }}
+      <div class="gs-soldby">Sold by {{ shop.name | default: 'Storefront' }} <span class="gs-soldby__check">&#10003;</span></div>
+      {%- if display_rating != blank or display_review_count != blank or display_sold_text != blank -%}
+        <div class="gs-rating-row">
+          {%- if display_rating != blank -%}
+            <b>{{ display_rating }}</b>
+            <span class="gs-stars" aria-hidden="true">&starf;</span>
           {%- endif -%}
-        </span>
-        <span>
-          {%- if sold_count != blank -%}
-            {{ sold_count }} have been sold.
-          {%- else -%}
-            {{ section.settings.fallback_sold_text }}
+          {%- if display_review_count != blank -%}<span>({{ display_review_count | remove: '(' | remove: ')' }})</span>{%- endif -%}
+          {%- if display_sold_text != blank -%}<span>{{ display_sold_text }}</span>{%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.value_title != blank or section.settings.value_subtitle != blank or section.settings.show_countdown -%}
+        <div class="gs-value-bar">
+          <span class="gs-value-bar__icon" aria-hidden="true">&#10003;</span>
+          <div class="gs-value-bar__copy">
+            {%- if section.settings.value_title != blank -%}
+              <div class="gs-value-bar__title">{{ section.settings.value_title }}</div>
+            {%- endif -%}
+            {%- if section.settings.value_subtitle != blank -%}
+              <div class="gs-value-bar__sub"><span aria-hidden="true">&#128666;</span> {{ section.settings.value_subtitle }}</div>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.show_countdown -%}
+            <span class="gs-countdown" data-gs-countdown>00:00:00</span>
           {%- endif -%}
-        </span>
-      </div>
-
-      <div class="gs-value-bar">
-        <span class="gs-value-bar__icon" aria-hidden="true">&#127873;</span>
-        <div class="gs-value-bar__copy">
-          <div class="gs-value-bar__title">{{ section.settings.value_title }}</div>
-          <div class="gs-value-bar__sub"><span aria-hidden="true">&#128666;</span> {{ section.settings.value_subtitle }}</div>
         </div>
-        <span class="gs-countdown" data-gs-countdown>00:00:00</span>
-      </div>
+      {%- endif -%}
 
-      <div class="gs-made-bar">
-        <span class="gs-made-bar__flag" aria-hidden="true"><span></span></span>
-        <span class="visually-hidden">United States</span>
-        <div class="gs-made-bar__text">
-          <small>{{ section.settings.origin_label }}</small>
-          <b>
-            <span class="gs-inline-icon" aria-hidden="true">{{ 'icon-map-pin.svg' | inline_asset_content }}</span>
-            {{ origin_text }}
-          </b>
+      {%- if origin_text != blank -%}
+        <div class="gs-made-bar">
+          <span class="gs-made-bar__flag" aria-hidden="true"><span></span></span>
+          <div class="gs-made-bar__text">
+            {%- if section.settings.origin_label != blank -%}<small>{{ section.settings.origin_label }}</small>{%- endif -%}
+            <b>
+              <span class="gs-inline-icon" aria-hidden="true">{{ 'icon-map-pin.svg' | inline_asset_content }}</span>
+              {{ origin_text }}
+            </b>
+          </div>
         </div>
-        <span class="gs-secure-pill">
-          <span class="gs-inline-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" role="presentation" focusable="false">
-              <path d="M12 3.2 18.2 5v5.1c0 4.1-2.5 7.8-6.2 9.4-3.7-1.6-6.2-5.3-6.2-9.4V5L12 3.2Z"></path>
-              <path d="m9.5 12 1.8 1.8 3.5-4"></path>
-            </svg>
-          </span>
-          Shopify Secure
-        </span>
-      </div>
+      {%- endif -%}
 
       {%- if gs_product != blank -%}
         <div class="gs-price-row">
@@ -186,7 +183,10 @@
             {%- if block.settings.badge != blank -%}<span class="gs-tier__badge">{{ block.settings.badge }}</span>{%- endif -%}
             <div class="gs-tier__top">
               <div>
-                <div class="gs-tier__name">{{ block.settings.title }} <span class="gs-tier__pill">{{ block.settings.pill }}</span></div>
+                <div class="gs-tier__name">
+                  {{ block.settings.title }}
+                  {%- if block.settings.pill != blank -%}<span class="gs-tier__pill">{{ block.settings.pill }}</span>{%- endif -%}
+                </div>
                 <div class="gs-tier__save">{{ block.settings.subtitle }}</div>
               </div>
               <div class="gs-tier__price">
@@ -237,11 +237,11 @@
         </div>
         <div>
           <span class="gs-trust-mini__icon" aria-hidden="true">&#8617;</span>
-          30-day returns
+          Return policy
         </div>
         <div>
           <span class="gs-trust-mini__icon" aria-hidden="true">&#128666;</span>
-          Tracked shipping
+          Delivery options
         </div>
       </div>
     </div>
@@ -259,30 +259,57 @@
 
 {% schema %}
 {
-  "name": "GS product buy",
+  "name": "Product buy",
   "settings": [
     { "type": "product", "id": "product", "label": "Homepage product fallback" },
     { "type": "image_picker", "id": "fallback_image", "label": "Fallback gallery image" },
-    { "type": "text", "id": "gallery_badge", "label": "Gallery badge", "default": "SAVE TODAY" },
-    { "type": "text", "id": "title", "label": "Fallback title", "default": "Pollinook product" },
-    { "type": "text", "id": "fallback_rating", "label": "Fallback rating text", "default": "4.8" },
-    { "type": "text", "id": "fallback_review_count", "label": "Fallback review count text", "default": "(1.8K)" },
-    { "type": "text", "id": "fallback_sold_text", "label": "Fallback sold text", "default": "3.2K have been sold." },
-    { "type": "text", "id": "value_title", "label": "Value title", "default": "Great Value Package" },
-    { "type": "text", "id": "value_subtitle", "label": "Value subtitle", "default": "Fast 7-day U.S. shipping" },
+    { "type": "text", "id": "gallery_badge", "label": "Gallery badge" },
+    { "type": "text", "id": "title", "label": "Fallback title", "default": "Featured product" },
+    { "type": "text", "id": "fallback_rating", "label": "Fallback rating text" },
+    { "type": "text", "id": "fallback_review_count", "label": "Fallback review count text" },
+    { "type": "text", "id": "fallback_sold_text", "label": "Fallback sold text" },
+    { "type": "text", "id": "value_title", "label": "Value title", "default": "Product details" },
+    {
+      "type": "text",
+      "id": "value_subtitle",
+      "label": "Value subtitle",
+      "default": "Shipping and delivery options are calculated at checkout."
+    },
+    { "type": "checkbox", "id": "show_countdown", "label": "Show countdown timer", "default": false },
     { "type": "text", "id": "origin_label", "label": "Origin label", "default": "SHIPS FROM" },
-    { "type": "text", "id": "origin_text", "label": "Origin text", "default": "Dallas, TX" },
-    { "type": "text", "id": "bundle_heading", "label": "Bundle heading", "default": "BUNDLE & SAVE" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" }
+    { "type": "text", "id": "origin_text", "label": "Origin text" },
+    { "type": "text", "id": "bundle_heading", "label": "Bundle heading", "default": "Choose a quantity" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+    { "type": "header", "content": "Section padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
   ],
   "blocks": [
     {
       "type": "tier",
       "name": "Tier",
       "settings": [
-        { "type": "text", "id": "title", "label": "Title", "default": "Single Garden Accent" },
-        { "type": "text", "id": "pill", "label": "Pill", "default": "Bundle" },
-        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "One flower stake for a favorite corner" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Single item" },
+        { "type": "text", "id": "pill", "label": "Pill", "default": "Option" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Add option details" },
         { "type": "text", "id": "badge", "label": "Badge" },
         { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 4, "step": 1, "default": 1 }
       ]
@@ -290,13 +317,8 @@
   ],
   "presets": [
     {
-      "name": "GS product buy",
-      "blocks": [
-        { "type": "tier", "settings": { "title": "Buy 1", "pill": "Starter", "subtitle": "One flower stake for a favorite corner", "quantity": 1 } },
-        { "type": "tier", "settings": { "title": "Buy 2", "pill": "Discount 20%", "subtitle": "Frame both sides of a path or patio", "badge": "&#128293; MOST POPULAR &#128293;", "quantity": 2 } },
-        { "type": "tier", "settings": { "title": "Buy 3", "pill": "Discount 25%", "subtitle": "Build a colorful garden cluster", "badge": "&#9889; FLASH SALE &#9889;", "quantity": 3 } },
-        { "type": "tier", "settings": { "title": "Buy 4", "pill": "Discount 30% - VIP Free Shipping", "subtitle": "Gift-ready set for gardeners", "badge": "&#127873; BEST VALUE OFFER &#127873;", "quantity": 4 } }
-      ]
+      "name": "Product buy",
+      "blocks": []
     }
   ]
 }

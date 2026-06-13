@@ -1,6 +1,6 @@
 {%- comment -%}
   Keep Dawn header utility snippets referenced for Theme Check while the active
-  Pollinook header uses a minimal reference layout.
+  Custom header uses a minimal reference layout.
 {%- endcomment -%}
 {%- if false -%}
   {% render 'header-drawer' %}
@@ -12,7 +12,8 @@
 {%- assign header_logo_width = section.settings.logo_width | default: settings.logo_width | default: 180 -%}
 {%- assign header_logo_sizes = header_logo_width | append: 'px' -%}
 {%- assign header_logo_style = 'width: ' | append: header_logo_width | append: 'px' -%}
-{%- assign header_logo_alt = shop.name | default: 'Pollinook' | escape -%}
+{%- assign header_logo_alt = shop.name | default: 'Storefront' | escape -%}
+{%- assign header_menu = section.settings.menu -%}
 
 <header class="gs-scope gs-head" role="banner">
   <div class="gs-wrap gs-head__wrap">
@@ -33,15 +34,16 @@
             style: header_logo_style
         }}
       {%- else -%}
-        <span class="gs-logo__text">Pollinook<sup>&trade;</sup></span>
+        <span class="gs-logo__text">{{ shop.name | default: 'Storefront' }}</span>
       {%- endif -%}
     </a>
-    <nav class="gs-head__links" aria-label="Page navigation">
-      <a href="{{ routes.root_url }}#product">Shop</a>
-      <a href="{{ routes.root_url }}#bundle">Bundle &amp; Save</a>
-      <a href="{{ routes.root_url }}#reviews">Reviews</a>
-      <a href="{{ routes.root_url }}#faq">Help</a>
-    </nav>
+    {%- if header_menu.links.size > 0 -%}
+      <nav class="gs-head__links" aria-label="Page navigation">
+        {%- for link in header_menu.links -%}
+          <a href="{{ link.url }}">{{ link.title | escape }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
     <nav class="gs-head__nav" aria-label="Header actions">
       <a href="{{ routes.search_url }}" aria-label="Search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
@@ -80,16 +82,17 @@
                 style: header_logo_style
             }}
           {%- else -%}
-            <span class="gs-logo__text">Pollinook<sup>&trade;</sup></span>
+            <span class="gs-logo__text">{{ shop.name | default: 'Storefront' }}</span>
           {%- endif -%}
         </a>
         <button type="button" class="gs-mobile-menu__close" data-gs-menu-close aria-label="Close menu">&times;</button>
       </div>
-      <a href="{{ routes.root_url }}#product">Shop</a>
-      <a href="{{ routes.root_url }}#bundle">Bundle &amp; Save</a>
-      <a href="{{ routes.root_url }}#reviews">Reviews</a>
-      <a href="{{ routes.root_url }}#faq">Help</a>
-      <hr>
+      {%- if header_menu.links.size > 0 -%}
+        {%- for link in header_menu.links -%}
+          <a href="{{ link.url }}">{{ link.title | escape }}</a>
+        {%- endfor -%}
+        <hr>
+      {%- endif -%}
       <a href="{{ routes.search_url }}">Search</a>
       {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}">Account</a>{%- endif -%}
       <a href="{{ routes.cart_url }}">Cart{% if cart != empty %} ({{ cart.item_count }}){% endif %}</a>
@@ -99,7 +102,7 @@
 
 {% schema %}
 {
-  "name": "GS header",
+  "name": "Header",
   "class": "section-header",
   "settings": [
     {
@@ -118,8 +121,14 @@
       "default": 180
     },
     {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
       "type": "paragraph",
-      "content": "Pollinook reference header. Logo, search, account and cart are bound to Shopify routes."
+      "content": "Custom reference header. Logo, menu, search, account and cart are bound to Shopify routes."
     }
   ]
 }

@@ -1,5 +1,7 @@
-<div class="gs-scope gs-trust-marquee">
-  <div class="gs-marquee-track" style="--gs-marquee-duration: {{ section.settings.speed }}s;">
+{% render 'ct-section-padding', section: section %}
+
+<div class="gs-scope gs-trust-marquee section-{{ section.id }}-padding">
+  <div class="gs-marquee-track" style="--ct-marquee-duration: {{ section.settings.speed }}s;">
     {%- for repeat in (1..6) -%}
       <div class="gs-marquee-set"{% if repeat > 1 %} aria-hidden="true"{% endif %}>
       {%- for block in section.blocks -%}
@@ -29,26 +31,49 @@
 </div>
 {% schema %}
 {
-  "name": "GS trust marquee",
-  "settings": [{ "type": "range", "id": "speed", "label": "Speed", "min": 30, "max": 90, "step": 5, "default": 30 }],
+  "name": "Trust marquee",
+  "settings": [
+    { "type": "range", "id": "speed", "label": "Speed", "min": 30, "max": 90, "step": 5, "default": 30 },
+    { "type": "header", "content": "Section padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    }
+  ],
   "blocks": [
     {
       "type": "message",
       "name": "Message",
       "settings": [
         { "type": "text", "id": "icon", "label": "Icon", "default": "&#10003;" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Loved by gardeners" }
+        { "type": "text", "id": "text", "label": "Text", "default": "Add trust message" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "GS trust marquee",
+      "name": "Trust marquee",
       "blocks": [
-        { "type": "message", "settings": { "icon": "&#10003;", "text": "Loved by gardeners" } },
-        { "type": "message", "settings": { "icon": "&#128666;", "text": "Free shipping over $40" } },
-        { "type": "message", "settings": { "icon": "&#128737;", "text": "Secure payment" } },
-        { "type": "message", "settings": { "icon": "&#8634;", "text": "30-day money-back" } }
+        { "type": "message", "settings": { "icon": "&#10003;", "text": "Add trust message" } },
+        { "type": "message", "settings": { "icon": "&#128666;", "text": "Add shipping message" } },
+        { "type": "message", "settings": { "icon": "&#128737;", "text": "Add payment message" } },
+        { "type": "message", "settings": { "icon": "&#8634;", "text": "Add policy message" } }
       ]
     }
   ]

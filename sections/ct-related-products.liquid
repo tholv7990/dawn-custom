@@ -9,7 +9,9 @@
   endfor
 -%}
 {%- if related_count > 0 -%}
-  <section class="gs-scope gs-section">
+  {% render 'ct-section-padding', section: section %}
+
+  <section class="gs-scope gs-section section-{{ section.id }}-padding">
     <div class="gs-wrap">
       <h2 class="gs-related__heading">{{ section.settings.heading }}</h2>
       <div class="gs-related-grid" data-gs-carousel="related">
@@ -46,11 +48,14 @@
 {%- endif -%}
 {% schema %}
 {
-  "name": "GS related products",
+  "name": "Related products",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "You may also like" },
-    { "type": "product_list", "id": "products", "label": "Products", "limit": 4 }
+    { "type": "product_list", "id": "products", "label": "Products", "limit": 4 },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 60 }
   ],
-  "presets": [{ "name": "GS related products" }]
+  "presets": [{ "name": "Related products" }]
 }
 {% endschema %}

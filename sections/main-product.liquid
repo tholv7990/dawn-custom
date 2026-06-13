@@ -489,7 +489,7 @@
                   show_pickup_availability: true
                 -%}
               {%- when 'addon' -%}
-              {%- when 'gardenstudio_benefits' -%}
+              {%- when 'benefits_checklist' -%}
                 {%- assign benefit_lines = block.settings.items | newline_to_br | split: '<br />' -%}
                 {%- if benefit_lines.size > 0 -%}
                   <ul class="gs-benefits" {{ block.shopify_attributes }}>
@@ -500,7 +500,7 @@
                         {%- liquid
                           assign clean_downcase = clean | downcase
                           assign icon_tone = 'green'
-                          if clean_downcase contains 'stake' or clean_downcase contains 'soil' or clean_downcase contains 'planter'
+                          if clean_downcase contains 'setup' or clean_downcase contains 'care' or clean_downcase contains 'easy'
                             assign icon_tone = 'green-dark'
                           endif
                           assign icon_class = 'gs-benefits__check gs-benefits__check--' | append: icon_tone
@@ -657,6 +657,7 @@
                           >
                             {% assign skip_card_product_styles = false %}
                             {%- for i in (1..number_of_slides) -%}
+                              {%- assign products_offset = forloop.index0 | times: block.settings.products_per_page -%}
                               <div
                                 id="Slide-{{ block.id }}-{{ forloop.index }}"
                                 class="complementary-slide complementary-slide--{{ settings.card_style }} grid__item slider__slide slideshow__slide"
@@ -670,7 +671,7 @@
                                 <ul class="list-unstyled" role="list">
                                   {%- for product in recommendations.products
                                     limit: block.settings.products_per_page
-                                    offset: continue
+                                    offset: products_offset
                                   -%}
                                     <li>
                                       {%- if block.settings.enable_quick_add -%}
@@ -848,40 +849,7 @@
           "availability": {{ schema_availability | json }},
           "itemCondition": "https://schema.org/NewCondition",
           "url": {{ canonical_url | json }},
-          "sku": {{ schema_sku | json }},
-          "shippingDetails": {
-            "@type": "OfferShippingDetails",
-            "shippingRate": {
-              "@type": "MonetaryAmount",
-              "value": 0,
-              "currency": {{ schema_currency | json }}
-            },
-            "shippingDestination": {
-              "@type": "DefinedRegion",
-              "addressCountry": "US"
-            },
-            "deliveryTime": {
-              "@type": "ShippingDeliveryTime",
-              "handlingTime": {
-                "@type": "QuantitativeValue",
-                "minValue": 3,
-                "maxValue": 7,
-                "unitCode": "DAY"
-              },
-              "transitTime": {
-                "@type": "QuantitativeValue",
-                "minValue": 5,
-                "maxValue": 15,
-                "unitCode": "DAY"
-              }
-            }
-          },
-          "hasMerchantReturnPolicy": {
-            "@type": "MerchantReturnPolicy",
-            "applicableCountry": "US",
-            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-            "merchantReturnDays": 30
-          }
+          "sku": {{ schema_sku | json }}
         }{%- if schema_rating != blank and schema_rating_count_number > 0 -%},
         "aggregateRating": {
           "@type": "AggregateRating",
@@ -1106,12 +1074,12 @@
       ]
     },
     {
-      "type": "gardenstudio_benefits",
-      "name": "Pollinook benefits checklist",
+      "type": "benefits_checklist",
+      "name": "Benefits checklist",
       "limit": 1,
       "settings": [
         { "type": "paragraph", "content": "5-item checkmark list shown high on the PDP info column. One per line: 'Title - description'. The hyphen separates the bold title from the lighter description." },
-        { "type": "textarea", "id": "items", "label": "Benefits (one per line)", "default": "Weather-resistant metal - built for sun, rain and wind outdoors.\nBird bath bowl - holds a small drink station for garden visitors.\nPollinator friendly - add pebbles for bees and butterflies.\nStake-and-go setup - pushes directly into soil or planters.\nGift-ready decor - a practical accent for gardeners and bird lovers." }
+        { "type": "textarea", "id": "items", "label": "Benefits (one per line)", "default": "Benefit one - describe a real product benefit.\nBenefit two - describe another product benefit.\nBenefit three - add merchant-owned copy." }
       ]
     },
     {
@@ -1124,7 +1092,7 @@
           "content": "Shows only when the selected variant's real stock is at or below the threshold (and inventory is tracked). Hidden when well-stocked — no fake urgency."
         },
         { "type": "range", "id": "threshold", "label": "Low-stock threshold", "min": 1, "max": 50, "step": 1, "default": 10 },
-        { "type": "text", "id": "selling_fast_label", "label": "Selling-fast label", "default": "Selling fast" },
+        { "type": "text", "id": "selling_fast_label", "label": "Low-stock label", "default": "Low stock" },
         { "type": "text", "id": "social_line", "label": "Social-proof line (optional)", "info": "Static editorial text. Leave blank to hide. Never a fake live counter." }
       ]
     },
@@ -1403,7 +1371,7 @@
           "type": "text",
           "id": "fallback_rating_text",
           "label": "Fallback rating text",
-          "default": "92% 5-star · 13 reviews",
+          "default": "",
           "info": "Shown when Shopify review metafields are empty."
         }
       ]
@@ -2463,8 +2431,8 @@
       "step": 1,
       "unit": "%",
       "label": "Automatic bundle discount percent",
-      "default": 15,
-      "info": "Display estimate only. Match this to the Shopify automatic discount: $100+ cart subtotal."
+      "default": 0,
+      "info": "Display estimate only. Keep at 0 unless the store has a matching Shopify automatic discount."
     },
     {
       "type": "header",

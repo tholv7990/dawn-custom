@@ -35,7 +35,7 @@
 
 {% schema %}
 {
-  "name": "GS announcement bars",
+  "name": "Announcement bars",
   "settings": [
     { "type": "paragraph", "content": "Renders a continuous scrolling ticker. Keep message text short so each item remains readable on mobile." }
   ],
@@ -44,30 +44,25 @@
       "type": "top_message",
       "name": "Top message",
       "settings": [
-        { "type": "text", "id": "icon", "label": "Icon", "default": "+1" },
-        { "type": "text", "id": "text", "label": "Text", "default": "24/7 online support" }
+        { "type": "text", "id": "icon", "label": "Icon", "default": "Info" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Add announcement text" }
       ]
     },
     {
       "type": "bottom_message",
       "name": "Bottom message",
       "settings": [
-        { "type": "text", "id": "icon", "label": "Icon", "default": "OK" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping over $40" }
+        { "type": "text", "id": "icon", "label": "Icon", "default": "Info" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Add secondary announcement text" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "GS announcement bars",
+      "name": "Announcement bars",
       "blocks": [
-        { "type": "top_message", "settings": { "icon": "Phone", "text": "(214) 555-5937" } },
-        { "type": "top_message", "settings": { "icon": "Care", "text": "24/7 online support" } },
-        { "type": "top_message", "settings": { "icon": "Email", "text": "support@pollinook.site" } },
-        { "type": "bottom_message", "settings": { "icon": "Ships", "text": "from trusted warehouses" } },
-        { "type": "bottom_message", "settings": { "icon": "Returns", "text": "30-day returns" } },
-        { "type": "bottom_message", "settings": { "icon": "Free", "text": "shipping over $40" } },
-        { "type": "bottom_message", "settings": { "icon": "Warranty", "text": "12-month warranty" } }
+        { "type": "top_message", "settings": { "icon": "Info", "text": "Add announcement text" } },
+        { "type": "bottom_message", "settings": { "icon": "Info", "text": "Add secondary announcement text" } }
       ]
     }
   ]

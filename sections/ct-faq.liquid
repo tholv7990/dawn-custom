@@ -1,0 +1,116 @@
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope gs-section gs-soft section-{{ section.id }}-padding" id="faq">
+  <div class="gs-wrap">
+    <h2 class="gs-section-heading">{{ section.settings.heading }}</h2>
+    <p class="gs-section-sub">&nbsp;</p>
+    <div class="gs-faq">
+      {%- for block in section.blocks -%}
+        <details {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question }} <span class="gs-faq__plus">+</span></summary>
+          <div class="gs-faq__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Questions, answered"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "When will my order ship?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Add your shipping timeline, carrier details, and tracking expectations here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "question": "When will my order ship?",
+            "answer": "Add your shipping timeline, carrier details, and tracking expectations here."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "How do returns work?",
+            "answer": "Use the return policy linked in the footer for the current store terms. Keep the product and packaging until the request is approved."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Can I change or cancel an order?",
+            "answer": "Add your order-change policy here, including when changes are no longer available."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Where can I find product details?",
+            "answer": "Check the product details, materials, and care information on this page. Merchant-editable blocks can be updated for each product."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Who can I contact for help?",
+            "answer": "Use the support email or contact form linked in the footer. Include your order number so the team can find the purchase quickly."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

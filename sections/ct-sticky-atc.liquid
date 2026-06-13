@@ -12,7 +12,7 @@
 <div class="gs-scope" data-gs-sticky-root>
   <div class="gs-sticky" data-gs-sticky>
     <div class="gs-wrap gs-sticky__wrap">
-      {% render 'gs-media-slot', image: gs_product.featured_image, class: 'gs-sticky__img', label: 'Product', ratio: '1 / 1' %}
+      {% render 'ct-media-slot', image: gs_product.featured_image, class: 'gs-sticky__img', label: 'Product', ratio: '1 / 1' %}
       <div class="gs-sticky__meta">
         <div class="gs-sticky__name">{% if gs_product != blank %}{{ gs_product.title | escape }}{% else %}Select a product{% endif %}</div>
         {%- if gs_product != blank -%}
@@ -58,8 +58,8 @@
 </div>
 {% schema %}
 {
-  "name": "GS sticky add to cart",
+  "name": "Sticky add to cart",
   "settings": [{ "type": "product", "id": "product", "label": "Homepage product fallback" }],
-  "presets": [{ "name": "GS sticky add to cart" }]
+  "presets": [{ "name": "Sticky add to cart" }]
 }
 {% endschema %}

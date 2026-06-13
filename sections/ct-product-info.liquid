@@ -1,0 +1,160 @@
+{%- assign support_email = section.settings.support_email | strip -%}
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope gs-section gs-soft section-{{ section.id }}-padding" data-gs-info id="specifications">
+  <div class="gs-wrap">
+    <div class="gs-tabs">
+      <div class="gs-tabs__strip" role="tablist">
+        <button type="button" class="gs-tab is-active" data-gs-tab="0">Specifications</button>
+        <button type="button" class="gs-tab" data-gs-tab="1">Protection</button>
+        <button type="button" class="gs-tab" data-gs-tab="2">Why Buy</button>
+        <button type="button" class="gs-tab" data-gs-tab="3">Shipping &amp; Returns</button>
+      </div>
+
+      <div class="gs-panel is-active is-open" data-gs-panel="0">
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Specifications <span>&#8964;</span></button>
+        <div class="gs-panel__body">
+          <p class="gs-section-sub gs-info-intro">Complete product details for your selected product.</p>
+          <table class="gs-spec-table">
+            <tbody>
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'spec' -%}
+                  <tr {{ block.shopify_attributes }}>
+                    <td>{{ block.settings.label }}</td>
+                    <td>
+                      {%- if block.settings.star -%}<span class="gs-spec-star">&starf;</span>{%- endif -%}
+                      <span class="{% if block.settings.highlight %}gs-green-text{% endif %}">{{ block.settings.value }}</span>
+                      {%- if block.settings.badge != blank -%}
+                        <span class="gs-badge gs-badge--{{ block.settings.badge_tone }}">{{ block.settings.badge }}</span>
+                      {%- endif -%}
+                    </td>
+                  </tr>
+                {%- endif -%}
+              {%- endfor -%}
+            </tbody>
+          </table>
+          <p class="gs-tip"><b>Tip:</b> Review the product details, setup notes, and care guidance before first use. Update this tip per product so shoppers get accurate expectations.</p>
+        </div>
+      </div>
+
+      <div class="gs-panel" data-gs-panel="1">
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Protection Package <span>&#8964;</span></button>
+        <div class="gs-panel__body">
+          <div class="gs-protection">
+            <div><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg> Secure payment</div>
+            <div><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg> Delivery commitment</div>
+            <div><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/></svg> Data privacy</div>
+            <div><svg viewBox="0 0 24 24"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/></svg> Support access</div>
+            <div><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 12l2.2 2.2L15.5 9.5"/></svg> Store policy details</div>
+            <div><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg> Returns &amp; support</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gs-panel" data-gs-panel="2">
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Why Buy From Us <span>&#8964;</span></button>
+        <div class="gs-panel__body">
+          <ul class="gs-bullet-list">
+            <li><b>Clear product details</b> &mdash; update this section with accurate product-specific information.</li>
+            <li><b>Store policies</b> &mdash; link shoppers to the current return, shipping, and support terms.</li>
+            <li><b>Support access</b> &mdash; provide the best contact path for order and product questions.</li>
+            <li><b>Delivery options</b> &mdash; shipping methods and costs are calculated at checkout.</li>
+            <li><b>Secure checkout</b> &mdash; payment is handled through Shopify checkout.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="gs-panel" data-gs-panel="3">
+        <button type="button" class="gs-panel__mobile-head" data-gs-accordion-toggle>Shipping &amp; Returns <span>&#8964;</span></button>
+        <div class="gs-panel__body">
+          <b>Shipping</b>
+          <ul class="gs-bullet-list gs-policy-list">
+            <li>Processing and delivery timing should match the current store policy.</li>
+            <li>Shipping methods and costs are calculated at checkout.</li>
+            <li>Tracking details are sent when available from the carrier.</li>
+          </ul>
+          <b class="gs-policy-heading">Returns &amp; refunds</b>
+          <ul class="gs-bullet-list gs-policy-list">
+            <li>Return windows and eligibility should match the current store policy.</li>
+            <li>Keep the product and packaging until the request is reviewed.</li>
+            {%- if support_email != blank -%}
+              <li>Email {{ support_email | escape }} to request a return.</li>
+            {%- endif -%}
+          </ul>
+          <b class="gs-policy-heading">Product support</b>
+          <ul class="gs-bullet-list gs-policy-list">
+            <li>Support terms should match the current product and store policies.</li>
+            <li>Use merchant-editable copy here for product-specific support details.</li>
+            <li>Keep policy language consistent with the footer and checkout pages.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support email"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Specification row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Product type" },
+        { "type": "text", "id": "value", "label": "Value", "default": "Featured product" },
+        { "type": "checkbox", "id": "highlight", "label": "Green highlight", "default": false },
+        { "type": "checkbox", "id": "star", "label": "Show star", "default": false },
+        { "type": "text", "id": "badge", "label": "Badge" },
+        { "type": "select", "id": "badge_tone", "label": "Badge tone", "options": [
+          { "value": "green", "label": "Green" },
+          { "value": "teal", "label": "Teal" },
+          { "value": "yellow", "label": "Yellow" }
+        ], "default": "green" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product information",
+      "blocks": [
+        { "type": "spec", "settings": { "label": "Product type", "value": "Add product type", "highlight": true } },
+        { "type": "spec", "settings": { "label": "Material", "value": "Add material details" } },
+        { "type": "spec", "settings": { "label": "Dimensions", "value": "Add dimensions" } },
+        { "type": "spec", "settings": { "label": "Care", "value": "Add care instructions" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

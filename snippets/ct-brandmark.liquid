@@ -1,0 +1,8 @@
+{%- liquid
+  assign modifier = ''
+  if inverse
+    assign modifier = ' gs-brandmark--inverse'
+  endif
+  assign brand_name = shop.name | default: 'Storefront'
+-%}
+<span class="gs-brandmark{{ modifier }}">{{ brand_name | escape }}</span>

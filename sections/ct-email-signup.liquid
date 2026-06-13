@@ -1,4 +1,6 @@
-<section class="gs-scope gs-email-signup" data-gs-email-signup>
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope gs-email-signup section-{{ section.id }}-padding" data-gs-email-signup>
   <div class="gs-wrap gs-email-signup__inner">
     <p class="gs-email-signup__eyebrow">{{ section.settings.eyebrow | escape }}</p>
     <h2>{{ section.settings.heading | escape }}</h2>
@@ -74,23 +76,23 @@
 
 {% schema %}
 {
-  "name": "GS email signup",
+  "name": "Email signup",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "JOIN THE LIST" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "15% off your first order" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Join the list" },
     {
       "type": "text",
       "id": "body",
       "label": "Body",
-      "default": "Join the list and we'll email your 15% code, plus first dibs on new colors & designs. No spam - unsubscribe anytime."
+      "default": "Get product updates, launch notes, and store news by email. Unsubscribe anytime."
     },
     { "type": "text", "id": "placeholder", "label": "Placeholder", "default": "you@email.com" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send my code" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Sign up" },
     {
       "type": "text",
       "id": "disclaimer",
       "label": "Disclaimer",
-      "default": "We'll email your code - 15% off your first order, any size - one discount per order - offers don't combine"
+      "default": "We will only use your email for store updates and offers you choose to receive."
     },
     { "type": "text", "id": "thanks_eyebrow", "label": "Thank you eyebrow", "default": "YOU'RE ON THE LIST" },
     { "type": "text", "id": "thanks_heading", "label": "Thank you heading", "default": "Thank you for signing up!" },
@@ -98,13 +100,13 @@
       "type": "text",
       "id": "thanks_body",
       "label": "Thank you body",
-      "default": "You just made our day. Welcome to the garden club - we're so glad you and your garden are here."
+      "default": "You just made our day. Welcome to the list - we're glad you're here."
     },
     {
       "type": "text",
       "id": "thanks_message",
       "label": "Thank you message",
-      "default": "Your 15% off code is on its way - check your inbox to claim it."
+      "default": "Check your inbox for a confirmation email."
     },
     {
       "type": "text",
@@ -112,8 +114,29 @@
       "label": "Thank you note",
       "default": "Don't see it in a minute? Peek in your spam or promotions folder."
     },
-    { "type": "text", "id": "thanks_button_label", "label": "Thank you button label", "default": "Start shopping" }
+    { "type": "text", "id": "thanks_button_label", "label": "Thank you button label", "default": "Start shopping" },
+    { "type": "header", "content": "Section padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    }
   ],
-  "presets": [{ "name": "GS email signup" }]
+  "presets": [{ "name": "Email signup" }]
 }
 {% endschema %}

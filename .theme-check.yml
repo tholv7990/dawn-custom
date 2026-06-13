@@ -7,3 +7,6 @@ OrphanedSnippet:
     - snippets/header-dropdown-menu.liquid
     - snippets/header-mega-menu.liquid
     - snippets/quick-order-product-row.liquid
+    - 'snippets\header-dropdown-menu.liquid'
+    - 'snippets\header-mega-menu.liquid'
+    - 'snippets\quick-order-product-row.liquid'

@@ -1,4 +1,6 @@
-<section class="gs-scope gs-section" id="video">
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope gs-section section-{{ section.id }}-padding" id="video">
   <div class="gs-wrap">
     <h2 class="gs-section-heading">{{ section.settings.heading }}</h2>
     <div class="gs-video-grid" data-gs-carousel="videos">
@@ -19,7 +21,7 @@
           data-gs-slide
           {{ block.shopify_attributes }}
         >
-          {% render 'gs-media-slot', image: block.settings.poster, video: block.settings.video, label: 'Video', ratio: media_ratio %}
+          {% render 'ct-media-slot', image: block.settings.poster, video: block.settings.video, label: 'Video', ratio: media_ratio %}
           {%- unless has_video -%}
             <span class="gs-play" aria-hidden="true"><b>&#9654;</b></span>
           {%- endunless -%}
@@ -32,9 +34,12 @@
 
 {% schema %}
 {
-  "name": "GS video gallery",
+  "name": "Video gallery",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Loved by gardeners everywhere" }
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Customer videos and product clips" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 60 }
   ],
   "blocks": [
     {
@@ -46,6 +51,6 @@
       ]
     }
   ],
-  "presets": [{ "name": "GS video gallery", "blocks": [{ "type": "video" }, { "type": "video" }, { "type": "video" }] }]
+  "presets": [{ "name": "Video gallery", "blocks": [{ "type": "video" }, { "type": "video" }, { "type": "video" }] }]
 }
 {% endschema %}

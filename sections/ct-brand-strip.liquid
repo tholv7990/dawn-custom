@@ -1,0 +1,78 @@
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope gs-brand-strip section-{{ section.id }}-padding">
+  <div class="gs-marquee-track" style="--ct-marquee-duration: {{ section.settings.speed }}s;">
+    {%- for repeat in (1..6) -%}
+      <div class="gs-marquee-set"{% if repeat > 1 %} aria-hidden="true"{% endif %}>
+      {%- for block in section.blocks -%}
+        <span class="gs-brand-strip__item"{% if repeat == 1 %} {{ block.shopify_attributes }}{% endif %}>
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 320
+              | image_tag:
+                loading: 'lazy',
+                widths: '120, 180, 240, 320',
+                sizes: '160px',
+                alt: block.settings.text | default: 'Brand logo' | escape
+            }}
+          {%- else -%}
+            {{ block.settings.text }}
+          {%- endif -%}
+        </span>
+      {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Brand strip",
+  "settings": [
+    { "type": "range", "id": "speed", "label": "Speed", "min": 30, "max": 90, "step": 5, "default": 30 },
+    { "type": "header", "content": "Section padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Brand image" },
+        { "type": "text", "id": "text", "label": "Text fallback / alt text", "default": "Brand logo" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand strip",
+      "blocks": [
+        { "type": "brand", "settings": { "text": "Publication" } },
+        { "type": "brand", "settings": { "text": "Media mention" } },
+        { "type": "brand", "settings": { "text": "Review site" } },
+        { "type": "brand", "settings": { "text": "Industry blog" } },
+        { "type": "brand", "settings": { "text": "Expert pick" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

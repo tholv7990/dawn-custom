@@ -1,7 +1,7 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Pollinook-Codex-V1",
+    "theme_name": "CT Generic Theme",
     "theme_version": "15.4.1",
     "theme_author": "Shopify",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
@@ -1453,7 +1453,7 @@
     ]
   },
   {
-    "name": "Pollinook brand",
+    "name": "Brand settings",
     "settings": [
       {
         "type": "header",
@@ -1463,13 +1463,13 @@
         "type": "color",
         "id": "color_accent",
         "label": "Accent",
-        "default": "#E0A92E"
+        "default": "#111827"
       },
       {
         "type": "color",
         "id": "color_accent_hover",
         "label": "Accent (hover/strong)",
-        "default": "#3F5743"
+        "default": "#374151"
       },
       {
         "type": "header",
@@ -1495,33 +1495,40 @@
         "default": 0.9
       },
       {
+        "type": "checkbox",
+        "id": "ct_force_light_mode",
+        "label": "Force light mode",
+        "info": "Keeps storefront surfaces pinned to light colors. Turn off only when testing custom color schemes.",
+        "default": true
+      },
+      {
         "type": "header",
         "content": "Cart rewards"
       },
       {
         "type": "paragraph",
-        "content": "Cart reward thresholds must be exact active-currency subunits. Market metafield pollinook.reward_thresholds overrides theme settings per market. Do not use guessed currency conversion."
+        "content": "Cart reward thresholds must be exact active-currency subunits. Market metafield ct.reward_thresholds overrides theme settings per market. Do not use guessed currency conversion."
       },
       {
         "type": "textarea",
         "id": "ct_reward_thresholds_by_currency",
         "label": "Reward thresholds by currency",
         "info": "One line per currency: ISO:free_shipping,discount. Values are Shopify money subunits for that active market. Missing non-shop currencies fail closed and are calculated at checkout.",
-        "default": "USD:5000,10000"
+        "default": ""
       },
       {
         "type": "text",
         "id": "ct_free_shipping_threshold_cents",
         "label": "Free shipping threshold",
         "info": "Shop-currency fallback only. For other active currencies, add a currency-map line or market metafield.",
-        "default": "5000"
+        "default": ""
       },
       {
         "type": "text",
         "id": "ct_discount_threshold_cents",
         "label": "Discount threshold",
         "info": "Shop-currency fallback only. For other active currencies, add a currency-map line or market metafield.",
-        "default": "10000"
+        "default": ""
       }
     ]
   }

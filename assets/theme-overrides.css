@@ -183,7 +183,7 @@ img { max-width: 100%; }
 .ct-badge {
   display: inline-block; padding: 2px 8px; border-radius: var(--ct-r-sm);
   font-size: var(--ct-text-xs); font-weight: var(--ct-fw-bold); line-height: 1.6;
-  font-family: var(--ct-font-mono); letter-spacing: .04em; color: #fff;
+  font-family: var(--ct-font-mono); letter-spacing: .04em; color: var(--ct-on-accent);
 }
 .ct-badge--sale { background: var(--ct-badge-sale); }
 .ct-badge--new { background: var(--ct-badge-new); }
@@ -212,7 +212,7 @@ ct-back-to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
 body:has(.ct-sticky-atc.is-visible) ct-back-to-top { bottom: 84px; }
 ct-back-to-top button {
   width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
-  background: var(--ct-accent); color: #fff; box-shadow: var(--ct-shadow-md);
+  background: var(--ct-accent); color: var(--ct-on-accent); box-shadow: var(--ct-shadow-md);
   display: flex; align-items: center; justify-content: center;
 }
 ct-back-to-top button:hover { background: var(--ct-accent-strong); }
@@ -300,7 +300,7 @@ fieldset.product-form__input input:checked + label.swatch {
   border-radius: var(--ct-r-md); font-weight: var(--ct-fw-semi);
   box-shadow: var(--ct-shadow-md);
 }
-.ct-card__qv-btn:hover { background: var(--ct-accent); color: #fff; }
+.ct-card__qv-btn:hover { background: var(--ct-accent); color: var(--ct-on-accent); }
 
 /* ---- Cart drawer slots (paired with cart-drawer.liquid edit) ---- */
 .ct-cart__bar { padding: 12px 20px; border-bottom: 1px solid var(--ct-border-subtle); }
@@ -342,7 +342,7 @@ fieldset.product-form__input input:checked + label.swatch {
 .header__menu-item:hover { color: var(--ct-text); }
 .header-wrapper--sticky.scrolled-past-header,
 .shopify-section-header-sticky.scrolled-past-header {
-  background: rgba(255, 255, 255, var(--ct-glass));
+  background: var(--ct-glass-surface);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   box-shadow: var(--ct-shadow-sm); border-bottom: 1px solid var(--ct-border-strong);
 }
