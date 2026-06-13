@@ -1,0 +1,114 @@
+{%- comment -%}
+  Estimated shipping + checkpoints — W3.T06. Shared snippet for the
+  `shipping_estimate` block in main-product / featured-product.
+
+  Server-rendered date engine (no JS): delivery window = now + (processing +
+  transit) days, with an optional same-day cutoff and weekend-skip, plus an
+  optional 3-step Ordered -> Ships -> Delivered timeline. Dates are locale
+  formatted by the `date` filter.
+
+  Accepts: section_id, block
+{%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign processing_days = s.processing_days | default: 0
+  assign transit_min = s.transit_min | default: 0
+  assign transit_max = s.transit_max | default: 0
+  assign cutoff_hour = s.cutoff_hour | default: 0
+
+  comment
+    Same-day cutoff: past the cutoff hour, add a processing day.
+  endcomment
+  assign now_hour = 'now' | date: '%H' | times: 1
+  assign extra = 0
+  if cutoff_hour > 0 and now_hour >= cutoff_hour
+    assign extra = 1
+  endif
+  assign proc_total = processing_days | plus: extra
+
+  assign now_ts = 'now' | date: '%s'
+  assign min_total = proc_total | plus: transit_min
+  assign max_total = proc_total | plus: transit_max
+  comment
+    Filters apply left-to-right: multiply days->seconds FIRST, then add to now.
+  endcomment
+  assign ship_ts = proc_total | times: 86400 | plus: now_ts
+  assign earliest_ts = min_total | times: 86400 | plus: now_ts
+  assign latest_ts = max_total | times: 86400 | plus: now_ts
+
+  comment
+    Weekend skip: bump Sat/Sun results forward to Monday (final-date approximation).
+  endcomment
+  if s.skip_weekends
+    assign ew = earliest_ts | date: '%w' | times: 1
+    if ew == 0
+      assign earliest_ts = earliest_ts | plus: 86400
+    elsif ew == 6
+      assign earliest_ts = earliest_ts | plus: 172800
+    endif
+    assign lw = latest_ts | date: '%w' | times: 1
+    if lw == 0
+      assign latest_ts = latest_ts | plus: 86400
+    elsif lw == 6
+      assign latest_ts = latest_ts | plus: 172800
+    endif
+    assign sw = ship_ts | date: '%w' | times: 1
+    if sw == 0
+      assign ship_ts = ship_ts | plus: 86400
+    elsif sw == 6
+      assign ship_ts = ship_ts | plus: 172800
+    endif
+  endif
+
+  assign date_fmt = s.date_format | default: '%b %-d'
+  assign earliest_date = earliest_ts | date: date_fmt
+  assign latest_date = latest_ts | date: date_fmt
+  assign ship_date = ship_ts | date: date_fmt
+  assign order_date = now_ts | date: date_fmt
+-%}
+{{ 'component-ct-shipping-estimate.css' | asset_url | stylesheet_tag }}
+<div class="ct-ship-est"{% if block != blank %} {{ block.shopify_attributes }}{% endif %}>
+  <div class="ct-ship-est__band">
+    {%- if s.icon != blank -%}
+      <span class="ct-ship-est__icon">
+        {% render 'ct-icon', name: s.icon, class: 'ct-icon ct-ship-est__icon-svg' %}
+      </span>
+    {%- endif -%}
+    <div class="ct-ship-est__body">
+      {%- if s.heading != blank -%}
+        <span class="ct-ship-est__heading">{{ s.heading | escape }}</span>
+      {%- endif -%}
+      {%- if s.show_dates -%}
+        <p class="ct-ship-est__window">
+          <span class="ct-ship-est__window-label">{{ s.window_label | default: 'Estimated delivery' | escape }}:</span>
+          <time class="ct-ship-est__date" datetime="{{ earliest_ts | date: '%Y-%m-%d' }}">{{ earliest_date }}</time>
+          <span class="ct-ship-est__sep" aria-hidden="true">&ndash;</span>
+          <time class="ct-ship-est__date" datetime="{{ latest_ts | date: '%Y-%m-%d' }}">{{ latest_date }}</time>
+        </p>
+      {%- endif -%}
+      {%- if s.note != blank -%}
+        <p class="ct-ship-est__note">{{ s.note | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if s.show_timeline -%}
+    <ol class="ct-ship-est__timeline" role="list">
+      <li class="ct-ship-est__step ct-ship-est__step--done">
+        <span class="ct-ship-est__dot" aria-hidden="true"></span>
+        <span class="ct-ship-est__step-label">{{ s.step_order | default: 'Order placed' | escape }}</span>
+        <time class="ct-ship-est__step-date" datetime="{{ now_ts | date: '%Y-%m-%d' }}">{{ order_date }}</time>
+      </li>
+      <li class="ct-ship-est__step">
+        <span class="ct-ship-est__dot" aria-hidden="true"></span>
+        <span class="ct-ship-est__step-label">{{ s.step_ship | default: 'Ships by' | escape }}</span>
+        <time class="ct-ship-est__step-date" datetime="{{ ship_ts | date: '%Y-%m-%d' }}">{{ ship_date }}</time>
+      </li>
+      <li class="ct-ship-est__step">
+        <span class="ct-ship-est__dot" aria-hidden="true"></span>
+        <span class="ct-ship-est__step-label">{{ s.step_deliver | default: 'Delivered by' | escape }}</span>
+        <time class="ct-ship-est__step-date" datetime="{{ latest_ts | date: '%Y-%m-%d' }}">{{ latest_date }}</time>
+      </li>
+    </ol>
+  {%- endif -%}
+</div>

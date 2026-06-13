@@ -84,6 +84,17 @@
             "show_variant": false,
             "exclude_in_cart": true
           }
+        },
+        "shipping_estimate": {
+          "type": "shipping_estimate",
+          "settings": {
+            "heading": "Fast, tracked shipping",
+            "processing_days": 1,
+            "transit_min": 3,
+            "transit_max": 7,
+            "show_dates": true,
+            "show_timeline": true
+          }
         }
       },
       "block_order": [
@@ -98,7 +109,8 @@
         "share",
         "sticky_atc",
         "bundle",
-        "product_upsells"
+        "product_upsells",
+        "shipping_estimate"
       ],
       "settings": {}
     },
