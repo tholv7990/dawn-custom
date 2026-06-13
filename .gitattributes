@@ -1,0 +1,36 @@
+# Normalize all text files to LF on commit (W0.T03). Prevents the CRLF drift
+# that Shopify theme uploads and the CRLF audit have repeatedly tripped on.
+* text=auto eol=lf
+
+# Explicit text types (theme + docs)
+*.liquid text eol=lf
+*.js     text eol=lf
+*.mjs    text eol=lf
+*.css    text eol=lf
+*.json   text eol=lf
+*.md     text eol=lf
+*.svg    text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.html   text eol=lf
+*.txt    text eol=lf
+
+# Binary assets — never normalize
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.bmp   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
+*.otf   binary
+*.pdf   binary
+*.mp4   binary
+*.webm  binary
+*.mov   binary
+*.zip   binary
