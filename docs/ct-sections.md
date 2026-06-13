@@ -1,6 +1,6 @@
 # CT Section Library
 
-Auto-generated catalog of the custom `ct-*` sections (run via the snippet at the bottom). All are Online Store 2.0 sections a merchant adds from the Theme Editor; all use token-only CSS, neutral presets, and bind commerce data to Shopify objects.
+Auto-generated catalog of the custom `ct-*` sections (`node qa/ct-section-catalog.mjs`). All are Online Store 2.0 sections a merchant adds from the Theme Editor; all use token-only CSS, neutral presets, and bind commerce data to Shopify objects.
 
 | Section | Name | Settings | Block types | Preset blocks |
 |---|---|---|---|---|
@@ -8,11 +8,14 @@ Auto-generated catalog of the custom `ct-*` sections (run via the snippet at the
 | `ct-announcement-bars` | Announcement bars | 0 | top_message, bottom_message | 2 |
 | `ct-before-after` | Before / after slider | 9 | - | 0 |
 | `ct-brand-strip` | Brand strip | 3 | brand | 5 |
+| `ct-bundle` | Bundle offer | 8 | - | 0 |
+| `ct-cart-savings` | Cart savings | 5 | - | 0 |
 | `ct-cart-upsells` | Cart upsells | 5 | - | 0 |
 | `ct-collection-grid` | Collection grid | 8 | - | 0 |
 | `ct-comparison` | Comparison | 5 | row | 5 |
 | `ct-cookie-bar` | Cookie bar | 6 | - | 0 |
 | `ct-cta-banner` | CTA banner | 10 | - | 0 |
+| `ct-discount-banner` | Discount banner | 8 | - | 0 |
 | `ct-divider` | Divider | 4 | - | 0 |
 | `ct-email-signup` | Email signup | 14 | - | 0 |
 | `ct-faq` | FAQ | 3 | item | 5 |
@@ -20,6 +23,7 @@ Auto-generated catalog of the custom `ct-*` sections (run via the snippet at the
 | `ct-featured-product-cta` | Featured product CTA | 8 | - | 0 |
 | `ct-free-shipping-bar` | Free shipping bar | 5 | - | 0 |
 | `ct-gallery` | Image gallery | 5 | image | 4 |
+| `ct-gift-offer` | Free gift offer | 9 | - | 0 |
 | `ct-hero` | Media hero | 14 | - | 0 |
 | `ct-hotspots` | Hotspot image | 6 | hotspot | 3 |
 | `ct-icon-columns` | Icon columns | 5 | column | 3 |
@@ -29,6 +33,7 @@ Auto-generated catalog of the custom `ct-*` sections (run via the snippet at the
 | `ct-product-upsells` | Product upsells | 8 | - | 0 |
 | `ct-promo-popup` | Promo popup | 14 | - | 0 |
 | `ct-quote` | Pull quote | 8 | - | 0 |
+| `ct-recently-viewed` | Recently viewed | 4 | - | 0 |
 | `ct-related-products` | Related products | 4 | - | 0 |
 | `ct-reviews` | Reviews | 4 | review | 3 |
 | `ct-scroll-to-top` | Back to top button | 3 | - | 0 |
@@ -44,7 +49,7 @@ Auto-generated catalog of the custom `ct-*` sections (run via the snippet at the
 | `ct-trust-marquee` | Trust marquee | 3 | message | 4 |
 | `ct-video-gallery` | Video gallery | 3 | video | 3 |
 
-**39 custom `ct-*` sections.**
+**44 custom `ct-*` sections.**
 
 ## Regenerate
 
