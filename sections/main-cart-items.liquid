@@ -4,6 +4,8 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+{%- comment -%} W4.T02 free-shipping bar styles — loaded once, outside the .js-contents refreshed region. {%- endcomment -%}
+{{ 'component-ct-cart-progress.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -52,6 +54,8 @@
       <div class="cart__items" id="main-cart-items" data-id="{{ section.id }}">
         <div class="js-contents">
           {%- if cart != empty -%}
+            {%- comment -%} W4.T02 free-shipping bar — inside .js-contents, updates on every cart change. {%- endcomment -%}
+            {% render 'ct-cart-progress' %}
             <table class="cart-items">
               <caption class="visually-hidden">
                 {{ 'sections.cart.title' | t }}
