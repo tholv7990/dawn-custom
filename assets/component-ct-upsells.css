@@ -1,0 +1,27 @@
+/* Upsells block — W3.T05. Slider modifier + exclude-in-cart. Token-only.
+   Grid layout + base .ct-upsells classes live in section-ct-components.css. */
+.ct-upsells__item--hidden {
+  display: none;
+}
+
+.ct-upsells--slider .ct-upsells__grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--ct-grid-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.ct-upsells--slider .ct-upsells__item {
+  flex: 0 0 auto;
+  width: calc((100% - (var(--ct-cols, 4) - 1) * var(--ct-grid-gap)) / var(--ct-cols, 4));
+  scroll-snap-align: start;
+}
+
+@media screen and (max-width: 749px) {
+  .ct-upsells--slider .ct-upsells__item {
+    width: 70%;
+  }
+}

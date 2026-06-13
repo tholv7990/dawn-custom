@@ -68,6 +68,22 @@
             "show_savings": true,
             "button_label": "Add bundle to cart"
           }
+        },
+        "product_upsells": {
+          "type": "product_upsells",
+          "settings": {
+            "heading": "You may also like",
+            "source": "manual",
+            "products": [
+              "womens-minimalist-casual-chic-denim-jacket-vest",
+              "crew-neck-t-shirt-slim-fit-athletic-training-top"
+            ],
+            "columns": 4,
+            "layout": "grid",
+            "show_add": true,
+            "show_variant": false,
+            "exclude_in_cart": true
+          }
         }
       },
       "block_order": [
@@ -81,7 +97,8 @@
         "description",
         "share",
         "sticky_atc",
-        "bundle"
+        "bundle",
+        "product_upsells"
       ],
       "settings": {}
     },

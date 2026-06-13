@@ -1,0 +1,124 @@
+{%- comment -%}
+  Product upsells — W3.T05. Shared snippet for the `product_upsells` block in
+  main-product / featured-product. Source = manual product list or Dawn
+  recommendations; add-to-cart rides the reusable ct-upsell-card (Dawn
+  product-form, G-07). Exclude-in-cart hides products already in the cart
+  (server-render initial state + live on cartUpdate via <ct-upsell-rail>).
+
+  Accepts: product (host), section_id, block
+{%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign source = s.source | default: 'manual'
+  assign rec_limit = s.count | default: 4
+  assign show_add = s.show_add
+  assign show_variant = s.show_variant
+  assign exclude_in_cart = s.exclude_in_cart
+
+  comment
+    Build a comma-bounded list of product ids in the cart for initial exclusion.
+  endcomment
+  assign cart_pids = ','
+  for ci in cart.items
+    assign cart_pids = cart_pids | append: ci.product_id | append: ','
+  endfor
+-%}
+{{ 'component-ct-upsells.css' | asset_url | stylesheet_tag }}
+{%- if source == 'manual' -%}
+  {%- if show_add -%}
+    <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+  <ct-upsell-rail
+    class="ct-upsells ct-upsells--{{ s.layout | default: 'grid' }}"
+    data-section-id="{{ section_id }}"
+    {% if exclude_in_cart %}data-exclude-in-cart="true"{% endif %}
+    {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
+  >
+    {%- if s.heading != blank -%}
+      <h2 class="gs-section-heading ct-upsells__heading">{{ s.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if s.subheading != blank -%}
+      <p class="gs-section-sub ct-upsells__subheading">{{ s.subheading | escape }}</p>
+    {%- endif -%}
+    <ul class="ct-upsells__grid" role="list" style="--ct-cols: {{ s.columns | default: 4 }};">
+      {%- for item in s.products limit: 6 -%}
+        {%- if item != blank and item.id != product.id -%}
+          {%- assign pid_token = ',' | append: item.id | append: ',' -%}
+          {%- assign in_cart = false -%}
+          {%- if cart_pids contains pid_token -%}
+            {%- assign in_cart = true -%}
+          {%- endif -%}
+          <li
+            class="ct-upsells__item{% if exclude_in_cart and in_cart %} ct-upsells__item--hidden{% endif %}"
+            data-upsell-pid="{{ item.id }}"
+            {% if exclude_in_cart and in_cart %}hidden{% endif %}
+          >
+            {%- if show_add -%}
+              {% render 'ct-upsell-card', product: item, section_id: section_id, show_variant: show_variant %}
+            {%- else -%}
+              <article class="ct-upsells__card">
+                <a class="ct-upsells__media-link" href="{{ item.url }}" aria-label="{{ item.title | escape }}">
+                  {% render 'ct-media-slot', image: item.featured_image, class: 'ct-upsells__media', ratio: '1 / 1', label: item.title %}
+                </a>
+                <div class="ct-upsells__body">
+                  <a class="ct-upsells__title" href="{{ item.url }}">{{ item.title | escape }}</a>
+                  <div class="ct-upsells__price">
+                    <span class="ct-upsells__price-now">{{ item.price | money }}</span>
+                    {%- if item.compare_at_price > item.price -%}
+                      <s class="ct-upsells__price-was">{{ item.compare_at_price | money }}</s>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </article>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+    {%- if exclude_in_cart -%}
+      <script src="{{ 'ct-upsell-rail.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+  </ct-upsell-rail>
+
+{%- else -%}
+  {%- if show_add -%}
+    <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+  <product-recommendations
+    class="ct-upsells ct-upsells--{{ s.layout | default: 'grid' }} complementary-products"
+    data-url="{{ routes.product_recommendations_url }}?section_id={{ section_id }}&product_id={{ product.id }}&limit={{ rec_limit }}&intent={{ s.intent | default: 'related' }}"
+    data-section-id="{{ section_id }}"
+    data-product-id="{{ product.id }}"
+    {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
+  >
+    {%- if recommendations.performed and recommendations.products_count > 0 -%}
+      {%- if s.heading != blank -%}
+        <h2 class="gs-section-heading ct-upsells__heading">{{ s.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if s.subheading != blank -%}
+        <p class="gs-section-sub ct-upsells__subheading">{{ s.subheading | escape }}</p>
+      {%- endif -%}
+      <ul class="ct-upsells__grid" role="list" style="--ct-cols: {{ s.columns | default: 4 }};">
+        {%- for item in recommendations.products -%}
+          <li class="ct-upsells__item" data-upsell-pid="{{ item.id }}">
+            {%- if show_add -%}
+              {% render 'ct-upsell-card', product: item, section_id: section_id, show_variant: show_variant %}
+            {%- else -%}
+              <article class="ct-upsells__card">
+                <a class="ct-upsells__media-link" href="{{ item.url }}" aria-label="{{ item.title | escape }}">
+                  {% render 'ct-media-slot', image: item.featured_image, class: 'ct-upsells__media', ratio: '1 / 1', label: item.title %}
+                </a>
+                <div class="ct-upsells__body">
+                  <a class="ct-upsells__title" href="{{ item.url }}">{{ item.title | escape }}</a>
+                  <div class="ct-upsells__price">
+                    <span class="ct-upsells__price-now">{{ item.price | money }}</span>
+                  </div>
+                </div>
+              </article>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </product-recommendations>
+{%- endif -%}
