@@ -1,0 +1,192 @@
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope ct-gallery section-{{ section.id }}-padding">
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="ct-gallery__sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="ct-gallery__grid" style="--ct-cols: {{ section.settings.columns }}" role="list">
+        {%- for block in section.blocks -%}
+          <li class="ct-gallery__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.link_url != blank -%}
+              <a class="ct-gallery__link" href="{{ block.settings.link_url }}">
+                {%- render 'ct-media-slot',
+                  image: block.settings.image,
+                  class: 'ct-gallery__media',
+                  label: block.settings.caption,
+                  ratio: '1 / 1'
+                -%}
+              </a>
+            {%- else -%}
+              {%- render 'ct-media-slot',
+                image: block.settings.image,
+                class: 'ct-gallery__media',
+                label: block.settings.caption,
+                ratio: '1 / 1'
+              -%}
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}
+              <p class="ct-gallery__caption">{{ block.settings.caption | escape }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  .ct-gallery .ct-gallery__sub {
+    margin: var(--ct-space-2) 0 0;
+    color: var(--ct-text-2);
+    font-size: var(--ct-body-size);
+    line-height: var(--ct-leading-base);
+  }
+
+  .ct-gallery .ct-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--ct-space-4);
+    margin: var(--ct-space-6) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ct-gallery .ct-gallery__item {
+    margin: 0;
+  }
+
+  .ct-gallery .ct-gallery__link {
+    display: block;
+    border-radius: var(--ct-r-lg);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-gallery .ct-gallery__link:hover {
+    transform: translateY(-4px);
+  }
+
+  .ct-gallery .ct-gallery__media {
+    border-radius: var(--ct-r-lg);
+    overflow: hidden;
+    background: var(--ct-bg-surface);
+  }
+
+  .ct-gallery .ct-gallery__caption {
+    margin: var(--ct-space-2) 0 0;
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-sm);
+    line-height: var(--ct-leading-base);
+  }
+
+  @media (min-width: 750px) {
+    .ct-gallery .ct-gallery__grid {
+      grid-template-columns: repeat(var(--ct-cols), 1fr);
+      gap: var(--ct-space-5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ct-gallery .ct-gallery__link {
+      transition: none;
+    }
+
+    .ct-gallery .ct-gallery__link:hover {
+      transform: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Image gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Gallery"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Add a short line of supporting context for this gallery."
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image gallery",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

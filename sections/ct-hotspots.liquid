@@ -1,0 +1,323 @@
+{% render 'ct-section-padding', section: section %}
+
+{%- assign root_id = 'ct-hotspots-' | append: section.id -%}
+
+<section class="gs-scope ct-hotspots section-{{ section.id }}-padding" id="{{ root_id }}" data-ct-hotspots>
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="ct-hotspots__sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+
+    <div class="ct-hotspots__stage">
+      {% render 'ct-media-slot',
+        image: section.settings.image,
+        class: 'ct-hotspots__media',
+        label: section.settings.heading,
+        ratio: '16 / 10'
+      %}
+
+      {%- for block in section.blocks -%}
+        {%- assign pop_id = root_id | append: '-pop-' | append: forloop.index -%}
+        <div class="ct-hotspots__point" style="left: {{ block.settings.x }}%; top: {{ block.settings.y }}%;" {{ block.shopify_attributes }}>
+          <button
+            type="button"
+            class="ct-hotspots__dot"
+            aria-expanded="false"
+            aria-controls="{{ pop_id }}"
+            aria-label="{{ block.settings.title | escape }}"
+            data-ct-hotspots-dot
+          >
+            <span aria-hidden="true">+</span>
+          </button>
+          <div
+            class="ct-hotspots__popover"
+            id="{{ pop_id }}"
+            role="dialog"
+            aria-label="{{ block.settings.title | escape }}"
+            hidden
+          >
+            {%- if block.settings.title != blank -%}
+              <p class="ct-hotspots__title">{{ block.settings.title | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="ct-hotspots__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.link_url != blank -%}
+              <a class="ct-hotspots__link" href="{{ block.settings.link_url }}">{{ section.settings.link_label | escape }}</a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ct-hotspots__sub {
+    margin: 0 0 var(--ct-space-6);
+    max-width: 60ch;
+    color: var(--ct-text-2);
+    font-size: var(--ct-body-size);
+    line-height: var(--ct-leading-base);
+  }
+
+  .ct-hotspots__stage {
+    position: relative;
+    width: 100%;
+    border-radius: var(--ct-r-lg);
+    overflow: hidden;
+  }
+
+  .ct-hotspots__media {
+    width: 100%;
+  }
+
+  .ct-hotspots__point {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  .ct-hotspots__point.is-open {
+    z-index: 2;
+  }
+
+  .ct-hotspots__dot {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: var(--ct-r-pill);
+    border: 2px solid var(--ct-on-accent);
+    background: var(--ct-action);
+    color: var(--ct-on-accent);
+    font-size: var(--ct-text-lg);
+    font-weight: var(--ct-fw-bold);
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--ct-shadow-md);
+    transition: transform var(--ct-dur-fast) var(--ct-ease-out), background var(--ct-dur-fast) var(--ct-ease-out);
+  }
+
+  .ct-hotspots__dot:hover {
+    background: var(--ct-action-hover);
+  }
+
+  .ct-hotspots__dot:focus-visible {
+    outline: 2px solid var(--ct-action);
+    outline-offset: 2px;
+  }
+
+  .ct-hotspots__point.is-open .ct-hotspots__dot {
+    transform: rotate(45deg);
+  }
+
+  .ct-hotspots__popover {
+    position: absolute;
+    top: calc(100% + var(--ct-space-3));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    max-width: 70vw;
+    padding: var(--ct-space-4);
+    border-radius: var(--ct-r-md);
+    border: 1px solid var(--ct-card-border);
+    background: var(--ct-card-bg);
+    box-shadow: var(--ct-shadow-lg);
+  }
+
+  .ct-hotspots__popover[hidden] {
+    display: none;
+  }
+
+  .ct-hotspots__title {
+    margin: 0 0 var(--ct-space-2);
+    color: var(--ct-text);
+    font-size: var(--ct-text-base);
+    font-weight: var(--ct-fw-semi);
+    line-height: var(--ct-leading-tight);
+  }
+
+  .ct-hotspots__text {
+    margin: 0;
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-sm);
+    line-height: var(--ct-leading-base);
+  }
+
+  .ct-hotspots__link {
+    display: inline-block;
+    margin-top: var(--ct-space-3);
+    color: var(--ct-action);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-medium);
+    text-decoration: underline;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ct-hotspots__dot {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    function initHotspots(root) {
+      if (!root || root.dataset.ctReady === 'true') return;
+      root.dataset.ctReady = 'true';
+
+      var points = root.querySelectorAll('.ct-hotspots__point');
+
+      function closeAll(except) {
+        points.forEach(function (pt) {
+          if (pt === except) return;
+          pt.classList.remove('is-open');
+          var dot = pt.querySelector('[data-ct-hotspots-dot]');
+          var pop = pt.querySelector('.ct-hotspots__popover');
+          if (dot) dot.setAttribute('aria-expanded', 'false');
+          if (pop) pop.hidden = true;
+        });
+      }
+
+      points.forEach(function (pt) {
+        var dot = pt.querySelector('[data-ct-hotspots-dot]');
+        var pop = pt.querySelector('.ct-hotspots__popover');
+        if (!dot || !pop) return;
+        dot.addEventListener('click', function () {
+          var open = pt.classList.toggle('is-open');
+          closeAll(pt);
+          dot.setAttribute('aria-expanded', open ? 'true' : 'false');
+          pop.hidden = !open;
+        });
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeAll(null);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!root.contains(e.target)) closeAll(null);
+      });
+    }
+    initHotspots(document.getElementById('{{ root_id }}'));
+    document.addEventListener('shopify:section:load', function (e) {
+      var el = e.target.querySelector ? e.target.querySelector('#{{ root_id }}') : null;
+      if (el) initHotspots(el);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hotspot image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Explore the details"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Tap each point to learn more about this image."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Hotspot link label",
+      "default": "Learn more"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Hotspot",
+      "settings": [
+        {
+          "type": "range",
+          "id": "x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 50
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Hotspot"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "A short note about this point."
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hotspot image",
+      "blocks": [
+        { "type": "hotspot" },
+        { "type": "hotspot" },
+        { "type": "hotspot" }
+      ]
+    }
+  ]
+}
+{% endschema %}

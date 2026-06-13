@@ -1,0 +1,136 @@
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope ct-divider section-{{ section.id }}-padding">
+  <div class="gs-wrap">
+    {%- if section.settings.style != 'none' -%}
+      <hr
+        class="ct-divider__rule ct-divider__rule--{{ section.settings.style }} ct-divider__rule--{{ section.settings.width }}"
+        aria-hidden="true"
+      >
+    {%- else -%}
+      <div class="ct-divider__rule ct-divider__rule--none" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  .ct-divider .gs-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .ct-divider__rule {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .ct-divider__rule--narrow {
+    max-width: 120px;
+  }
+
+  .ct-divider__rule--medium {
+    max-width: 480px;
+  }
+
+  .ct-divider__rule--full {
+    max-width: 100%;
+  }
+
+  .ct-divider__rule--line {
+    height: 1px;
+    background: var(--ct-border);
+  }
+
+  .ct-divider__rule--dots {
+    height: 4px;
+    background-image: radial-gradient(circle, var(--ct-border) 40%, transparent 42%);
+    background-size: var(--ct-space-3) var(--ct-space-3);
+    background-position: center;
+    background-repeat: repeat-x;
+  }
+
+  .ct-divider__rule--none {
+    height: 1px;
+    background: transparent;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Divider",
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "line",
+          "label": "Line"
+        },
+        {
+          "value": "dots",
+          "label": "Dots"
+        },
+        {
+          "value": "none",
+          "label": "None (spacer only)"
+        }
+      ],
+      "default": "line"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Divider"
+    }
+  ]
+}
+{% endschema %}
