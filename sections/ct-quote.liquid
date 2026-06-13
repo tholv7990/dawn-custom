@@ -2,11 +2,13 @@
 
 <section class="gs-scope ct-quote section-{{ section.id }}-padding">
   <div class="gs-wrap">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
+    {%- assign quote_heading = section.settings.heading | strip -%}
+    {%- assign quote_subheading = section.settings.subheading | strip -%}
+    {%- if quote_heading != blank and quote_heading != '-' -%}
+      <h2 class="gs-section-heading">{{ quote_heading | escape }}</h2>
     {%- endif -%}
-    {%- if section.settings.subheading != blank -%}
-      <p class="gs-section-sub">{{ section.settings.subheading | escape }}</p>
+    {%- if quote_subheading != blank and quote_subheading != '-' -%}
+      <p class="gs-section-sub">{{ quote_subheading | escape }}</p>
     {%- endif -%}
     <figure class="ct-quote__figure">
       {%- if section.settings.show_stars -%}
@@ -86,13 +88,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": ""
+      "default": "-"
     },
     {
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": ""
+      "default": "-"
     },
     {
       "type": "textarea",
