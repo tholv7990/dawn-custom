@@ -1,0 +1,43 @@
+/* Cart upsell rail (W4.T03). Token-only. Default-off feature.
+   Compact in the narrow drawer; a wider grid on the cart page. */
+.ct-cart-upsells-rail {
+  margin-bottom: var(--ct-space-5);
+}
+
+.ct-cart-upsells-rail__heading {
+  margin: 0 0 var(--ct-space-3);
+  color: var(--ct-text);
+  font-size: var(--ct-text-sm);
+  font-weight: var(--ct-fw-semi);
+  line-height: 1.3;
+}
+
+.ct-cart-upsells-rail__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--ct-space-3);
+}
+
+.ct-cart-upsells-rail__item {
+  margin: 0;
+  min-width: 0;
+}
+
+/* Drawer: single column (narrow). */
+.ct-cart-upsells-rail--drawer .ct-cart-upsells-rail__list {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Page: responsive multi-column. */
+.ct-cart-upsells-rail--page .ct-cart-upsells-rail__list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ct-space-5);
+}
+
+@media screen and (min-width: 750px) {
+  .ct-cart-upsells-rail--page .ct-cart-upsells-rail__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1565,6 +1565,29 @@
         "label": "Show a discount-code field in the cart",
         "info": "Adds a code field to the cart drawer and cart page. Codes apply through Shopify's native discount link. Default off.",
         "default": false
+      },
+      {
+        "type": "header",
+        "content": "Cart upsells"
+      },
+      {
+        "type": "checkbox",
+        "id": "ct_show_cart_upsells",
+        "label": "Show an upsell rail in the cart",
+        "info": "Adds a \"complete your order\" rail to the cart drawer and cart page. Products already in the cart are hidden automatically. Default off.",
+        "default": false
+      },
+      {
+        "type": "product_list",
+        "id": "ct_cart_upsell_products",
+        "label": "Upsell products",
+        "limit": 6
+      },
+      {
+        "type": "checkbox",
+        "id": "ct_cart_upsell_show_variant",
+        "label": "Show a variant selector on upsell cards",
+        "default": false
       }
     ]
   },

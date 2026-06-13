@@ -1,0 +1,56 @@
+{%- comment -%}
+  Cart upsell rail (W4.T03) for the cart drawer + cart page.
+
+  Server-rendered "complete your order" rail. Each card is the reusable
+  ct-upsell-card snippet (Dawn <product-form> AJAX add → refreshes the cart via
+  the Section Rendering API). Products already in the cart are excluded by id, so
+  placing this INSIDE the drawer's refreshed region means the rail self-prunes a
+  product the instant it is added. Renders nothing when the feature is off, the
+  cart is empty, or no eligible products remain.
+
+  Gated by settings.ct_show_cart_upsells (DEFAULT OFF) — zero effect on the live
+  store until enabled. Reads settings.ct_cart_upsell_products (a product_list).
+
+  Params: context 'drawer' | 'page'
+{%- endcomment -%}
+{%- if settings.ct_show_cart_upsells and cart != empty -%}
+  {%- liquid
+    assign ctx = context | default: 'page'
+    assign show_variant = settings.ct_cart_upsell_show_variant
+
+    assign cart_product_ids = ''
+    for line_item in cart.items
+      assign cart_product_ids = cart_product_ids | append: ',' | append: line_item.product_id | append: ','
+    endfor
+
+    assign card_section_id = 'ct-cart-upsell-' | append: ctx
+    assign upsell_count = 0
+    for item in settings.ct_cart_upsell_products limit: 6
+      if item == blank
+        continue
+      endif
+      assign id_token = ',' | append: item.id | append: ','
+      if cart_product_ids contains id_token
+        continue
+      endif
+      assign upsell_count = upsell_count | plus: 1
+    endfor
+  -%}
+  {%- if upsell_count > 0 -%}
+    <div class="ct-cart-upsells-rail ct-cart-upsells-rail--{{ ctx }}" data-ct-cart-upsells>
+      <p class="ct-cart-upsells-rail__heading">{{ 'sections.cart.ct_upsells_heading' | t }}</p>
+      <ul class="ct-cart-upsells-rail__list" role="list">
+        {%- for item in settings.ct_cart_upsell_products limit: 6 -%}
+          {%- if item == blank -%}{% continue %}{%- endif -%}
+          {%- assign id_token = ',' | append: item.id | append: ',' -%}
+          {%- if cart_product_ids contains id_token -%}{% continue %}{%- endif -%}
+          {%- assign card_uid = ctx | append: '-' | append: item.id -%}
+          <li class="ct-cart-upsells-rail__item">
+            {% render 'ct-upsell-card', product: item, section_id: card_section_id, uid: card_uid, show_variant: show_variant %}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+    <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+{%- endif -%}

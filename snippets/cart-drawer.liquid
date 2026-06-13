@@ -13,6 +13,8 @@
 {{ 'component-ct-cart-tnc.css' | asset_url | stylesheet_tag }}
 {%- comment -%} W4.T05 discount-field styles — only matters when settings.ct_show_cart_discount is on. {%- endcomment -%}
 {{ 'component-ct-cart-discount-field.css' | asset_url | stylesheet_tag }}
+{%- comment -%} W4.T03 cart-upsell-rail styles — only matters when settings.ct_show_cart_upsells is on. {%- endcomment -%}
+{{ 'component-ct-cart-upsells-rail.css' | asset_url | stylesheet_tag }}
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
@@ -522,6 +524,9 @@
             </cart-note>
           </details>
         {%- endif -%}
+
+        {%- comment -%} W4.T03 upsell rail — inside the drawer, self-prunes a product when it is added. {%- endcomment -%}
+        {% render 'ct-cart-upsells-rail', context: 'drawer' %}
 
         <!-- Start blocks -->
         <!-- Subtotals -->

@@ -6,6 +6,8 @@
 {{ 'component-ct-cart-tnc.css' | asset_url | stylesheet_tag }}
 {%- comment -%} W4.T05 discount-field styles — only matters when settings.ct_show_cart_discount is on. {%- endcomment -%}
 {{ 'component-ct-cart-discount-field.css' | asset_url | stylesheet_tag }}
+{%- comment -%} W4.T03 cart-upsell-rail styles — only matters when settings.ct_show_cart_upsells is on. {%- endcomment -%}
+{{ 'component-ct-cart-upsells-rail.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -28,6 +30,8 @@
 >
   <div class="page-width">
     <div class="cart__footer isolate section-{{ section.id }}-padding">
+      {%- comment -%} W4.T03 upsell rail (cart page). {%- endcomment -%}
+      {% render 'ct-cart-upsells-rail', context: 'page' %}
       {%- if settings.show_cart_note -%}
         <cart-note class="cart__note field">
           <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>

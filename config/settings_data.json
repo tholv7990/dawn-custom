@@ -15,6 +15,9 @@
       "ct_tnc_text": "<p>I agree to the terms and conditions.</p>",
       "ct_tnc_error": "Please accept the terms and conditions to continue.",
       "ct_show_cart_discount": false,
+      "ct_show_cart_upsells": false,
+      "ct_cart_upsell_products": [],
+      "ct_cart_upsell_show_variant": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -211,6 +214,9 @@
       "ct_tnc_text": "<p>I agree to the terms and conditions.</p>",
       "ct_tnc_error": "Please accept the terms and conditions to continue.",
       "ct_show_cart_discount": false,
+      "ct_show_cart_upsells": false,
+      "ct_cart_upsell_products": [],
+      "ct_cart_upsell_show_variant": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -407,6 +413,9 @@
       "ct_tnc_text": "<p>I agree to the terms and conditions.</p>",
       "ct_tnc_error": "Please accept the terms and conditions to continue.",
       "ct_show_cart_discount": false,
+      "ct_show_cart_upsells": false,
+      "ct_cart_upsell_products": [],
+      "ct_cart_upsell_show_variant": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -603,6 +612,9 @@
       "ct_tnc_text": "<p>I agree to the terms and conditions.</p>",
       "ct_tnc_error": "Please accept the terms and conditions to continue.",
       "ct_show_cart_discount": false,
+      "ct_show_cart_upsells": false,
+      "ct_cart_upsell_products": [],
+      "ct_cart_upsell_show_variant": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
