@@ -130,6 +130,10 @@ img { max-width: 100%; }
 }
 .button:hover { transform: translateY(-1px); }
 .button:focus-visible { box-shadow: var(--ct-focus); outline: none; }
+/* Dawn marks disabled buttons/links with aria-disabled but only sets cursor/opacity;
+   links (<a>) have no native disabled, so block interaction here too (a11y). */
+.button[aria-disabled='true'] { pointer-events: none; }
+.button[aria-disabled='true']:hover { transform: none; }
 
 .button.is-loading { pointer-events: none; color: transparent; position: relative; }
 .button.is-loading::after {
