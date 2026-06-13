@@ -57,12 +57,30 @@ re-inits on `shopify:section:load`. Self-injects its stylesheet.
 `window.CT.toast(message, { variant, duration, onClose })` — single polite `aria-live` host,
 queued (no overlap), hover/focus pause, token-styled, self-injecting. `variant`: `success` | `error`.
 
+### `<ct-carousel>` (W2.T07)
+Standalone, dependency-free slider. Scroll-snap track with optional arrows
+(`[data-ct-carousel-prev/next]`), dots (`[data-ct-carousel-dots]`), keyboard nav, and
+autoplay (`data-ct-autoplay="ms"`) that pauses on hover/focus and is disabled under
+`prefers-reduced-motion`. Consumes the `--ct-arrow-*` / `--ct-dot-*` chrome tokens.
+Slides are `[data-ct-slide]` children of `[data-ct-carousel-track]`.
+
+### `ct-upsell-card` (W2.T02, snippet)
+Reusable upsell/related product card. Commerce flows through Dawn's `<product-form>`
+pipeline (G-07); presentation uses `ct-media-slot` + `ct-rating-stars` + `ct-price-tokens`.
+Renders nothing without a product. The host section must load `assets/product-form.js`.
+`{% render 'ct-upsell-card', product: item, section_id: section.id, show_variant: true %}`
+Params: `product`, `section_id`, `uid`, `layout` (`card` | `row`), `show_variant`,
+`show_rating`, `button_label`.
+
 ## Styling
 
 `assets/component-ct-primitives.css` holds token-only styles for `.ct-icon`, `.ct-stars`,
-`ct-copy-button`, and `ct-countdown-timer`. Load it from any section that adopts a primitive.
-`ct-reveal.js` and `ct-toast.js` inject their own styles, so they need no CSS file.
+`ct-copy-button`, and `ct-countdown-timer`. `assets/component-ct-carousel.css` styles
+`<ct-carousel>` and `.ct-upsell`. Load whichever a section adopts. `ct-reveal.js` and
+`ct-toast.js` inject their own styles, so they need no CSS file.
 
-## Deferred (next W2 pass)
-- `ct-carousel` wrapper extending Dawn `slider-component` (W2.T07).
-- `ct-upsell-card` snippet (W2.T02) — depends on `ct-price-tokens` + `ct-rating-stars` + Dawn `product-form`.
+## Status
+
+W2 shared-primitive layer is **complete**: T01 (price tokens), T02 (upsell card),
+T03 (rating stars), T04 (copy button), T05 (countdown), T06 (reveal engine), T07 (carousel),
+T08 (icon system), T09 (toast). All are additive and demonstrated in `sections/ct-styleguide.liquid`.

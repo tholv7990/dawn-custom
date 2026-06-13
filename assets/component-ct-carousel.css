@@ -1,0 +1,136 @@
+/* component-ct-carousel.css (W2.T07) - token-only styling for <ct-carousel> and the
+   ct-upsell-card. Loaded by sections that adopt them (and the dev styleguide). Additive:
+   targets only ct- markup absent from current live templates. */
+
+ct-carousel {
+  display: block;
+  position: relative;
+}
+.ct-carousel__track,
+ct-carousel [data-ct-carousel-track] {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: var(--ct-grid-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+ct-carousel [data-ct-carousel-track]::-webkit-scrollbar {
+  display: none;
+}
+ct-carousel [data-ct-carousel-track] > * {
+  scroll-snap-align: center;
+  min-width: 0;
+}
+.ct-carousel__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ct-arrow-size);
+  height: var(--ct-arrow-size);
+  border: 1px solid var(--ct-border);
+  border-radius: var(--ct-arrow-radius);
+  background: var(--ct-arrow-bg);
+  color: var(--ct-arrow-color);
+  cursor: pointer;
+}
+.ct-carousel__arrow:focus-visible {
+  outline: none;
+  box-shadow: var(--ct-ring);
+}
+.ct-carousel__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ct-dot-gap);
+  margin-block-start: var(--ct-space-5);
+}
+.ct-carousel__dot {
+  width: var(--ct-dot-size);
+  height: var(--ct-dot-size);
+  border: 0;
+  border-radius: var(--ct-r-pill);
+  background: var(--ct-dot-color);
+  cursor: pointer;
+  transition: width var(--ct-dur-base) var(--ct-ease-out);
+}
+.ct-carousel__dot.is-on {
+  width: var(--ct-dot-active-width);
+  background: var(--ct-dot-active-color);
+}
+
+/* Upsell card (ct-upsell-card.liquid) */
+.ct-upsell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ct-space-4);
+  background: var(--ct-card-bg);
+  border: var(--ct-card-border-width) solid var(--ct-card-border);
+  border-radius: var(--ct-card-radius);
+  padding: var(--ct-card-pad);
+}
+.ct-upsell--row {
+  flex-direction: row;
+  align-items: center;
+}
+.ct-upsell__media-link {
+  position: relative;
+  display: block;
+  border-radius: var(--ct-r-sm);
+  overflow: hidden;
+}
+.ct-upsell--row .ct-upsell__media-link {
+  flex: 0 0 34%;
+}
+.ct-upsell__save {
+  position: absolute;
+  inset-block-start: var(--ct-space-3);
+  inset-inline-start: var(--ct-space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ct-space-2);
+  padding-block: var(--ct-space-1);
+  padding-inline: var(--ct-space-3);
+  border-radius: var(--ct-badge-radius);
+  background: var(--ct-badge-sale);
+  color: var(--ct-on-accent);
+  font-size: var(--ct-text-xs);
+}
+.ct-upsell__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ct-space-3);
+  min-width: 0;
+}
+.ct-upsell__title {
+  color: var(--ct-text);
+  font-size: var(--ct-text-base);
+  font-weight: var(--ct-fw-semi);
+  text-decoration: none;
+}
+.ct-upsell__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ct-space-3);
+}
+.ct-upsell__price-now {
+  color: var(--ct-price);
+  font-weight: var(--ct-fw-bold);
+}
+.ct-upsell__price-was {
+  color: var(--ct-price-compare);
+  font-size: var(--ct-text-sm);
+}
+.ct-upsell__variant {
+  width: 100%;
+  min-height: var(--ct-touch);
+  border: var(--ct-input-border-width) solid var(--ct-input-border);
+  border-radius: var(--ct-input-radius);
+  background: var(--ct-input-bg);
+  color: var(--ct-input-text);
+}
+.ct-upsell__atc {
+  min-height: var(--ct-btn-min-height);
+}

@@ -93,9 +93,33 @@
     <div class="ct-sg__row" data-ct-reveal data-ct-reveal-order="0">
       <span class="ct-sg__body">This row uses data-ct-reveal (ct-reveal.js).</span>
     </div>
+
+    <h3 class="ct-sg__h">Carousel (&lt;ct-carousel&gt;) + upsell card</h3>
+    <ct-carousel data-ct-autoplay="0">
+      <div class="ct-sg__row" style="justify-content: flex-end;">
+        <button type="button" class="ct-carousel__arrow" data-ct-carousel-prev aria-label="Previous">&lsaquo;</button>
+        <button type="button" class="ct-carousel__arrow" data-ct-carousel-next aria-label="Next">&rsaquo;</button>
+      </div>
+      <div data-ct-carousel-track>
+        {%- assign ct_sg_products = collections.all.products -%}
+        {%- if ct_sg_products.size > 0 -%}
+          {%- for ct_sg_product in ct_sg_products limit: 6 -%}
+            <div data-ct-slide>
+              {% render 'ct-upsell-card', product: ct_sg_product, section_id: section.id, show_rating: true %}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div data-ct-slide><span class="ct-sg__body">Add products to preview the upsell card.</span></div>
+        {%- endif -%}
+      </div>
+      <div class="ct-carousel__dots" data-ct-carousel-dots></div>
+    </ct-carousel>
   </div>
 
   {{ 'component-ct-primitives.css' | asset_url | stylesheet_tag }}
+  {{ 'component-ct-carousel.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'ct-carousel.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'ct-price-tokens.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'ct-copy-button.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'ct-countdown-timer.js' | asset_url }}" defer="defer"></script>

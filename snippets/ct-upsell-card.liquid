@@ -1,0 +1,77 @@
+{%- comment -%}
+  snippets/ct-upsell-card.liquid (W2.T02) - reusable upsell/related product card.
+  Commerce goes through Dawn's <product-form> pipeline (G-07). Presentation uses the
+  CT primitives (ct-media-slot, ct-rating-stars, ct-price-tokens). Renders nothing
+  without a product. The host section must load assets/product-form.js.
+
+  Params:
+    product      - product object (required)
+    section_id   - host section id, for product-form section rendering (required for ATC)
+    uid          - unique suffix for the form id (default product.id)
+    layout       - 'card' (default) | 'row'
+    show_variant - show a variant <select> when the product has options (default false)
+    show_rating  - render rating stars from reviews metafield when present (default true)
+    button_label - ATC label (default 'Add to cart')
+
+  Usage: {% render 'ct-upsell-card', product: item, section_id: section.id %}
+{%- endcomment -%}
+{%- if product != blank -%}
+  {%- liquid
+    assign ct_uid = uid | default: product.id
+    assign ct_form_id = 'ct-upsell-form-' | append: ct_uid
+    assign ct_layout = layout | default: 'card'
+    assign ct_variant = product.selected_or_first_available_variant
+    assign ct_show_rating = show_rating | default: true
+    assign ct_rating = product.metafields.reviews.rating.value
+    assign ct_rating_count = product.metafields.reviews.rating_count.value
+    assign ct_multi = false
+    if show_variant and product.has_only_default_variant == false
+      assign ct_multi = true
+    endif
+  -%}
+  <div class="ct-upsell ct-upsell--{{ ct_layout }}">
+    <a class="ct-upsell__media-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {% render 'ct-media-slot', image: product.featured_image, class: 'ct-upsell__media', ratio: '1 / 1', label: product.title %}
+      {%- if ct_variant.compare_at_price > ct_variant.price -%}
+        <span class="ct-upsell__save">{% render 'ct-icon', name: 'discount' %} Sale</span>
+      {%- endif -%}
+    </a>
+    <div class="ct-upsell__body">
+      <a class="ct-upsell__title" href="{{ product.url }}">{{ product.title }}</a>
+      {%- if ct_show_rating and ct_rating != blank -%}
+        {% render 'ct-rating-stars', rating: ct_rating, count: ct_rating_count %}
+      {%- endif -%}
+      <div class="ct-upsell__price">
+        <span class="ct-upsell__price-now">{% render 'ct-price-tokens', text: '[price]', variant: ct_variant %}</span>
+        {%- if ct_variant.compare_at_price > ct_variant.price -%}
+          <s class="ct-upsell__price-was">{% render 'ct-price-tokens', text: '[compare_price]', variant: ct_variant %}</s>
+        {%- endif -%}
+      </div>
+
+      <product-form class="product-form ct-upsell__form" data-section-id="{{ section_id }}" data-hide-errors="true">
+        {%- form 'product', product, id: ct_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+          {%- if ct_multi -%}
+            <select name="id" class="product-variant-id ct-upsell__variant" aria-label="{{ 'products.product.variant' | t: default: 'Variant' }}">
+              {%- for variant in product.variants -%}
+                <option value="{{ variant.id }}"{% unless variant.available %} disabled{% endunless %}>
+                  {{ variant.title }}{% unless variant.available %} - {{ 'products.product.sold_out' | t }}{% endunless %}
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ ct_variant.id }}" class="product-variant-id"{% unless ct_variant.available %} disabled{% endunless %}>
+          {%- endif -%}
+          <button
+            type="submit"
+            name="add"
+            class="ct-upsell__atc button button--full-width"
+            {% unless ct_variant.available %}aria-disabled="true" disabled{% endunless %}
+          >
+            <span>{{ button_label | default: 'Add to cart' }}</span>
+            {% render 'loading-spinner' %}
+          </button>
+        {%- endform -%}
+      </product-form>
+    </div>
+  </div>
+{%- endif -%}
