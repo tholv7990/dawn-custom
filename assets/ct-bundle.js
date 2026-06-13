@@ -13,6 +13,8 @@ if (!customElements.get('ct-bundle')) {
 
         this.moneyFormat = this.dataset.moneyFormat || '${{amount}}';
         this.partial = this.dataset.partial || 'skip';
+        this.emptyMsg = this.dataset.emptyMsg || '';
+        this.errorMsg = this.dataset.errorMsg || '';
         this.lines = Array.from(this.querySelectorAll('[data-ct-bundle-line]'));
         this.addBtn = this.querySelector('[data-ct-bundle-add]');
         this.totalEl = this.querySelector('[data-ct-bundle-total]');
@@ -93,9 +95,13 @@ if (!customElements.get('ct-bundle')) {
           this.savingsAmount.textContent = this.formatMoney(savings);
         }
 
-        // Block-mode: any unavailable line disables the whole bundle.
-        if (this.addBtn && this.partial === 'block') {
-          this.addBtn.disabled = !allAvailable;
+        // Reconcile the add button on load + on every line change. Never
+        // override the in-flight busy state. In skip mode buildItems() drops
+        // unavailable lines, so the button must stay live; in block mode any
+        // unavailable line disables the whole bundle.
+        if (this.addBtn && !this._busy) {
+          this.addBtn.disabled = this.partial === 'block' ? !allAvailable : false;
+          this.addBtn.setAttribute('aria-disabled', this.addBtn.disabled ? 'true' : 'false');
         }
       }
 
@@ -123,12 +129,13 @@ if (!customElements.get('ct-bundle')) {
       }
 
       add() {
+        if (this._busy) return;
         if (this.addBtn && this.addBtn.disabled) return;
         this.clearError();
 
         var built = this.buildItems();
         if (!built.items.length) {
-          this.showError('No products available to add.');
+          this.showError(this.emptyMsg);
           return;
         }
 
@@ -152,7 +159,7 @@ if (!customElements.get('ct-bundle')) {
           .then((res) => res.json().then((data) => ({ ok: res.ok, data: data })))
           .then((res) => {
             if (!res.ok || res.data.status) {
-              throw new Error(res.data.description || res.data.message || 'Unable to add bundle.');
+              throw new Error(res.data.description || res.data.message || this.errorMsg);
             }
             if (cart && typeof cart.renderContents === 'function') {
               if (cart.setActiveElement) cart.setActiveElement(document.activeElement);
@@ -166,16 +173,19 @@ if (!customElements.get('ct-bundle')) {
       }
 
       setBusy(on) {
+        this._busy = on;
         if (!this.addBtn) return;
+        this.addBtn.disabled = on;
         this.addBtn.classList.toggle('loading', on);
         this.addBtn.setAttribute('aria-busy', on ? 'true' : 'false');
         var spinner = this.addBtn.querySelector('.loading__spinner, .loading-overlay__spinner');
         if (spinner) spinner.classList.toggle('hidden', !on);
+        if (!on) this.recompute();
       }
 
       showError(message) {
         if (!this.errorEl) return;
-        this.errorEl.textContent = message || 'Something went wrong. Please try again.';
+        this.errorEl.textContent = message || this.errorMsg;
         this.errorEl.hidden = false;
       }
 
@@ -205,6 +215,15 @@ if (!customElements.get('ct-bundle')) {
             break;
           case 'amount_no_decimals_with_comma_separator':
             value = group(cents, 0, '.', ',');
+            break;
+          case 'amount_with_space_separator':
+            value = group(cents, 2, ' ', ',');
+            break;
+          case 'amount_no_decimals_with_space_separator':
+            value = group(cents, 0, ' ', ',');
+            break;
+          case 'amount_with_period_and_space_separator':
+            value = group(cents, 2, ' ', '.');
             break;
           case 'amount_with_apostrophe_separator':
             value = group(cents, 2, "'", '.');

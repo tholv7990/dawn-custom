@@ -35,6 +35,16 @@
   assign qb_save_label = s.save_label | default: 'Save'
   assign tier_keys = '1,2,3,4' | split: ','
   assign first_active_done = false
+  comment
+    Count enabled tiers so we never emit an empty radiogroup + a live Add button.
+  endcomment
+  assign qb_enabled_count = 0
+  for n in tier_keys
+    assign ek = 'tier_' | append: n | append: '_enable'
+    if s[ek]
+      assign qb_enabled_count = qb_enabled_count | plus: 1
+    endif
+  endfor
 -%}
 {%- if qb_product != blank -%}
   {{ 'component-ct-quantity-breaks.css' | asset_url | stylesheet_tag }}
@@ -51,6 +61,7 @@
       <div class="ct-qb__heading">{{ s.heading | escape }}</div>
     {%- endif -%}
 
+    {%- if qb_enabled_count > 0 -%}
     <div class="ct-qb__tiers" role="radiogroup" aria-label="{{ s.heading | default: 'Choose quantity' | escape }}">
       {%- for n in tier_keys -%}
         {%- liquid
@@ -141,6 +152,10 @@
       <span data-ct-qb-add-text>{{ qb_btn_label | escape }}</span>
       {% render 'loading-spinner' %}
     </button>
+    <p class="ct-qb__error" data-ct-qb-error role="alert" aria-live="assertive" hidden></p>
+    {%- elsif request.design_mode -%}
+      <p class="ct-qb__error" role="status">Enable at least one quantity tier in this block&#39;s settings.</p>
+    {%- endif -%}
   </ct-quantity-breaks>
   <script src="{{ 'ct-quantity-breaks.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}

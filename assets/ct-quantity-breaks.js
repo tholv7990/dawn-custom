@@ -22,9 +22,11 @@ if (!customElements.get('ct-quantity-breaks')) {
         this.tiers.forEach((tier) => {
           tier.addEventListener('click', () => this.selectTier(tier));
           tier.addEventListener('keydown', (e) => this.onTierKey(e, tier));
-          // Per-unit selects must not bubble a tier "click" that resets focus.
+          // Per-unit selects must not bubble click/keydown to the radio tier
+          // (would reset focus / hijack arrow keys inside the radiogroup).
           tier.querySelectorAll('[data-ct-qb-unit]').forEach((sel) => {
             sel.addEventListener('click', (e) => e.stopPropagation());
+            sel.addEventListener('keydown', (e) => e.stopPropagation());
           });
         });
 
@@ -32,7 +34,10 @@ if (!customElements.get('ct-quantity-breaks')) {
 
         if (window.subscribe && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.variantChange) {
           this.unsubscribe = window.subscribe(window.PUB_SUB_EVENTS.variantChange, (event) => {
-            if (!event || !event.data || event.data.sectionId !== this.sectionId) return;
+            if (!event || !event.data) return;
+            var evtId = event.data.sectionId;
+            // Plain PDP matches directly; quick-add modal rewrites the id to quickadd-<id>.
+            if (evtId !== this.sectionId && 'quickadd-' + evtId !== this.sectionId) return;
             this.onVariantChange(event.data.variant);
           });
         }
@@ -57,6 +62,8 @@ if (!customElements.get('ct-quantity-breaks')) {
       }
 
       onTierKey(event, tier) {
+        // Ignore keys originating inside a per-unit control (don't hijack the select).
+        if (event.target.closest('select, [data-ct-qb-unit]')) return;
         var key = event.key;
         if (key === ' ' || key === 'Enter') {
           event.preventDefault();
@@ -109,6 +116,8 @@ if (!customElements.get('ct-quantity-breaks')) {
       }
 
       add() {
+        if (this._busy) return;
+        this.clearError();
         var payload = this.buildPayload();
         if (!payload) return;
 
@@ -131,30 +140,47 @@ if (!customElements.get('ct-quantity-breaks')) {
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify(payload),
         })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.status) {
-              // Shopify error shape (e.g. sold out): surface, do not refresh.
-              this.showError(data.description || data.message);
+          .then((res) => res.json().then((data) => ({ ok: res.ok, data: data })))
+          .then((res) => {
+            if (!res.ok || res.data.status) {
+              // Non-2xx or Shopify error shape (e.g. sold out): surface, do not refresh.
+              this.showError(res.data.description || res.data.message);
               return;
             }
             if (cart && typeof cart.renderContents === 'function') {
               if (cart.setActiveElement) cart.setActiveElement(document.activeElement);
-              cart.renderContents(data);
+              cart.renderContents(res.data);
             } else if (window.publish && window.PUB_SUB_EVENTS) {
               window.publish(window.PUB_SUB_EVENTS.cartUpdate, { source: 'ct-quantity-breaks' });
             }
+            this.clearError();
           })
           .catch(() => this.showError(''))
           .finally(() => this.setLoading(false));
       }
 
       setLoading(on) {
+        this._busy = on;
         if (!this.addBtn) return;
+        // Preserve the availability-based disabled state across the in-flight window.
+        if (on) {
+          this._wasDisabled = this.addBtn.disabled;
+          this.addBtn.disabled = true;
+        } else {
+          this.addBtn.disabled = this._wasDisabled || false;
+        }
         this.addBtn.classList.toggle('loading', on);
-        this.addBtn.setAttribute('aria-disabled', on ? 'true' : 'false');
+        this.addBtn.setAttribute('aria-busy', on ? 'true' : 'false');
         var spinner = this.addBtn.querySelector('.loading__spinner, .loading-overlay__spinner');
         if (spinner) spinner.classList.toggle('hidden', !on);
+      }
+
+      clearError() {
+        var box = this.querySelector('[data-ct-qb-error]');
+        if (box) {
+          box.hidden = true;
+          box.textContent = '';
+        }
       }
 
       showError(message) {
@@ -165,8 +191,10 @@ if (!customElements.get('ct-quantity-breaks')) {
           box.className = 'ct-qb__error';
           box.setAttribute('data-ct-qb-error', '');
           box.setAttribute('role', 'alert');
+          box.setAttribute('aria-live', 'assertive');
           this.appendChild(box);
         }
+        box.hidden = false;
         box.textContent = message;
       }
 
@@ -227,6 +255,15 @@ if (!customElements.get('ct-quantity-breaks')) {
             break;
           case 'amount_no_decimals_with_comma_separator':
             value = group(cents, 0, '.', ',');
+            break;
+          case 'amount_with_space_separator':
+            value = group(cents, 2, ' ', ',');
+            break;
+          case 'amount_no_decimals_with_space_separator':
+            value = group(cents, 0, ' ', ',');
+            break;
+          case 'amount_with_period_and_space_separator':
+            value = group(cents, 2, ' ', '.');
             break;
           case 'amount_with_apostrophe_separator':
             value = group(cents, 2, "'", '.');

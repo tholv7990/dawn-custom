@@ -72,7 +72,10 @@ if (!customElements.get('ct-sticky-atc')) {
         // Reuse mode: mirror the host product form's variant changes.
         if (window.subscribe && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.variantChange) {
           this.unsubscribe = window.subscribe(window.PUB_SUB_EVENTS.variantChange, (event) => {
-            if (!event || !event.data || event.data.sectionId !== this.sectionId) return;
+            if (!event || !event.data) return;
+            var evtId = event.data.sectionId;
+            // Plain PDP matches directly; quick-add modal rewrites the id to quickadd-<id>.
+            if (evtId !== this.sectionId && 'quickadd-' + evtId !== this.sectionId) return;
             this.applyVariant(event.data.variant, event.data.html);
           });
         }

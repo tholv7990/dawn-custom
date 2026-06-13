@@ -46,6 +46,8 @@
   {{ 'component-ct-sticky-atc.css' | asset_url | stylesheet_tag }}
   <ct-sticky-atc
     class="ct-sticky-atc"
+    role="region"
+    aria-label="{{ sticky_btn_label | escape }}"
     data-section-id="{{ section_id }}"
     {% if reuse_form %}data-form-id="{{ product_form_id }}"{% endif %}
     {% if block != blank %}{{ block.shopify_attributes }}{% endif %}

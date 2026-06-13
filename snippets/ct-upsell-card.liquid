@@ -33,7 +33,7 @@
     <a class="ct-upsell__media-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
       {% render 'ct-media-slot', image: product.featured_image, class: 'ct-upsell__media', ratio: '1 / 1', label: product.title %}
       {%- if ct_variant.compare_at_price > ct_variant.price -%}
-        <span class="ct-upsell__save">{% render 'ct-icon', name: 'discount' %} Sale</span>
+        <span class="ct-upsell__save">{% render 'ct-icon', name: 'discount' %} {{ 'products.product.on_sale' | t }}</span>
       {%- endif -%}
     </a>
     <div class="ct-upsell__body">

@@ -26,7 +26,8 @@
     assign line_total = mv.price | times: main_qty
     assign total = total | plus: line_total
     if mv.compare_at_price > mv.price
-      assign compare_total = compare_total | plus: mv.compare_at_price | times: main_qty
+      assign mv_compare_total = mv.compare_at_price | times: main_qty
+      assign compare_total = compare_total | plus: mv_compare_total
     else
       assign compare_total = compare_total | plus: line_total
     endif
@@ -39,7 +40,8 @@
       assign a1_total = a1v.price | times: addon_1_qty
       assign total = total | plus: a1_total
       if a1v.compare_at_price > a1v.price
-        assign compare_total = compare_total | plus: a1v.compare_at_price | times: addon_1_qty
+        assign a1_compare_total = a1v.compare_at_price | times: addon_1_qty
+        assign compare_total = compare_total | plus: a1_compare_total
       else
         assign compare_total = compare_total | plus: a1_total
       endif
@@ -53,7 +55,8 @@
       assign a2_total = a2v.price | times: addon_2_qty
       assign total = total | plus: a2_total
       if a2v.compare_at_price > a2v.price
-        assign compare_total = compare_total | plus: a2v.compare_at_price | times: addon_2_qty
+        assign a2_compare_total = a2v.compare_at_price | times: addon_2_qty
+        assign compare_total = compare_total | plus: a2_compare_total
       else
         assign compare_total = compare_total | plus: a2_total
       endif
@@ -75,6 +78,8 @@
     data-section-id="{{ section_id }}"
     data-money-format="{{ shop.money_format | escape }}"
     data-partial="{{ s.partial_availability | default: 'skip' }}"
+    data-empty-msg="{{ 'sections.cart.cart_error' | t | escape }}"
+    data-error-msg="{{ 'sections.cart.cart_error' | t | escape }}"
     {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
   >
     {%- if s.heading != blank -%}
