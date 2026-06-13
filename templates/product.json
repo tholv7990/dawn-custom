@@ -57,6 +57,17 @@
             "enable_per_unit": false,
             "button_label": "Add to cart"
           }
+        },
+        "bundle": {
+          "type": "bundle",
+          "settings": {
+            "heading": "Frequently bought together",
+            "addon_1": "womens-minimalist-casual-chic-denim-jacket-vest",
+            "addon_1_qty": 1,
+            "enable_variant_select": true,
+            "show_savings": true,
+            "button_label": "Add bundle to cart"
+          }
         }
       },
       "block_order": [
@@ -69,7 +80,8 @@
         "quantity_breaks",
         "description",
         "share",
-        "sticky_atc"
+        "sticky_atc",
+        "bundle"
       ],
       "settings": {}
     },

@@ -793,6 +793,13 @@
                   section_id: section.id,
                   block: block
                 %}
+              {%- when 'bundle' -%}
+                {% render 'ct-bundle',
+                  product: product,
+                  product_form_id: product_form_id,
+                  section_id: section.id,
+                  block: block
+                %}
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -1048,6 +1055,41 @@
         { "type": "text", "id": "tier_4_badge", "label": "Badge" },
         { "type": "text", "id": "tier_4_benefit", "label": "Benefit" },
         { "type": "checkbox", "id": "tier_4_highlight", "label": "Highlight", "default": false }
+      ]
+    },
+    {
+      "type": "bundle",
+      "name": "Bundle offer",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently bought together" },
+        { "type": "range", "id": "main_qty", "label": "This product quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
+        { "type": "product", "id": "addon_1", "label": "Add-on product 1" },
+        { "type": "range", "id": "addon_1_qty", "label": "Add-on 1 quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
+        { "type": "product", "id": "addon_2", "label": "Add-on product 2" },
+        { "type": "range", "id": "addon_2_qty", "label": "Add-on 2 quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
+        { "type": "checkbox", "id": "enable_variant_select", "label": "Let shoppers choose each variant", "default": true },
+        { "type": "checkbox", "id": "show_savings", "label": "Show savings line", "default": true },
+        { "type": "text", "id": "total_label", "label": "Total label", "default": "Bundle total" },
+        { "type": "text", "id": "savings_label", "label": "Savings label", "default": "You save" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Add bundle to cart" },
+        {
+          "type": "select",
+          "id": "partial_availability",
+          "label": "If an item is unavailable",
+          "default": "skip",
+          "options": [
+            { "value": "skip", "label": "Add the rest (skip unavailable)" },
+            { "value": "block", "label": "Disable the bundle" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "discount_note",
+          "label": "Discount note",
+          "info": "Bundle pricing is shown over your Shopify automatic discounts.",
+          "default": "Bundle discount applied automatically at checkout."
+        }
       ]
     },
     {

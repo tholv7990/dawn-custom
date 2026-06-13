@@ -1,0 +1,74 @@
+{%- comment -%}
+  One product line inside a ct-bundle block. Commerce values bind to the
+  product object; variant is shopper-selectable (when enabled + multi-variant),
+  quantity is merchant-set. The hidden + data hooks feed the multi-line add.
+
+  Params:
+    product            {Product} required
+    qty                {Number}  per-product quantity (default 1)
+    index              {Number}  line index (for ids)
+    show_plus          {Boolean} render a leading "+" separator
+    enable_variant     {Boolean} show a variant <select> on multi-variant products
+{%- endcomment -%}
+{%- if product != blank -%}
+  {%- liquid
+    assign bl_variant = product.selected_or_first_available_variant
+    assign bl_qty = qty | default: 1
+    assign bl_multivariant = false
+    if product.variants.size > 1
+      assign bl_multivariant = true
+    endif
+  -%}
+  {%- if show_plus -%}
+    <li class="ct-bundle__plus" aria-hidden="true">+</li>
+  {%- endif -%}
+  <li
+    class="ct-bundle__line"
+    data-ct-bundle-line
+    data-qty="{{ bl_qty }}"
+    data-unit-cents="{{ bl_variant.price }}"
+  >
+    <div class="ct-bundle__media">
+      {% render 'ct-media-slot', image: product.featured_image, class: 'ct-bundle__media-img', ratio: '1 / 1', label: product.title %}
+      {%- if bl_qty > 1 -%}<span class="ct-bundle__qty-chip">&times;{{ bl_qty }}</span>{%- endif -%}
+    </div>
+    <div class="ct-bundle__line-body">
+      <span class="ct-bundle__line-title">{{ product.title | escape }}</span>
+      <div class="ct-bundle__line-price">
+        <span class="ct-bundle__line-now" data-ct-bundle-line-price>{{ bl_variant.price | times: bl_qty | money }}</span>
+        {%- if bl_variant.compare_at_price > bl_variant.price -%}
+          <s class="ct-bundle__line-was">{{ bl_variant.compare_at_price | times: bl_qty | money }}</s>
+        {%- endif -%}
+      </div>
+      {%- if enable_variant and bl_multivariant -%}
+        <label class="visually-hidden" for="CtBundleVar-{{ index }}">{{ product.title | escape }}</label>
+        <select
+          id="CtBundleVar-{{ index }}"
+          class="ct-bundle__line-select"
+          data-ct-bundle-variant
+          data-money-format="{{ shop.money_format | escape }}"
+        >
+          {%- for variant in product.variants -%}
+            <option
+              value="{{ variant.id }}"
+              data-cents="{{ variant.price }}"
+              data-compare-cents="{{ variant.compare_at_price }}"
+              data-available="{{ variant.available }}"
+              {% if variant.id == bl_variant.id %}selected{% endif %}
+              {% unless variant.available %}disabled{% endunless %}
+            >
+              {{ variant.title }}{% unless variant.available %} - {{ 'products.product.sold_out' | t }}{% endunless %}
+            </option>
+          {%- endfor -%}
+        </select>
+      {%- else -%}
+        <input
+          type="hidden"
+          data-ct-bundle-variant
+          value="{{ bl_variant.id }}"
+          data-available="{{ bl_variant.available }}"
+        >
+      {%- endif -%}
+    </div>
+  </li>
+{%- endif -%}

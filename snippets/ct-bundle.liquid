@@ -1,0 +1,129 @@
+{%- comment -%}
+  Bundle offer — W3.T03. Shared snippet for the `bundle` block in
+  main-product / featured-product. Host product + up to 2 add-on products,
+  per-product variant select + merchant-set quantity, combined price, single
+  multi-line add (cart/add.js items[]) through Dawn's cart (G-07).
+
+  Accepts: product (host), product_form_id, section_id, block
+{%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign main_product = product
+  assign addon_1 = s.addon_1
+  assign addon_2 = s.addon_2
+  assign main_qty = s.main_qty | default: 1
+  assign addon_1_qty = s.addon_1_qty | default: 1
+  assign addon_2_qty = s.addon_2_qty | default: 1
+  assign enable_variant = s.enable_variant_select
+-%}
+{%- if main_product != blank -%}
+  {%- liquid
+    assign total = 0
+    assign compare_total = 0
+    assign all_available = true
+
+    assign mv = main_product.selected_or_first_available_variant
+    assign line_total = mv.price | times: main_qty
+    assign total = total | plus: line_total
+    if mv.compare_at_price > mv.price
+      assign compare_total = compare_total | plus: mv.compare_at_price | times: main_qty
+    else
+      assign compare_total = compare_total | plus: line_total
+    endif
+    unless mv.available
+      assign all_available = false
+    endunless
+
+    if addon_1 != blank
+      assign a1v = addon_1.selected_or_first_available_variant
+      assign a1_total = a1v.price | times: addon_1_qty
+      assign total = total | plus: a1_total
+      if a1v.compare_at_price > a1v.price
+        assign compare_total = compare_total | plus: a1v.compare_at_price | times: addon_1_qty
+      else
+        assign compare_total = compare_total | plus: a1_total
+      endif
+      unless a1v.available
+        assign all_available = false
+      endunless
+    endif
+
+    if addon_2 != blank
+      assign a2v = addon_2.selected_or_first_available_variant
+      assign a2_total = a2v.price | times: addon_2_qty
+      assign total = total | plus: a2_total
+      if a2v.compare_at_price > a2v.price
+        assign compare_total = compare_total | plus: a2v.compare_at_price | times: addon_2_qty
+      else
+        assign compare_total = compare_total | plus: a2_total
+      endif
+      unless a2v.available
+        assign all_available = false
+      endunless
+    endif
+
+    assign savings = compare_total | minus: total
+    assign has_savings = false
+    if savings > 0
+      assign has_savings = true
+    endif
+    assign bundle_btn_label = s.button_label | default: 'Add bundle to cart'
+  -%}
+  {{ 'component-ct-bundle.css' | asset_url | stylesheet_tag }}
+  <ct-bundle
+    class="ct-bundle"
+    data-section-id="{{ section_id }}"
+    data-money-format="{{ shop.money_format | escape }}"
+    data-partial="{{ s.partial_availability | default: 'skip' }}"
+    {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
+  >
+    {%- if s.heading != blank -%}
+      <div class="ct-bundle__heading">{{ s.heading | escape }}</div>
+    {%- endif -%}
+
+    <ul class="ct-bundle__lines" role="list">
+      {% render 'ct-bundle-line', product: main_product, qty: main_qty, index: '0', enable_variant: enable_variant %}
+      {%- if addon_1 != blank -%}
+        {% render 'ct-bundle-line', product: addon_1, qty: addon_1_qty, index: '1', show_plus: true, enable_variant: enable_variant %}
+      {%- endif -%}
+      {%- if addon_2 != blank -%}
+        {% render 'ct-bundle-line', product: addon_2, qty: addon_2_qty, index: '2', show_plus: true, enable_variant: enable_variant %}
+      {%- endif -%}
+    </ul>
+
+    <div class="ct-bundle__summary">
+      <div class="ct-bundle__total-row">
+        <span class="ct-bundle__total-label">{{ s.total_label | default: 'Bundle total' | escape }}</span>
+        <span class="ct-bundle__total">
+          {%- if has_savings -%}
+            <s class="ct-bundle__total-was" data-ct-bundle-compare>{{ compare_total | money }}</s>
+          {%- endif -%}
+          <span class="ct-bundle__total-now" data-ct-bundle-total>{{ total | money }}</span>
+        </span>
+      </div>
+
+      {%- if s.show_savings -%}
+        <p class="ct-bundle__savings" data-ct-bundle-savings{% unless has_savings %} hidden{% endunless %}>
+          {{ s.savings_label | default: 'You save' | escape }} <span data-ct-bundle-savings-amount>{{ savings | money }}</span>
+        </p>
+      {%- endif -%}
+
+      <button
+        type="button"
+        class="ct-bundle__add button button--primary"
+        data-ct-bundle-add
+        {% unless all_available %}aria-disabled="true" disabled{% endunless %}
+      >
+        <span data-ct-bundle-add-text>{{ bundle_btn_label | escape }}</span>
+        {% render 'loading-spinner' %}
+      </button>
+
+      <p class="ct-bundle__error" data-ct-bundle-error role="alert" aria-live="assertive" hidden></p>
+
+      {%- if s.discount_note != blank -%}
+        <p class="ct-bundle__note">{{ s.discount_note | escape }}</p>
+      {%- endif -%}
+    </div>
+  </ct-bundle>
+  <script src="{{ 'ct-bundle.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
