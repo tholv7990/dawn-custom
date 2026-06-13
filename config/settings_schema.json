@@ -1419,7 +1419,7 @@
             "label": "t:settings_schema.cart.settings.cart_type.notification.label"
           }
         ],
-        "default": "notification",
+        "default": "drawer",
         "label": "t:settings_schema.cart.settings.cart_type.label"
       },
       {
@@ -1520,8 +1520,8 @@
         "type": "text",
         "id": "ct_free_shipping_threshold_cents",
         "label": "Free shipping threshold",
-        "info": "Shop-currency fallback only. Use 0 to disable until real store rules are configured. For other active currencies, add a currency-map line or market metafield.",
-        "default": "0"
+        "info": "Shop-currency subunits (amount x 100). Use 0 to disable. Seeded with a demo value — set your real free-shipping threshold here.",
+        "default": "50000000"
       },
       {
         "type": "text",
@@ -1563,8 +1563,8 @@
         "type": "checkbox",
         "id": "ct_show_cart_discount",
         "label": "Show a discount-code field in the cart",
-        "info": "Adds a code field to the cart drawer and cart page. Codes apply through Shopify's native discount link. Default off.",
-        "default": false
+        "info": "Adds a code field to the cart drawer and cart page. Codes apply through Shopify's native discount link.",
+        "default": true
       },
       {
         "type": "header",
@@ -1574,8 +1574,8 @@
         "type": "checkbox",
         "id": "ct_show_cart_upsells",
         "label": "Show an upsell rail in the cart",
-        "info": "Adds a \"complete your order\" rail to the cart drawer and cart page. Products already in the cart are hidden automatically. Default off.",
-        "default": false
+        "info": "Adds a \"complete your order\" rail to the cart drawer and cart page. Products already in the cart are hidden automatically. Pick the upsell products below.",
+        "default": true
       },
       {
         "type": "product_list",
@@ -1620,8 +1620,8 @@
         "type": "checkbox",
         "id": "ct_price_in_button",
         "label": "Show price in the Add-to-cart button",
-        "info": "Appends the selected variant's price to the Add-to-cart button and updates it on variant change. Hidden when the variant is sold out. Default off.",
-        "default": false
+        "info": "Appends the selected variant's price to the Add-to-cart button and updates it on variant change. Hidden when the variant is sold out.",
+        "default": true
       }
     ]
   },

@@ -5,9 +5,15 @@
     "footer": {
       "type": "footer",
       "settings": {}
+    },
+    "cookie_bar": {
+      "type": "ct-cookie-bar",
+      "settings": {}
+    },
+    "scroll_to_top": {
+      "type": "ct-scroll-to-top",
+      "settings": {}
     }
   },
-  "order": [
-    "footer"
-  ]
+  "order": ["footer", "cookie_bar", "scroll_to_top"]
 }

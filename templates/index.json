@@ -1,59 +1,250 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "ct_hero_0": {
+      "type": "ct-hero",
+      "settings": {}
+    },
+    "ct_icon_columns_1": {
+      "type": "ct-icon-columns",
+      "settings": {},
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "b1": {
+          "type": "column",
           "settings": {}
         },
-        "text": {
-          "type": "text",
+        "b2": {
+          "type": "column",
           "settings": {}
         },
-        "buttons": {
-          "type": "buttons",
+        "b3": {
+          "type": "column",
           "settings": {}
         }
       },
       "block_order": [
-        "heading",
-        "text",
-        "buttons"
-      ],
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "ct_feature_blocks_2": {
+      "type": "ct-feature-blocks",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "feature",
+          "settings": {
+            "image_side": "right"
+          }
+        },
+        "b2": {
+          "type": "feature",
+          "settings": {
+            "image_side": "left"
+          }
+        },
+        "b3": {
+          "type": "feature",
+          "settings": {
+            "image_side": "right"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "ct_before_after_3": {
+      "type": "ct-before-after",
       "settings": {}
     },
-    "rich_text": {
-      "type": "rich-text",
+    "ct_stats_4": {
+      "type": "ct-stats",
+      "settings": {},
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "b1": {
+          "type": "stat",
           "settings": {}
         },
-        "text": {
-          "type": "text",
+        "b2": {
+          "type": "stat",
           "settings": {}
         },
-        "button": {
-          "type": "button",
+        "b3": {
+          "type": "stat",
+          "settings": {}
+        },
+        "b4": {
+          "type": "stat",
           "settings": {}
         }
       },
       "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
-      "settings": {}
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
     },
-    "featured_collection": {
+    "featured_products": {
       "type": "featured-collection",
+      "settings": {}
+    },
+    "ct_reviews_5": {
+      "type": "ct-reviews",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "review",
+          "settings": {}
+        },
+        "b2": {
+          "type": "review",
+          "settings": {}
+        },
+        "b3": {
+          "type": "review",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "ct_comparison_6": {
+      "type": "ct-comparison",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "row",
+          "settings": {}
+        },
+        "b2": {
+          "type": "row",
+          "settings": {}
+        },
+        "b3": {
+          "type": "row",
+          "settings": {}
+        },
+        "b4": {
+          "type": "row",
+          "settings": {}
+        },
+        "b5": {
+          "type": "row",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ]
+    },
+    "ct_gallery_7": {
+      "type": "ct-gallery",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "image",
+          "settings": {}
+        },
+        "b2": {
+          "type": "image",
+          "settings": {}
+        },
+        "b3": {
+          "type": "image",
+          "settings": {}
+        },
+        "b4": {
+          "type": "image",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "ct_faq_8": {
+      "type": "ct-faq",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "item",
+          "settings": {
+            "question": "When will my order ship?",
+            "answer": "Add your shipping timeline, carrier details, and tracking expectations here."
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "question": "How do returns work?",
+            "answer": "Use the return policy linked in the footer for the current store terms. Keep the product and packaging until the request is approved."
+          }
+        },
+        "b3": {
+          "type": "item",
+          "settings": {
+            "question": "Can I change or cancel an order?",
+            "answer": "Add your order-change policy here, including when changes are no longer available."
+          }
+        },
+        "b4": {
+          "type": "item",
+          "settings": {
+            "question": "Where can I find product details?",
+            "answer": "Check the product details, materials, and care information on this page."
+          }
+        },
+        "b5": {
+          "type": "item",
+          "settings": {
+            "question": "Who can I contact for help?",
+            "answer": "Use the support email or contact form linked in the footer. Include your order number."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ]
+    },
+    "ct_cta_banner_9": {
+      "type": "ct-cta-banner",
+      "settings": {}
+    },
+    "ct_email_signup_10": {
+      "type": "ct-email-signup",
       "settings": {}
     }
   },
   "order": [
-    "image_banner",
-    "rich_text",
-    "featured_collection"
+    "ct_hero_0",
+    "ct_icon_columns_1",
+    "ct_feature_blocks_2",
+    "ct_before_after_3",
+    "ct_stats_4",
+    "featured_products",
+    "ct_reviews_5",
+    "ct_comparison_6",
+    "ct_gallery_7",
+    "ct_faq_8",
+    "ct_cta_banner_9",
+    "ct_email_signup_10"
   ]
 }

@@ -56,6 +56,8 @@
           {%- if cart != empty -%}
             {%- comment -%} W4.T02 free-shipping bar — inside .js-contents, updates on every cart change. {%- endcomment -%}
             {% render 'ct-cart-progress' %}
+            {%- comment -%} W4.T06 cart-page gift parity — matches the drawer's ct-cart-gift. {%- endcomment -%}
+            {% render 'ct-cart-gift' %}
             <table class="cart-items">
               <caption class="visually-hidden">
                 {{ 'sections.cart.title' | t }}

@@ -2,12 +2,31 @@
   "name": "Header",
   "type": "header",
   "sections": {
+    "announcement": {
+      "type": "ct-announcement-bars",
+      "blocks": {
+        "b1": {
+          "type": "top_message",
+          "settings": {
+            "icon": "Info",
+            "text": "Free shipping on qualifying orders"
+          }
+        },
+        "b2": {
+          "type": "bottom_message",
+          "settings": {
+            "icon": "Info",
+            "text": "Hassle-free returns"
+          }
+        }
+      },
+      "block_order": ["b1", "b2"],
+      "settings": {}
+    },
     "header": {
       "type": "header",
       "settings": {}
     }
   },
-  "order": [
-    "header"
-  ]
+  "order": ["announcement", "header"]
 }
