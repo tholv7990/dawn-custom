@@ -14,7 +14,13 @@ audit tooling, de-branding, presets, CI guards, **and the L3 component-token + t
 reveal emission (W1.T05–T08)** are now in place; what remains is the **visual-regression lane** —
 px/breakpoint retrofit (T10/T11), CSS file-split (T12), `theme-overrides.css` triage (T13),
 `.gs-scope` retirement (T14), light-lock OFF-state verify (T03), override partial (T17). The
-**W2 shared-primitive layer is complete (T01–T09)**. W3–W6 are not started.
+**W2 shared-primitive layer is complete (T01–T09)**. The **W3 PDP block library is complete and dual-host**
+(quantity-breaks, sticky-ATC, bundle, gift, upsells, shipping, discount, size-chart, custom-fields,
+reviews-showcase, savings-line — additive, no Dawn commerce-logic edits); the **W5 section library (14)**
+and **W6 overlays** are built. What remains is the **preview-gated lane**: Dawn-core buy-box edits +
+media-gallery blockification (W3.T09/T10), the whole **W4 cart system** (drawer blockification, rewards bar,
+TnC checkout gate), **W6.T02 mega-menu / W6.T05 RTL**, and the **W1 visual-regression lane** — all need a
+working `shopify theme dev` render, currently blocked by `ECONNRESET` on this machine.
 
 > **Progress log (headless-safe lane, branch `custom-theme`):**
 > - **Chunk A** `e1e3a09` — W1.E2 token emission (`--ct-btn/input/pill/dropdown/qty/swatch/arrow/dot/card/drawer/popup/badge-*`, `--ct-h1…h6`, `--ct-reveal-*`) + dev `ct-styleguide` section.
@@ -35,7 +41,14 @@ px/breakpoint retrofit (T10/T11), CSS file-split (T12), `theme-overrides.css` tr
 >   - **Bug fixes:** button ghost-frame (`--buttons-radius` sync), cart-notification corner sync.
 >   - All token-only CSS, neutral presets/defaults, 0 brand/proof; interactive sections use idempotent, section-scoped, reduced-motion-aware IIFE scripts.
 > - **Commerce build (guard-clean; cart-AJAX follows Dawn's tested product-form pattern but is functionally UNVERIFIED — the dev preview is down on `read ECONNRESET` Shopify-connectivity errors):** ct-product-upsells, ct-collection-grid, ct-featured-product-cta, ct-free-shipping-bar (wires the dead `ct_free_shipping_threshold_cents` setting), ct-cart-upsells, ct-bundle (multi-add via `cart.getSectionsToRender()`/`renderContents()`), ct-bundle-card snippet, ct-cart-savings, ct-recently-viewed, ct-discount-banner (native discount-URL apply + copy), ct-gift-offer (threshold + manual add, no oscillation), W6.T01 header sticky modes. **44 `ct-*` sections total** (see `docs/ct-sections.md`).
-> - **Truly remaining (preview-gated — needs a working `shopify theme dev` render):** functional verification of all the cart-AJAX sections; **W4 cart-drawer blockification + TnC checkout gate** (rewrites the live cart / gates checkout — unsafe blind); **`main-product` block registration** of qty-breaks/sticky/reviews/media-gallery (W3.T01/T02/T09/T10); **W6.T02 mega-menu**; the **W1 visual lane** (T03/T10/T11/T13/T14); **W6.T05 RTL** (logical-property sweep, needs RTL render); **W0.T03** LF normalization. Blocker: this machine currently cannot reach Shopify (`ECONNRESET`); resolves when the connection recovers.
+> - **W3 PDP BLOCK LIBRARY — COMPLETE (dual-host, 2026-06-13, branch `custom-theme`):** the full Shrine-parity PDP block set is now registered as `{%- when -%}` cases **in BOTH `sections/main-product.liquid` AND `sections/featured-product.liquid`** (dual-host rule), each implemented as a shared `snippets/ct-*.liquid` + token-only CSS + idempotent section-scoped JS, all seeded into `templates/product.json`:
+>   - **quantity_breaks** (per-unit variant selects, full AC), **sticky_atc**, **bundle** (FBT multi-add via Dawn `cart.getSectionsToRender()`/`renderContents()`), **product_upsells** (manual/recommendations), **shipping_estimate** (Liquid date-window + checkpoints), **discount_code** (native discount-URL apply via `routes.root_url` + copy), **size_chart** (Dawn `<modal-dialog>`), **custom_field** (line-item properties, capture-phase required-enforcement), **gift_offer** (threshold, no-oscillation engine), **reviews_showcase** (metafield-bound aggregate, G-05 no-fabrication), **savings_line** (variant-real savings, hidden off-sale, floor() parity with the Liquid render).
+>   - Hardened by **two adversarial Workflow bug-hunts + one agent review → 29 real defects fixed** (filter-precedence ×4, image-alt escape ×2, missing `res.ok` ×2, double-click cart races, broken radiogroup, inert required-validation, i18n literal leaks, money-format gaps). Cart-functional smoke (headless, via `cart/*.js` round-trips) verified 6/6: qty-N add, multi-line aggregation, sold-out atomic reject, custom-field property lands, gift round-trip.
+>   - Every block: `node qa/ct-qa.mjs` green + Theme Check 0 offenses + `node --check` clean. **G-07 Dawn-native cart pipeline** throughout (no bespoke cart mutation); **no Dawn commerce-logic edits** — purely additive `when`-cases + schema.
+> - **W0.T03 — DONE:** `.gitattributes` (`* text=auto eol=lf` + explicit text/binary rules) committed; CRLF audit allowlist reset to `{}`; LF enforced on commit — ends the recurring CRLF-drift friction.
+> - **Font — DONE (picker-driven):** `type_header_font` default → `poppins_n4` (heading), `--font-body-family: 'Inter'` retained; `--ct-font-display/-heading` wired to `var(--font-heading-family, …)` so the Dawn font-picker drives it with a safe fallback.
+> - **WD.T03 — RESOLVED (keep cluster):** `ct_free_shipping_threshold_cents` is now wired (consumed by `ct-free-shipping-bar.liquid`); its two siblings `ct_reward_thresholds_by_currency` + `ct_discount_threshold_cents` are the same cart-threshold cluster reserved for the W4 rewards/discount bar — kept intact (deleting siblings of a wired setting makes a half-cluster + re-add churn), not dead garbage.
+> - **Truly remaining (preview-gated — needs a working `shopify theme dev` render; the additive/headless lane is now exhausted):** browser/interaction QA of all the new PDP blocks + the restored Dawn header/footer; **Dawn-CORE buy-box edits** (price-in-button, variant-picker, buy-buttons upgrades) and **W3.T10 media gallery** (monolithic gallery → block) — these touch the live buy box, unsafe blind; **W4 cart-drawer blockification + rewards/checkpoints bar + TnC checkout gate** (rewrites the live cart / gates checkout — a bug breaks ALL purchases, hard 🔒); **W6.T02 mega-menu**; the **W1 visual lane** (T03 light-lock OFF verify, T10/T11 px+breakpoint retrofit, T13 `theme-overrides` triage, T14 `.gs-scope` retirement, W0.T05 screenshot baseline — prereq for all visual 🔒); **W6.T05 RTL** logical-property sweep. Blocker: sustained Shopify API transfers on this machine drop on `ECONNRESET`/`socket hang up` (dev preview + `theme push` both unreliable); resolves when the connection recovers or from a different network.
 
 **Two assessor claims were wrong and are corrected here:** (1) there is **no `!important`** in the
 emitter — the old light-lock paint is already removed; (2) the typography/buttons/pills/inputs/cards/
@@ -96,8 +109,11 @@ Legend: ✅ done · 🟡 partial · ⬜ todo · 🔒 needs-live-preview (visual/
 `<countdown-timer>` (T05), reveal engine v2 (T06), `<ct-carousel>` (T07), `icon.liquid` system (T08),
 toast service (T09). **None exist.** All ⚙️ headless-safe to build (net-new files; don't alter current rendering until adopted).
 
-### W3 — PDP block library — **mostly ⬜; 3 partial bases exist**
-T01 Quantity-breaks 🟡 (logic lives in `ct-product-buy` tiers — not yet a reusable block) · T02 Sticky-ATC 🟡 (`ct-sticky-atc` is a section, not a block) · T09 Reviews 🟡 (`ct-reviews` not registered as a `main-product` block) · T10 Media gallery 🟡 (monolithic in `ct-product-buy`) · T03/T04/T05/T06/T07/T08 ⬜. Almost all 🔒.
+### W3 — PDP block library — **block set ✅ (dual-host); Dawn-core buy-box + media gallery 🔒**
+**✅ Done (2026-06-13, additive `when`-cases in main-product **and** featured-product, seeded in `product.json`):**
+T01 Quantity-breaks ✅ (`ct-quantity-breaks` block, per-unit variant selects) · T02 Sticky-ATC ✅ (`sticky_atc` block) · T03 Bundle/FBT ✅ · T04 Gift offer ✅ · T05 Product upsells ✅ · T06 Shipping+checkpoints ✅ · T07 Discount code ✅ · T08 Size-chart modal + custom fields ✅ · T09 Reviews-showcase ✅ + Savings-line ✅. All `ct-qa`+Theme-Check green, hardened by 29 adversarial-bug-hunt fixes, cart-smoke 6/6.
+**🔒 Remaining (needs live preview — touches the live buy box / monolithic gallery):**
+T09 Dawn-core price-in-button + variant-picker + buy-buttons upgrades · T10 Media gallery blockification. Unsafe blind.
 
 ### W4 — Cart system — **all ⬜** (drawer blockification, progress/checkpoints bar, gift engine, discount/TnC, cart-page parity). All 🔒.
 
