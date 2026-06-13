@@ -1588,6 +1588,29 @@
         "id": "ct_cart_upsell_show_variant",
         "label": "Show a variant selector on upsell cards",
         "default": false
+      },
+      {
+        "type": "header",
+        "content": "Cart free gift"
+      },
+      {
+        "type": "checkbox",
+        "id": "ct_cart_gift_enabled",
+        "label": "Enable an automatic free gift",
+        "info": "Auto-adds a gift when the cart total reaches the threshold, and removes it if the cart drops below. Add an automatic discount in admin to zero the gift's price. Default off.",
+        "default": false
+      },
+      {
+        "type": "product",
+        "id": "ct_cart_gift_product",
+        "label": "Gift product"
+      },
+      {
+        "type": "text",
+        "id": "ct_cart_gift_threshold_cents",
+        "label": "Gift threshold",
+        "info": "Shop-currency subunits, e.g. 7500 = 75.00. Use 0 to disable.",
+        "default": "0"
       }
     ]
   },

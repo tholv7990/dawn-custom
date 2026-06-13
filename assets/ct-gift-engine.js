@@ -8,6 +8,11 @@
  * via cart/change.js by line key. No polling.
  */
 var ctGiftBusy = false;
+// Singleton actor: when more than one engine is on a page (e.g. a global cart
+// gift + a PDP gift_offer block), only ONE performs cart add/remove so they
+// can't oscillate against each other's config. All engines still update their
+// own display. First valid engine to connect wins; releases on disconnect.
+var ctGiftActor = null;
 if (!customElements.get('ct-gift-engine')) {
   customElements.define(
     'ct-gift-engine',
@@ -28,6 +33,19 @@ if (!customElements.get('ct-gift-engine')) {
         if (!this.giftVariantId || isNaN(this.giftVariantId)) return;
         this.dataset.ready = 'true';
 
+        // Claim cart-mutation actorship if free OR currently held by a DETACHED
+        // engine. The drawer engine re-mounts on every cart refresh, and
+        // replaceWith() connects the new node before disconnecting the old — so
+        // without the isConnected check the actor slot would be left null and
+        // never reclaimed, silently killing auto add/remove after the first
+        // external add-to-cart.
+        if (ctGiftActor === null || ctGiftActor.isConnected === false) {
+          ctGiftActor = this;
+          this.isActor = true;
+        } else {
+          this.isActor = false;
+        }
+
         this.debounced = this.debounce(() => this.evaluate(), 350);
         if (window.subscribe && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.cartUpdate) {
           this.unsubscribe = window.subscribe(window.PUB_SUB_EVENTS.cartUpdate, this.debounced);
@@ -37,13 +55,17 @@ if (!customElements.get('ct-gift-engine')) {
 
       disconnectedCallback() {
         if (this.unsubscribe) this.unsubscribe();
+        if (this._debounceTimer) clearTimeout(this._debounceTimer);
+        this.isActor = false;
+        // Release actorship so a re-rendered/sibling engine can take over.
+        if (ctGiftActor === this) ctGiftActor = null;
       }
 
       debounce(fn, wait) {
-        var t;
+        var self = this;
         return function () {
-          clearTimeout(t);
-          t = setTimeout(fn, wait);
+          clearTimeout(self._debounceTimer);
+          self._debounceTimer = setTimeout(fn, wait);
         };
       }
 
@@ -89,8 +111,9 @@ if (!customElements.get('ct-gift-engine')) {
           .then((res) => res.json().then((data) => ({ ok: res.ok, data: data })))
           .then((res) => {
             // 422 etc (e.g. sold-out gift): leave the cart UI untouched, don't render an error object as a cart.
-            if (!res.ok || (res.data && res.data.status)) return;
+            if (!res.ok || (res.data && res.data.status)) return false;
             this.renderCart(res.data);
+            return true;
           });
       }
 
@@ -107,8 +130,9 @@ if (!customElements.get('ct-gift-engine')) {
         })
           .then((res) => res.json().then((data) => ({ ok: res.ok, data: data })))
           .then((res) => {
-            if (!res.ok || (res.data && res.data.status)) return;
+            if (!res.ok || (res.data && res.data.status)) return false;
             this.renderCart(res.data);
+            return true;
           });
       }
 
@@ -128,6 +152,7 @@ if (!customElements.get('ct-gift-engine')) {
 
       evaluate() {
         if (ctGiftBusy) return;
+        if (!this.isConnected) return;
         fetch(this.routeRoot() + 'cart.js', { headers: { Accept: 'application/json' } })
           .then((res) => res.json())
           .then((cart) => {
@@ -147,22 +172,27 @@ if (!customElements.get('ct-gift-engine')) {
             if (remaining < 0) remaining = 0;
             this.setUnlockedUI(eligible, remaining, qualifying);
 
+            // Display updates for every engine; only the actor mutates the cart.
+            if (!this.isActor) return;
+
             if (eligible && !giftPresent) {
               ctGiftBusy = true;
               this.addGift()
-                .catch(() => {})
-                .then(() => {
+                .catch(() => false)
+                .then((ok) => {
                   ctGiftBusy = false;
-                  // Reconcile any cart change that landed during the round-trip.
-                  this.debounced();
+                  // Reconcile cart changes that landed during the round-trip — but
+                  // ONLY after a successful add. Re-arming on a failed (sold-out
+                  // 422) add would loop ~3 req/s while the cart stays eligible.
+                  if (ok) this.debounced();
                 });
             } else if (!eligible && giftPresent) {
               ctGiftBusy = true;
               this.removeGift(giftLine.key)
-                .catch(() => {})
-                .then(() => {
+                .catch(() => false)
+                .then((ok) => {
                   ctGiftBusy = false;
-                  this.debounced();
+                  if (ok) this.debounced();
                 });
             }
           })

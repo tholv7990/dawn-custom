@@ -1,0 +1,78 @@
+{%- comment -%}
+  Cart-level automatic free gift (W4.T04) for the cart drawer.
+
+  Global counterpart of the PDP `gift_offer` block: driven by theme settings,
+  rendered in the drawer. Reuses the oscillation-safe <ct-gift-engine> (cart-wide
+  via the cartUpdate pubsub; its singleton actor-guard keeps it from fighting a
+  PDP gift_offer block). Server-renders the initial state for a no-JS fallback.
+
+  Gated by settings.ct_cart_gift_enabled (DEFAULT OFF) + a gift product + a
+  threshold, so it has zero effect on the live store until configured. The gift
+  is added at its normal price; the merchant zeroes it with an automatic discount
+  in admin (G-05 — no synthesized pricing). Styles come from
+  component-ct-gift-offer.css, loaded once by the drawer host.
+{%- endcomment -%}
+{%- liquid
+  assign gift_product = settings.ct_cart_gift_product
+  assign gift_variant = gift_product.selected_or_first_available_variant
+  assign threshold = settings.ct_cart_gift_threshold_cents | times: 1
+
+  assign qualifying = cart.total_price
+  for line in cart.items
+    if line.properties._ct_gift == 'true'
+      assign qualifying = qualifying | minus: line.final_line_price
+    endif
+  endfor
+  if qualifying < 0
+    assign qualifying = 0
+  endif
+
+  assign unlocked = false
+  if qualifying >= threshold
+    assign unlocked = true
+  endif
+
+  assign remaining = threshold | minus: qualifying
+  if remaining < 0
+    assign remaining = 0
+  endif
+  assign remaining_money = remaining | money
+  assign locked_tpl = 'sections.cart.ct_cart_gift_locked' | t | escape
+  assign locked_message = locked_tpl | replace: '[amount]', remaining_money
+  assign unlocked_message = 'sections.cart.ct_cart_gift_unlocked' | t
+
+  assign pct = 0
+  if threshold > 0
+    assign pct = qualifying | times: 100 | divided_by: threshold
+    if pct > 100
+      assign pct = 100
+    endif
+  endif
+-%}
+{%- if settings.ct_cart_gift_enabled and gift_product != blank and gift_variant != blank and threshold > 0 and cart != empty -%}
+  <ct-gift-engine
+    class="ct-gift-offer ct-cart-gift{% if unlocked %} ct-gift-offer--unlocked{% endif %}"
+    data-gift-variant="{{ gift_variant.id }}"
+    data-threshold="{{ threshold }}"
+    data-locked-template="{{ locked_tpl }}"
+    data-unlocked-text="{{ unlocked_message | escape }}"
+    data-money-format="{{ shop.money_format | escape }}"
+  >
+    <div class="ct-gift-offer__preview">
+      {% render 'ct-media-slot', image: gift_variant.featured_media.preview_image | default: gift_product.featured_image, class: 'ct-gift-offer__img', label: gift_product.title, alt: gift_product.title, ratio: '1 / 1' %}
+      <div class="ct-gift-offer__preview-text">
+        <span class="ct-gift-offer__gift-name">{{ gift_product.title | escape }}</span>
+      </div>
+    </div>
+
+    <div class="ct-gift-offer__status" role="status" aria-live="polite">
+      <p class="ct-gift-offer__text" data-gift-status-text>
+        {%- if unlocked -%}{{ unlocked_message | escape }}{%- else -%}{{ locked_message }}{%- endif -%}
+      </p>
+      <div class="ct-gift-offer__track">
+        <i class="ct-gift-offer__bar" data-gift-bar style="width: {{ pct }}%"></i>
+      </div>
+    </div>
+  </ct-gift-engine>
+  <script src="{{ 'ct-gift-engine.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
