@@ -1,0 +1,42 @@
+{%- comment -%}
+  snippets/ct-bundle-card.liquid - single product card for ct-bundle.liquid.
+  Renders nothing without a product. Presentation uses ct-media-slot; commerce
+  values bind to the product object (price via the money filter, multi-currency).
+
+  Params:
+    product       - product object (required)
+    show_plus     - render a leading "+" separator before this card (default false)
+{%- endcomment -%}
+{%- if product != blank -%}
+  {%- assign bp_variant = product.selected_or_first_available_variant -%}
+  {%- if show_plus -%}
+    <li class="ct-bundle__plus" aria-hidden="true">+</li>
+  {%- endif -%}
+  <li class="ct-bundle__card">
+    <a class="ct-bundle__card-link" href="{{ product.url }}">
+      {% render 'ct-media-slot',
+        image: product.featured_image,
+        class: 'ct-bundle__media',
+        ratio: '1 / 1',
+        label: product.title
+      %}
+    </a>
+    <div class="ct-bundle__card-body">
+      <a class="ct-bundle__card-title" href="{{ product.url }}">{{ product.title | escape }}</a>
+      <div class="ct-bundle__card-price">
+        <span class="ct-bundle__price-now">{{ bp_variant.price | money }}</span>
+        {%- if bp_variant.compare_at_price > bp_variant.price -%}
+          <s class="ct-bundle__price-was">{{ bp_variant.compare_at_price | money }}</s>
+        {%- endif -%}
+      </div>
+    </div>
+    {%- if bp_variant != blank -%}
+      <input
+        type="hidden"
+        class="ct-bundle__variant-id"
+        value="{{ bp_variant.id }}"
+        data-variant-available="{{ bp_variant.available }}"
+      >
+    {%- endif -%}
+  </li>
+{%- endif -%}

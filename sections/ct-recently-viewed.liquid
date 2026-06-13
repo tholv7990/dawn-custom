@@ -1,0 +1,253 @@
+{%- comment -%}
+  sections/ct-recently-viewed.liquid - recently-viewed products rail.
+
+  Pure presentation + localStorage. NO cart mutation. Liquid cannot read
+  localStorage, so the server renders an empty container and an inline IIFE:
+
+    - On a product template it records {{ product.handle }} into a capped,
+      de-duplicated, most-recent-first list in localStorage.
+    - It then reads the stored handles, excludes the current product, fetches
+      each product's .js JSON (locale-aware routes root), and builds a minimal
+      link card (image, title, price). All localStorage + fetch is guarded in
+      try/catch and fails silent. If nothing renders, the rail stays hidden.
+
+  Renders nothing when the storage list is empty (handled client-side; the
+  container starts hidden and only reveals once at least one card is built).
+{%- endcomment -%}
+{%- liquid
+  assign rv_max = section.settings.max | default: 5
+  assign rv_heading = section.settings.heading | default: 'Recently viewed'
+-%}
+
+{% render 'ct-section-padding', section: section %}
+
+<section
+  class="gs-scope ct-recent section-{{ section.id }}-padding"
+  id="ct-recent-{{ section.id }}"
+  data-current="{{ product.handle | default: '' | escape }}"
+  data-max="{{ rv_max }}"
+  hidden
+>
+  <div class="gs-wrap">
+    {%- if rv_heading != blank -%}
+      <h2 class="gs-section-heading ct-recent__heading">{{ rv_heading | escape }}</h2>
+    {%- endif -%}
+    <ul class="ct-recent__grid" role="list" data-recent-grid>
+      <li class="ct-recent__status" aria-live="polite" role="status"></li>
+    </ul>
+  </div>
+</section>
+
+{%- style -%}
+  .ct-recent__heading {
+    margin-bottom: var(--ct-space-6);
+  }
+
+  .ct-recent__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--ct-recent-cols, 5), minmax(0, 1fr));
+    gap: var(--ct-space-5);
+  }
+
+  .ct-recent__status {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .ct-recent__item {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .ct-recent__card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    background-color: var(--ct-card-bg);
+    border: 1px solid var(--ct-card-border);
+    border-radius: var(--ct-r-lg);
+    box-shadow: var(--ct-shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-recent__card:hover {
+    box-shadow: var(--ct-shadow-md);
+  }
+
+  .ct-recent__card:focus-visible {
+    outline: var(--ct-ring);
+    outline-offset: 2px;
+  }
+
+  .ct-recent__media {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background-color: var(--ct-bg-surface);
+  }
+
+  .ct-recent__media--empty {
+    aspect-ratio: 1 / 1;
+    background-color: var(--ct-bg-surface);
+  }
+
+  .ct-recent__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ct-space-2);
+    padding: var(--ct-space-4);
+  }
+
+  .ct-recent__title {
+    color: var(--ct-text);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-semi);
+    line-height: 1.3;
+  }
+
+  .ct-recent__price {
+    color: var(--ct-price);
+    font-size: var(--ct-body-size);
+    font-weight: var(--ct-fw-bold);
+  }
+
+  @media screen and (max-width: 989px) {
+    .ct-recent__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ct-recent__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+{%- endstyle -%}
+
+<script>
+  (function () {
+    var KEY = 'ct-recently-viewed';
+    var root = document.getElementById('ct-recent-{{ section.id }}');
+    if (!root || root.dataset.ready === 'true') return;
+    root.dataset.ready = 'true';
+
+    var grid = root.querySelector('[data-recent-grid]');
+    var current = (root.getAttribute('data-current') || '').trim();
+    var max = parseInt(root.getAttribute('data-max'), 10) || 5;
+    var routeRoot = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+
+    function read() {
+      try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; }
+    }
+    function write(list) {
+      try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {}
+    }
+
+    if (current) {
+      var list = read().filter(function (h) { return h && h !== current; });
+      list.unshift(current);
+      write(list.slice(0, 20));
+    }
+
+    var handles = read().filter(function (h) { return h && h !== current; }).slice(0, max);
+    if (!handles.length) return;
+
+    Promise.all(handles.map(function (handle) {
+      return fetch(routeRoot + 'products/' + encodeURIComponent(handle) + '.js')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    })).then(function (products) {
+      var frag = document.createDocumentFragment();
+      products.forEach(function (p) {
+        if (!p) return;
+        var a = document.createElement('a');
+        a.className = 'ct-recent__card';
+        a.href = routeRoot.replace(/\/$/, '') + p.url;
+        var img = p.featured_image
+          ? '<img class="ct-recent__media" src="' + p.featured_image + '" alt="" loading="lazy" width="400" height="400">'
+          : '<span class="ct-recent__media ct-recent__media--empty"></span>';
+        var price = document.createElement('span');
+        price.className = 'ct-recent__price';
+        price.textContent = String(p.price);
+        var title = document.createElement('span');
+        title.className = 'ct-recent__title';
+        title.textContent = p.title || '';
+        a.innerHTML = img;
+        var body = document.createElement('span');
+        body.className = 'ct-recent__body';
+        body.appendChild(title);
+        body.appendChild(price);
+        a.appendChild(body);
+        var li = document.createElement('li');
+        li.className = 'ct-recent__item';
+        li.appendChild(a);
+        frag.appendChild(li);
+      });
+      if (!frag.childNodes.length) return;
+      grid.innerHTML = '';
+      grid.appendChild(frag);
+      root.style.setProperty('--ct-recent-cols', String(max));
+      root.hidden = false;
+    }).catch(function () {});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Recently viewed",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Recently viewed"
+    },
+    {
+      "type": "range",
+      "id": "max",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "label": "Maximum products",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently viewed"
+    }
+  ]
+}
+{% endschema %}

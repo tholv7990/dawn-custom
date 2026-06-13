@@ -1,0 +1,127 @@
+{% render 'ct-section-padding', section: section %}
+
+{%- liquid
+  assign original = 0
+  for item in cart.items
+    if item.original_line_price
+      assign original = original | plus: item.original_line_price
+    else
+      assign original = original | plus: item.final_line_price
+    endif
+  endfor
+  assign saved = cart.original_total_price | minus: cart.total_price
+-%}
+
+<section class="gs-scope ct-cart-savings section-{{ section.id }}-padding" id="ct-cart-savings-{{ section.id }}">
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading ct-cart-savings__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if saved > 0 -%}
+      <p class="ct-cart-savings__line" role="status" aria-live="polite">
+        <span class="ct-cart-savings__label">{{ section.settings.label | escape }}</span>
+        <span class="ct-cart-savings__amount">{{ saved | money }}</span>
+      </p>
+    {%- elsif section.settings.empty_note != blank -%}
+      <p class="ct-cart-savings__empty" role="status" aria-live="polite">{{ section.settings.empty_note | escape }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- style -%}
+  .ct-cart-savings .ct-cart-savings__heading {
+    margin-bottom: var(--ct-space-3);
+  }
+
+  .ct-cart-savings .ct-cart-savings__line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--ct-space-2) var(--ct-space-3);
+    margin: 0;
+    padding: var(--ct-space-4) var(--ct-space-5);
+    background: var(--ct-bg-raised);
+    border: 1px solid var(--ct-border);
+    border-radius: var(--ct-r-lg);
+    box-shadow: var(--ct-shadow-sm);
+  }
+
+  .ct-cart-savings .ct-cart-savings__label {
+    font-size: var(--ct-text-base);
+    font-weight: var(--ct-fw-medium);
+    color: var(--ct-text-2);
+  }
+
+  .ct-cart-savings .ct-cart-savings__amount {
+    font-size: var(--ct-text-xl);
+    font-weight: var(--ct-fw-bold);
+    color: var(--ct-success);
+  }
+
+  .ct-cart-savings .ct-cart-savings__empty {
+    margin: 0;
+    padding: var(--ct-space-4) var(--ct-space-5);
+    font-size: var(--ct-text-sm);
+    color: var(--ct-text-3);
+    background: var(--ct-bg-surface);
+    border: 1px solid var(--ct-border);
+    border-radius: var(--ct-r-lg);
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Cart savings",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your savings"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Savings label",
+      "default": "You are saving"
+    },
+    {
+      "type": "text",
+      "id": "empty_note",
+      "label": "Empty note",
+      "info": "Shown when the cart has no savings. Leave blank to hide the section when there are no savings.",
+      "default": "Add items to see your savings."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart savings"
+    }
+  ]
+}
+{% endschema %}
