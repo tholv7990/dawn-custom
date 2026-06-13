@@ -18,6 +18,15 @@
           "type": "price",
           "settings": {}
         },
+        "savings_line": {
+          "type": "savings_line",
+          "settings": {
+            "prefix": "You save",
+            "show_amount": true,
+            "show_percent": true,
+            "style": "text"
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {}
@@ -153,6 +162,7 @@
         "vendor",
         "title",
         "price",
+        "savings_line",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",

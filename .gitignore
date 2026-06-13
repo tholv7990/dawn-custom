@@ -14,3 +14,7 @@ Thumbs.db
 
 # Theme export / packaging artifacts (build outputs, not source)
 *.zip
+
+# Shopify CLI dev-server scratch logs (local only)
+tmp-shopify-theme-dev.out.log
+tmp-shopify-theme-dev.err.log

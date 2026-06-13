@@ -1,0 +1,41 @@
+{%- comment -%}
+  Savings line — W3.T09. Shared snippet for the `savings_line` block in
+  main-product / featured-product. Shows "You save [amount] ([percent]%)" bound
+  to the variant's REAL compare-at price — renders nothing when the variant is
+  not on sale (G-05, no fabricated savings). Updates on variantChange.
+
+  Accepts: product, section_id, block
+{%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign v = product.selected_or_first_available_variant
+  assign on_sale = false
+  assign saved = 0
+  assign percent = 0
+  if v.compare_at_price > v.price
+    assign on_sale = true
+    assign saved = v.compare_at_price | minus: v.price
+    assign percent = saved | times: 100 | divided_by: v.compare_at_price
+  endif
+  assign saved_money = saved | money
+-%}
+{%- if product != blank -%}
+  {{ 'component-ct-savings-line.css' | asset_url | stylesheet_tag }}
+  <ct-savings-line
+    class="ct-savings-line ct-savings-line--{{ s.style | default: 'text' }}"
+    data-section-id="{{ section_id }}"
+    data-money-format="{{ shop.money_format | escape }}"
+    data-prefix="{{ s.prefix | default: 'You save' | escape }}"
+    data-show-amount="{{ s.show_amount | default: true }}"
+    data-show-percent="{{ s.show_percent | default: true }}"
+    {% unless on_sale %}hidden{% endunless %}
+    {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
+  >
+    <span class="ct-savings-line__text" data-savings-text>
+      {{- s.prefix | default: 'You save' | escape }}
+      {%- if s.show_amount %} <span data-savings-amount>{{ saved_money }}</span>{%- endif -%}
+      {%- if s.show_percent %} <span data-savings-percent>({{ percent }}%)</span>{%- endif -%}
+    </span>
+  </ct-savings-line>
+  <script src="{{ 'ct-savings-line.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

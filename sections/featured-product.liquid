@@ -487,6 +487,8 @@
                   {% render 'ct-gift-offer', section_id: section.id, block: block %}
                 {%- when 'reviews_showcase' -%}
                   {% render 'ct-reviews-showcase', product: product, section_id: section.id, block: block %}
+                {%- when 'savings_line' -%}
+                  {% render 'ct-savings-line', product: product, section_id: section.id, block: block %}
                 {%- when 'benefits_checklist' -%}
                   {%- assign benefit_lines = block.settings.items | newline_to_br | split: '<br />' -%}
                   {%- if benefit_lines.size > 0 -%}
@@ -967,6 +969,26 @@
         { "type": "header", "content": "Link to all reviews" },
         { "type": "url", "id": "anchor_url", "label": "All reviews link" },
         { "type": "text", "id": "anchor_label", "label": "Link label", "default": "Read all reviews" }
+      ]
+    },
+    {
+      "type": "savings_line",
+      "name": "Savings line",
+      "settings": [
+        { "type": "paragraph", "content": "Shows the variant's real savings; hidden when not on sale (no fabricated discounts)." },
+        { "type": "text", "id": "prefix", "label": "Prefix", "default": "You save" },
+        { "type": "checkbox", "id": "show_amount", "label": "Show amount saved", "default": true },
+        { "type": "checkbox", "id": "show_percent", "label": "Show percent saved", "default": true },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "default": "text",
+          "options": [
+            { "value": "text", "label": "Text" },
+            { "value": "badge", "label": "Badge" }
+          ]
+        }
       ]
     },
     {

@@ -1,0 +1,25 @@
+/* Savings line — W3.T09. Token-only. */
+.ct-savings-line {
+  display: block;
+}
+
+.ct-savings-line[hidden] {
+  display: none;
+}
+
+.ct-savings-line__text {
+  font-size: var(--ct-text-sm);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-savings);
+}
+
+.ct-savings-line--badge .ct-savings-line__text {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ct-space-1);
+  padding: var(--ct-space-1) var(--ct-space-3);
+  color: var(--ct-on-accent);
+  background: var(--ct-savings);
+  border-radius: var(--ct-r-pill);
+  font-size: var(--ct-text-xs);
+}
