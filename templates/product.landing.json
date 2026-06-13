@@ -1,0 +1,299 @@
+{
+  "sections": {
+    "ct_product_buy": {
+      "type": "ct-product-buy",
+      "settings": {},
+      "blocks": {
+        "tier_1": {
+          "type": "tier",
+          "settings": {
+            "quantity": 1
+          }
+        },
+        "tier_2": {
+          "type": "tier",
+          "settings": {
+            "quantity": 2
+          }
+        },
+        "tier_3": {
+          "type": "tier",
+          "settings": {
+            "quantity": 3
+          }
+        }
+      },
+      "block_order": [
+        "tier_1",
+        "tier_2",
+        "tier_3"
+      ]
+    },
+    "ct_product_info": {
+      "type": "ct-product-info",
+      "settings": {},
+      "blocks": {
+        "spec_1": {
+          "type": "spec",
+          "settings": {}
+        },
+        "spec_2": {
+          "type": "spec",
+          "settings": {}
+        },
+        "spec_3": {
+          "type": "spec",
+          "settings": {}
+        },
+        "spec_4": {
+          "type": "spec",
+          "settings": {}
+        },
+        "spec_5": {
+          "type": "spec",
+          "settings": {}
+        },
+        "spec_6": {
+          "type": "spec",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "spec_1",
+        "spec_2",
+        "spec_3",
+        "spec_4",
+        "spec_5",
+        "spec_6"
+      ]
+    },
+    "ct_brand_strip": {
+      "type": "ct-brand-strip",
+      "settings": {},
+      "blocks": {
+        "brand_1": {
+          "type": "brand",
+          "settings": {}
+        },
+        "brand_2": {
+          "type": "brand",
+          "settings": {}
+        },
+        "brand_3": {
+          "type": "brand",
+          "settings": {}
+        },
+        "brand_4": {
+          "type": "brand",
+          "settings": {}
+        },
+        "brand_5": {
+          "type": "brand",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "brand_1",
+        "brand_2",
+        "brand_3",
+        "brand_4",
+        "brand_5"
+      ]
+    },
+    "ct_reviews": {
+      "type": "ct-reviews",
+      "settings": {},
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {}
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {}
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ]
+    },
+    "ct_feature_blocks": {
+      "type": "ct-feature-blocks",
+      "settings": {},
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "image_side": "right"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "image_side": "left"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "image_side": "right"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ]
+    },
+    "ct_comparison": {
+      "type": "ct-comparison",
+      "settings": {},
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {}
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {}
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {}
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {}
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5"
+      ]
+    },
+    "ct_trust_marquee": {
+      "type": "ct-trust-marquee",
+      "settings": {},
+      "blocks": {
+        "message_1": {
+          "type": "message",
+          "settings": {}
+        },
+        "message_2": {
+          "type": "message",
+          "settings": {}
+        },
+        "message_3": {
+          "type": "message",
+          "settings": {}
+        },
+        "message_4": {
+          "type": "message",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "message_1",
+        "message_2",
+        "message_3",
+        "message_4"
+      ]
+    },
+    "ct_video_gallery": {
+      "type": "ct-video-gallery",
+      "settings": {},
+      "blocks": {
+        "video_1": {
+          "type": "video",
+          "settings": {}
+        },
+        "video_2": {
+          "type": "video",
+          "settings": {}
+        },
+        "video_3": {
+          "type": "video",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "video_1",
+        "video_2",
+        "video_3"
+      ]
+    },
+    "ct_faq": {
+      "type": "ct-faq",
+      "settings": {},
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_5": {
+          "type": "item",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5"
+      ]
+    },
+    "ct_related_products": {
+      "type": "ct-related-products",
+      "settings": {}
+    },
+    "ct_email_signup": {
+      "type": "ct-email-signup",
+      "settings": {}
+    },
+    "ct_sticky_atc": {
+      "type": "ct-sticky-atc",
+      "settings": {}
+    }
+  },
+  "order": [
+    "ct_product_buy",
+    "ct_product_info",
+    "ct_brand_strip",
+    "ct_reviews",
+    "ct_feature_blocks",
+    "ct_comparison",
+    "ct_trust_marquee",
+    "ct_video_gallery",
+    "ct_faq",
+    "ct_related_products",
+    "ct_email_signup",
+    "ct_sticky_atc"
+  ]
+}
