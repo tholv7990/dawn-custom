@@ -214,6 +214,124 @@ body {
 
   --ct-glass: {{ settings.glass_opacity | default: 0.9 }};
   --ct-glass-surface:rgba(255,255,255,var(--ct-glass));
+
+  /* CT L3 component contracts - geometry aliases Dawn-native panel vars; color/shadow from CT L1/L2.
+     Additive: nothing consumes these yet, so emission is a visual no-op until a component opts in. */
+
+  /* Buttons (W1.T06) */
+  --ct-btn-radius:var(--buttons-radius, var(--ct-product-button-radius));
+  --ct-btn-border-width:var(--buttons-border-width, 1px);
+  --ct-btn-border-opacity:var(--buttons-border-opacity, 1);
+  --ct-btn-shadow-h:var(--buttons-shadow-horizontal-offset, 0);
+  --ct-btn-shadow-v:var(--buttons-shadow-vertical-offset, 0);
+  --ct-btn-shadow-blur:var(--buttons-shadow-blur-radius, 0);
+  --ct-btn-shadow-opacity:var(--buttons-shadow-opacity, 0);
+  --ct-btn-bg:var(--ct-action);
+  --ct-btn-bg-hover:var(--ct-action-hover);
+  --ct-btn-text:var(--ct-on-accent);
+  --ct-btn-min-height:max(44px, var(--ct-product-button-height));
+
+  /* Inputs (W1.T07b) */
+  --ct-input-radius:var(--inputs-radius, var(--ct-r-sm));
+  --ct-input-border-width:var(--inputs-border-width, 1px);
+  --ct-input-border-opacity:var(--inputs-border-opacity, 1);
+  --ct-input-border:var(--ct-border);
+  --ct-input-bg:var(--ct-bg-raised);
+  --ct-input-text:var(--ct-text);
+  --ct-input-height:var(--ct-form-field-height);
+  --ct-input-pad-x:var(--ct-form-field-pad-x);
+
+  /* Variant pills (W1.T07a) */
+  --ct-pill-radius:var(--variant-pills-radius, var(--ct-r-pill));
+  --ct-pill-border-width:var(--variant-pills-border-width, 1px);
+  --ct-pill-border-opacity:var(--variant-pills-border-opacity, 1);
+  --ct-pill-border:var(--ct-border);
+  --ct-pill-bg:var(--ct-bg-raised);
+  --ct-pill-text:var(--ct-text);
+  --ct-pill-selected-bg:var(--ct-action);
+  --ct-pill-selected-text:var(--ct-on-accent);
+  --ct-pill-min-height:44px;
+
+  /* Dropdowns (W1.T07b) - share input geometry */
+  --ct-dropdown-radius:var(--ct-input-radius);
+  --ct-dropdown-border:var(--ct-input-border);
+  --ct-dropdown-bg:var(--ct-input-bg);
+  --ct-dropdown-text:var(--ct-input-text);
+
+  /* Quantity picker (W1.T07c) */
+  --ct-qty-radius:var(--ct-input-radius);
+  --ct-qty-border:var(--ct-border);
+  --ct-qty-bg:var(--ct-bg-raised);
+  --ct-qty-text:var(--ct-text);
+  --ct-qty-height:var(--ct-input-height);
+  --ct-qty-btn-size:44px;
+
+  /* Color swatches (W1.T07d) */
+  --ct-swatch-size:34px;
+  --ct-swatch-radius:var(--ct-r-pill);
+  --ct-swatch-border:var(--ct-border-strong);
+  --ct-swatch-ring:var(--ct-action);
+  --ct-swatch-gap:var(--ct-space-3);
+
+  /* Slider chrome (W1.T07e) */
+  --ct-arrow-size:var(--ct-gallery-arrow-size);
+  --ct-arrow-radius:var(--ct-r-pill);
+  --ct-arrow-bg:var(--ct-glass-bg);
+  --ct-arrow-icon:var(--ct-gallery-icon-size);
+  --ct-arrow-color:var(--ct-text);
+  --ct-dot-size:var(--ct-gallery-dot-size);
+  --ct-dot-active-width:var(--ct-gallery-dot-active-width);
+  --ct-dot-gap:var(--ct-gallery-dot-gap);
+  --ct-dot-color:var(--ct-border-strong);
+  --ct-dot-active-color:var(--ct-action);
+
+  /* Cards (W1.T07) */
+  --ct-card-radius:var(--card-corner-radius, var(--ct-r-md));
+  --ct-card-border-width:var(--card-border-width, 1px);
+  --ct-card-border:var(--ct-border);
+  --ct-card-bg:var(--ct-bg-raised);
+  --ct-card-pad-token:var(--ct-card-pad-lg);
+  --ct-card-shadow:var(--ct-shadow-md);
+
+  /* Drawers (W1.T07) */
+  --ct-drawer-bg:var(--ct-bg-raised);
+  --ct-drawer-border:var(--ct-border);
+  --ct-drawer-shadow:var(--ct-shadow-drawer);
+  --ct-drawer-width:420px;
+
+  /* Popups (W1.T07) */
+  --ct-popup-radius:var(--popup-corner-radius, var(--ct-r-lg));
+  --ct-popup-bg:var(--ct-bg-raised);
+  --ct-popup-border:var(--ct-border);
+  --ct-popup-shadow:var(--ct-shadow-pop);
+  --ct-popup-overlay:var(--ct-overlay-bg);
+
+  /* Badges (W1.T07 / FR-GS-06) */
+  --ct-badge-radius:var(--badge-corner-radius, var(--ct-r-sm));
+  --ct-badge-pad-x:var(--ct-space-3);
+  --ct-badge-pad-y:var(--ct-space-1);
+  --ct-badge-shadow:var(--ct-shadow-badge);
+
+  /* Typography scale (W1.T05) - settings-driven multipliers */
+  --ct-heading-scale: {{ settings.heading_scale | default: 100 | times: 0.01 }};
+  --ct-body-scale: {{ settings.body_scale | default: 100 | times: 0.01 }};
+  --ct-h1:calc(var(--ct-text-4xl) * var(--ct-heading-scale));
+  --ct-h2:calc(var(--ct-text-3xl) * var(--ct-heading-scale));
+  --ct-h3:calc(var(--ct-text-2xl) * var(--ct-heading-scale));
+  --ct-h4:calc(var(--ct-text-xl) * var(--ct-heading-scale));
+  --ct-h5:calc(var(--ct-text-lg) * var(--ct-heading-scale));
+  --ct-h6:calc(var(--ct-text-md) * var(--ct-heading-scale));
+  --ct-body-size:calc(var(--ct-text-base) * var(--ct-body-scale));
+
+  /* Reveal / motion (W1.T08) - inputs for the W2.T06 reveal engine */
+  --ct-reveal-duration:var(--ct-dur-slow);
+  --ct-reveal-delay:0ms;
+  --ct-reveal-stagger:80ms;
+  --ct-reveal-opacity:0;
+  --ct-reveal-x:0;
+  --ct-reveal-y:16px;
+  --ct-reveal-zoom:1;
+  --ct-reveal-ease:var(--ct-ease-out);
 }
 
 [class*="color-scheme-"],

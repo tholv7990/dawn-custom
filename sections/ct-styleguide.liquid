@@ -1,0 +1,162 @@
+{% comment %}
+  sections/ct-styleguide.liquid - DEV-ONLY token proof sheet (W1.E2 / W1.T07).
+  Renders the L3 component tokens emitted by snippets/css-variables.liquid so a
+  developer can confirm --ct-btn/pill/input/qty/swatch/arrow/dot/badge/reveal-*
+  resolve correctly. Not referenced by any live template, so it never ships
+  unless manually added. Token-only styling (no raw color/size literals) to keep
+  the CT token audit green.
+{% endcomment %}
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope ct-sg section-{{ section.id }}-padding" {{ section.shopify_attributes }}>
+  <div class="gs-wrap">
+    <h2 class="ct-sg__title">{{ section.settings.heading | escape }}</h2>
+
+    <h3 class="ct-sg__h">Typography scale (--ct-h1…h6, --ct-body-size)</h3>
+    <div class="ct-sg__type">
+      <p class="ct-sg__t1">Display H1</p>
+      <p class="ct-sg__t2">Heading H2</p>
+      <p class="ct-sg__t3">Heading H3</p>
+      <p class="ct-sg__t4">Heading H4</p>
+      <p class="ct-sg__body">Body copy at --ct-body-size with the body font and scale applied.</p>
+    </div>
+
+    <h3 class="ct-sg__h">Semantic colors (L2 roles)</h3>
+    <div class="ct-sg__swatches">
+      <span class="ct-sg__chip ct-sg__chip--action">action</span>
+      <span class="ct-sg__chip ct-sg__chip--price">price</span>
+      <span class="ct-sg__chip ct-sg__chip--sale">sale</span>
+      <span class="ct-sg__chip ct-sg__chip--trust">trust</span>
+      <span class="ct-sg__chip ct-sg__chip--rating">rating</span>
+      <span class="ct-sg__chip ct-sg__chip--urgency">urgency</span>
+    </div>
+
+    <h3 class="ct-sg__h">Buttons (--ct-btn-*)</h3>
+    <div class="ct-sg__row">
+      <button type="button" class="ct-sg__btn">Primary action</button>
+      <button type="button" class="ct-sg__btn ct-sg__btn--ghost">Ghost</button>
+    </div>
+
+    <h3 class="ct-sg__h">Variant pills (--ct-pill-*)</h3>
+    <div class="ct-sg__row">
+      <span class="ct-sg__pill is-selected">Selected</span>
+      <span class="ct-sg__pill">Small</span>
+      <span class="ct-sg__pill">Medium</span>
+      <span class="ct-sg__pill">Large</span>
+    </div>
+
+    <h3 class="ct-sg__h">Input + quantity (--ct-input-*, --ct-qty-*)</h3>
+    <div class="ct-sg__row">
+      <input class="ct-sg__input" type="text" placeholder="Input field" aria-label="Demo input" />
+      <span class="ct-sg__qty">
+        <button type="button" class="ct-sg__qty-btn" aria-label="Decrease">&minus;</button>
+        <span class="ct-sg__qty-val">1</span>
+        <button type="button" class="ct-sg__qty-btn" aria-label="Increase">&plus;</button>
+      </span>
+    </div>
+
+    <h3 class="ct-sg__h">Swatches + slider chrome (--ct-swatch-*, --ct-arrow-*, --ct-dot-*)</h3>
+    <div class="ct-sg__row">
+      <span class="ct-sg__swatch is-selected"></span>
+      <span class="ct-sg__swatch"></span>
+      <span class="ct-sg__swatch"></span>
+      <span class="ct-sg__arrow" aria-hidden="true">&lsaquo;</span>
+      <span class="ct-sg__dots"><b class="is-on"></b><b></b><b></b></span>
+    </div>
+
+    <h3 class="ct-sg__h">Badges (--ct-badge-*)</h3>
+    <div class="ct-sg__row">
+      <span class="ct-sg__badge ct-sg__badge--sale">Sale</span>
+      <span class="ct-sg__badge ct-sg__badge--new">New</span>
+      <span class="ct-sg__badge ct-sg__badge--best">Best</span>
+    </div>
+  </div>
+
+  {% style %}
+    .ct-sg__title { font-size: var(--ct-h2); color: var(--ct-text); margin-bottom: var(--ct-space-7); }
+    .ct-sg__h { font-size: var(--ct-text-sm); text-transform: uppercase; letter-spacing: .08em; color: var(--ct-text-2); margin-top: var(--ct-space-9); margin-bottom: var(--ct-space-4); }
+    .ct-sg__t1 { font-size: var(--ct-h1); line-height: var(--ct-leading-tight); color: var(--ct-text); }
+    .ct-sg__t2 { font-size: var(--ct-h2); line-height: var(--ct-leading-tight); color: var(--ct-text); }
+    .ct-sg__t3 { font-size: var(--ct-h3); color: var(--ct-text); }
+    .ct-sg__t4 { font-size: var(--ct-h4); color: var(--ct-text); }
+    .ct-sg__body { font-size: var(--ct-body-size); line-height: var(--ct-leading-base); color: var(--ct-text-2); }
+    .ct-sg__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ct-space-5); }
+    .ct-sg__swatches { display: flex; flex-wrap: wrap; gap: var(--ct-space-3); }
+    .ct-sg__chip { display: inline-flex; align-items: center; padding-top: var(--ct-space-2); padding-bottom: var(--ct-space-2); padding-left: var(--ct-space-4); padding-right: var(--ct-space-4); border-radius: var(--ct-r-pill); font-size: var(--ct-text-xs); color: var(--ct-on-accent); }
+    .ct-sg__chip--action { background: var(--ct-action); }
+    .ct-sg__chip--price { background: var(--ct-price); }
+    .ct-sg__chip--sale { background: var(--ct-badge-sale); }
+    .ct-sg__chip--trust { background: var(--ct-trust); }
+    .ct-sg__chip--rating { background: var(--ct-rating); color: var(--ct-text); }
+    .ct-sg__chip--urgency { background: var(--ct-urgency); }
+    .ct-sg__btn { min-height: var(--ct-btn-min-height); padding-left: var(--ct-space-7); padding-right: var(--ct-space-7); border-radius: var(--ct-btn-radius); border: var(--ct-btn-border-width) solid transparent; background: var(--ct-btn-bg); color: var(--ct-btn-text); font-size: var(--ct-text-base); cursor: pointer; }
+    .ct-sg__btn:hover { background: var(--ct-btn-bg-hover); }
+    .ct-sg__btn--ghost { background: transparent; color: var(--ct-action); border-color: var(--ct-action-border); }
+    .ct-sg__pill { display: inline-flex; align-items: center; min-height: var(--ct-pill-min-height); padding-left: var(--ct-space-5); padding-right: var(--ct-space-5); border-radius: var(--ct-pill-radius); border: var(--ct-pill-border-width) solid var(--ct-pill-border); background: var(--ct-pill-bg); color: var(--ct-pill-text); font-size: var(--ct-text-sm); }
+    .ct-sg__pill.is-selected { background: var(--ct-pill-selected-bg); color: var(--ct-pill-selected-text); border-color: var(--ct-pill-selected-bg); }
+    .ct-sg__input { height: var(--ct-input-height); padding-left: var(--ct-input-pad-x); padding-right: var(--ct-input-pad-x); border-radius: var(--ct-input-radius); border: var(--ct-input-border-width) solid var(--ct-input-border); background: var(--ct-input-bg); color: var(--ct-input-text); font-size: var(--ct-text-base); }
+    .ct-sg__qty { display: inline-flex; align-items: center; height: var(--ct-qty-height); border-radius: var(--ct-qty-radius); border: 1px solid var(--ct-qty-border); background: var(--ct-qty-bg); }
+    .ct-sg__qty-btn { width: var(--ct-qty-btn-size); height: var(--ct-qty-btn-size); background: transparent; border: 0; color: var(--ct-qty-text); cursor: pointer; }
+    .ct-sg__qty-val { min-width: var(--ct-space-9); text-align: center; color: var(--ct-qty-text); }
+    .ct-sg__swatch { width: var(--ct-swatch-size); height: var(--ct-swatch-size); border-radius: var(--ct-swatch-radius); border: 1px solid var(--ct-swatch-border); background: var(--ct-bg-control); }
+    .ct-sg__swatch.is-selected { box-shadow: 0 0 0 2px var(--ct-bg), 0 0 0 4px var(--ct-swatch-ring); }
+    .ct-sg__arrow { display: inline-flex; align-items: center; justify-content: center; width: var(--ct-arrow-size); height: var(--ct-arrow-size); border-radius: var(--ct-arrow-radius); background: var(--ct-arrow-bg); color: var(--ct-arrow-color); border: 1px solid var(--ct-border); }
+    .ct-sg__dots { display: inline-flex; align-items: center; gap: var(--ct-dot-gap); }
+    .ct-sg__dots b { width: var(--ct-dot-size); height: var(--ct-dot-size); border-radius: var(--ct-r-pill); background: var(--ct-dot-color); }
+    .ct-sg__dots b.is-on { width: var(--ct-dot-active-width); border-radius: var(--ct-r-pill); background: var(--ct-dot-active-color); }
+    .ct-sg__badge { display: inline-flex; align-items: center; padding-left: var(--ct-badge-pad-x); padding-right: var(--ct-badge-pad-x); padding-top: var(--ct-badge-pad-y); padding-bottom: var(--ct-badge-pad-y); border-radius: var(--ct-badge-radius); font-size: var(--ct-text-xs); color: var(--ct-on-accent); box-shadow: var(--ct-badge-shadow); }
+    .ct-sg__badge--sale { background: var(--ct-badge-sale); }
+    .ct-sg__badge--new { background: var(--ct-badge-new); color: var(--ct-text); }
+    .ct-sg__badge--best { background: var(--ct-badge-best); color: var(--ct-text); }
+  {% endstyle %}
+</section>
+
+{% schema %}
+{
+  "name": "CT Styleguide (dev)",
+  "tag": "section",
+  "class": "ct-styleguide-section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Developer token proof sheet. Renders the L3 component tokens (--ct-btn/pill/input/qty/swatch/arrow/dot/badge/reveal-*). Add to a page template only to verify tokens; not part of the live storefront."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "CT token styleguide"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "CT Styleguide (dev)"
+    }
+  ]
+}
+{% endschema %}
