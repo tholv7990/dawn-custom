@@ -179,7 +179,11 @@
         "gift_offer",
         "reviews_showcase"
       ],
-      "settings": {}
+      "settings": {
+        "gallery_layout": "thumbnail_slider",
+        "media_size": "large",
+        "mobile_thumbnails": "show"
+      }
     },
     "related-products": {
       "type": "related-products",
