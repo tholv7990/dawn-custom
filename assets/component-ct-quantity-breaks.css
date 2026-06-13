@@ -1,0 +1,198 @@
+/* Quantity breaks tier selector — W3.T01. Token-only; layouts normal | compact | vertical. */
+.ct-qb {
+  display: block;
+}
+
+.ct-qb__heading {
+  font-size: var(--ct-text-md);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-text);
+  margin-bottom: var(--ct-space-3);
+}
+
+.ct-qb__tiers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ct-space-3);
+}
+
+.ct-qb--vertical .ct-qb__tiers {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.ct-qb--vertical .ct-qb__tier {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.ct-qb__tier {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--ct-space-4);
+  background: var(--ct-card-bg);
+  border: 2px solid var(--ct-border);
+  border-radius: var(--ct-r-md);
+  cursor: pointer;
+  transition: border-color var(--ct-dur-base) var(--ct-ease-out),
+    box-shadow var(--ct-dur-base) var(--ct-ease-out);
+}
+
+.ct-qb--compact .ct-qb__tier {
+  padding: var(--ct-space-3);
+}
+
+.ct-qb__tier:hover {
+  border-color: var(--ct-action-border);
+}
+
+.ct-qb__tier--active {
+  border-color: var(--ct-action);
+  box-shadow: var(--ct-ring);
+}
+
+.ct-qb__tier--highlight {
+  border-color: var(--ct-action);
+}
+
+.ct-qb__tier:focus-visible {
+  outline: none;
+  box-shadow: var(--ct-ring);
+}
+
+.ct-qb__radio {
+  position: absolute;
+  top: var(--ct-space-4);
+  left: var(--ct-space-4);
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ct-border-strong);
+  border-radius: var(--ct-r-pill);
+  background: var(--ct-bg-raised);
+}
+
+.ct-qb__tier--active .ct-qb__radio {
+  border-color: var(--ct-action);
+  background:
+    radial-gradient(circle at center, var(--ct-action) 0 5px, transparent 6px);
+}
+
+.ct-qb__badge {
+  position: absolute;
+  top: 0;
+  right: var(--ct-space-4);
+  transform: translateY(-50%);
+  padding: var(--ct-space-1) var(--ct-space-3);
+  font-size: var(--ct-text-xs);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-on-accent);
+  background: var(--ct-action);
+  border-radius: var(--ct-r-pill);
+}
+
+.ct-qb__tier-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ct-space-3);
+  padding-left: var(--ct-space-7);
+}
+
+.ct-qb--vertical .ct-qb__tier-main {
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: var(--ct-space-7);
+}
+
+.ct-qb__tier-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ct-space-1);
+  min-width: 0;
+}
+
+.ct-qb__tier-label {
+  font-size: var(--ct-text-base);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-text);
+}
+
+.ct-qb__tier-benefit {
+  font-size: var(--ct-text-sm);
+  color: var(--ct-trust);
+}
+
+.ct-qb__tier-price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ct-space-2);
+  white-space: nowrap;
+}
+
+.ct-qb__tier-price strong {
+  font-size: var(--ct-text-md);
+  font-weight: var(--ct-fw-bold);
+  color: var(--ct-price);
+}
+
+.ct-qb__tier-price s {
+  font-size: var(--ct-text-sm);
+  color: var(--ct-price-was);
+}
+
+.ct-qb__tier-save {
+  font-size: var(--ct-text-xs);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-savings);
+}
+
+.ct-qb__picks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--ct-space-2);
+  margin-top: var(--ct-space-3);
+  padding-left: var(--ct-space-7);
+}
+
+.ct-qb__pick {
+  display: flex;
+  align-items: center;
+  gap: var(--ct-space-2);
+}
+
+.ct-qb__pick-num {
+  font-size: var(--ct-text-xs);
+  font-weight: var(--ct-fw-semi);
+  color: var(--ct-text-2);
+}
+
+.ct-qb__pick-select {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: var(--ct-touch);
+  padding: var(--ct-space-2) var(--ct-space-3);
+  color: var(--ct-text);
+  background: var(--ct-bg-control);
+  border: 1px solid var(--ct-border);
+  border-radius: var(--ct-r-sm);
+}
+
+.ct-qb__add {
+  width: 100%;
+  margin-top: var(--ct-space-4);
+  min-height: var(--ct-touch);
+}
+
+.ct-qb__error {
+  margin-top: var(--ct-space-2);
+  color: var(--ct-error);
+  font-size: var(--ct-text-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-qb__tier {
+    transition: none;
+  }
+}

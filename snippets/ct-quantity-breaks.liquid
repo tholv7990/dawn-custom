@@ -1,0 +1,146 @@
+{%- comment -%}
+  Quantity Breaks tier selector — W3.T01. Shared snippet for the
+  `quantity_breaks` block in main-product / featured-product.
+
+  Up to 4 tiers (flat settings — Shopify blocks can't nest blocks). Each tier
+  adds quantity N. With per-unit variants enabled on a multi-variant product,
+  each of the N units gets its own variant <select> and the bar adds a
+  multi-line cart payload (items[]); otherwise it adds quantity N of the
+  currently-selected variant through the host product form (G-07).
+
+  Display price is unit x N over Shopify automatic discounts — never a
+  synthesized per-tier price (G-05 / NFR-06).
+
+  Accepts: product, product_form_id, section_id, block
+{%- endcomment -%}
+{%- liquid
+  assign qb_product = product
+  if qb_product == blank and block != blank
+    assign qb_product = block.settings.product
+  endif
+  assign qb_variant = qb_product.selected_or_first_available_variant
+  assign qb_unit = qb_variant.price
+  assign qb_unit_compare = qb_variant.compare_at_price
+  assign s = block.settings
+  assign qb_multivariant = false
+  if qb_product.variants.size > 1
+    assign qb_multivariant = true
+  endif
+  assign qb_per_unit = false
+  if s.enable_per_unit and qb_multivariant
+    assign qb_per_unit = true
+  endif
+  assign qb_layout = s.layout | default: 'normal'
+  assign qb_btn_label = s.button_label | default: 'Add to cart'
+  assign qb_save_label = s.save_label | default: 'Save'
+  assign tier_keys = '1,2,3,4' | split: ','
+  assign first_active_done = false
+-%}
+{%- if qb_product != blank -%}
+  {{ 'component-ct-quantity-breaks.css' | asset_url | stylesheet_tag }}
+  <ct-quantity-breaks
+    class="ct-qb ct-qb--{{ qb_layout }}"
+    data-section-id="{{ section_id }}"
+    data-form-id="{{ product_form_id }}"
+    data-money-format="{{ shop.money_format | escape }}"
+    data-unit-cents="{{ qb_unit }}"
+    {% if qb_per_unit %}data-per-unit="true"{% endif %}
+    {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
+  >
+    {%- if s.heading != blank -%}
+      <div class="ct-qb__heading">{{ s.heading | escape }}</div>
+    {%- endif -%}
+
+    <div class="ct-qb__tiers" role="radiogroup" aria-label="{{ s.heading | default: 'Choose quantity' | escape }}">
+      {%- for n in tier_keys -%}
+        {%- liquid
+          assign enable_key = 'tier_' | append: n | append: '_enable'
+          assign qty_key = 'tier_' | append: n | append: '_quantity'
+          assign label_key = 'tier_' | append: n | append: '_label'
+          assign badge_key = 'tier_' | append: n | append: '_badge'
+          assign benefit_key = 'tier_' | append: n | append: '_benefit'
+          assign highlight_key = 'tier_' | append: n | append: '_highlight'
+          assign tier_enabled = s[enable_key]
+          assign tier_qty = s[qty_key] | default: 1
+          assign tier_total = qb_unit | times: tier_qty
+          assign tier_compare_total = 0
+          if qb_unit_compare > qb_unit
+            assign tier_compare_total = qb_unit_compare | times: tier_qty
+          endif
+          assign tier_save_pct = 0
+          if tier_compare_total > tier_total
+            assign tier_save_pct = tier_compare_total | minus: tier_total | times: 100 | divided_by: tier_compare_total
+          endif
+          assign is_active = false
+          unless first_active_done
+            assign is_active = true
+            assign first_active_done = true
+          endunless
+        -%}
+        {%- if tier_enabled -%}
+          <div
+            class="ct-qb__tier{% if is_active %} ct-qb__tier--active{% endif %}{% if s[highlight_key] %} ct-qb__tier--highlight{% endif %}"
+            role="radio"
+            tabindex="{% if is_active %}0{% else %}-1{% endif %}"
+            aria-checked="{% if is_active %}true{% else %}false{% endif %}"
+            data-ct-qb-tier
+            data-quantity="{{ tier_qty }}"
+            data-total-cents="{{ tier_total }}"
+          >
+            <span class="ct-qb__radio" aria-hidden="true"></span>
+            {%- if s[badge_key] != blank -%}
+              <span class="ct-qb__badge">{{ s[badge_key] | escape }}</span>
+            {%- endif -%}
+            <div class="ct-qb__tier-main">
+              <div class="ct-qb__tier-copy">
+                <span class="ct-qb__tier-label">{{ s[label_key] | default: tier_qty | escape }}</span>
+                {%- if s[benefit_key] != blank -%}
+                  <span class="ct-qb__tier-benefit">{{ s[benefit_key] | escape }}</span>
+                {%- endif -%}
+              </div>
+              <div class="ct-qb__tier-price">
+                <strong data-ct-qb-price>{{ tier_total | money }}</strong>
+                {%- if tier_compare_total > tier_total -%}
+                  <s data-ct-qb-compare>{{ tier_compare_total | money }}</s>
+                  <span class="ct-qb__tier-save" data-ct-qb-save>{{ qb_save_label | escape }} {{ tier_save_pct }}%</span>
+                {%- endif -%}
+              </div>
+            </div>
+
+            {%- if qb_per_unit -%}
+              <div class="ct-qb__picks" data-ct-qb-picks>
+                {%- for i in (1..tier_qty) -%}
+                  <label class="ct-qb__pick">
+                    <span class="ct-qb__pick-num">#{{ i }}</span>
+                    <select class="ct-qb__pick-select" data-ct-qb-unit aria-label="{{ qb_product.title | escape }} #{{ i }}">
+                      {%- for variant in qb_product.variants -%}
+                        <option
+                          value="{{ variant.id }}"
+                          {% if variant.id == qb_variant.id %}selected{% endif %}
+                          {% unless variant.available %}disabled{% endunless %}
+                        >
+                          {{ variant.title }}{% unless variant.available %} - {{ 'products.product.sold_out' | t }}{% endunless %}
+                        </option>
+                      {%- endfor -%}
+                    </select>
+                  </label>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <button
+      type="button"
+      class="ct-qb__add button button--primary"
+      data-ct-qb-add
+      {% unless qb_variant.available %}disabled{% endunless %}
+    >
+      <span data-ct-qb-add-text>{{ qb_btn_label | escape }}</span>
+      {% render 'loading-spinner' %}
+    </button>
+  </ct-quantity-breaks>
+  <script src="{{ 'ct-quantity-breaks.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
