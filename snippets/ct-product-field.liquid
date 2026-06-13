@@ -3,19 +3,20 @@
   `custom_field` block in main-product / featured-product. Renders a line-item
   property input associated with the host product form via the `form`
   attribute, so Dawn's product-form serializes it into cart/add.js and it
-  lands on the cart line (G-07). Native HTML5 `required` gates the add — no
-  form-submit interception.
+  lands on the cart line (G-07). The host form is novalidate and its submit is
+  JS-intercepted, so native `required` is NOT self-enforcing — a capture-phase
+  submit guard below blocks the add when a required field is invalid.
 
-  Accepts: product_form_id, section_id, block
+  Accepts: product (host), product_form_id, section_id, block
 {%- endcomment -%}
 {%- liquid
   assign s = block.settings
   assign label = s.label | strip
   assign field_type = s.field_type | default: 'text'
   assign uid = section_id | append: '-' | append: block.id
-  assign prop_name = 'properties[' | append: label | append: ']'
+  assign prop_name = 'properties[' | append: label | append: ']' | escape
 -%}
-{%- if label != blank and product_form_id != blank -%}
+{%- if label != blank and product_form_id != blank and product != blank -%}
   {{ 'component-ct-product-field.css' | asset_url | stylesheet_tag }}
   <div class="ct-product-field ct-product-field--{{ field_type }}"{% if block != blank %} {{ block.shopify_attributes }}{% endif %}>
     {%- if field_type == 'checkbox' -%}
@@ -27,7 +28,7 @@
           name="{{ prop_name }}"
           form="{{ product_form_id }}"
           value="{{ s.checkbox_value | default: 'Yes' | escape }}"
-          {% if s.required %}required{% endif %}
+          {% if s.required %}required aria-required="true"{% endif %}
         >
         <span class="ct-product-field__check-label">
           {{ label | escape }}{% if s.required %} <span class="ct-product-field__req" aria-hidden="true">*</span>{% endif %}
@@ -66,4 +67,29 @@
       <p class="ct-product-field__help">{{ s.help_text | escape }}</p>
     {%- endif -%}
   </div>
+
+  {%- if s.required -%}
+    <script>
+      (function () {
+        var input = document.getElementById('CtField-{{ uid }}');
+        var form = document.getElementById('{{ product_form_id }}');
+        if (!input || !form) return;
+        var flag = form.dataset.ctFieldGuard || '';
+        if (flag.indexOf('{{ uid }};') !== -1) return;
+        form.dataset.ctFieldGuard = flag + '{{ uid }};';
+        // Capture phase so this runs BEFORE Dawn's bubble-phase product-form submit handler.
+        form.addEventListener(
+          'submit',
+          function (e) {
+            if (!input.checkValidity()) {
+              input.reportValidity();
+              e.preventDefault();
+              e.stopImmediatePropagation();
+            }
+          },
+          true
+        );
+      })();
+    </script>
+  {%- endif -%}
 {%- endif -%}

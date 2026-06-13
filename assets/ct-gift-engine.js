@@ -1,18 +1,19 @@
 /*
  * <ct-gift-engine> — W3.T04 automatic free gift (PDP block host).
- * Same oscillation-safe engine as sections/ct-gift-auto.liquid, as a reusable
- * element: a module/instance `busy` re-entrancy flag, a 350ms debounce, the
- * qualifying total EXCLUDES the gift's own line (so a gift-only cart can't
- * self-qualify), the gift line is found by its `_ct_gift` property (not variant
- * id), one-per-cart add, remove via cart/change.js by line key. No polling.
+ * Same oscillation-safe engine as sections/ct-gift-auto.liquid: a MODULE-scoped
+ * `ctGiftBusy` re-entrancy flag (shared across instances so two engines on one
+ * page can't double-add), a 350ms debounce, the qualifying total EXCLUDES the
+ * gift's own line (so a gift-only cart can't self-qualify), the gift line is
+ * found by its `_ct_gift` property (not variant id), one-per-cart add, remove
+ * via cart/change.js by line key. No polling.
  */
+var ctGiftBusy = false;
 if (!customElements.get('ct-gift-engine')) {
   customElements.define(
     'ct-gift-engine',
     class CtGiftEngine extends HTMLElement {
       connectedCallback() {
         if (this.dataset.ready === 'true') return;
-        this.dataset.ready = 'true';
 
         this.giftVariantId = parseInt(this.getAttribute('data-gift-variant'), 10);
         this.threshold = parseInt(this.getAttribute('data-threshold'), 10) || 0;
@@ -21,9 +22,11 @@ if (!customElements.get('ct-gift-engine')) {
         this.moneyFormat = this.getAttribute('data-money-format') || '${{amount}}';
         this.statusText = this.querySelector('[data-gift-status-text]');
         this.bar = this.querySelector('[data-gift-bar]');
-        this.busy = false;
 
+        // Only mark ready (and wire up) once we have a usable gift variant, so a
+        // re-connected element that bailed can still init later.
         if (!this.giftVariantId || isNaN(this.giftVariantId)) return;
+        this.dataset.ready = 'true';
 
         this.debounced = this.debounce(() => this.evaluate(), 350);
         if (window.subscribe && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.cartUpdate) {
@@ -83,8 +86,12 @@ if (!customElements.get('ct-gift-engine')) {
             sections_url: window.location.pathname,
           }),
         })
-          .then((res) => res.json())
-          .then((data) => this.renderCart(data));
+          .then((res) => res.json().then((data) => ({ ok: res.ok, data: data })))
+          .then((res) => {
+            // 422 etc (e.g. sold-out gift): leave the cart UI untouched, don't render an error object as a cart.
+            if (!res.ok || (res.data && res.data.status)) return;
+            this.renderCart(res.data);
+          });
       }
 
       removeGift(lineKey) {
@@ -98,8 +105,11 @@ if (!customElements.get('ct-gift-engine')) {
             sections_url: window.location.pathname,
           }),
         })
-          .then((res) => res.json())
-          .then((data) => this.renderCart(data));
+          .then((res) => res.json().then((data) => ({ ok: res.ok, data: data })))
+          .then((res) => {
+            if (!res.ok || (res.data && res.data.status)) return;
+            this.renderCart(res.data);
+          });
       }
 
       setUnlockedUI(unlocked, remaining, qualifying) {
@@ -110,17 +120,18 @@ if (!customElements.get('ct-gift-engine')) {
             : this.lockedTemplate.replace('[amount]', this.formatMoney(remaining));
         }
         if (this.bar && this.threshold > 0) {
-          var pct = Math.max(0, Math.min(100, Math.round((qualifying * 100) / this.threshold)));
+          // Floor to match the Liquid divided_by server render (no hydration snap).
+          var pct = Math.max(0, Math.min(100, Math.floor((qualifying * 100) / this.threshold)));
           this.bar.style.width = pct + '%';
         }
       }
 
       evaluate() {
-        if (this.busy) return;
+        if (ctGiftBusy) return;
         fetch(this.routeRoot() + 'cart.js', { headers: { Accept: 'application/json' } })
           .then((res) => res.json())
           .then((cart) => {
-            if (this.busy) return;
+            if (ctGiftBusy) return;
             if (!cart || typeof cart.total_price !== 'number') return;
 
             var giftLine = this.findGiftLine(cart);
@@ -137,18 +148,21 @@ if (!customElements.get('ct-gift-engine')) {
             this.setUnlockedUI(eligible, remaining, qualifying);
 
             if (eligible && !giftPresent) {
-              this.busy = true;
+              ctGiftBusy = true;
               this.addGift()
                 .catch(() => {})
                 .then(() => {
-                  this.busy = false;
+                  ctGiftBusy = false;
+                  // Reconcile any cart change that landed during the round-trip.
+                  this.debounced();
                 });
             } else if (!eligible && giftPresent) {
-              this.busy = true;
+              ctGiftBusy = true;
               this.removeGift(giftLine.key)
                 .catch(() => {})
                 .then(() => {
-                  this.busy = false;
+                  ctGiftBusy = false;
+                  this.debounced();
                 });
             }
           })
@@ -156,36 +170,14 @@ if (!customElements.get('ct-gift-engine')) {
       }
 
       formatMoney(cents) {
-        var format = this.moneyFormat;
-        function group(number, decimals, thousands, decimalSep) {
-          number = (number / 100).toFixed(decimals);
-          var parts = number.split('.');
-          parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
-          return parts.join(decimalSep || '.');
+        if (this.moneyFormat && window.Shopify && typeof window.Shopify.formatMoney === 'function') {
+          try {
+            return window.Shopify.formatMoney(cents, this.moneyFormat);
+          } catch (e) {
+            /* fall through */
+          }
         }
-        var match = format.match(/\{\{\s*(\w+)\s*\}\}/);
-        var token = match ? match[1] : 'amount';
-        var value;
-        switch (token) {
-          case 'amount_no_decimals':
-            value = group(cents, 0, ',', '.');
-            break;
-          case 'amount_with_comma_separator':
-            value = group(cents, 2, '.', ',');
-            break;
-          case 'amount_no_decimals_with_comma_separator':
-            value = group(cents, 0, '.', ',');
-            break;
-          case 'amount_with_space_separator':
-            value = group(cents, 2, ' ', ',');
-            break;
-          case 'amount_no_decimals_with_space_separator':
-            value = group(cents, 0, ' ', ',');
-            break;
-          default:
-            value = group(cents, 2, ',', '.');
-        }
-        return format.replace(/\{\{\s*\w+\s*\}\}/, value);
+        return (cents / 100).toFixed(2);
       }
     }
   );

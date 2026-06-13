@@ -69,6 +69,8 @@
       assign ct_icon_file = 'icon-discount.svg'
     when 'error', 'alert'
       assign ct_icon_file = 'icon-error.svg'
+    when 'close', 'x', 'dismiss'
+      assign ct_icon_file = 'icon-close.svg'
     else
       assign ct_icon_file = ''
   endcase

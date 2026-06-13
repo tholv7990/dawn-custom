@@ -37,7 +37,8 @@
     endif
     assign remaining_money = remaining | money
 
-    assign locked_message = section.settings.locked_text | replace: '[amount]', remaining_money
+    assign locked_tpl = section.settings.locked_text | escape
+    assign locked_message = locked_tpl | replace: '[amount]', remaining_money
   -%}
 
   <section
@@ -74,7 +75,7 @@
               {%- if unlocked -%}
                 {{ section.settings.unlocked_text | escape }}
               {%- else -%}
-                {{ locked_message | escape }}
+                {{ locked_message }}
               {%- endif -%}
             </span>
           </p>
@@ -254,10 +255,13 @@
             body: JSON.stringify(body),
           })
             .then(function (res) {
-              return res.json();
+              return res.json().then(function (data) {
+                return { ok: res.ok, data: data };
+              });
             })
-            .then(function (data) {
-              renderCart(data);
+            .then(function (r) {
+              if (!r.ok || (r.data && r.data.status)) return;
+              renderCart(r.data);
             });
         }
 
@@ -275,10 +279,13 @@
             body: JSON.stringify(body),
           })
             .then(function (res) {
-              return res.json();
+              return res.json().then(function (data) {
+                return { ok: res.ok, data: data };
+              });
             })
-            .then(function (data) {
-              renderCart(data);
+            .then(function (r) {
+              if (!r.ok || (r.data && r.data.status)) return;
+              renderCart(r.data);
             });
         }
 

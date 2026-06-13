@@ -36,7 +36,12 @@
     assign remaining = 0
   endif
   assign remaining_money = remaining | money
-  assign locked_message = s.locked_text | default: 'Spend [amount] more for a free gift' | replace: '[amount]', remaining_money
+  comment
+    Escape the merchant template FIRST, then substitute the trusted money HTML,
+    so HTML-bearing money_format isn't double-escaped (CT-LIQ-04).
+  endcomment
+  assign locked_tpl = s.locked_text | default: 'Spend [amount] more for a free gift' | escape
+  assign locked_message = locked_tpl | replace: '[amount]', remaining_money
   assign unlocked_message = s.unlocked_text | default: 'Free gift added to your cart!'
   assign pct = 0
   if threshold > 0
@@ -69,7 +74,7 @@
 
     <div class="ct-gift-offer__status" role="status" aria-live="polite">
       <p class="ct-gift-offer__text" data-gift-status-text>
-        {%- if unlocked -%}{{ unlocked_message | escape }}{%- else -%}{{ locked_message | escape }}{%- endif -%}
+        {%- if unlocked -%}{{ unlocked_message | escape }}{%- else -%}{{ locked_message }}{%- endif -%}
       </p>
       {%- if s.show_bar -%}
         <div class="ct-gift-offer__track">

@@ -25,7 +25,8 @@
               <article class="gs-product-card" data-gs-slide>
                 <a class="gs-product-card__media gs-media-slot" href="{{ item.url }}">
                   {%- if item.featured_image != blank -%}
-                    {{ item.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: item.featured_image.alt | default: item.title | escape }}
+                    {%- assign card_alt = item.featured_image.alt | default: item.title -%}
+                    {{ item.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: card_alt }}
                   {%- endif -%}
                   {%- if item.compare_at_price > item.price -%}<span class="gs-product-card__save">SAVE</span>{%- endif -%}
                 </a>

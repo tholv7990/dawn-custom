@@ -10,6 +10,7 @@
   assign s = block.settings
   assign source = s.source | default: 'richtext'
   assign uid = section_id | append: '-' | append: block.id
+  assign sc_alt = s.heading | default: 'Size guide'
   assign has_content = false
   if source == 'page' and s.page != blank
     assign has_content = true
@@ -59,7 +60,7 @@
           {%- when 'page' -%}
             <div class="rte">{{ s.page.content }}</div>
           {%- when 'image' -%}
-            {{ s.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '480, 800, 1200', alt: s.heading | default: 'Size guide' | escape }}
+            {{ s.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '480, 800, 1200', alt: sc_alt }}
           {%- else -%}
             <div class="rte">{{ s.content }}</div>
         {%- endcase -%}
