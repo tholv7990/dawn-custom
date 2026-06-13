@@ -1,0 +1,315 @@
+{% render 'ct-section-padding', section: section %}
+
+{%- assign ba_id = 'ct-ba-' | append: section.id -%}
+<section class="gs-scope ct-ba section-{{ section.id }}-padding">
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="gs-section-sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+
+    <div
+      class="ct-ba__compare"
+      id="{{ ba_id }}"
+      style="--pos: {{ section.settings.start_position }}%;"
+    >
+      <div class="ct-ba__layer ct-ba__layer--before">
+        {% render 'ct-media-slot',
+          image: section.settings.before_image,
+          ratio: '4 / 3',
+          label: section.settings.before_label,
+          class: 'ct-ba__media'
+        %}
+        <span class="ct-ba__tag ct-ba__tag--before" aria-hidden="true">{{ section.settings.before_label | escape }}</span>
+      </div>
+
+      <div class="ct-ba__layer ct-ba__layer--after">
+        {% render 'ct-media-slot',
+          image: section.settings.after_image,
+          ratio: '4 / 3',
+          label: section.settings.after_label,
+          class: 'ct-ba__media'
+        %}
+        <span class="ct-ba__tag ct-ba__tag--after" aria-hidden="true">{{ section.settings.after_label | escape }}</span>
+      </div>
+
+      <button
+        type="button"
+        class="ct-ba__handle"
+        role="slider"
+        aria-label="{{ section.settings.heading | default: 'Before and after comparison' | escape }}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="{{ section.settings.start_position }}"
+      >
+        <span class="ct-ba__grip" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ct-ba__compare {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--ct-r-lg);
+    border: 1px solid var(--ct-card-border);
+    background: var(--ct-card-bg);
+    box-shadow: var(--ct-shadow-sm);
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  .ct-ba__layer {
+    position: relative;
+    inset: 0;
+  }
+
+  .ct-ba__layer--after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+    transition: clip-path var(--ct-dur-fast) var(--ct-ease-out);
+  }
+
+  .ct-ba__media {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ct-ba__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ct-ba__tag {
+    position: absolute;
+    bottom: var(--ct-space-4);
+    padding: var(--ct-space-1) var(--ct-space-3);
+    font-size: var(--ct-text-xs);
+    font-weight: var(--ct-fw-semi);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ct-on-accent);
+    background: var(--ct-overlay-bg);
+    border-radius: var(--ct-r-pill);
+    pointer-events: none;
+  }
+
+  .ct-ba__tag--before {
+    left: var(--ct-space-4);
+  }
+
+  .ct-ba__tag--after {
+    right: var(--ct-space-4);
+  }
+
+  .ct-ba__handle {
+    position: absolute;
+    top: 0;
+    left: var(--pos);
+    transform: translateX(-50%);
+    width: 44px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: ew-resize;
+    touch-action: none;
+  }
+
+  .ct-ba__handle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: var(--ct-on-accent);
+  }
+
+  .ct-ba__grip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--ct-r-pill);
+    background: var(--ct-bg-raised);
+    border: 1px solid var(--ct-border-strong);
+    box-shadow: var(--ct-shadow-md);
+  }
+
+  .ct-ba__grip::before,
+  .ct-ba__grip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+
+  .ct-ba__grip::before {
+    left: 12px;
+    transform: translateY(-50%);
+    border-right: 6px solid var(--ct-text-2);
+  }
+
+  .ct-ba__grip::after {
+    right: 12px;
+    transform: translateY(-50%);
+    border-left: 6px solid var(--ct-text-2);
+  }
+
+  .ct-ba__handle:focus-visible {
+    outline: 2px solid var(--ct-action);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ct-ba__layer--after {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    function initBA(root) {
+      if (!root || root.dataset.ready === 'true') return;
+      root.dataset.ready = 'true';
+      var handle = root.querySelector('.ct-ba__handle');
+      if (!handle) return;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function setPos(value) {
+        var pos = Math.max(0, Math.min(100, value));
+        root.style.setProperty('--pos', pos + '%');
+        handle.setAttribute('aria-valuenow', Math.round(pos));
+      }
+      function fromEvent(event) {
+        var rect = root.getBoundingClientRect();
+        if (!rect.width) return;
+        setPos(((event.clientX - rect.left) / rect.width) * 100);
+      }
+      var dragging = false;
+      root.addEventListener('pointerdown', function (event) {
+        dragging = true;
+        if (root.setPointerCapture) root.setPointerCapture(event.pointerId);
+        fromEvent(event);
+      });
+      root.addEventListener('pointermove', function (event) {
+        if (dragging) fromEvent(event);
+      });
+      root.addEventListener('pointerup', function () {
+        dragging = false;
+      });
+      handle.addEventListener('keydown', function (event) {
+        var now = parseFloat(handle.getAttribute('aria-valuenow')) || 0;
+        if (event.key === 'ArrowLeft') { setPos(now - 2); event.preventDefault(); }
+        if (event.key === 'ArrowRight') { setPos(now + 2); event.preventDefault(); }
+      });
+      if (reduce) root.classList.add('ct-ba--reduced');
+    }
+    initBA(document.getElementById('{{ ba_id }}'));
+    document.addEventListener('shopify:section:load', function (event) {
+      var el = event.target.querySelector ? event.target.querySelector('#{{ ba_id }}') : null;
+      if (el) initBA(el);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Before / after slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "See the difference"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Drag the handle to compare."
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before image"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After image"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Before label",
+      "default": "Before"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "After label",
+      "default": "After"
+    },
+    {
+      "type": "range",
+      "id": "start_position",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Start position",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before / after slider"
+    }
+  ]
+}
+{% endschema %}

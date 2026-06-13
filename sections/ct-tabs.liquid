@@ -1,0 +1,228 @@
+{% render 'ct-section-padding', section: section %}
+
+{%- assign ct_tabs_uid = 'ct-tabs-' | append: section.id -%}
+<section class="gs-scope ct-tabs section-{{ section.id }}-padding" id="{{ ct_tabs_uid }}">
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="gs-section-sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="ct-tabs__list" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+        {%- for block in section.blocks -%}
+          <button
+            type="button"
+            class="ct-tabs__tab"
+            role="tab"
+            id="{{ ct_tabs_uid }}-tab-{{ forloop.index }}"
+            aria-controls="{{ ct_tabs_uid }}-panel-{{ forloop.index }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {{ block.settings.title | escape }}
+          </button>
+        {%- endfor -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div
+          class="ct-tabs__panel"
+          role="tabpanel"
+          id="{{ ct_tabs_uid }}-panel-{{ forloop.index }}"
+          aria-labelledby="{{ ct_tabs_uid }}-tab-{{ forloop.index }}"
+          tabindex="0"
+          {% unless forloop.first %}hidden{% endunless %}
+        >
+          <div class="ct-tabs__content rte">{{ block.settings.content }}</div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{%- style -%}
+  .ct-tabs {
+    background-color: var(--ct-bg);
+    color: var(--ct-text);
+  }
+
+  .ct-tabs__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ct-space-2);
+    border-bottom: 1px solid var(--ct-border);
+    margin-bottom: var(--ct-space-6);
+  }
+
+  .ct-tabs__tab {
+    appearance: none;
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-base);
+    font-weight: var(--ct-fw-medium);
+    line-height: var(--ct-leading-base);
+    padding: var(--ct-space-3) var(--ct-space-4);
+    border-radius: var(--ct-r-md) var(--ct-r-md) 0 0;
+    cursor: pointer;
+    transition: color var(--ct-dur-base) var(--ct-ease-out),
+      background-color var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-tabs__tab:hover {
+    color: var(--ct-text);
+    background-color: var(--ct-action-tint);
+  }
+
+  .ct-tabs__tab[aria-selected='true'] {
+    color: var(--ct-action);
+    border-color: var(--ct-action);
+    border-bottom-color: transparent;
+  }
+
+  .ct-tabs__tab:focus-visible {
+    outline: 2px solid var(--ct-action);
+    outline-offset: 2px;
+  }
+
+  .ct-tabs__panel {
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-base);
+    line-height: var(--ct-leading-loose);
+  }
+
+  .ct-tabs__panel[hidden] {
+    display: none;
+  }
+
+  .ct-tabs__panel:focus-visible {
+    outline: 2px solid var(--ct-action);
+    outline-offset: 4px;
+  }
+
+  .ct-tabs__content > * + * {
+    margin-top: var(--ct-space-3);
+  }
+{%- endstyle -%}
+
+<script>
+  (function () {
+    function initCtTabs(root) {
+      if (!root || root.dataset.ctTabsReady) return;
+      root.dataset.ctTabsReady = 'true';
+      var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+      if (!tabs.length) return;
+      function activate(index) {
+        tabs.forEach(function (tab, i) {
+          var selected = i === index;
+          tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+          tab.setAttribute('tabindex', selected ? '0' : '-1');
+          var panel = root.querySelector('#' + tab.getAttribute('aria-controls'));
+          if (panel) panel.hidden = !selected;
+        });
+      }
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () {
+          activate(i);
+        });
+        tab.addEventListener('keydown', function (e) {
+          var next = -1;
+          if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+          else if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+          if (next < 0) return;
+          e.preventDefault();
+          activate(next);
+          tabs[next].focus();
+        });
+      });
+    }
+    initCtTabs(document.getElementById('{{ ct_tabs_uid }}'));
+    document.addEventListener('shopify:section:load', function (e) {
+      initCtTabs(e.target.querySelector('#{{ ct_tabs_uid }}'));
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Content tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Explore"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Browse details across a few helpful tabs."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Tab title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Add the details for this tab here. Use it for specifications, care steps, or any supporting information.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Content tabs",
+      "blocks": [
+        {
+          "type": "tab"
+        },
+        {
+          "type": "tab"
+        },
+        {
+          "type": "tab"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
