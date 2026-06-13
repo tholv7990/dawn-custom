@@ -10,7 +10,7 @@
   assign s = block.settings
   assign code = s.code | strip
   assign enc_code = code | url_encode
-  assign discount_url = routes.root | append: 'discount/' | append: enc_code | append: '?redirect=/cart'
+  assign discount_url = routes.root_url | append: 'discount/' | append: enc_code | append: '?redirect=/cart'
 -%}
 {%- if code != blank -%}
   {{ 'component-ct-discount-code.css' | asset_url | stylesheet_tag }}
