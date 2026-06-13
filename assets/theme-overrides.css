@@ -111,6 +111,12 @@ img { max-width: 100%; }
 .customer button {
   font-family: var(--ct-font-body);
   font-weight: var(--ct-fw-semi);
+  /* Dawn draws the button border/shadow on ::before/::after, rounded by
+     --buttons-radius(-outset). Overriding only border-radius left those rings
+     square (buttons_radius=0) and showed a ghost frame against the rounded fill.
+     Sync the ring radius to the element radius. */
+  --buttons-radius: var(--ct-r-md);
+  --buttons-radius-outset: var(--ct-r-md);
   border-radius: var(--ct-r-md);
   transition: background var(--ct-dur-base) var(--ct-ease-out),
               transform var(--ct-dur-fast) var(--ct-ease-out),
