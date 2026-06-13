@@ -50,7 +50,7 @@
               <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
             {%- endfor -%}
             {%- if shop.terms_of_service.body != blank -%}
-              <li>{% render 'ct-policy-link', policy: shop.terms_of_service, label: 'Terms of service' %}</li>
+              <li>{% render 'ct-policy-link', policy: shop.terms_of_service, label: shop.terms_of_service.title %}</li>
             {%- endif -%}
           </ul>
         </nav>
@@ -63,13 +63,13 @@
               <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
             {%- endfor -%}
             {%- if shop.privacy_policy.body != blank -%}
-              <li>{% render 'ct-policy-link', policy: shop.privacy_policy, label: 'Privacy policy' %}</li>
+              <li>{% render 'ct-policy-link', policy: shop.privacy_policy, label: shop.privacy_policy.title %}</li>
             {%- endif -%}
             {%- if shop.refund_policy.body != blank -%}
-              <li>{% render 'ct-policy-link', policy: shop.refund_policy, label: 'Returns & refunds' %}</li>
+              <li>{% render 'ct-policy-link', policy: shop.refund_policy, label: shop.refund_policy.title %}</li>
             {%- endif -%}
             {%- if shop.shipping_policy.body != blank -%}
-              <li>{% render 'ct-policy-link', policy: shop.shipping_policy, label: 'Shipping & delivery' %}</li>
+              <li>{% render 'ct-policy-link', policy: shop.shipping_policy, label: shop.shipping_policy.title %}</li>
             {%- endif -%}
           </ul>
         </nav>

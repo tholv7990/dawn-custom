@@ -17,7 +17,7 @@
 
 <header class="gs-scope gs-head" data-ct-sticky="{{ section.settings.sticky_mode | default: 'always' }}" role="banner">
   <div class="gs-wrap gs-head__wrap">
-    <button type="button" class="gs-menu-toggle" data-gs-menu-toggle aria-expanded="false" aria-controls="GS-Mobile-Menu" aria-label="Open menu">
+    <button type="button" class="gs-menu-toggle" data-gs-menu-toggle aria-expanded="false" aria-controls="GS-Mobile-Menu" aria-label="{{ 'sections.header.menu' | t }}">
       <span class="gs-menu-toggle__icon gs-menu-toggle__icon--open" aria-hidden="true">{{ 'icon-hamburger.svg' | inline_asset_content }}</span>
       <span class="gs-menu-toggle__icon gs-menu-toggle__icon--close" aria-hidden="true">{{ 'icon-close.svg' | inline_asset_content }}</span>
     </button>
@@ -45,19 +45,19 @@
       </nav>
     {%- endif -%}
     <nav class="gs-head__nav" aria-label="Header actions">
-      <a href="{{ routes.search_url }}" aria-label="Search">
+      <a href="{{ routes.search_url }}" aria-label="{{ 'general.search.search' | t }}">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
-        <span>Search</span>
+        <span>{{ 'general.search.search' | t }}</span>
       </a>
       {%- if shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" aria-label="Account">
+        <a href="{{ routes.account_url }}" aria-label="{{ 'customer.account_fallback' | t }}">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.8-4 5-6 8-6s6.2 2 8 6"></path></svg>
-          <span>Account</span>
+          <span>{{ 'customer.account_fallback' | t }}</span>
         </a>
       {%- endif -%}
       <a href="{{ routes.cart_url }}" aria-label="{{ 'templates.cart.cart' | t }}" id="cart-icon-bubble">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h15l-2 9H8L6 3H3"></path><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle></svg>
-        <span>Cart</span>
+        <span>{{ 'templates.cart.cart' | t }}</span>
         {%- if cart != empty -%}
           <span class="gs-cart-dot" aria-hidden="true">{{ cart.item_count }}</span>
           <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
@@ -66,7 +66,7 @@
     </nav>
   </div>
   <div class="gs-mobile-menu" id="GS-Mobile-Menu" data-gs-mobile-menu hidden>
-    <button type="button" class="gs-mobile-menu__backdrop" data-gs-menu-close aria-label="Close menu"></button>
+    <button type="button" class="gs-mobile-menu__backdrop" data-gs-menu-close aria-label="{{ 'accessibility.close' | t }}"></button>
     <nav class="gs-mobile-menu__panel" aria-label="Mobile navigation">
       <div class="gs-mobile-menu__head">
         <a class="gs-logo" href="{{ routes.root_url }}" aria-label="{{ header_logo_alt }} home">
@@ -85,7 +85,7 @@
             <span class="gs-logo__text">{{ shop.name | default: 'Storefront' }}</span>
           {%- endif -%}
         </a>
-        <button type="button" class="gs-mobile-menu__close" data-gs-menu-close aria-label="Close menu">&times;</button>
+        <button type="button" class="gs-mobile-menu__close" data-gs-menu-close aria-label="{{ 'accessibility.close' | t }}">&times;</button>
       </div>
       {%- if header_menu.links.size > 0 -%}
         {%- for link in header_menu.links -%}
@@ -93,9 +93,9 @@
         {%- endfor -%}
         <hr>
       {%- endif -%}
-      <a href="{{ routes.search_url }}">Search</a>
-      {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}">Account</a>{%- endif -%}
-      <a href="{{ routes.cart_url }}">Cart{% if cart != empty %} ({{ cart.item_count }}){% endif %}</a>
+      <a href="{{ routes.search_url }}">{{ 'general.search.search' | t }}</a>
+      {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}">{{ 'customer.account_fallback' | t }}</a>{%- endif -%}
+      <a href="{{ routes.cart_url }}">{{ 'templates.cart.cart' | t }}{% if cart != empty %} ({{ cart.item_count }}){% endif %}</a>
     </nav>
   </div>
 </header>
