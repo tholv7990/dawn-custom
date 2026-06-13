@@ -762,6 +762,23 @@
                 </product-recommendations>
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
+              {%- when 'ct_divider' -%}
+                <hr
+                  class="ct-pdp-divider"
+                  style="border: 0; border-top: 1px solid var(--ct-border); margin-block: var(--ct-space-5);"
+                  {{ block.shopify_attributes }}
+                >
+              {%- when 'ct_link_button' -%}
+                {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+                  <a
+                    href="{{ block.settings.link_url }}"
+                    class="button{% unless block.settings.primary %} button--secondary{% endunless %} ct-pdp-link-button"
+                    style="margin-top: var(--ct-space-4);"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{ block.settings.link_label | escape }}
+                  </a>
+                {%- endif -%}
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -873,6 +890,33 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "ct_divider",
+      "name": "Divider"
+    },
+    {
+      "type": "ct_link_button",
+      "name": "Link button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Label",
+          "default": "Learn more"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "primary",
+          "label": "Primary style",
+          "default": false
+        }
+      ]
     },
     {
       "type": "text",
