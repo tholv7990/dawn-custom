@@ -21,8 +21,34 @@ Custom storefront work lives in `ct-*` files. The old `gs-*` section, snippet, a
 ## Shared Snippets
 
 - `ct-section-padding`: emits the responsive padding style block. Pass `section: section`.
+- `ct-color-scheme` (W1.T17): emits the merged `class` + optional `--ct-*` override `style` for the
+  section wrapper (L4 per-section color scheme + custom colors). Place it inside the opening tag.
 - `ct-add-to-cart`: Dawn-compatible product form helper when a custom section needs add-to-cart behavior.
 - `ct-section-head`, `ct-trust-chips`, and other `ct-*` helpers should be preferred when present.
+- W2 presentation primitives — see `docs/ct-primitives.md` (`ct-icon`, `ct-rating-stars`,
+  `ct-price-tokens`, `ct-upsell-card`, `<ct-carousel>`, `<ct-copy-button>`, `<ct-countdown-timer>`,
+  `ct-reveal.js`, `ct-toast.js`).
+
+## Per-section color scheme + overrides (W1.T17)
+
+Use `ct-color-scheme` for the wrapper, and add this schema fragment to the section's `settings`:
+
+```json
+{ "type": "color_scheme", "id": "color_scheme", "default": "scheme-1", "label": "Color scheme" },
+{ "type": "header", "content": "Custom colors" },
+{ "type": "checkbox", "id": "ct_custom_colors", "label": "Use custom colors", "default": false },
+{ "type": "color", "id": "ct_custom_bg", "label": "Custom background" },
+{ "type": "color", "id": "ct_custom_text", "label": "Custom text" },
+{ "type": "color", "id": "ct_custom_accent", "label": "Custom accent" }
+```
+
+```liquid
+{%- capture base -%}ct-name section-{{ section.id }}-padding{%- endcapture -%}
+<section {% render 'ct-color-scheme', section: section, base_class: base %} {{ section.shopify_attributes }}>
+```
+
+The scheme class flips the L2 surface tokens via the scheme bridge in `snippets/css-variables.liquid`;
+the custom-color toggle re-declares `--ct-bg/--ct-text/--ct-action` locally on the wrapper.
 
 ## Schema Rules
 

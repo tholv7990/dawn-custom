@@ -308,7 +308,11 @@
     </script>
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"{% if settings.ct_copy_protect %} data-ct-copy-protect="true" data-ct-copy-notice="{{ settings.ct_security_notice | escape }}"{% endif %}>
+    {%- if settings.ct_copy_protect -%}
+      <script src="{{ 'ct-toast.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'ct-security.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

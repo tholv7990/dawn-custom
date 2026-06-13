@@ -7,8 +7,9 @@
   the CT token audit green.
 {% endcomment %}
 {% render 'ct-section-padding', section: section %}
+{%- capture ct_sg_base -%}gs-scope ct-sg section-{{ section.id }}-padding{%- endcapture -%}
 
-<section class="gs-scope ct-sg section-{{ section.id }}-padding" {{ section.shopify_attributes }}>
+<section {% render 'ct-color-scheme', section: section, base_class: ct_sg_base %} {{ section.shopify_attributes }}>
   <div class="gs-wrap">
     <h2 class="ct-sg__title">{{ section.settings.heading | escape }}</h2>
 
@@ -187,6 +188,31 @@
       "id": "heading",
       "label": "Heading",
       "default": "CT token styleguide"
+    },
+    {
+      "type": "header",
+      "content": "Color overrides (W1.T17 L4 demo)"
+    },
+    {
+      "type": "checkbox",
+      "id": "ct_custom_colors",
+      "label": "Use custom colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "ct_custom_bg",
+      "label": "Custom background"
+    },
+    {
+      "type": "color",
+      "id": "ct_custom_text",
+      "label": "Custom text"
+    },
+    {
+      "type": "color",
+      "id": "ct_custom_accent",
+      "label": "Custom accent"
     },
     {
       "type": "header",

@@ -1531,5 +1531,26 @@
         "default": "0"
       }
     ]
+  },
+  {
+    "name": "Security",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Copy protection limits right-click, copy and text selection. It has real accessibility trade-offs (it interferes with assistive tech and keyboard copy) and does not stop a determined visitor. Leave OFF unless you specifically need it."
+      },
+      {
+        "type": "checkbox",
+        "id": "ct_copy_protect",
+        "label": "Enable copy protection",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "ct_security_notice",
+        "label": "Copy notice",
+        "info": "Optional short message shown (as a toast) when a copy attempt is blocked. Leave blank for none."
+      }
+    ]
   }
 ]

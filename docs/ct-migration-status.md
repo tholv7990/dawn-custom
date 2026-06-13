@@ -21,8 +21,9 @@ px/breakpoint retrofit (T10/T11), CSS file-split (T12), `theme-overrides.css` tr
 > - **Chunk B** — deferred: the valuable CSS split is a visual-regression task (distributed `@media` cascade), not headless-safe.
 > - **Chunk C** `9adba31` — W2 primitives: `ct-icon`, `ct-rating-stars`, `ct-price-tokens` (+JS), `<ct-copy-button>`, `<ct-countdown-timer>`, `ct-reveal.js`, `ct-toast.js`.
 > - **Chunk D** `9adf2e4` — W2 complete: `<ct-carousel>`, `ct-upsell-card` (Dawn `<product-form>` pipeline).
-> - Every chunk verified: `node qa/ct-qa.mjs` green (no new token findings) + Theme Check 0 offenses. All additive — no live-template rendering changed.
-> - **Remaining headless-safe odds-and-ends:** W1.T17 color-scheme partial, W6.T04 security panel (default-off), WD.T08 `ct-sticky-atc` metafield fallback, W1.T04 document the `--gs-` freeze.
+> - **Chunk E** — additive odds-and-ends: **W1.T17** `ct-color-scheme` partial (L4 per-section scheme + custom overrides) + styleguide demo + authoring fragment; **W6.T04** Security panel (copy-protect, **default OFF** — script + body flag gated so it's never loaded unless enabled); **WD.T08** closed as N/A (`ct-sticky-atc` reads no rating/sold metafields, so there is no fabricated-proof path to harden); **W1.T04** the `--gs-` freeze is documented (0 consumers; no alias file needed).
+> - Every chunk verified: `node qa/ct-qa.mjs` green (no new token findings) + Theme Check 0 offenses. All additive — no live-template rendering changed (security feature is inert at its default).
+> - **Headless-safe lane is now exhausted.** Everything remaining (W1 px/breakpoint retrofit, CSS split, `theme-overrides.css` triage, `.gs-scope` retirement; W3–W6 commerce) requires a Shopify dev store for visual verification.
 
 **Two assessor claims were wrong and are corrected here:** (1) there is **no `!important`** in the
 emitter — the old light-lock paint is already removed; (2) the typography/buttons/pills/inputs/cards/

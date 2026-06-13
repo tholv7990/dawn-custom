@@ -1,0 +1,39 @@
+{%- comment -%}
+  snippets/ct-color-scheme.liquid (W1.T17) - L4 per-section color scheme + custom overrides.
+  Emits a merged class attribute (base classes + Dawn color scheme) and an optional inline
+  style of --ct-* token overrides. Place it INSIDE the opening wrapper tag:
+
+    {%- capture base -%}gs-scope gs-section section-{{ section.id }}-padding{%- endcapture -%}
+    <section {% render 'ct-color-scheme', section: section, base_class: base %} {{ section.shopify_attributes }}>
+
+  The color scheme class flips the L2 surface tokens via the scheme bridge in
+  snippets/css-variables.liquid; custom overrides re-declare the same token names locally.
+
+  Reads (all optional - add via the schema fragment in docs/ct-section-authoring.md):
+    color_scheme       - Dawn color_scheme setting id (e.g. scheme-1)
+    ct_custom_colors   - checkbox; when true the *_color overrides apply
+    ct_custom_bg       - color
+    ct_custom_text     - color
+    ct_custom_accent   - color
+  Params: section (required), base_class (string, optional)
+{%- endcomment -%}
+{%- liquid
+  assign cs_class = base_class | default: ''
+  assign cs_scheme = section.settings.color_scheme
+  if cs_scheme != blank
+    assign cs_class = cs_class | append: ' color-' | append: cs_scheme
+  endif
+  assign cs_style = ''
+  if section.settings.ct_custom_colors
+    if section.settings.ct_custom_bg != blank
+      assign cs_style = cs_style | append: '--ct-bg:' | append: section.settings.ct_custom_bg | append: ';--ct-bg-raised:' | append: section.settings.ct_custom_bg | append: ';'
+    endif
+    if section.settings.ct_custom_text != blank
+      assign cs_style = cs_style | append: '--ct-text:' | append: section.settings.ct_custom_text | append: ';'
+    endif
+    if section.settings.ct_custom_accent != blank
+      assign cs_style = cs_style | append: '--ct-action:' | append: section.settings.ct_custom_accent | append: ';--ct-accent:' | append: section.settings.ct_custom_accent | append: ';'
+    endif
+  endif
+-%}
+class="{{ cs_class | strip }}"{% if cs_style != blank %} style="{{ cs_style | strip }}"{% endif %}
