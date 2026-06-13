@@ -1,0 +1,16 @@
+/* Price-in-the-Add-to-cart-button (W3.T09). Token-only. Inline with the button label. */
+.product-form__submit .ct-atc-price {
+  display: inline;
+  font-weight: var(--ct-fw-semi, 600);
+}
+
+/* Separator between the label and the price; not shown if the price is hidden. */
+.product-form__submit .ct-atc-price::before {
+  content: '·';
+  margin: 0 0.5ch;
+  opacity: 0.65;
+}
+
+.product-form__submit .ct-atc-price[hidden] {
+  display: none;
+}

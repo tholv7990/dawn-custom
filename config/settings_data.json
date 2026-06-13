@@ -21,6 +21,7 @@
       "ct_cart_gift_enabled": false,
       "ct_cart_gift_product": "",
       "ct_cart_gift_threshold_cents": "0",
+      "ct_price_in_button": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -223,6 +224,7 @@
       "ct_cart_gift_enabled": false,
       "ct_cart_gift_product": "",
       "ct_cart_gift_threshold_cents": "0",
+      "ct_price_in_button": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -425,6 +427,7 @@
       "ct_cart_gift_enabled": false,
       "ct_cart_gift_product": "",
       "ct_cart_gift_threshold_cents": "0",
+      "ct_price_in_button": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -627,6 +630,7 @@
       "ct_cart_gift_enabled": false,
       "ct_cart_gift_product": "",
       "ct_cart_gift_threshold_cents": "0",
+      "ct_price_in_button": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {

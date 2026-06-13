@@ -24,6 +24,12 @@
       endif
     -%}
 
+    {%- comment -%} W3.T09 price-in-button — only when settings.ct_price_in_button is on. {%- endcomment -%}
+    {%- if settings.ct_price_in_button -%}
+      {{ 'component-ct-atc-price.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'ct-price-in-button.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
     <product-form
       class="product-form"
       data-hide-errors="{{ gift_card_recipient_feature_active }}"
@@ -91,6 +97,27 @@
                 {{ 'products.product.add_to_cart' | t }}
               {%- endif -%}
             </span>
+            {%- comment -%}
+              W3.T09 price-in-button. A non-<span> element so Dawn's
+              toggleSubmitButton (which targets the first <span>) never overwrites
+              it; updates on variantChange via ct-price-in-button.js; hidden when
+              the variant is sold out / unavailable.
+            {%- endcomment -%}
+            {%- if settings.ct_price_in_button and product.selected_or_first_available_variant != null -%}
+              {%- liquid
+                assign ct_atc_v = product.selected_or_first_available_variant
+                assign ct_atc_unavailable = false
+                if ct_atc_v.available == false or quantity_rule_soldout
+                  assign ct_atc_unavailable = true
+                endif
+              -%}
+              <ct-atc-price
+                class="ct-atc-price"
+                data-section-id="{{ section_id }}"
+                data-money-format="{{ shop.money_format | escape }}"
+                {% if ct_atc_unavailable %}hidden{% endif %}
+              >{{ ct_atc_v.price | money }}</ct-atc-price>
+            {%- endif -%}
             {%- render 'loading-spinner' -%}
           </button>
           {%- if show_dynamic_checkout -%}

@@ -1611,6 +1611,17 @@
         "label": "Gift threshold",
         "info": "Shop-currency subunits, e.g. 7500 = 75.00. Use 0 to disable.",
         "default": "0"
+      },
+      {
+        "type": "header",
+        "content": "Product buy box"
+      },
+      {
+        "type": "checkbox",
+        "id": "ct_price_in_button",
+        "label": "Show price in the Add-to-cart button",
+        "info": "Appends the selected variant's price to the Add-to-cart button and updates it on variant change. Hidden when the variant is sold out. Default off.",
+        "default": false
       }
     ]
   },
