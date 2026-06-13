@@ -134,11 +134,13 @@ body {
   --ct-r-md: {{ settings.border_radius | default: 12 }}px;
   --ct-r-lg:18px; --ct-r-xl:24px; --ct-r-pill:9999px;
 
-  --ct-font-display: 'Poppins', system-ui, sans-serif;
-  --ct-font-heading: 'Poppins', system-ui, sans-serif;
+  /* Heading is picker-driven (W1.T05): follows Dawn's --font-heading-family
+     from the type_header_font picker, defaulting to Poppins. Body stays a
+     brand-locked Inter (Inter is not in Shopify's font library). */
+  --ct-font-display: var(--font-heading-family, 'Poppins', system-ui, sans-serif);
+  --ct-font-heading: var(--font-heading-family, 'Poppins', system-ui, sans-serif);
   --ct-font-body: 'Inter', system-ui, sans-serif;
   --ct-font-mono: 'Inter', ui-monospace, monospace;
-  --font-heading-family: 'Poppins', system-ui, sans-serif;
   --font-body-family: 'Inter', system-ui, sans-serif;
 
   --ct-text-xs:12px; --ct-text-sm:13px; --ct-text-base:15px; --ct-text-md:16px;
