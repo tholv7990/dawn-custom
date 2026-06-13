@@ -1,0 +1,259 @@
+{% render 'ct-section-padding', section: section %}
+
+{%- liquid
+  assign code = section.settings.code | strip
+  assign has_code = false
+  if code != blank
+    assign has_code = true
+  endif
+  assign discount_url = routes.root | append: 'discount/' | append: code | url_encode | append: '?redirect=/cart'
+-%}
+
+<section class="ct-discount gs-scope section-{{ section.id }}-padding" id="ct-discount-{{ section.id }}">
+  <div class="gs-wrap">
+    <div class="ct-discount__card">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ct-discount__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.message != blank -%}
+        <p class="ct-discount__message">{{ section.settings.message | escape }}</p>
+      {%- endif -%}
+
+      {%- if has_code -%}
+        <div class="ct-discount__row">
+          <div class="ct-discount__code-wrap">
+            <span class="ct-discount__code" data-discount-code>{{ code | escape }}</span>
+          </div>
+
+          {%- if section.settings.show_copy -%}
+            <ct-copy-button
+              class="ct-discount__copy"
+              data-ct-clipboard="{{ code | escape }}"
+              data-ct-copied="{{ 'Copied' | escape }}"
+              aria-label="{{ 'Copy discount code' | escape }} {{ code | escape }}"
+            >
+              <span class="ct-discount__copy-label">Copy</span>
+            </ct-copy-button>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.auto_apply -%}
+          <a class="ct-discount__apply" href="{{ discount_url }}">
+            {{ section.settings.apply_label | escape }}
+          </a>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ct-discount .ct-discount__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ct-space-4);
+    padding: var(--ct-pad-tight);
+    text-align: center;
+    background: var(--ct-action-tint);
+    border: 1px solid var(--ct-action-border);
+    border-radius: var(--ct-r-lg);
+    box-shadow: var(--ct-shadow-sm);
+  }
+
+  .ct-discount .ct-discount__heading {
+    margin: 0;
+    color: var(--ct-text);
+    font-size: var(--ct-h3);
+    font-weight: var(--ct-fw-bold);
+    line-height: 1.2;
+  }
+
+  .ct-discount .ct-discount__message {
+    margin: 0;
+    max-width: 540px;
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-md);
+    font-weight: var(--ct-fw-normal);
+    line-height: 1.55;
+  }
+
+  .ct-discount .ct-discount__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: var(--ct-space-3);
+    margin-top: var(--ct-space-2);
+  }
+
+  .ct-discount .ct-discount__code-wrap {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--ct-space-3) var(--ct-space-6);
+    background: var(--ct-bg-raised);
+    border: 1px dashed var(--ct-action-border);
+    border-radius: var(--ct-r-md);
+  }
+
+  .ct-discount .ct-discount__code {
+    color: var(--ct-action);
+    font-size: var(--ct-text-xl);
+    font-weight: var(--ct-fw-bold);
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .ct-discount .ct-discount__copy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--ct-space-3) var(--ct-space-5);
+    color: var(--ct-on-accent);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-semi);
+    background: var(--ct-action);
+    border: 1px solid var(--ct-action);
+    border-radius: var(--ct-r-md);
+    cursor: pointer;
+    transition: background var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-discount .ct-discount__copy:hover {
+    background: var(--ct-action-hover);
+  }
+
+  .ct-discount .ct-discount__copy:focus-visible {
+    outline: 2px solid var(--ct-action);
+    outline-offset: 2px;
+  }
+
+  .ct-discount .ct-discount__copy[data-ct-copy-state='copied'] {
+    background: var(--ct-success);
+    border-color: var(--ct-success);
+  }
+
+  .ct-discount .ct-discount__copy-label {
+    pointer-events: none;
+  }
+
+  .ct-discount .ct-discount__apply {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--ct-space-2);
+    padding: var(--ct-space-2) var(--ct-space-4);
+    color: var(--ct-action);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-semi);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    background: transparent;
+    border-radius: var(--ct-r-sm);
+    transition: color var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-discount .ct-discount__apply:hover {
+    color: var(--ct-action-hover);
+  }
+
+  .ct-discount .ct-discount__apply:focus-visible {
+    outline: 2px solid var(--ct-action);
+    outline-offset: 2px;
+  }
+
+  .ct-discount .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ct-discount .ct-discount__copy,
+    .ct-discount .ct-discount__apply {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+{%- if section.settings.show_copy and has_code -%}
+  <script src="{{ 'ct-copy-button.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Discount banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Special offer"
+    },
+    {
+      "type": "textarea",
+      "id": "message",
+      "label": "Message",
+      "default": "Use this code at checkout."
+    },
+    {
+      "type": "text",
+      "id": "code",
+      "label": "Discount code",
+      "default": "SAVE10"
+    },
+    {
+      "type": "text",
+      "id": "apply_label",
+      "label": "Apply link label",
+      "default": "Apply code"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_copy",
+      "label": "Show copy button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_apply",
+      "label": "Show apply link",
+      "info": "Applies the discount via Shopify's native discount URL and redirects to the cart.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Discount banner"
+    }
+  ]
+}
+{% endschema %}
