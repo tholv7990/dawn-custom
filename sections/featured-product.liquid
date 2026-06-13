@@ -487,6 +487,100 @@
                   {% render 'ct-gift-offer', section_id: section.id, block: block %}
                 {%- when 'reviews_showcase' -%}
                   {% render 'ct-reviews-showcase', product: product, section_id: section.id, block: block %}
+                {%- when 'benefits_checklist' -%}
+                  {%- assign benefit_lines = block.settings.items | newline_to_br | split: '<br />' -%}
+                  {%- if benefit_lines.size > 0 -%}
+                    <ul class="gs-benefits" {{ block.shopify_attributes }}>
+                      {%- for line in benefit_lines -%}
+                        {%- assign clean = line | strip | strip_newlines -%}
+                        {%- if clean != blank -%}
+                          {%- assign parts = clean | split: ' - ' -%}
+                          {%- liquid
+                            assign clean_downcase = clean | downcase
+                            assign icon_tone = 'green'
+                            if clean_downcase contains 'setup' or clean_downcase contains 'care' or clean_downcase contains 'easy'
+                              assign icon_tone = 'green-dark'
+                            endif
+                            assign icon_class = 'gs-benefits__check gs-benefits__check--' | append: icon_tone
+                          -%}
+                          <li>
+                            <span class="{{ icon_class }}" aria-hidden="true">&#10003;</span>
+                            <span><b>{{ parts[0] | strip }}</b>{% if parts[1] != blank %} <span class="gs-benefits__desc">- {{ parts[1] | strip }}</span>{% endif %}</span>
+                          </li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                {%- when 'scarcity' -%}
+                  {%- liquid
+                    assign ct_var = product.selected_or_first_available_variant
+                    assign ct_show_scarcity = false
+                    if ct_var.inventory_management == "shopify" and ct_var.inventory_quantity > 0 and ct_var.inventory_quantity <= block.settings.threshold
+                      assign ct_show_scarcity = true
+                    endif
+                    if request.design_mode
+                      assign ct_show_scarcity = true
+                    endif
+                    assign ct_pct = 0
+                    if block.settings.threshold > 0
+                      assign ct_pct = ct_var.inventory_quantity | times: 100.0 | divided_by: block.settings.threshold
+                    endif
+                    if ct_pct > 100
+                      assign ct_pct = 100
+                    endif
+                  -%}
+                  <ct-scarcity id="Scarcity-{{ section.id }}" data-section="{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+                    {%- if ct_show_scarcity -%}
+                      <div class="ct-scarcity">
+                        <div class="ct-scarcity__top">
+                          <span class="ct-scarcity__count">Only {{ ct_var.inventory_quantity }} left in stock</span>
+                          {%- if block.settings.selling_fast_label != blank -%}
+                            <span class="ct-scarcity__fast">{{ block.settings.selling_fast_label }}</span>
+                          {%- endif -%}
+                        </div>
+                        <div class="ct-scarcity__bar"><i style="width: {{ ct_pct }}%"></i></div>
+                        {%- if block.settings.social_line != blank -%}
+                          <div class="ct-scarcity__social">{{ block.settings.social_line }}</div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </ct-scarcity>
+                {%- when 'payment_reassurance' -%}
+                  <div class="ct-pay" {{ block.shopify_attributes }}>
+                    {%- if block.settings.show_icons and shop.enabled_payment_types.size > 0 -%}
+                      <div class="ct-pay__icons">
+                        {%- for type in shop.enabled_payment_types -%}
+                          {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.secure_line != blank -%}
+                      <div class="ct-pay__secure">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <rect x="5" y="11" width="14" height="9" rx="2"></rect>
+                          <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
+                        </svg>
+                        {{ block.settings.secure_line }}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                {%- when 'ct_divider' -%}
+                  <hr
+                    class="ct-pdp-divider"
+                    style="border: 0; border-top: 1px solid var(--ct-border); margin-block: var(--ct-space-5);"
+                    {{ block.shopify_attributes }}
+                  >
+                {%- when 'ct_link_button' -%}
+                  {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+                    <a
+                      href="{{ block.settings.link_url }}"
+                      class="button{% unless block.settings.primary %} button--secondary{% endunless %} ct-pdp-link-button"
+                      style="margin-top: var(--ct-space-4);"
+                      {{ block.shopify_attributes }}
+                    >
+                      {{ block.settings.link_label | escape }}
+                    </a>
+                  {%- endif -%}
               {%- endcase -%}
             {%- endfor -%}
             <a
@@ -873,6 +967,48 @@
         { "type": "header", "content": "Link to all reviews" },
         { "type": "url", "id": "anchor_url", "label": "All reviews link" },
         { "type": "text", "id": "anchor_label", "label": "Link label", "default": "Read all reviews" }
+      ]
+    },
+    {
+      "type": "benefits_checklist",
+      "name": "Benefits checklist",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Checkmark list. One per line: 'Title - description'." },
+        { "type": "textarea", "id": "items", "label": "Benefits (one per line)", "default": "Benefit one - describe a real product benefit.\nBenefit two - describe another product benefit.\nBenefit three - add merchant-owned copy." }
+      ]
+    },
+    {
+      "type": "scarcity",
+      "name": "Scarcity bar",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Shows only when the selected variant's real stock is at or below the threshold (inventory tracked). Hidden when well-stocked." },
+        { "type": "range", "id": "threshold", "label": "Low-stock threshold", "min": 1, "max": 50, "step": 1, "default": 10 },
+        { "type": "text", "id": "selling_fast_label", "label": "Low-stock label", "default": "Low stock" },
+        { "type": "text", "id": "social_line", "label": "Social-proof line (optional)", "info": "Static editorial text. Leave blank to hide." }
+      ]
+    },
+    {
+      "type": "payment_reassurance",
+      "name": "Payment reassurance",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_icons", "label": "Show payment icons", "default": true },
+        { "type": "text", "id": "secure_line", "label": "Secure-checkout line", "default": "Secure checkout, SSL encrypted" }
+      ]
+    },
+    {
+      "type": "ct_divider",
+      "name": "Divider"
+    },
+    {
+      "type": "ct_link_button",
+      "name": "Link button",
+      "settings": [
+        { "type": "text", "id": "link_label", "label": "Label", "default": "Learn more" },
+        { "type": "url", "id": "link_url", "label": "Link" },
+        { "type": "checkbox", "id": "primary", "label": "Primary style", "default": false }
       ]
     },
     {
