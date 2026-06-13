@@ -1,0 +1,114 @@
+{%- comment -%}
+  Reviews showcase — W3.T09. Shared snippet for the `reviews_showcase` block in
+  main-product / featured-product. An aggregate score header (bound to the
+  product's reviews metafields, with a settings fallback per G-04) plus up to 3
+  highlighted, merchant-entered review quotes. No fabricated rating/count
+  defaults (G-05).
+
+  Accepts: product, section_id, block
+{%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign scale_max = s.scale_max | default: 5
+
+  comment
+    Prefer the live review metafield; fall back to merchant settings (no default).
+  endcomment
+  assign mf_rating = product.metafields.reviews.rating.value
+  assign agg_score = ''
+  assign agg_count = ''
+  if mf_rating != blank
+    assign agg_score = mf_rating.rating
+    assign scale_max = mf_rating.scale_max
+    assign agg_count = product.metafields.reviews.rating_count
+  else
+    assign agg_score = s.fallback_score | strip
+    assign agg_count = s.fallback_count | strip
+  endif
+
+  comment
+    Half-star decimal for the aggregate star row.
+  endcomment
+  assign agg_floor = agg_score | floor
+  assign agg_dec = agg_score | times: 1 | minus: agg_floor
+  assign agg_rating_decimal = 0
+  if agg_dec >= 0.3 and agg_dec <= 0.7
+    assign agg_rating_decimal = 0.5
+  elsif agg_dec > 0.7
+    assign agg_rating_decimal = 1
+  endif
+
+  assign quote_keys = '1,2,3' | split: ','
+  assign quote_count = 0
+  for n in quote_keys
+    assign qk = 'quote_' | append: n | append: '_text'
+    if s[qk] != blank
+      assign quote_count = quote_count | plus: 1
+    endif
+  endfor
+-%}
+{%- if agg_score != blank or quote_count > 0 -%}
+  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+  {{ 'component-ct-reviews-showcase.css' | asset_url | stylesheet_tag }}
+  <div class="ct-reviews-showcase"{% if block != blank %} {{ block.shopify_attributes }}{% endif %}>
+    {%- if s.heading != blank -%}
+      <h2 class="ct-reviews-showcase__heading">{{ s.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if s.show_score and agg_score != blank -%}
+      <div class="ct-reviews-showcase__score">
+        <span class="ct-reviews-showcase__big">{{ agg_score }}</span>
+        <div class="ct-reviews-showcase__score-meta">
+          <div
+            class="rating"
+            role="img"
+            aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: agg_score, rating_max: scale_max }}"
+          >
+            <span
+              aria-hidden="true"
+              class="rating-star"
+              style="--rating: {{ agg_floor }}; --rating-max: {{ scale_max }}; --rating-decimal: {{ agg_rating_decimal }};"
+            ></span>
+          </div>
+          {%- if agg_count != blank -%}
+            <span class="ct-reviews-showcase__count">{{ s.count_prefix | default: 'from' | escape }} {{ agg_count | remove: '(' | remove: ')' }} {{ s.count_suffix | default: 'reviews' | escape }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if quote_count > 0 -%}
+      <ul class="ct-reviews-showcase__quotes" role="list">
+        {%- for n in quote_keys -%}
+          {%- liquid
+            assign qtext = 'quote_' | append: n | append: '_text'
+            assign qauthor = 'quote_' | append: n | append: '_author'
+            assign qrating = 'quote_' | append: n | append: '_rating'
+            assign qverified = 'quote_' | append: n | append: '_verified'
+          -%}
+          {%- if s[qtext] != blank -%}
+            <li class="ct-reviews-showcase__quote">
+              {%- assign qr = s[qrating] | default: scale_max -%}
+              <div
+                class="rating"
+                role="img"
+                aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: qr, rating_max: scale_max }}"
+              >
+                <span aria-hidden="true" class="rating-star" style="--rating: {{ qr }}; --rating-max: {{ scale_max }}; --rating-decimal: 0;"></span>
+              </div>
+              <blockquote class="ct-reviews-showcase__quote-text">{{ s[qtext] | escape }}</blockquote>
+              <div class="ct-reviews-showcase__quote-by">
+                {%- if s[qauthor] != blank -%}<cite class="ct-reviews-showcase__author">{{ s[qauthor] | escape }}</cite>{%- endif -%}
+                {%- if s[qverified] -%}<span class="ct-reviews-showcase__verified">{% render 'ct-icon', name: 'check' %} {{ s.verified_label | default: 'Verified' | escape }}</span>{%- endif -%}
+              </div>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if s.anchor_url != blank and s.anchor_label != blank -%}
+      <a class="ct-reviews-showcase__all link" href="{{ s.anchor_url }}">{{ s.anchor_label | escape }}</a>
+    {%- endif -%}
+  </div>
+{%- endif -%}

@@ -112,7 +112,7 @@
             "trigger_label": "Size guide",
             "heading": "Size guide",
             "source": "richtext",
-            "content": "<table><thead><tr><th>Size</th><th>Chest</th></tr></thead><tbody><tr><th>S</th><td>36in</td></tr><tr><th>M</th><td>40in</td></tr></tbody></table>"
+            "content": "<p>Size guide</p><ul><li>S: 36in chest</li><li>M: 40in chest</li></ul>"
           }
         },
         "custom_field": {
@@ -134,6 +134,19 @@
             "show_bar": true,
             "show_gift_preview": true
           }
+        },
+        "reviews_showcase": {
+          "type": "reviews_showcase",
+          "settings": {
+            "heading": "What customers say",
+            "show_score": true,
+            "fallback_score": "4.8",
+            "fallback_count": "126",
+            "quote_1_text": "Exactly as described, great quality.",
+            "quote_1_author": "Sam R.",
+            "quote_1_rating": 5,
+            "quote_1_verified": true
+          }
         }
       },
       "block_order": [
@@ -153,7 +166,8 @@
         "discount_code",
         "size_chart",
         "custom_field",
-        "gift_offer"
+        "gift_offer",
+        "reviews_showcase"
       ],
       "settings": {}
     },
