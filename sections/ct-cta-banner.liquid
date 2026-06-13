@@ -44,11 +44,13 @@
     border-radius: var(--ct-r-xl);
     background: var(--ct-bg-surface);
     border: 1px solid var(--ct-border);
+    box-shadow: var(--ct-shadow-sm);
   }
 
   .ct-cta--tint .ct-cta__panel {
     background: var(--ct-action-tint);
     border-color: var(--ct-action-border);
+    box-shadow: none;
   }
 
   .ct-cta .ct-cta__eyebrow {
@@ -63,6 +65,8 @@
   .ct-cta .ct-cta__heading {
     margin: 0;
     color: var(--ct-text);
+    line-height: var(--ct-leading-tight);
+    text-wrap: balance;
   }
 
   .ct-cta .ct-cta__sub {
@@ -115,9 +119,20 @@
     background: var(--ct-bg-control);
   }
 
+  .ct-cta .ct-cta__btn:focus-visible {
+    outline: 2px solid var(--ct-action);
+    outline-offset: 2px;
+  }
+
   .ct-cta .ct-cta__btn[aria-disabled="true"] {
     cursor: default;
     opacity: 0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ct-cta .ct-cta__btn {
+      transition: none;
+    }
   }
 {% endstyle %}
 
@@ -129,19 +144,19 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "Get in touch"
+      "default": "Ready when you are"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Ready to get started"
+      "default": "Let's get you started today"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Add a short supporting line that gives shoppers a reason to take the next step."
+      "default": "Everything you need is ready to go. Take the next step and we'll handle the rest, with help on hand whenever you need it."
     },
     {
       "type": "text",
@@ -157,7 +172,8 @@
     {
       "type": "text",
       "id": "button2_label",
-      "label": "Secondary button label"
+      "label": "Secondary button label",
+      "default": "Learn more"
     },
     {
       "type": "url",

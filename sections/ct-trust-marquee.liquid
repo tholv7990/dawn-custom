@@ -1,5 +1,43 @@
 {% render 'ct-section-padding', section: section %}
 
+{%- style -%}
+  #shopify-section-{{ section.id }} .gs-trust-marquee {
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .gs-trust-marquee .gs-marquee-track {
+    letter-spacing: 0.04em;
+  }
+  #shopify-section-{{ section.id }} .gs-trust-marquee .gs-marquee-set span {
+    line-height: 1;
+  }
+  /* Soft edge fades so the scrolling copy reads cleanly at the container edges */
+  #shopify-section-{{ section.id }} .gs-trust-marquee::before,
+  #shopify-section-{{ section.id }} .gs-trust-marquee::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: clamp(24px, 6vw, 64px);
+    z-index: 1;
+    pointer-events: none;
+  }
+  #shopify-section-{{ section.id }} .gs-trust-marquee::before {
+    left: 0;
+    background: linear-gradient(to right, var(--ct-accent), transparent);
+  }
+  #shopify-section-{{ section.id }} .gs-trust-marquee::after {
+    right: 0;
+    background: linear-gradient(to left, var(--ct-accent), transparent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .gs-trust-marquee .gs-marquee-track {
+      animation: none;
+      transform: none;
+      will-change: auto;
+    }
+  }
+{%- endstyle -%}
+
 <div class="gs-scope gs-trust-marquee section-{{ section.id }}-padding">
   <div class="gs-marquee-track" style="--ct-marquee-duration: {{ section.settings.speed }}s;">
     {%- for repeat in (1..6) -%}
@@ -62,7 +100,7 @@
       "name": "Message",
       "settings": [
         { "type": "text", "id": "icon", "label": "Icon", "default": "&#10003;" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Add trust message" }
+        { "type": "text", "id": "text", "label": "Text", "default": "Quality you can trust" }
       ]
     }
   ],
@@ -70,10 +108,10 @@
     {
       "name": "Trust marquee",
       "blocks": [
-        { "type": "message", "settings": { "icon": "&#10003;", "text": "Add trust message" } },
-        { "type": "message", "settings": { "icon": "&#128666;", "text": "Add shipping message" } },
-        { "type": "message", "settings": { "icon": "&#128737;", "text": "Add payment message" } },
-        { "type": "message", "settings": { "icon": "&#8634;", "text": "Add policy message" } }
+        { "type": "message", "settings": { "icon": "&#128666;", "text": "Free shipping on qualifying orders" } },
+        { "type": "message", "settings": { "icon": "&#10003;", "text": "Quality you can trust" } },
+        { "type": "message", "settings": { "icon": "&#8634;", "text": "Easy returns" } },
+        { "type": "message", "settings": { "icon": "&#128737;", "text": "Secure checkout" } }
       ]
     }
   ]

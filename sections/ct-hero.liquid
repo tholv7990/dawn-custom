@@ -5,21 +5,27 @@
   assign height = section.settings.min_height | default: 'medium'
   assign overlay = section.settings.overlay_opacity | default: 30
   assign overlay_alpha = overlay | times: 0.01
+  assign has_media = false
+  if section.settings.image != blank or section.settings.video != blank
+    assign has_media = true
+  endif
 -%}
 
 <section
-  class="gs-scope ct-hero ct-hero--{{ height }} ct-hero--align-{{ align }} section-{{ section.id }}-padding"
+  class="gs-scope ct-hero ct-hero--{{ height }} ct-hero--align-{{ align }}{% unless has_media %} ct-hero--no-media{% endunless %} section-{{ section.id }}-padding"
   style="--ct-hero-overlay: {{ overlay_alpha }};"
 >
-  <div class="ct-hero__media" aria-hidden="true">
-    {% render 'ct-media-slot',
-      image: section.settings.image,
-      video: section.settings.video,
-      class: 'ct-hero__slot',
-      label: section.settings.heading
-    %}
-    <div class="ct-hero__overlay"></div>
-  </div>
+  {%- if has_media -%}
+    <div class="ct-hero__media" aria-hidden="true">
+      {% render 'ct-media-slot',
+        image: section.settings.image,
+        video: section.settings.video,
+        class: 'ct-hero__slot',
+        label: section.settings.heading
+      %}
+      <div class="ct-hero__overlay"></div>
+    </div>
+  {%- endif -%}
 
   <div class="ct-hero__inner">
     <div class="ct-hero__content">
@@ -63,6 +69,37 @@
     overflow: hidden;
     background: var(--ct-bg-surface);
     color: var(--ct-on-accent);
+  }
+
+  /* No background image/video: render as a readable token surface with dark
+     text instead of light-on-light. The media slot + overlay are not output. */
+  .ct-hero--no-media {
+    background:
+      radial-gradient(120% 120% at 50% 0%, var(--ct-accent-subtle), transparent 60%),
+      var(--ct-bg-raised);
+    color: var(--ct-text);
+    border-block: 1px solid var(--ct-border-faint);
+  }
+
+  .ct-hero--no-media .ct-hero__eyebrow {
+    color: var(--ct-accent-text);
+  }
+
+  .ct-hero--no-media .ct-hero__heading {
+    color: var(--ct-text);
+  }
+
+  .ct-hero--no-media .ct-hero__sub {
+    color: var(--ct-text-2);
+  }
+
+  .ct-hero--no-media .ct-hero__btn--secondary {
+    color: var(--ct-text);
+    border-color: var(--ct-border-strong);
+  }
+
+  .ct-hero--no-media .ct-hero__btn--secondary:hover {
+    background: var(--ct-bg-control);
   }
 
   .ct-hero__media {
@@ -250,19 +287,19 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "New collection"
+      "default": "Now available"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Make a statement"
+      "default": "Designed for the way you live"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Add a short supporting line that introduces this hero and sets the tone for the page."
+      "default": "Thoughtful details, quality materials, and a finish that lasts. Explore the collection and find your new everyday favorite."
     },
     {
       "type": "text",

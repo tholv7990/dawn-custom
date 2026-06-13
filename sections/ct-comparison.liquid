@@ -36,13 +36,51 @@
     </div>
   </div>
 </section>
+
+{% style %}
+  .section-{{ section.id }}-padding .gs-section-heading {
+    text-align: center;
+  }
+  .section-{{ section.id }}-padding .gs-compare {
+    box-shadow: var(--ct-shadow-md);
+  }
+  .section-{{ section.id }}-padding .gs-compare tbody tr:nth-child(even) td {
+    background: var(--ct-bg-surface);
+  }
+  .section-{{ section.id }}-padding .gs-compare tbody tr:nth-child(even) .gs-us {
+    background: var(--ct-accent-subtle);
+  }
+  .section-{{ section.id }}-padding .gs-compare td:first-child {
+    color: var(--ct-text);
+    letter-spacing: 0.005em;
+  }
+  .section-{{ section.id }}-padding .gs-compare .gs-us {
+    box-shadow: inset 1px 0 0 var(--ct-accent-border), inset -1px 0 0 var(--ct-accent-border);
+  }
+  .section-{{ section.id }}-padding .gs-compare tbody .gs-us {
+    color: var(--ct-accent-text);
+    font-weight: 800;
+  }
+  .section-{{ section.id }}-padding .gs-compare .gs-no {
+    color: var(--ct-text-3);
+  }
+  .section-{{ section.id }}-padding .gs-compare tbody tr {
+    transition: background 0.18s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .section-{{ section.id }}-padding .gs-compare tbody tr {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
 {% schema %}
 {
   "name": "Comparison",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading prefix", "default": "Why choose" },
-    { "type": "text", "id": "alt_1_label", "label": "Alternative 1 label", "default": "Alternative 1" },
-    { "type": "text", "id": "alt_2_label", "label": "Alternative 2 label", "default": "Alternative 2" },
+    { "type": "text", "id": "heading", "label": "Heading prefix", "default": "How we compare" },
+    { "type": "text", "id": "alt_1_label", "label": "Alternative 1 label", "default": "Others" },
+    { "type": "text", "id": "alt_2_label", "label": "Alternative 2 label", "default": "Basic" },
     { "type": "header", "content": "Section padding" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 60 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 60 }
@@ -53,10 +91,10 @@
       "name": "Row",
       "settings": [
         { "type": "text", "id": "feature", "label": "Feature", "default": "Feature" },
-        { "type": "text", "id": "us", "label": "Us", "default": "Your product" },
-        { "type": "text", "id": "alt_1", "label": "Alternative 1", "default": "Alternative" },
+        { "type": "text", "id": "us", "label": "Us", "default": "Yes" },
+        { "type": "text", "id": "alt_1", "label": "Alternative 1", "default": "Sometimes" },
         { "type": "checkbox", "id": "alt_1_good", "label": "Alternative 1 positive", "default": false },
-        { "type": "text", "id": "alt_2", "label": "Alternative 2", "default": "Alternative" },
+        { "type": "text", "id": "alt_2", "label": "Alternative 2", "default": "No" },
         { "type": "checkbox", "id": "alt_2_good", "label": "Alternative 2 positive", "default": false }
       ]
     }
@@ -65,11 +103,61 @@
     {
       "name": "Comparison",
       "blocks": [
-        { "type": "row" },
-        { "type": "row" },
-        { "type": "row" },
-        { "type": "row" },
-        { "type": "row" }
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Quality",
+            "us": "Premium",
+            "alt_1": "Mixed",
+            "alt_1_good": false,
+            "alt_2": "Low",
+            "alt_2_good": false
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Comfort",
+            "us": "Yes",
+            "alt_1": "Sometimes",
+            "alt_1_good": false,
+            "alt_2": "No",
+            "alt_2_good": false
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Durability",
+            "us": "Built to last",
+            "alt_1": "Varies",
+            "alt_1_good": false,
+            "alt_2": "Wears quickly",
+            "alt_2_good": false
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Value",
+            "us": "Yes",
+            "alt_1": "Overpriced",
+            "alt_1_good": false,
+            "alt_2": "Hidden costs",
+            "alt_2_good": false
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature": "Support",
+            "us": "Dedicated",
+            "alt_1": "Limited",
+            "alt_1_good": false,
+            "alt_2": "None",
+            "alt_2_good": false
+          }
+        }
       ]
     }
   ]

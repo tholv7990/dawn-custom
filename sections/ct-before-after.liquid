@@ -47,6 +47,23 @@
         <span class="ct-ba__grip" aria-hidden="true"></span>
       </button>
     </div>
+
+    {%- if section.settings.before_caption != blank or section.settings.after_caption != blank -%}
+      <dl class="ct-ba__captions">
+        <div class="ct-ba__caption">
+          <dt class="ct-ba__caption-label">{{ section.settings.before_label | escape }}</dt>
+          {%- if section.settings.before_caption != blank -%}
+            <dd class="ct-ba__caption-text">{{ section.settings.before_caption | escape }}</dd>
+          {%- endif -%}
+        </div>
+        <div class="ct-ba__caption">
+          <dt class="ct-ba__caption-label">{{ section.settings.after_label | escape }}</dt>
+          {%- if section.settings.after_caption != blank -%}
+            <dd class="ct-ba__caption-text">{{ section.settings.after_caption | escape }}</dd>
+          {%- endif -%}
+        </div>
+      </dl>
+    {%- endif -%}
   </div>
 </section>
 
@@ -181,6 +198,42 @@
     outline-offset: 2px;
   }
 
+  .ct-ba__captions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ct-space-4);
+    margin: var(--ct-space-5) 0 0;
+  }
+
+  .ct-ba__caption {
+    padding: var(--ct-space-4);
+    border: 1px solid var(--ct-card-border);
+    border-radius: var(--ct-r-md);
+    background: var(--ct-card-bg);
+  }
+
+  .ct-ba__caption-label {
+    margin: 0 0 var(--ct-space-1);
+    font-size: var(--ct-text-xs);
+    font-weight: var(--ct-fw-semi);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ct-text-2);
+  }
+
+  .ct-ba__caption-text {
+    margin: 0;
+    font-size: var(--ct-text-sm);
+    line-height: var(--ct-leading-base);
+    color: var(--ct-text);
+  }
+
+  @media (max-width: 599px) {
+    .ct-ba__captions {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .ct-ba__layer--after {
       transition: none;
@@ -247,7 +300,7 @@
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Drag the handle to compare."
+      "default": "Drag the handle to compare the before and after for yourself."
     },
     {
       "type": "image_picker",
@@ -270,6 +323,18 @@
       "id": "after_label",
       "label": "After label",
       "default": "After"
+    },
+    {
+      "type": "text",
+      "id": "before_caption",
+      "label": "Before caption",
+      "default": "The starting point, before anything changes."
+    },
+    {
+      "type": "text",
+      "id": "after_caption",
+      "label": "After caption",
+      "default": "The result you can expect to see."
     },
     {
       "type": "range",

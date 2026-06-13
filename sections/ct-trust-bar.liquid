@@ -107,6 +107,14 @@
     border: 1px solid var(--ct-card-border);
     border-radius: var(--ct-r-lg);
     box-shadow: var(--ct-shadow-sm);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .ct-trust-bar__item--benefit:hover,
+  .ct-trust-bar__item--payment:hover {
+    border-color: var(--ct-action);
+    box-shadow: var(--ct-shadow-md);
+    transform: translateY(-2px);
   }
 
   .ct-trust-bar__list--row .ct-trust-bar__item--divider {
@@ -203,6 +211,19 @@
       align-self: auto;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ct-trust-bar__item--benefit,
+    .ct-trust-bar__item--payment,
+    .ct-trust-bar__item--note {
+      transition: none;
+    }
+
+    .ct-trust-bar__item--benefit:hover,
+    .ct-trust-bar__item--payment:hover {
+      transform: none;
+    }
+  }
 {%- endstyle -%}
 
 {% schema %}
@@ -286,7 +307,7 @@
           "type": "text",
           "id": "text",
           "label": "Text",
-          "default": "On orders over your threshold"
+          "default": "On qualifying orders"
         }
       ]
     },
@@ -330,7 +351,7 @@
           "settings": {
             "icon": "truck",
             "title": "Free shipping",
-            "text": "On orders over your threshold"
+            "text": "On qualifying orders"
           }
         },
         {
@@ -338,7 +359,7 @@
           "settings": {
             "icon": "return",
             "title": "Easy returns",
-            "text": "Add your return window here"
+            "text": "Hassle-free return process"
           }
         },
         {
@@ -350,9 +371,11 @@
           }
         },
         {
-          "type": "payment",
+          "type": "benefit",
           "settings": {
-            "note": "Secure checkout"
+            "icon": "chat",
+            "title": "Friendly support",
+            "text": "We're here to help"
           }
         }
       ]
