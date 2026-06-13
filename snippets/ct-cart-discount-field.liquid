@@ -24,6 +24,7 @@
     data-context="{{ ctx }}"
     data-empty-msg="{{ 'sections.cart.ct_discount_empty' | t | escape }}"
     data-applying-msg="{{ 'sections.cart.ct_discount_applying' | t | escape }}"
+    {% if block %}{{ block.shopify_attributes }}{% endif %}
   >
     <form
       class="ct-cart-discount-field__form"

@@ -1,0 +1,21 @@
+{%- comment -%}
+  Cart-drawer checkout block (W4.T01). Extracted verbatim from the drawer footer
+  so it can render both as a reorderable section block AND as the no-block
+  fallback. The button id/name/form attributes are unchanged — cart.js + the
+  TnC gate target #CartDrawer-Checkout / CartDrawer-Form, so they must stay.
+  Optional param: block (for shopify_attributes when rendered as a section block).
+{%- endcomment -%}
+<div class="cart__ctas"{% if block %} {{ block.shopify_attributes }}{% endif %}>
+  <button
+    type="submit"
+    id="CartDrawer-Checkout"
+    class="cart__checkout-button button"
+    name="checkout"
+    form="CartDrawer-Form"
+    {% if cart == empty %}
+      disabled
+    {% endif %}
+  >
+    {{ 'sections.cart.checkout' | t }}
+  </button>
+</div>

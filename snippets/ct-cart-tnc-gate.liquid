@@ -21,6 +21,7 @@
     class="ct-tnc-gate"
     data-context="{{ ctx }}"
     data-error-id="{{ err_id }}"
+    {% if block %}{{ block.shopify_attributes }}{% endif %}
   >
     <label class="ct-tnc-gate__label" for="{{ cb_id }}">
       <input
