@@ -23,8 +23,10 @@ px/breakpoint retrofit (T10/T11), CSS file-split (T12), `theme-overrides.css` tr
 > - **Chunk D** `9adf2e4` — W2 complete: `<ct-carousel>`, `ct-upsell-card` (Dawn `<product-form>` pipeline).
 > - **Chunk E** — additive odds-and-ends: **W1.T17** `ct-color-scheme` partial (L4 per-section scheme + custom overrides) + styleguide demo + authoring fragment; **W6.T04** Security panel (copy-protect, **default OFF** — script + body flag gated so it's never loaded unless enabled); **WD.T08** closed as N/A (`ct-sticky-atc` reads no rating/sold metafields, so there is no fabricated-proof path to harden); **W1.T04** the `--gs-` freeze is documented (0 consumers; no alias file needed).
 > - **Chunk F** — **W0.T02**: `templates/product.landing.json` — re-assembles the full `ct-*` funnel as an **opt-in product landing template** (12 sections, neutral schema-default content; tier ladder 1/2/3 and alternating feature sides as structural config, DR-compliant). Additive — a new template not referenced by default, so zero impact on the live storefront until a merchant assigns it; makes the entire `ct-*` library + W2 primitives usable again.
-> - Every chunk verified: `node qa/ct-qa.mjs` green (no new token findings) + Theme Check 0 offenses. All additive — no live-template rendering changed (security feature is inert at its default; landing template is opt-in).
-> - **Remaining work** (W1 px/breakpoint retrofit, CSS split, `theme-overrides.css` triage, `.gs-scope` retirement; W3–W6 commerce) changes live rendering and should be visually verified on a Shopify dev store before merge.
+> - **Chunk G** — G-03: seeded neutral preset blocks for ct-product-buy / ct-reviews / ct-feature-blocks / ct-comparison (drag-in now shows a complete default).
+> - **Chunk H** — **W1.T12**: split `section-ct-page.css` (2,510 lines) into `section-ct-base.css` + `section-ct-components.css` + `section-ct-responsive.css`, loaded in that order. Cut at depth-0 boundaries; **concat === original verified byte-for-byte** → guaranteed zero visual change. Token allowlist re-keyed (192 px → 17/155/20). Per-section/per-template loading (the payload-reduction optimization) is the visual-lane follow-up.
+> - Every chunk verified: `node qa/ct-qa.mjs` green (no new token findings) + Theme Check 0 offenses. All additive — no live-template rendering changed (security feature is inert at its default; landing template is opt-in; CSS split is byte-identical).
+> - **Remaining work** (W1 px/breakpoint retrofit, `theme-overrides.css` triage, `.gs-scope` retirement, per-section CSS loading; W3–W6 commerce) changes live rendering and should be visually verified on a Shopify dev store before merge.
 
 **Two assessor claims were wrong and are corrected here:** (1) there is **no `!important`** in the
 emitter — the old light-lock paint is already removed; (2) the typography/buttons/pills/inputs/cards/
@@ -72,7 +74,7 @@ Legend: ✅ done · 🟡 partial · ⬜ todo · 🔒 needs-live-preview (visual/
 | W1.T09 `ct-section-padding` partial | ✅ | ⚙️ | In use by 11/13 sections |
 | W1.T10 Section token retrofit + unified breakpoints | 🟡 | 🔒 | 192 px-literals + legacy 620/760/780/820/1040 breakpoints remain; 2 sections (announce, sticky) not on padding partial |
 | W1.T11 Typography retrofit | 🟡 | 🔒 | Type tokens exist; `.gs-section-heading` still `clamp(22px,3vw,30px)` literal |
-| W1.T12 Split `section-ct-page.css` (2,510 lines) | ⬜ | ⚙️ | Monolith intact; no `component-marquee/toast/sticky/lightbox/media-slot.css` |
+| W1.T12 Split `section-ct-page.css` (2,510 lines) | ✅ | ⚙️ | Split into `section-ct-base/components/responsive.css`, loaded in order; byte-identical concat (no-op). Per-section loading deferred. |
 | W1.T13 Triage `theme-overrides.css` (358 lines) → 0 | ⬜ | 🔒 | All token-referenced, but 14 px-literals + 2 `!important`; touches Dawn-native pages |
 | W1.T14 Retire `.gs-scope` | ⬜ | 🔒 | 27 occurrences (14 in CSS + 13 sections); needs full screenshot matrix |
 | W1.T15 Brand/IP purge | ✅ | ⚙️ | 0 leakage; brand-strip image-only |

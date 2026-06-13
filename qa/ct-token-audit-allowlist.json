@@ -20,7 +20,9 @@
     "assets/component-cart-drawer.css": 1,
     "assets/customer.css": 1,
     "assets/quick-order-list.css": 2,
-    "assets/section-ct-page.css": 192,
+    "assets/section-ct-base.css": 17,
+    "assets/section-ct-components.css": 155,
+    "assets/section-ct-responsive.css": 20,
     "assets/theme-overrides.css": 14
   }
 }

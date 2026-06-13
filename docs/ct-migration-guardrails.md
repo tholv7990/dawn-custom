@@ -86,7 +86,7 @@ The deprecated legacy token alias stylesheet has been removed. Live storefront C
 
 `ct-section-schema-audit` confirms all 13 current `ct-*` sections include at least one preset.
 
-`assets/section-ct-page.css` now pauses announcement and marquee animation under `prefers-reduced-motion: reduce`.
+The custom section CSS is split (W1.T12) into `assets/section-ct-base.css` + `assets/section-ct-components.css` + `assets/section-ct-responsive.css`, loaded in that order from `layout/theme.liquid` (byte-identical to the former `section-ct-page.css`). `section-ct-responsive.css` pauses announcement and marquee animation under `prefers-reduced-motion: reduce`.
 
 `ct-crlf-audit` records current line-ending debt and fails only when future changes add more CRLF line endings. Current baseline:
 

@@ -86,7 +86,7 @@ Shared snippets:
 
 Shared assets:
 
-- `assets/section-ct-page.css`
+- `assets/section-ct-base.css`, `assets/section-ct-components.css`, `assets/section-ct-responsive.css` (split from the former `section-ct-page.css`)
 - `assets/ct-page.js`
 
 `layout/theme.liquid` loads both shared custom assets globally. The code remains
