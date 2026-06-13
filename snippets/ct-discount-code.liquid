@@ -1,0 +1,50 @@
+{%- comment -%}
+  Clickable discount code — W3.T08. Shared snippet for the `discount_code`
+  block in main-product / featured-product. Copy-to-clipboard via the
+  <ct-copy-button> element (W2.T04); optional auto-apply through Shopify's
+  native /discount/<code> link (no synthesized pricing, G-05).
+
+  Accepts: section_id, block
+{%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign code = s.code | strip
+  assign enc_code = code | url_encode
+  assign discount_url = routes.root | append: 'discount/' | append: enc_code | append: '?redirect=/cart'
+-%}
+{%- if code != blank -%}
+  {{ 'component-ct-discount-code.css' | asset_url | stylesheet_tag }}
+  <div class="ct-discount"{% if block != blank %} {{ block.shopify_attributes }}{% endif %}>
+    <div class="ct-discount__card">
+      {%- if s.heading != blank -%}
+        <span class="ct-discount__heading">{{ s.heading | escape }}</span>
+      {%- endif -%}
+      {%- if s.message != blank -%}
+        <p class="ct-discount__message">{{ s.message | escape }}</p>
+      {%- endif -%}
+
+      <div class="ct-discount__row">
+        <div class="ct-discount__code-wrap">
+          <span class="ct-discount__code" data-discount-code>{{ code | escape }}</span>
+        </div>
+        {%- if s.show_copy -%}
+          <ct-copy-button
+            class="ct-discount__copy"
+            data-ct-clipboard="{{ code | escape }}"
+            data-ct-copied="{{ s.copied_label | default: 'Copied' | escape }}"
+            aria-label="{{ s.copy_label | default: 'Copy discount code' | escape }} {{ code | escape }}"
+          >
+            <span class="ct-discount__copy-label">{{ s.copy_label | default: 'Copy' | escape }}</span>
+          </ct-copy-button>
+          <script src="{{ 'ct-copy-button.js' | asset_url }}" defer="defer"></script>
+        {%- endif -%}
+      </div>
+
+      {%- if s.auto_apply -%}
+        <a class="ct-discount__apply" href="{{ discount_url }}">
+          {{ s.apply_label | default: 'Apply at checkout' | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

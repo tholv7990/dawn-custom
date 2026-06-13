@@ -95,6 +95,16 @@
             "show_dates": true,
             "show_timeline": true
           }
+        },
+        "discount_code": {
+          "type": "discount_code",
+          "settings": {
+            "heading": "Save 10%",
+            "message": "Use this code at checkout.",
+            "code": "SAVE10",
+            "show_copy": true,
+            "auto_apply": true
+          }
         }
       },
       "block_order": [
@@ -110,7 +120,8 @@
         "sticky_atc",
         "bundle",
         "product_upsells",
-        "shipping_estimate"
+        "shipping_estimate",
+        "discount_code"
       ],
       "settings": {}
     },
