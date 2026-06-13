@@ -1,6 +1,7 @@
 {
   "color-literal": {
     "assets/base.css": 10,
+    "sections/header.liquid": 1,
     "sections/main-product.liquid": 4
   },
   "important": {

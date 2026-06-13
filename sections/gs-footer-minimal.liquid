@@ -1,0 +1,172 @@
+{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
+
+{%- assign footer_email = section.settings.contact_email | strip -%}
+{%- assign footer_phone = section.settings.contact_phone | strip -%}
+{%- assign footer_address = section.settings.contact_address | strip -%}
+{%- assign footer_address_link = section.settings.contact_address_link -%}
+{%- assign footer_logo = section.settings.logo | default: settings.logo -%}
+{%- assign footer_logo_width = section.settings.logo_width | default: settings.logo_width | default: 170 -%}
+{%- assign footer_logo_sizes = footer_logo_width | append: 'px' -%}
+{%- assign footer_logo_style = 'width: ' | append: footer_logo_width | append: 'px' -%}
+{%- assign footer_logo_alt = shop.name | default: 'Storefront' | escape -%}
+{%- assign footer_info_menu = section.settings.info_menu -%}
+{%- assign footer_service_menu = section.settings.service_menu -%}
+{%- assign show_policy_links = false -%}
+{%- if shop.terms_of_service.body != blank or shop.privacy_policy.body != blank or shop.refund_policy.body != blank or shop.shipping_policy.body != blank -%}
+  {%- assign show_policy_links = true -%}
+{%- endif -%}
+{%- assign show_contact = false -%}
+{%- if footer_email != blank or footer_phone != blank or footer_address != blank -%}
+  {%- assign show_contact = true -%}
+{%- endif -%}
+
+<footer class="gs-scope gs-foot" role="contentinfo">
+  <div class="gs-wrap">
+    <div class="gs-foot__cols">
+      <div>
+        <a class="gs-logo" href="{{ routes.root_url }}" aria-label="{{ footer_logo_alt }} home">
+          {%- if footer_logo != blank -%}
+            {{
+              footer_logo
+              | image_url: width: 340
+              | image_tag:
+                loading: 'lazy',
+                widths: '120, 170, 220, 280, 340',
+                sizes: footer_logo_sizes,
+                alt: footer_logo_alt,
+                style: footer_logo_style
+            }}
+          {%- else -%}
+            <span class="gs-logo__text">{{ shop.name | default: 'Storefront' }}</span>
+          {%- endif -%}
+        </a>
+        <p class="gs-foot__blurb">{{ section.settings.brand_blurb | escape }}</p>
+      </div>
+      {%- if footer_info_menu.links.size > 0 or shop.terms_of_service.body != blank -%}
+        <nav aria-label="Info">
+          <h5>Info</h5>
+          <ul>
+            {%- for link in footer_info_menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {%- endfor -%}
+            {%- if shop.terms_of_service.body != blank -%}
+              <li>{% render 'ct-policy-link', policy: shop.terms_of_service, label: shop.terms_of_service.title %}</li>
+            {%- endif -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+      {%- if footer_service_menu.links.size > 0 or show_policy_links -%}
+        <nav aria-label="Customer service">
+          <h5>Customer service</h5>
+          <ul>
+            {%- for link in footer_service_menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {%- endfor -%}
+            {%- if shop.privacy_policy.body != blank -%}
+              <li>{% render 'ct-policy-link', policy: shop.privacy_policy, label: shop.privacy_policy.title %}</li>
+            {%- endif -%}
+            {%- if shop.refund_policy.body != blank -%}
+              <li>{% render 'ct-policy-link', policy: shop.refund_policy, label: shop.refund_policy.title %}</li>
+            {%- endif -%}
+            {%- if shop.shipping_policy.body != blank -%}
+              <li>{% render 'ct-policy-link', policy: shop.shipping_policy, label: shop.shipping_policy.title %}</li>
+            {%- endif -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+      {%- if show_contact -%}
+        <nav aria-label="Contact us">
+          <h5>Contact us</h5>
+          <ul>
+            {%- if footer_email != blank -%}
+              <li><a href="mailto:{{ footer_email | escape }}">{{ footer_email | escape }}</a></li>
+            {%- endif -%}
+            {%- if footer_phone != blank -%}
+              <li><a href="tel:{{ footer_phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | escape }}">{{ footer_phone | escape }}</a></li>
+            {%- endif -%}
+            {%- if footer_address != blank -%}
+              <li>
+                {%- if footer_address_link != blank -%}
+                  <a href="{{ footer_address_link }}">{{ footer_address | escape }}</a>
+                {%- else -%}
+                  {{ footer_address | escape }}
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+    </div>
+
+    <div class="gs-foot__region">
+      <span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})</span>
+      {%- if shop.enabled_payment_types.size > 0 -%}
+        <ul class="list list-payment" role="list" aria-label="Accepted payment methods">
+          {%- for type in shop.enabled_payment_types -%}
+            <li class="list-payment__item">{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+    <p class="gs-foot__copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'Storefront' }}. All rights reserved.</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer (parked)",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 240,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 170
+    },
+    {
+      "type": "textarea",
+      "id": "brand_blurb",
+      "label": "Brand blurb",
+      "default": "A focused storefront built around clear product details, secure checkout, and helpful support."
+    },
+    {
+      "type": "link_list",
+      "id": "info_menu",
+      "label": "Info menu"
+    },
+    {
+      "type": "link_list",
+      "id": "service_menu",
+      "label": "Customer service menu"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact email"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Contact phone"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_address",
+      "label": "Contact address"
+    },
+    {
+      "type": "url",
+      "id": "contact_address_link",
+      "label": "Address link"
+    }
+  ]
+}
+{% endschema %}
