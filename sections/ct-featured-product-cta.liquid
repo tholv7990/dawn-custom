@@ -1,0 +1,206 @@
+{%- comment -%}
+  sections/ct-featured-product-cta.liquid
+  Single featured-product spotlight with add-to-cart. Two-column: a contained
+  ct-media-slot of the product's featured image and a panel with title, price,
+  body copy, and the reusable ct-upsell-card snippet (Dawn product-form pipeline).
+  Commerce is handled by snippets/ct-upsell-card.liquid; this section only loads
+  assets/product-form.js. Renders nothing without a selected product.
+{%- endcomment -%}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{%- assign ct_product = section.settings.product -%}
+{%- if ct_product != blank -%}
+  {% render 'ct-section-padding', section: section %}
+
+  {%- liquid
+    assign ct_variant = ct_product.selected_or_first_available_variant
+    assign ct_heading = section.settings.heading | default: ct_product.title
+    assign ct_button = section.settings.button_label | default: 'Add to cart'
+  -%}
+
+  <section class="gs-scope ct-feat-prod ct-feat-prod--{{ section.settings.layout }} section-{{ section.id }}-padding">
+    <div class="gs-wrap">
+      <div class="ct-feat-prod__grid">
+        <div class="ct-feat-prod__media">
+          {% render 'ct-media-slot',
+            image: ct_product.featured_image,
+            class: 'ct-feat-prod__slot',
+            ratio: '4 / 3',
+            label: ct_product.title
+          %}
+        </div>
+
+        <div class="ct-feat-prod__panel">
+          <h2 class="gs-section-heading ct-feat-prod__heading">{{ ct_heading | escape }}</h2>
+
+          {%- if section.settings.show_price -%}
+            <div class="ct-feat-prod__price">
+              <span class="ct-feat-prod__price-now">{{ ct_variant.price | money }}</span>
+              {%- if ct_variant.compare_at_price > ct_variant.price -%}
+                <s class="ct-feat-prod__price-was">{{ ct_variant.compare_at_price | money }}</s>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.body != blank -%}
+            <div class="ct-feat-prod__body rte">{{ section.settings.body }}</div>
+          {%- endif -%}
+
+          <div class="ct-feat-prod__cta">
+            {% render 'ct-upsell-card',
+              product: ct_product,
+              section_id: section.id,
+              uid: section.id,
+              layout: 'row',
+              show_variant: true,
+              show_rating: false,
+              button_label: ct_button
+            %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- style -%}
+    .ct-feat-prod__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--ct-space-8);
+      align-items: center;
+    }
+
+    .ct-feat-prod__slot {
+      border-radius: var(--ct-r-lg);
+      overflow: hidden;
+      border: 1px solid var(--ct-card-border);
+      background: var(--ct-card-bg);
+    }
+
+    .ct-feat-prod__panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ct-space-4);
+    }
+
+    .ct-feat-prod__heading {
+      margin: 0;
+      color: var(--ct-text);
+    }
+
+    .ct-feat-prod__price {
+      display: flex;
+      align-items: baseline;
+      gap: var(--ct-space-3);
+      font-size: var(--ct-text-2xl);
+      font-weight: var(--ct-fw-bold);
+    }
+
+    .ct-feat-prod__price-now {
+      color: var(--ct-price);
+    }
+
+    .ct-feat-prod__price-was {
+      color: var(--ct-price-compare);
+      font-size: var(--ct-text-lg);
+      font-weight: var(--ct-fw-normal);
+    }
+
+    .ct-feat-prod__body {
+      color: var(--ct-text-2);
+      font-size: var(--ct-body-size);
+      line-height: 1.6;
+    }
+
+    .ct-feat-prod__cta {
+      margin-top: var(--ct-space-2);
+    }
+
+    @media screen and (min-width: 750px) {
+      .ct-feat-prod__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--ct-space-10);
+      }
+
+      .ct-feat-prod--image-right .ct-feat-prod__media {
+        order: 2;
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Featured product CTA",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Leave blank to use the product title."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Add a short pitch for this product: what it is, who it's for, and why it's worth adding to cart."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Media position",
+      "options": [
+        { "value": "image-left", "label": "Image left" },
+        { "value": "image-right", "label": "Image right" }
+      ],
+      "default": "image-left"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured product CTA"
+    }
+  ]
+}
+{% endschema %}

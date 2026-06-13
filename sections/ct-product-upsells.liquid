@@ -1,0 +1,271 @@
+{%- comment -%}
+  sections/ct-product-upsells.liquid - product upsell/cross-sell rail.
+
+  Commerce add-to-cart goes through the reusable ct-upsell-card snippet, which
+  renders a Dawn <product-form>. When add-to-cart is enabled we load Dawn's
+  product-form.js so the form can intercept and AJAX into the cart. When it is
+  disabled we render simpler link-only cards (ct-media-slot + title + price).
+
+  Renders nothing when no products are picked.
+{%- endcomment -%}
+{%- liquid
+  assign upsell_count = 0
+  for item in section.settings.products limit: 6
+    if item != blank
+      assign upsell_count = upsell_count | plus: 1
+    endif
+  endfor
+  assign show_add = section.settings.show_add
+  assign show_variant = section.settings.show_variant
+-%}
+
+{%- if upsell_count > 0 -%}
+  {% render 'ct-section-padding', section: section %}
+
+  {%- if show_add -%}
+    <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+
+  <section class="gs-scope ct-upsells section-{{ section.id }}-padding">
+    <div class="gs-wrap">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="gs-section-heading ct-upsells__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="gs-section-sub ct-upsells__subheading">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+
+      <ul
+        class="ct-upsells__grid"
+        role="list"
+        style="--ct-cols: {{ section.settings.columns }};"
+      >
+        {%- for item in section.settings.products limit: 6 -%}
+          {%- if item != blank -%}
+            <li class="ct-upsells__item">
+              {%- if show_add -%}
+                {% render 'ct-upsell-card',
+                  product: item,
+                  section_id: section.id,
+                  show_variant: show_variant
+                %}
+              {%- else -%}
+                <article class="ct-upsells__card">
+                  <a class="ct-upsells__media-link" href="{{ item.url }}" aria-label="{{ item.title | escape }}">
+                    {% render 'ct-media-slot',
+                      image: item.featured_image,
+                      class: 'ct-upsells__media',
+                      ratio: '1 / 1',
+                      label: item.title
+                    %}
+                    {%- if item.compare_at_price > item.price -%}
+                      <span class="ct-upsells__save">{{ 'products.product.on_sale' | t: default: 'Sale' }}</span>
+                    {%- endif -%}
+                  </a>
+                  <div class="ct-upsells__body">
+                    <a class="ct-upsells__title" href="{{ item.url }}">{{ item.title | escape }}</a>
+                    <div class="ct-upsells__price">
+                      <span class="ct-upsells__price-now">{{ item.price | money }}</span>
+                      {%- if item.compare_at_price > item.price -%}
+                        <s class="ct-upsells__price-was">{{ item.compare_at_price | money }}</s>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </article>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </section>
+
+  {%- style -%}
+    .ct-upsells__heading {
+      margin-bottom: var(--ct-space-2);
+    }
+
+    .ct-upsells__subheading {
+      margin-top: 0;
+      margin-bottom: var(--ct-space-6);
+      color: var(--ct-text-2);
+      font-size: var(--ct-body-size);
+    }
+
+    .ct-upsells__grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(var(--ct-cols, 4), minmax(0, 1fr));
+      gap: var(--ct-space-5);
+    }
+
+    .ct-upsells__item {
+      margin: 0;
+      min-width: 0;
+    }
+
+    .ct-upsells__card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background-color: var(--ct-card-bg);
+      border: 1px solid var(--ct-card-border);
+      border-radius: var(--ct-r-lg);
+      box-shadow: var(--ct-shadow-sm);
+      overflow: hidden;
+      transition: box-shadow var(--ct-dur-base) var(--ct-ease-out);
+    }
+
+    .ct-upsells__card:hover {
+      box-shadow: var(--ct-shadow-md);
+    }
+
+    .ct-upsells__media-link {
+      position: relative;
+      display: block;
+    }
+
+    .ct-upsells__media {
+      width: 100%;
+      background-color: var(--ct-bg-surface);
+    }
+
+    .ct-upsells__save {
+      position: absolute;
+      inset: var(--ct-space-3) auto auto var(--ct-space-3);
+      padding: var(--ct-space-1) var(--ct-space-2);
+      background-color: var(--ct-badge-sale);
+      color: var(--ct-on-accent);
+      font-size: var(--ct-text-xs);
+      font-weight: var(--ct-fw-semi);
+      border-radius: var(--ct-r-pill);
+    }
+
+    .ct-upsells__body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ct-space-2);
+      padding: var(--ct-space-4);
+    }
+
+    .ct-upsells__title {
+      color: var(--ct-text);
+      font-size: var(--ct-text-sm);
+      font-weight: var(--ct-fw-semi);
+      text-decoration: none;
+    }
+
+    .ct-upsells__title:hover {
+      color: var(--ct-action);
+    }
+
+    .ct-upsells__price {
+      display: flex;
+      align-items: baseline;
+      gap: var(--ct-space-2);
+    }
+
+    .ct-upsells__price-now {
+      color: var(--ct-price);
+      font-weight: var(--ct-fw-bold);
+    }
+
+    .ct-upsells__price-was {
+      color: var(--ct-price-compare);
+      font-size: var(--ct-text-sm);
+    }
+
+    @media screen and (max-width: 989px) {
+      .ct-upsells__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      .ct-upsells__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product upsells",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Optional. Leave blank to hide.",
+      "default": "You may also like"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "info": "Optional. Leave blank to hide."
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products",
+      "limit": 6
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Columns (desktop)",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant",
+      "label": "Show variant selector",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add",
+      "label": "Show add to cart",
+      "info": "When off, cards link to the product page only.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product upsells"
+    }
+  ]
+}
+{% endschema %}

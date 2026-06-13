@@ -1,0 +1,252 @@
+{%- comment -%}
+  sections/ct-collection-grid.liquid (ct-coll-grid) - link-only collection product grid.
+  Cards link to product.url (NO add-to-cart). Presentation uses ct-media-slot for a
+  contained square image. Real commerce values bind to the product object (price,
+  compare_at_price, title, image, vendor) - nothing is hardcoded. Renders a gentle
+  empty note when no collection is picked or the collection has no products.
+{%- endcomment -%}
+{% render 'ct-section-padding', section: section %}
+
+{%- liquid
+  assign coll = section.settings.collection
+  assign limit = section.settings.products_to_show
+  assign cols = section.settings.columns
+  assign show_price = section.settings.show_price
+  assign show_vendor = section.settings.show_vendor
+  assign product_count = coll.products.size
+-%}
+
+<section class="gs-scope gs-section ct-coll-grid section-{{ section.id }}-padding">
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading ct-coll-grid__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if coll == blank or product_count == 0 -%}
+      <p class="ct-coll-grid__empty">Pick a collection to display its products here.</p>
+    {%- else -%}
+      <ul class="ct-coll-grid__grid" role="list" style="--ct-cols: {{ cols }};">
+        {%- for item in coll.products limit: limit -%}
+          <li class="ct-coll-grid__item">
+            <article class="ct-coll-grid__card">
+              <a class="ct-coll-grid__link" href="{{ item.url }}" aria-label="{{ item.title | escape }}">
+                {% render 'ct-media-slot',
+                  image: item.featured_image,
+                  class: 'ct-coll-grid__media',
+                  ratio: '1 / 1',
+                  label: item.title,
+                  alt: item.featured_image.alt | default: item.title
+                %}
+              </a>
+              <div class="ct-coll-grid__body">
+                {%- if show_vendor and item.vendor != blank -%}
+                  <p class="ct-coll-grid__vendor">{{ item.vendor | escape }}</p>
+                {%- endif -%}
+                <a class="ct-coll-grid__title" href="{{ item.url }}">{{ item.title | escape }}</a>
+                {%- if show_price -%}
+                  <p class="ct-coll-grid__price">
+                    {%- if item.compare_at_price > item.price -%}
+                      <span class="ct-coll-grid__price-now">{{ item.price | money }}</span>
+                      <s class="ct-coll-grid__price-was">{{ item.compare_at_price | money }}</s>
+                    {%- else -%}
+                      <span class="ct-coll-grid__price-now">{{ item.price | money }}</span>
+                    {%- endif -%}
+                  </p>
+                {%- endif -%}
+              </div>
+            </article>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- style -%}
+  .ct-coll-grid .ct-coll-grid__heading {
+    margin-bottom: var(--ct-space-6);
+  }
+
+  .ct-coll-grid .ct-coll-grid__empty {
+    color: var(--ct-text-3);
+    font-size: var(--ct-body-size);
+    margin: 0;
+  }
+
+  .ct-coll-grid .ct-coll-grid__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ct-space-5);
+  }
+
+  @media screen and (min-width: 750px) {
+    .ct-coll-grid .ct-coll-grid__grid {
+      grid-template-columns: repeat(var(--ct-cols, 4), minmax(0, 1fr));
+      gap: var(--ct-space-6);
+    }
+  }
+
+  .ct-coll-grid .ct-coll-grid__item {
+    margin: 0;
+  }
+
+  .ct-coll-grid .ct-coll-grid__card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--ct-card-bg);
+    border: 1px solid var(--ct-card-border);
+    border-radius: var(--ct-r-lg);
+    overflow: hidden;
+    transition: box-shadow var(--ct-dur-base) var(--ct-ease-out),
+      transform var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-coll-grid .ct-coll-grid__card:hover {
+    box-shadow: var(--ct-shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .ct-coll-grid .ct-coll-grid__link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .ct-coll-grid .ct-coll-grid__media {
+    width: 100%;
+    background: var(--ct-bg-surface);
+  }
+
+  .ct-coll-grid .ct-coll-grid__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ct-coll-grid .ct-coll-grid__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ct-space-1);
+    padding: var(--ct-space-4);
+  }
+
+  .ct-coll-grid .ct-coll-grid__vendor {
+    margin: 0;
+    color: var(--ct-text-3);
+    font-size: var(--ct-text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .ct-coll-grid .ct-coll-grid__title {
+    color: var(--ct-text);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-medium);
+    line-height: 1.35;
+    text-decoration: none;
+  }
+
+  .ct-coll-grid .ct-coll-grid__title:hover {
+    color: var(--ct-action);
+  }
+
+  .ct-coll-grid .ct-coll-grid__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--ct-space-2);
+    margin: 0;
+    font-size: var(--ct-text-sm);
+  }
+
+  .ct-coll-grid .ct-coll-grid__price-now {
+    color: var(--ct-price);
+    font-weight: var(--ct-fw-semi);
+  }
+
+  .ct-coll-grid .ct-coll-grid__price-was {
+    color: var(--ct-price-compare);
+    font-weight: var(--ct-fw-normal);
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Collection grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop the collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Products to show",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection grid"
+    }
+  ]
+}
+{% endschema %}
