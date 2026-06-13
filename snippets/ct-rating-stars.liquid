@@ -1,0 +1,43 @@
+{%- comment -%}
+  snippets/ct-rating-stars.liquid (W2.T03) - accessible star rating with half-star support.
+  Presentational only. Renders a 5-star track with a clipped fill proportional to `rating`.
+  Token-sized/colored via component-ct-primitives.css (.ct-stars). No fabricated defaults:
+  if no rating is provided, renders nothing (G-05).
+
+  Params:
+    rating   - number 0-5 (e.g. 4.5). Required to render anything.
+    count    - optional review count to show after the stars
+    max      - max stars (default 5)
+    label    - optional override for the aria-label
+    style    - 'default' | 'trustpilot' (square filled tiles)
+
+  Usage: {% render 'ct-rating-stars', rating: product.metafields.reviews.rating.value, count: 128 %}
+{%- endcomment -%}
+{%- liquid
+  assign ct_rating = rating | default: 0 | times: 1.0
+  assign ct_max = max | default: 5 | times: 1
+  assign ct_style = style | default: 'default'
+-%}
+{%- if ct_rating > 0 -%}
+  {%- liquid
+    assign ct_pct = ct_rating | divided_by: ct_max | times: 100
+    if ct_pct > 100
+      assign ct_pct = 100
+    endif
+    assign ct_label = label | default: ''
+    if ct_label == ''
+      assign ct_label = ct_rating | round: 1 | append: ' out of ' | append: ct_max | append: ' stars'
+    endif
+  -%}
+  <span class="ct-stars ct-stars--{{ ct_style }}" role="img" aria-label="{{ ct_label | escape }}">
+    <span class="ct-stars__track" aria-hidden="true">
+      {%- for i in (1..ct_max) -%}&#9733;{%- endfor -%}
+    </span>
+    <span class="ct-stars__fill" style="width: {{ ct_pct }}%;" aria-hidden="true">
+      {%- for i in (1..ct_max) -%}&#9733;{%- endfor -%}
+    </span>
+  </span>
+  {%- if count != blank -%}
+    <span class="ct-stars__count">({{ count }})</span>
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,64 @@
+{%- comment -%}
+  snippets/ct-price-tokens.liquid (W2.T01) - server-side price token resolver.
+  Replaces tokens in a text string with money-formatted values from a variant + quantity.
+  No fabricated prices: compare/savings tokens resolve only from a real compare_at_price (G-05).
+
+  Tokens: [quantity] [price] [compare_price] [price_each] [compare_price_each]
+          [amount_saved] [amount_saved_rounded]
+
+  Params:
+    text      - the text containing tokens
+    variant   - a variant object (falls back to product.selected_or_first_available_variant)
+    product   - optional, used to resolve a variant when none is passed
+    quantity  - integer multiplier (default 1)
+
+  Usage: {% render 'ct-price-tokens', text: block.settings.label, variant: variant, quantity: 2 %}
+{%- endcomment -%}
+{%- liquid
+  assign ct_text = text | default: ''
+  assign ct_variant = variant
+  if ct_variant == blank and product != blank
+    assign ct_variant = product.selected_or_first_available_variant
+  endif
+  assign ct_qty = quantity | default: 1 | times: 1
+
+  if ct_variant != blank
+    assign ct_unit = ct_variant.price
+    assign ct_unit_compare = ct_variant.compare_at_price
+    assign ct_total = ct_unit | times: ct_qty
+    assign ct_has_compare = false
+    assign ct_total_compare = 0
+    assign ct_saved = 0
+    if ct_unit_compare != blank and ct_unit_compare > ct_unit
+      assign ct_has_compare = true
+      assign ct_total_compare = ct_unit_compare | times: ct_qty
+      assign ct_saved = ct_total_compare | minus: ct_total
+    endif
+
+    comment
+      Pre-format money to variables: Liquid cannot nest a filter inside a replace argument.
+    endcomment
+    assign ct_price_each_money = ct_unit | money
+    assign ct_price_money = ct_total | money
+    assign ct_compare_each_money = ct_unit_compare | money
+    assign ct_compare_money = ct_total_compare | money
+    assign ct_saved_money = ct_saved | money
+    assign ct_saved_round_money = ct_saved | money_without_trailing_zeros
+
+    assign ct_text = ct_text | replace: '[quantity]', ct_qty
+    assign ct_text = ct_text | replace: '[price_each]', ct_price_each_money
+    assign ct_text = ct_text | replace: '[price]', ct_price_money
+    if ct_has_compare
+      assign ct_text = ct_text | replace: '[compare_price_each]', ct_compare_each_money
+      assign ct_text = ct_text | replace: '[compare_price]', ct_compare_money
+      assign ct_text = ct_text | replace: '[amount_saved_rounded]', ct_saved_round_money
+      assign ct_text = ct_text | replace: '[amount_saved]', ct_saved_money
+    else
+      assign ct_text = ct_text | replace: '[compare_price_each]', ''
+      assign ct_text = ct_text | replace: '[compare_price]', ''
+      assign ct_text = ct_text | replace: '[amount_saved_rounded]', ''
+      assign ct_text = ct_text | replace: '[amount_saved]', ''
+    endif
+  endif
+-%}
+{{- ct_text -}}

@@ -1,0 +1,84 @@
+{%- comment -%}
+  snippets/ct-icon.liquid (W2.T08) - curated commerce icon system.
+  Renders an inline SVG from Dawn's bundled icon-*.svg assets by friendly name,
+  or a merchant-uploaded image (G-01 fallback). Unknown name -> empty output (safe).
+
+  Params:
+    name  - friendly icon key (see case map below)
+    image - optional image object; if present, overrides the named icon
+    class - wrapper class (default 'ct-icon')
+    label - accessible label; when present sets role=img + aria-label, else aria-hidden
+
+  Usage: {% render 'ct-icon', name: 'truck', label: 'Free shipping' %}
+{%- endcomment -%}
+{%- liquid
+  assign ct_icon = name | default: '' | strip | downcase
+  assign ct_icon_class = class | default: 'ct-icon'
+  assign ct_icon_label = label | default: ''
+  assign ct_icon_file = ''
+  case ct_icon
+    when 'check', 'checkmark', 'tick', 'done'
+      assign ct_icon_file = 'icon-checkmark.svg'
+    when 'truck', 'shipping', 'delivery'
+      assign ct_icon_file = 'icon-truck.svg'
+    when 'plane', 'air', 'express'
+      assign ct_icon_file = 'icon-plane.svg'
+    when 'box', 'package', 'parcel'
+      assign ct_icon_file = 'icon-box.svg'
+    when 'lock', 'secure', 'shield', 'security'
+      assign ct_icon_file = 'icon-padlock.svg'
+    when 'return', 'refund', 'exchange'
+      assign ct_icon_file = 'icon-return.svg'
+    when 'star', 'rating'
+      assign ct_icon_file = 'icon-star.svg'
+    when 'heart', 'love', 'wishlist'
+      assign ct_icon_file = 'icon-heart.svg'
+    when 'info'
+      assign ct_icon_file = 'icon-info.svg'
+    when 'question', 'help', 'faq'
+      assign ct_icon_file = 'icon-question-mark.svg'
+    when 'discount', 'sale', 'offer'
+      assign ct_icon_file = 'icon-discount.svg'
+    when 'tag', 'price', 'price-tag'
+      assign ct_icon_file = 'icon-price-tag.svg'
+    when 'cart', 'bag', 'basket'
+      assign ct_icon_file = 'icon-cart.svg'
+    when 'stopwatch', 'timer', 'clock'
+      assign ct_icon_file = 'icon-stopwatch.svg'
+    when 'fire', 'hot', 'trending'
+      assign ct_icon_file = 'icon-fire.svg'
+    when 'bolt', 'lightning', 'flash'
+      assign ct_icon_file = 'icon-lightning-bolt.svg'
+    when 'recycle', 'eco', 'sustainable'
+      assign ct_icon_file = 'icon-recycle.svg'
+    when 'leaf', 'natural', 'plant'
+      assign ct_icon_file = 'icon-leaf.svg'
+    when 'pin', 'map-pin', 'location'
+      assign ct_icon_file = 'icon-map-pin.svg'
+    when 'copy', 'clipboard'
+      assign ct_icon_file = 'icon-copy.svg'
+    when 'success', 'verified'
+      assign ct_icon_file = 'icon-success.svg'
+    when 'ruler', 'size', 'measure'
+      assign ct_icon_file = 'icon-ruler.svg'
+    when 'eye', 'view'
+      assign ct_icon_file = 'icon-eye.svg'
+    when 'chat', 'support', 'message'
+      assign ct_icon_file = 'icon-chat-bubble.svg'
+    when 'gift'
+      assign ct_icon_file = 'icon-discount.svg'
+    when 'error', 'alert'
+      assign ct_icon_file = 'icon-error.svg'
+    else
+      assign ct_icon_file = ''
+  endcase
+-%}
+{%- if image != blank -%}
+  <span class="{{ ct_icon_class }}"{% if ct_icon_label != blank %} role="img" aria-label="{{ ct_icon_label | escape }}"{% else %} aria-hidden="true"{% endif %}>
+    {{ image | image_url: width: 96 | image_tag: loading: 'lazy', widths: '48, 96, 144', alt: ct_icon_label }}
+  </span>
+{%- elsif ct_icon_file != blank -%}
+  <span class="{{ ct_icon_class }}"{% if ct_icon_label != blank %} role="img" aria-label="{{ ct_icon_label | escape }}"{% else %} aria-hidden="true"{% endif %}>
+    {{ ct_icon_file | inline_asset_content }}
+  </span>
+{%- endif -%}

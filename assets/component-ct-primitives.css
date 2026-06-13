@@ -1,0 +1,113 @@
+/* component-ct-primitives.css (W2) - token-only styling for the shared CT primitives.
+   Loaded by sections that adopt a primitive (and by the dev styleguide). Additive:
+   targets only ct-* primitive markup that does not exist on current live templates. */
+
+/* Icon system (ct-icon.liquid) */
+.ct-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  color: currentColor;
+}
+.ct-icon svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+.ct-icon img {
+  width: 1em;
+  height: 1em;
+  object-fit: contain;
+}
+
+/* Star rating (ct-rating-stars.liquid) */
+.ct-stars {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  font-size: var(--ct-text-md);
+  line-height: 1;
+  vertical-align: middle;
+}
+.ct-stars__track {
+  color: var(--ct-rating-empty);
+  letter-spacing: 0.08em;
+}
+.ct-stars__fill {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  overflow: hidden;
+  color: var(--ct-rating);
+  letter-spacing: 0.08em;
+}
+.ct-stars--trustpilot .ct-stars__track,
+.ct-stars--trustpilot .ct-stars__fill {
+  letter-spacing: 0.04em;
+}
+.ct-stars__count {
+  display: inline-block;
+  padding-inline-start: var(--ct-space-3);
+  color: var(--ct-text-2);
+  font-size: var(--ct-text-sm);
+  vertical-align: middle;
+}
+
+/* Copy button (ct-copy-button.js) */
+ct-copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ct-space-2);
+  min-height: var(--ct-touch);
+  padding-inline: var(--ct-space-5);
+  border: var(--ct-input-border-width) dashed var(--ct-action-border);
+  border-radius: var(--ct-input-radius);
+  background: var(--ct-action-tint);
+  color: var(--ct-action);
+  font-size: var(--ct-text-sm);
+  cursor: pointer;
+  user-select: none;
+}
+ct-copy-button:focus-visible {
+  outline: none;
+  box-shadow: var(--ct-ring);
+}
+ct-copy-button[data-ct-copy-state='copied'] {
+  border-style: solid;
+  border-color: var(--ct-success);
+  color: var(--ct-success);
+}
+ct-copy-button[data-ct-copy-state='error'] {
+  border-color: var(--ct-error);
+  color: var(--ct-error);
+}
+
+/* Countdown timer (ct-countdown-timer.js) */
+ct-countdown-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ct-space-3);
+  font-variant-numeric: tabular-nums;
+  color: var(--ct-text);
+}
+ct-countdown-timer [data-ct-part] {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 2.2em;
+  padding-block: var(--ct-space-2);
+  padding-inline: var(--ct-space-3);
+  border-radius: var(--ct-r-sm);
+  background: var(--ct-bg-control);
+  font-size: var(--ct-text-lg);
+  font-weight: var(--ct-fw-bold);
+}
+ct-countdown-timer [data-ct-part] small {
+  font-size: var(--ct-text-xs);
+  font-weight: var(--ct-fw-normal);
+  color: var(--ct-text-2);
+}
+ct-countdown-timer[hidden] {
+  display: none;
+}

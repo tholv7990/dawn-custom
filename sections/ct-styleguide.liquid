@@ -70,7 +70,43 @@
       <span class="ct-sg__badge ct-sg__badge--new">New</span>
       <span class="ct-sg__badge ct-sg__badge--best">Best</span>
     </div>
+
+    <h3 class="ct-sg__h">W2 primitives</h3>
+    <div class="ct-sg__row">
+      {% render 'ct-icon', name: 'truck', label: 'Shipping' %}
+      {% render 'ct-icon', name: 'lock', label: 'Secure' %}
+      {% render 'ct-icon', name: 'return', label: 'Returns' %}
+      {% render 'ct-icon', name: 'star', label: 'Rated' %}
+      {% render 'ct-rating-stars', rating: 4.5, count: 128 %}
+    </div>
+    <p class="ct-sg__body">
+      Price tokens (resolve against a product/variant):
+      {% render 'ct-price-tokens', text: 'total [price] - save [amount_saved]', quantity: 2 %}
+    </p>
+    <div class="ct-sg__row">
+      <ct-copy-button data-ct-clipboard="WELCOME10" data-ct-copied="Code copied">
+        {% render 'ct-icon', name: 'copy' %} Copy WELCOME10
+      </ct-copy-button>
+      <ct-countdown-timer data-ct-mode="evergreen" data-ct-minutes="15" data-ct-key="styleguide">00:15:00</ct-countdown-timer>
+      <button type="button" class="ct-sg__btn" data-ct-sg-toast>Trigger toast</button>
+    </div>
+    <div class="ct-sg__row" data-ct-reveal data-ct-reveal-order="0">
+      <span class="ct-sg__body">This row uses data-ct-reveal (ct-reveal.js).</span>
+    </div>
   </div>
+
+  {{ 'component-ct-primitives.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'ct-price-tokens.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'ct-copy-button.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'ct-countdown-timer.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'ct-reveal.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'ct-toast.js' | asset_url }}" defer="defer"></script>
+  <script>
+    document.addEventListener('click', function (event) {
+      if (!event.target.closest('[data-ct-sg-toast]')) return;
+      if (window.CT && window.CT.toast) window.CT.toast('Added to cart', { variant: 'success' });
+    });
+  </script>
 
   {% style %}
     .ct-sg__title { font-size: var(--ct-h2); color: var(--ct-text); margin-bottom: var(--ct-space-7); }
