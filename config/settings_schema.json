@@ -1529,6 +1529,42 @@
         "label": "Discount threshold",
         "info": "Shop-currency fallback only. Use 0 to disable until real store rules are configured. For other active currencies, add a currency-map line or market metafield.",
         "default": "0"
+      },
+      {
+        "type": "header",
+        "content": "Checkout terms gate"
+      },
+      {
+        "type": "checkbox",
+        "id": "ct_require_tnc",
+        "label": "Require terms agreement before checkout",
+        "info": "Adds a checkbox to the cart drawer and cart page. The checkout button (and dynamic checkout buttons) stay disabled until the shopper agrees. Default off — only affects the storefront when enabled.",
+        "default": false
+      },
+      {
+        "type": "richtext",
+        "id": "ct_tnc_text",
+        "label": "Agreement text",
+        "info": "Shown next to the checkbox. You can link to your policy pages.",
+        "default": "<p>I agree to the terms and conditions.</p>"
+      },
+      {
+        "type": "text",
+        "id": "ct_tnc_error",
+        "label": "Error message",
+        "info": "Shown when a shopper tries to check out without agreeing.",
+        "default": "Please accept the terms and conditions to continue."
+      },
+      {
+        "type": "header",
+        "content": "Cart discount field"
+      },
+      {
+        "type": "checkbox",
+        "id": "ct_show_cart_discount",
+        "label": "Show a discount-code field in the cart",
+        "info": "Adds a code field to the cart drawer and cart page. Codes apply through Shopify's native discount link. Default off.",
+        "default": false
       }
     ]
   },

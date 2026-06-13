@@ -1,0 +1,44 @@
+{%- comment -%}
+  Terms & Conditions checkout gate (W4.T05). Integrated checkbox that blocks
+  checkout (regular button + dynamic checkout buttons) until the shopper agrees.
+
+  Master-gated by settings.ct_require_tnc (DEFAULT OFF) — renders nothing unless
+  the merchant enables it, so it has zero effect on the live store by default.
+  Progressive enhancement / FAIL-OPEN: if ct-cart-tnc.js doesn't run, the
+  checkbox is inert and checkout proceeds (the gate is a JS enhancement).
+
+  Params:
+    context  'drawer' | 'page' — which checkout target(s) this gate guards
+{%- endcomment -%}
+{%- if settings.ct_require_tnc -%}
+  {%- liquid
+    assign ctx = context | default: 'page'
+    assign uid = ctx | append: '-' | append: section.id
+    assign cb_id = 'CtTnc-' | append: uid
+    assign err_id = 'CtTncError-' | append: uid
+  -%}
+  <ct-tnc-gate
+    class="ct-tnc-gate"
+    data-context="{{ ctx }}"
+    data-error-id="{{ err_id }}"
+  >
+    <label class="ct-tnc-gate__label" for="{{ cb_id }}">
+      <input
+        type="checkbox"
+        class="ct-tnc-gate__checkbox"
+        id="{{ cb_id }}"
+        data-ct-tnc-checkbox
+        aria-describedby="{{ err_id }}"
+      >
+      <span class="ct-tnc-gate__text rte">{{ settings.ct_tnc_text }}</span>
+    </label>
+    {%- comment -%} role=alert stays in the a11y tree, empty; JS injects the text so AT announces it. {%- endcomment -%}
+    <p
+      class="ct-tnc-gate__error"
+      id="{{ err_id }}"
+      role="alert"
+      data-ct-tnc-message="{{ settings.ct_tnc_error | default: 'Please accept the terms and conditions to continue.' | escape }}"
+    ></p>
+  </ct-tnc-gate>
+  <script src="{{ 'ct-cart-tnc.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

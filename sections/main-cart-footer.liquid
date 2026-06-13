@@ -2,6 +2,10 @@
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+{%- comment -%} W4.T05 terms-gate styles — only matters when settings.ct_require_tnc is on. {%- endcomment -%}
+{{ 'component-ct-cart-tnc.css' | asset_url | stylesheet_tag }}
+{%- comment -%} W4.T05 discount-field styles — only matters when settings.ct_show_cart_discount is on. {%- endcomment -%}
+{{ 'component-ct-cart-discount-field.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -104,6 +108,10 @@
                 </small>
               </div>
             {%- else -%}
+              {%- if cart != empty -%}
+                {% render 'ct-cart-discount-field', context: 'page' %}
+                {% render 'ct-cart-tnc-gate', context: 'page' %}
+              {%- endif -%}
               <div class="cart__ctas" {{ block.shopify_attributes }}>
                 <button
                   type="submit"

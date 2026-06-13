@@ -1,0 +1,56 @@
+/* Cart discount-code field (W4.T05). Token-only. Default-off feature. */
+.ct-cart-discount-field {
+  display: block;
+  margin-bottom: var(--ct-space-4);
+}
+
+.ct-cart-discount-field__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ct-space-2);
+  align-items: stretch;
+  margin: 0;
+}
+
+.ct-cart-discount-field__input {
+  flex: 1 1 180px;
+  min-width: 0;
+  padding: var(--ct-space-3) var(--ct-space-4);
+  color: var(--ct-text);
+  font-size: var(--ct-body-size);
+  background: var(--ct-bg-control);
+  border: 1px solid var(--ct-border);
+  border-radius: var(--ct-r-md);
+  transition: border-color var(--ct-dur-base) var(--ct-ease-out);
+}
+
+.ct-cart-discount-field__input::placeholder {
+  color: var(--ct-text-3);
+}
+
+.ct-cart-discount-field__input:focus {
+  outline: none;
+  border-color: var(--ct-action-border);
+  box-shadow: var(--ct-ring);
+}
+
+.ct-cart-discount-field__button {
+  flex: 0 0 auto;
+}
+
+.ct-cart-discount-field__status {
+  margin: var(--ct-space-2) 0 0;
+  color: var(--ct-text-2);
+  font-size: var(--ct-text-sm);
+  line-height: 1.4;
+}
+
+.ct-cart-discount-field__status:empty {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-cart-discount-field__input {
+    transition: none;
+  }
+}

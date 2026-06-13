@@ -11,6 +11,10 @@
       "ct_reward_thresholds_by_currency": "0",
       "ct_free_shipping_threshold_cents": "0",
       "ct_discount_threshold_cents": "0",
+      "ct_require_tnc": false,
+      "ct_tnc_text": "<p>I agree to the terms and conditions.</p>",
+      "ct_tnc_error": "Please accept the terms and conditions to continue.",
+      "ct_show_cart_discount": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -203,6 +207,10 @@
       "ct_reward_thresholds_by_currency": "0",
       "ct_free_shipping_threshold_cents": "0",
       "ct_discount_threshold_cents": "0",
+      "ct_require_tnc": false,
+      "ct_tnc_text": "<p>I agree to the terms and conditions.</p>",
+      "ct_tnc_error": "Please accept the terms and conditions to continue.",
+      "ct_show_cart_discount": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -395,6 +403,10 @@
       "ct_reward_thresholds_by_currency": "0",
       "ct_free_shipping_threshold_cents": "0",
       "ct_discount_threshold_cents": "0",
+      "ct_require_tnc": false,
+      "ct_tnc_text": "<p>I agree to the terms and conditions.</p>",
+      "ct_tnc_error": "Please accept the terms and conditions to continue.",
+      "ct_show_cart_discount": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {
@@ -587,6 +599,10 @@
       "ct_reward_thresholds_by_currency": "0",
       "ct_free_shipping_threshold_cents": "0",
       "ct_discount_threshold_cents": "0",
+      "ct_require_tnc": false,
+      "ct_tnc_text": "<p>I agree to the terms and conditions.</p>",
+      "ct_tnc_error": "Please accept the terms and conditions to continue.",
+      "ct_show_cart_discount": false,
       "color_schemes": {
         "scheme-1": {
           "settings": {

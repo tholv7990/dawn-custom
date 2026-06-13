@@ -9,6 +9,10 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {%- comment -%} W4.T02 free-shipping bar styles — loaded once, outside the section-refreshed region. {%- endcomment -%}
 {{ 'component-ct-cart-progress.css' | asset_url | stylesheet_tag }}
+{%- comment -%} W4.T05 terms-gate styles — only matters when settings.ct_require_tnc is on. {%- endcomment -%}
+{{ 'component-ct-cart-tnc.css' | asset_url | stylesheet_tag }}
+{%- comment -%} W4.T05 discount-field styles — only matters when settings.ct_show_cart_discount is on. {%- endcomment -%}
+{{ 'component-ct-cart-discount-field.css' | asset_url | stylesheet_tag }}
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
@@ -585,6 +589,10 @@
 
         <!-- CTAs -->
 
+        {%- if cart != empty -%}
+          {% render 'ct-cart-discount-field', context: 'drawer' %}
+          {% render 'ct-cart-tnc-gate', context: 'drawer' %}
+        {%- endif -%}
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <button
             type="submit"

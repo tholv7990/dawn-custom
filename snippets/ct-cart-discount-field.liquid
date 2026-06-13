@@ -1,0 +1,54 @@
+{%- comment -%}
+  Cart discount-code field (W4.T05) for the cart drawer + cart page.
+
+  Applies via Shopify's native discount link (root/discount/CODE?redirect=/cart)
+  — the reliable way to attach a code to the classic cart. Applied codes then
+  render as chips via cart.cart_level_discount_applications (Dawn already shows
+  these in the cart/drawer footer). The JS uses window.Shopify.routes.root (the
+  populated JS form), not Liquid routes.root (which is empty).
+
+  Gated by settings.ct_show_cart_discount (DEFAULT OFF) — zero effect on the
+  live store until enabled. FAIL-OPEN: with no JS the native form still submits.
+
+  Params: context 'drawer' | 'page'
+{%- endcomment -%}
+{%- if settings.ct_show_cart_discount -%}
+  {%- liquid
+    assign ctx = context | default: 'page'
+    assign uid = ctx | append: '-' | append: section.id
+    assign in_id = 'CtDiscount-' | append: uid
+    assign st_id = 'CtDiscountStatus-' | append: uid
+  -%}
+  <ct-cart-discount
+    class="ct-cart-discount-field"
+    data-context="{{ ctx }}"
+    data-empty-msg="{{ 'sections.cart.ct_discount_empty' | t | escape }}"
+    data-applying-msg="{{ 'sections.cart.ct_discount_applying' | t | escape }}"
+  >
+    <form
+      class="ct-cart-discount-field__form"
+      method="get"
+      action="{{ routes.root_url }}/discount/"
+      data-ct-discount-form
+    >
+      <label class="visually-hidden" for="{{ in_id }}">{{ 'sections.cart.ct_discount_label' | t }}</label>
+      <input
+        class="ct-cart-discount-field__input"
+        type="text"
+        id="{{ in_id }}"
+        name="discount"
+        placeholder="{{ 'sections.cart.ct_discount_label' | t }}"
+        aria-describedby="{{ st_id }}"
+        autocomplete="off"
+        autocapitalize="characters"
+        spellcheck="false"
+        data-ct-discount-input
+      >
+      <button class="ct-cart-discount-field__button button" type="submit">
+        {{- 'sections.cart.ct_discount_apply' | t -}}
+      </button>
+    </form>
+    <p class="ct-cart-discount-field__status" id="{{ st_id }}" role="status" aria-live="polite" data-ct-discount-status></p>
+  </ct-cart-discount>
+  <script src="{{ 'ct-cart-discount.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

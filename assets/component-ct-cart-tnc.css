@@ -1,0 +1,80 @@
+/* Terms & Conditions checkout gate (W4.T05). Token-only.
+   Default-off feature: only rendered when settings.ct_require_tnc is on. */
+.ct-tnc-gate {
+  display: block;
+  margin-bottom: var(--ct-space-4);
+}
+
+.ct-tnc-gate__label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ct-space-3);
+  margin: 0;
+  cursor: pointer;
+  color: var(--ct-text);
+  font-size: var(--ct-text-sm);
+  font-weight: var(--ct-fw-medium);
+  line-height: 1.5;
+}
+
+.ct-tnc-gate__checkbox {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  margin-top: var(--ct-space-1);
+  accent-color: var(--ct-action);
+  cursor: pointer;
+}
+
+.ct-tnc-gate__checkbox:focus-visible {
+  outline: var(--ct-ring);
+  outline-offset: 2px;
+  border-radius: var(--ct-r-sm);
+}
+
+.ct-tnc-gate__text {
+  color: var(--ct-text);
+}
+
+.ct-tnc-gate__text a {
+  color: var(--ct-action);
+  font-weight: var(--ct-fw-semi);
+  text-underline-offset: 2px;
+}
+
+.ct-tnc-gate__text a:hover {
+  color: var(--ct-action-hover);
+}
+
+.ct-tnc-gate__error {
+  margin: var(--ct-space-2) 0 0;
+  color: var(--ct-error, var(--ct-action));
+  font-size: var(--ct-text-xs);
+  font-weight: var(--ct-fw-semi);
+  line-height: 1.4;
+}
+
+/* Empty alert region collapses its margin but stays in the a11y tree (so JS
+   text injection is announced); it is never display:none'd. */
+.ct-tnc-gate__error:empty {
+  margin-top: 0;
+}
+
+/* Blocked state — applied by ct-cart-tnc.js while consent is missing.
+   The native `disabled` attribute is never touched (Dawn owns empty-cart state);
+   these are purely the gate's visual + interaction lock. */
+.cart__checkout-button.ct-tnc-blocked {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* Dynamic checkout buttons (Shop Pay etc.) while unconsented: pointer-events
+   blocks the mouse, and visibility:hidden removes the cross-origin iframe from
+   the tab order (pointer-events alone leaves a keyboard leak). Paired with the
+   `inert` attribute set by ct-cart-tnc.js. Re-shown on consent. */
+.cart__dynamic-checkout-buttons.ct-tnc-blocked,
+.additional-checkout-buttons.ct-tnc-blocked {
+  pointer-events: none;
+  visibility: hidden;
+}
