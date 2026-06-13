@@ -355,10 +355,10 @@ fieldset.product-form__input input:checked + label.swatch {
 
 /* ---- Cart notification (Dawn ships this largely unstyled) ---- */
 .cart-notification {
+  --popup-corner-radius: var(--ct-r-xl); /* sync Dawn bottom-corner radius longhands with the override radius */
   background: var(--ct-bg-raised); border: 1px solid var(--ct-border-strong);
   border-radius: var(--ct-r-xl); box-shadow: var(--ct-shadow-lg);
   font-family: var(--ct-font-body);
 }
 .cart-notification__heading,
 .cart-notification-product__name { color: var(--ct-text); font-weight: var(--ct-fw-semi); }
-.cart-notification__links .button { border-radius: var(--ct-r-md); }
