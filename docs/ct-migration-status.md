@@ -20,7 +20,7 @@ reviews-showcase, savings-line — additive, no Dawn commerce-logic edits); the 
 and **W6 overlays** are built. The **W4 cart system is ~85% done** (drawer blockification, free-shipping bar,
 upsell rail, TnC gate + discount field, cart-page parity — all shipped + adversarially reviewed; only the
 low-value multi-tier checkpoints / cart-gift leftovers remain). What remains is the **preview-gated lane**:
-Dawn-core buy-box edits + media-gallery blockification (W3.T09/T10), **W6.T05 RTL sweep** (W6.T02 mega-menu is Dawn-native), and the
+**W6.T05 RTL sweep** (W3 buy-box polish + W6.T02 mega-menu + W3.T10 gallery are done/Dawn-native), and the
 **W1 visual-regression lane** — these need a working `shopify theme dev` render + screenshot baselines. The
 batched `--only theme push` workaround now reliably lands code on the preview theme despite the earlier
 sustained-transfer `ECONNRESET`.
@@ -115,8 +115,11 @@ toast service (T09). **None exist.** All ⚙️ headless-safe to build (net-new 
 ### W3 — PDP block library — **block set ✅ (dual-host); Dawn-core buy-box + media gallery 🔒**
 **✅ Done (2026-06-13, additive `when`-cases in main-product **and** featured-product, seeded in `product.json`):**
 T01 Quantity-breaks ✅ (`ct-quantity-breaks` block, per-unit variant selects) · T02 Sticky-ATC ✅ (`sticky_atc` block) · T03 Bundle/FBT ✅ · T04 Gift offer ✅ · T05 Product upsells ✅ · T06 Shipping+checkpoints ✅ · T07 Discount code ✅ · T08 Size-chart modal + custom fields ✅ · T09 Reviews-showcase ✅ + Savings-line ✅. All `ct-qa`+Theme-Check green, hardened by 29 adversarial-bug-hunt fixes, cart-smoke 6/6.
-**🔒 Remaining (needs live preview — touches the live buy box / monolithic gallery):**
-T09 Dawn-core price-in-button + variant-picker + buy-buttons upgrades · T10 Media gallery blockification. Unsafe blind.
+**✅ Buy-box polish (2026-06-13, QA-passed on the dev server):**
+T09 **price-in-the-Add-to-cart-button** ✅ BUILT — `<ct-atc-price>` in the shared `buy-buttons.liquid` (both hosts), variant-reactive via variantChange, default-off, non-`<span>` so it can't collide with Dawn's `toggleSubmitButton`; cannot affect the form submit. ·
+T09 **variant-picker swatches/picker-type** ✅ **Dawn-native** — set `picker_type: button` + `swatch_shape` on the variant_picker block + assign swatch colors in Admin → Settings → Variants (no build). ·
+T10 **media-gallery layout** ✅ **Dawn-native** — `gallery_layout` (stacked / thumbnail / thumbnail-slider / columns) + `media_size` + `media_position` + `mobile_thumbnails` section settings (no build).
+The full PDP (block library + buy box) renders cleanly on the preview after the `scale_max` schema fix. **W3 effectively complete.**
 
 ### W4 — Cart system — **~85% ✅ (5 features shipped, adversarially reviewed); leftovers low-value**
 **✅ Done (2026-06-13, additive into the Dawn cart drawer + cart page; all default-off where they touch live flows):**
