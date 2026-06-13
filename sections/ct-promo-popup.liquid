@@ -1,0 +1,563 @@
+{%- liquid
+  assign ct_pp_enabled = section.settings.enable
+  assign ct_pp_design = false
+  if request.design_mode
+    assign ct_pp_design = true
+  endif
+  assign ct_pp_id = 'CtPromoPopup-' | append: section.id
+  assign ct_pp_label_id = 'CtPromoPopupTitle-' | append: section.id
+  assign ct_pp_store_key = 'ct-promo-popup-dismissed-' | append: section.id
+-%}
+{%- if ct_pp_enabled or ct_pp_design -%}
+  <div
+    class="gs-scope ct-promo-popup{% if ct_pp_design %} is-open is-static{% endif %}"
+    id="{{ ct_pp_id }}"
+    data-ct-promo-popup
+    data-delay="{{ section.settings.delay_seconds }}"
+    data-frequency="{{ section.settings.frequency_days }}"
+    data-store-key="{{ ct_pp_store_key }}"
+    data-design-mode="{{ ct_pp_design }}"
+    data-mode="{{ section.settings.mode }}"
+    {% unless ct_pp_design %}hidden{% endunless %}
+  >
+    <button
+      type="button"
+      class="ct-promo-popup__backdrop"
+      data-ct-promo-close
+      aria-label="{{ section.settings.close_label | escape }}"
+      tabindex="-1"
+    ></button>
+
+    <div
+      class="ct-promo-popup__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="{{ ct_pp_label_id }}"
+      tabindex="-1"
+      data-ct-promo-dialog
+    >
+      <button
+        type="button"
+        class="ct-promo-popup__close"
+        data-ct-promo-close
+        aria-label="{{ section.settings.close_label | escape }}"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
+
+      {%- if section.settings.image != blank -%}
+        <div class="ct-promo-popup__media">
+          {{
+            section.settings.image
+            | image_url: width: 720
+            | image_tag: loading: 'lazy', widths: '360, 540, 720', alt: section.settings.heading
+          }}
+        </div>
+      {%- endif -%}
+
+      <div class="ct-promo-popup__body">
+        <h2 id="{{ ct_pp_label_id }}" class="ct-promo-popup__heading">
+          {{- section.settings.heading | escape -}}
+        </h2>
+        <p class="ct-promo-popup__text">{{ section.settings.body | escape }}</p>
+
+        {%- if section.settings.mode == 'code' -%}
+          <div class="ct-promo-popup__code">
+            <span class="ct-promo-popup__code-value" data-ct-promo-code>
+              {{- section.settings.code | escape -}}
+            </span>
+            <button
+              type="button"
+              class="ct-promo-popup__copy"
+              data-ct-promo-copy
+              data-ct-promo-copied="{{ section.settings.copied_label | escape }}"
+              aria-label="{{ section.settings.copy_label | escape }}"
+            >
+              <span data-ct-promo-copy-label>{{ section.settings.copy_label | escape }}</span>
+            </button>
+            <span class="visually-hidden" aria-live="polite" data-ct-promo-live></span>
+          </div>
+        {%- else -%}
+          {%- assign ct_pp_form_id = 'CtPromoForm-' | append: section.id -%}
+          {%- form 'customer', id: ct_pp_form_id, class: 'ct-promo-popup__form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            {%- if form.posted_successfully? -%}
+              <p class="ct-promo-popup__success" role="status">
+                {{- section.settings.success_message | escape -}}
+              </p>
+            {%- else -%}
+              <label class="visually-hidden" for="CtPromoEmail-{{ section.id }}">
+                {{- section.settings.placeholder | escape -}}
+              </label>
+              <div class="ct-promo-popup__field">
+                <input
+                  id="CtPromoEmail-{{ section.id }}"
+                  type="email"
+                  name="contact[email]"
+                  value="{{ form.email }}"
+                  autocomplete="email"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  placeholder="{{ section.settings.placeholder | escape }}"
+                  required
+                >
+                <button type="submit" class="ct-promo-popup__submit">
+                  {{- section.settings.button_label | escape -}}
+                </button>
+              </div>
+              {%- if form.errors -%}
+                <p class="ct-promo-popup__error" role="status">
+                  {{ form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email }}
+                </p>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- style -%}
+    #{{ ct_pp_id }}.ct-promo-popup {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--ct-space-5);
+    }
+    #{{ ct_pp_id }}.ct-promo-popup.is-open {
+      display: flex;
+    }
+    #{{ ct_pp_id }}.ct-promo-popup.is-static {
+      position: relative;
+      inset: auto;
+      z-index: auto;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__backdrop {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+      background: var(--ct-overlay-bg);
+    }
+    #{{ ct_pp_id }}.ct-promo-popup.is-static .ct-promo-popup__backdrop {
+      position: absolute;
+      cursor: default;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__dialog {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      max-height: calc(100vh - var(--ct-space-8));
+      overflow: auto;
+      background: var(--ct-card-bg);
+      border: 1px solid var(--ct-border);
+      border-radius: var(--ct-r-lg);
+      box-shadow: var(--ct-shadow-lg);
+      transform: translateY(8px) scale(0.98);
+      opacity: 0;
+      transition: transform var(--ct-dur-base) var(--ct-ease-out), opacity var(--ct-dur-base) var(--ct-ease-out);
+    }
+    #{{ ct_pp_id }}.ct-promo-popup.is-open .ct-promo-popup__dialog,
+    #{{ ct_pp_id }}.ct-promo-popup.is-static .ct-promo-popup__dialog {
+      transform: none;
+      opacity: 1;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__close {
+      position: absolute;
+      top: var(--ct-space-3);
+      right: var(--ct-space-3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: var(--ct-r-pill);
+      background: var(--ct-bg-surface);
+      color: var(--ct-text);
+      cursor: pointer;
+      transition: background var(--ct-dur-fast) var(--ct-ease-out);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__close:hover {
+      background: var(--ct-action-tint);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__close svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__close:focus-visible,
+    #{{ ct_pp_id }} .ct-promo-popup__copy:focus-visible,
+    #{{ ct_pp_id }} .ct-promo-popup__submit:focus-visible,
+    #{{ ct_pp_id }} .ct-promo-popup__field input:focus-visible {
+      outline: none;
+      box-shadow: var(--ct-ring);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__media {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: var(--ct-r-lg) var(--ct-r-lg) 0 0;
+      background: var(--ct-bg-surface);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__body {
+      padding: var(--ct-space-8);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__heading {
+      margin: 0;
+      font-family: var(--ct-font-heading);
+      font-size: var(--ct-h3);
+      font-weight: var(--ct-fw-bold);
+      line-height: var(--ct-leading-tight);
+      color: var(--ct-text);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__text {
+      margin: var(--ct-space-3) 0 var(--ct-space-5);
+      font-size: var(--ct-body-size);
+      line-height: var(--ct-leading-base);
+      color: var(--ct-text-2);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__code {
+      display: flex;
+      align-items: stretch;
+      gap: var(--ct-space-3);
+      flex-wrap: wrap;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__code-value {
+      display: inline-flex;
+      align-items: center;
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: var(--ct-space-3) var(--ct-space-5);
+      font-family: var(--ct-font-mono);
+      font-size: var(--ct-text-lg);
+      font-weight: var(--ct-fw-bold);
+      letter-spacing: 0.08em;
+      color: var(--ct-text);
+      background: var(--ct-bg-surface);
+      border: 1px dashed var(--ct-border-strong);
+      border-radius: var(--ct-r-md);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__copy,
+    #{{ ct_pp_id }} .ct-promo-popup__submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--ct-space-3) var(--ct-space-6);
+      font-family: var(--ct-font-body);
+      font-size: var(--ct-text-base);
+      font-weight: var(--ct-fw-semi);
+      color: var(--ct-on-accent);
+      background: var(--ct-action);
+      border: 0;
+      border-radius: var(--ct-r-md);
+      cursor: pointer;
+      transition: background var(--ct-dur-fast) var(--ct-ease-out);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__copy:hover,
+    #{{ ct_pp_id }} .ct-promo-popup__submit:hover {
+      background: var(--ct-action-hover);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__copy[data-ct-promo-state="copied"] {
+      background: var(--ct-success, var(--ct-action));
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__field {
+      display: flex;
+      gap: var(--ct-space-3);
+      flex-wrap: wrap;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__field input {
+      flex: 1 1 200px;
+      min-width: 0;
+      height: var(--ct-input-height);
+      padding: 0 var(--ct-input-pad-x);
+      font-size: var(--ct-text-base);
+      color: var(--ct-input-text);
+      background: var(--ct-input-bg);
+      border: 1px solid var(--ct-border);
+      border-radius: var(--ct-r-md);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__success,
+    #{{ ct_pp_id }} .ct-promo-popup__error {
+      margin: 0;
+      font-size: var(--ct-text-base);
+      line-height: var(--ct-leading-base);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__success {
+      color: var(--ct-text);
+      font-weight: var(--ct-fw-semi);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__error {
+      margin-top: var(--ct-space-3);
+      color: var(--ct-error, var(--ct-text));
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #{{ ct_pp_id }} .ct-promo-popup__dialog {
+        transition: none;
+        transform: none;
+      }
+    }
+  {%- endstyle -%}
+
+  <script>
+    (function () {
+      var root = document.getElementById('{{ ct_pp_id }}');
+      if (!root || root.dataset.ready === 'true') return;
+      root.dataset.ready = 'true';
+
+      var design = root.getAttribute('data-design-mode') === 'true';
+      var dialog = root.querySelector('[data-ct-promo-dialog]');
+      var closers = root.querySelectorAll('[data-ct-promo-close]');
+      var storeKey = root.getAttribute('data-store-key');
+      var frequencyDays = parseInt(root.getAttribute('data-frequency'), 10) || 0;
+      var delayMs = (parseInt(root.getAttribute('data-delay'), 10) || 0) * 1000;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var lastFocus = null;
+      var timer = null;
+
+      function readStore() {
+        try {
+          return window.localStorage.getItem(storeKey);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function writeStore() {
+        try {
+          window.localStorage.setItem(storeKey, String(Date.now()));
+        } catch (e) {
+          /* localStorage may be unavailable */
+        }
+      }
+
+      function dismissedRecently() {
+        if (!frequencyDays) return false;
+        var stamp = readStore();
+        if (!stamp) return false;
+        var when = parseInt(stamp, 10);
+        if (!when) return false;
+        var windowMs = frequencyDays * 86400000;
+        return Date.now() - when < windowMs;
+      }
+
+      function open() {
+        if (root.classList.contains('is-open')) return;
+        lastFocus = document.activeElement;
+        root.hidden = false;
+        root.classList.add('is-open');
+        document.addEventListener('keydown', onKeydown);
+        if (dialog) {
+          window.requestAnimationFrame(function () {
+            try {
+              dialog.focus();
+            } catch (e) {
+              /* focus may fail if detached */
+            }
+          });
+        }
+      }
+
+      function close() {
+        if (!root.classList.contains('is-open')) return;
+        root.classList.remove('is-open');
+        document.removeEventListener('keydown', onKeydown);
+        writeStore();
+        var finish = function () {
+          root.hidden = true;
+          if (lastFocus && typeof lastFocus.focus === 'function') {
+            lastFocus.focus();
+          }
+        };
+        if (reduce) {
+          finish();
+        } else {
+          window.setTimeout(finish, 240);
+        }
+      }
+
+      function onKeydown(event) {
+        if (event.key === 'Escape' || event.key === 'Esc') {
+          event.preventDefault();
+          close();
+        }
+      }
+
+      Array.prototype.forEach.call(closers, function (btn) {
+        btn.addEventListener('click', close);
+      });
+
+      var copyBtn = root.querySelector('[data-ct-promo-copy]');
+      if (copyBtn) {
+        var codeEl = root.querySelector('[data-ct-promo-code]');
+        var copyLabelEl = root.querySelector('[data-ct-promo-copy-label]');
+        var liveEl = root.querySelector('[data-ct-promo-live]');
+        var copiedText = copyBtn.getAttribute('data-ct-promo-copied') || 'Copied';
+        var idleText = copyLabelEl ? copyLabelEl.textContent : '';
+        var copyTimer = null;
+        copyBtn.addEventListener('click', function () {
+          var text = codeEl ? (codeEl.textContent || '').trim() : '';
+          if (!text) return;
+          var flash = function () {
+            copyBtn.setAttribute('data-ct-promo-state', 'copied');
+            if (copyLabelEl) copyLabelEl.textContent = copiedText;
+            if (liveEl) liveEl.textContent = copiedText;
+            window.clearTimeout(copyTimer);
+            copyTimer = window.setTimeout(function () {
+              copyBtn.removeAttribute('data-ct-promo-state');
+              if (copyLabelEl) copyLabelEl.textContent = idleText;
+            }, 1800);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(flash, flash);
+          } else {
+            flash();
+          }
+        });
+      }
+
+      if (design) return;
+
+      if (dismissedRecently()) return;
+
+      if (delayMs > 0) {
+        timer = window.setTimeout(open, delayMs);
+      } else {
+        open();
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Promo popup",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable popup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get 10 percent off"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Join our list for a welcome offer."
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Offer mode",
+      "options": [
+        { "value": "email", "label": "Email signup" },
+        { "value": "code", "label": "Discount code" }
+      ],
+      "default": "email"
+    },
+    {
+      "type": "text",
+      "id": "code",
+      "label": "Discount code",
+      "info": "Shown when offer mode is set to Discount code.",
+      "default": "WELCOME"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Email button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "you@email.com"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks - check your inbox."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "copy_label",
+      "label": "Copy button label",
+      "default": "Copy code"
+    },
+    {
+      "type": "text",
+      "id": "copied_label",
+      "label": "Copied confirmation label",
+      "default": "Copied"
+    },
+    {
+      "type": "text",
+      "id": "close_label",
+      "label": "Close button label",
+      "default": "Close popup"
+    },
+    {
+      "type": "header",
+      "content": "Timing"
+    },
+    {
+      "type": "range",
+      "id": "delay_seconds",
+      "label": "Delay before showing",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "s",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "frequency_days",
+      "label": "Days before showing again",
+      "info": "After a visitor dismisses the popup, wait this many days before showing it again.",
+      "min": 0,
+      "max": 90,
+      "step": 1,
+      "unit": "d",
+      "default": 7
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo popup"
+    }
+  ]
+}
+{% endschema %}

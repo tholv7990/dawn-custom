@@ -1,0 +1,267 @@
+{%- liquid
+  assign ct_cookie_id = 'ct-cookie-' | append: section.id
+  assign ct_cookie_design = false
+  if request.design_mode
+    assign ct_cookie_design = true
+  endif
+-%}
+{%- if section.settings.enable -%}
+  <div
+    class="gs-scope ct-cookie ct-cookie--{{ section.settings.position }}"
+    id="{{ ct_cookie_id }}"
+    role="region"
+    aria-label="{{ section.settings.region_label | escape }}"
+    data-ct-cookie
+    data-design-mode="{{ ct_cookie_design }}"
+    {% unless ct_cookie_design %}hidden{% endunless %}
+  >
+    <div class="ct-cookie__inner">
+      <div class="ct-cookie__message">{{ section.settings.message }}</div>
+      <div class="ct-cookie__actions">
+        <button type="button" class="ct-cookie__btn ct-cookie__btn--decline" data-ct-cookie-decline>
+          {{ section.settings.decline_label | escape }}
+        </button>
+        <button type="button" class="ct-cookie__btn ct-cookie__btn--accept" data-ct-cookie-accept>
+          {{ section.settings.accept_label | escape }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {%- style -%}
+    #{{ ct_cookie_id }}.ct-cookie {
+      position: fixed;
+      left: 0;
+      right: 0;
+      z-index: 998;
+      padding: var(--ct-space-4);
+      background: var(--ct-card-bg);
+      color: var(--ct-text);
+      border-top: 1px solid var(--ct-border);
+      box-shadow: var(--ct-shadow-lg);
+      font-size: var(--ct-text-sm);
+    }
+
+    #{{ ct_cookie_id }}.ct-cookie--bottom {
+      bottom: 0;
+    }
+
+    #{{ ct_cookie_id }}.ct-cookie--top {
+      top: 0;
+      bottom: auto;
+      border-top: 0;
+      border-bottom: 1px solid var(--ct-border);
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--ct-space-4);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__message {
+      flex: 1 1 280px;
+      margin: 0;
+      color: var(--ct-text-2);
+      line-height: 1.5;
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__message > * {
+      margin: 0;
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__message a {
+      color: var(--ct-action);
+      text-decoration: underline;
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__message a:hover {
+      color: var(--ct-action-hover);
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--ct-space-3);
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: var(--ct-space-2) var(--ct-space-5);
+      border-radius: var(--ct-r-pill);
+      border: 1px solid var(--ct-border-strong);
+      font-size: var(--ct-text-sm);
+      font-weight: var(--ct-fw-semi);
+      line-height: 1;
+      cursor: pointer;
+      transition: background var(--ct-dur-fast) var(--ct-ease-out), color var(--ct-dur-fast) var(--ct-ease-out),
+        border-color var(--ct-dur-fast) var(--ct-ease-out);
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__btn:focus-visible {
+      outline: var(--ct-ring);
+      outline-offset: 2px;
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__btn--decline {
+      background: var(--ct-bg-raised);
+      color: var(--ct-text);
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__btn--decline:hover {
+      background: var(--ct-bg-surface);
+      border-color: var(--ct-text-2);
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__btn--accept {
+      background: var(--ct-action);
+      color: var(--ct-on-accent);
+      border-color: var(--ct-action);
+    }
+
+    #{{ ct_cookie_id }} .ct-cookie__btn--accept:hover {
+      background: var(--ct-action-hover);
+      border-color: var(--ct-action-hover);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #{{ ct_cookie_id }} .ct-cookie__btn {
+        transition: none;
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      #{{ ct_cookie_id }} .ct-cookie__actions {
+        width: 100%;
+      }
+
+      #{{ ct_cookie_id }} .ct-cookie__btn {
+        flex: 1 1 auto;
+      }
+    }
+  {%- endstyle -%}
+
+  <script>
+    (function () {
+      var root = document.getElementById('{{ ct_cookie_id }}');
+      if (!root || root.dataset.ctReady === 'true') return;
+      root.dataset.ctReady = 'true';
+
+      var STORAGE_KEY = 'ct-cookie-bar-choice';
+      var designMode = root.dataset.designMode === 'true';
+
+      function readChoice() {
+        try {
+          return window.localStorage.getItem(STORAGE_KEY);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function storeChoice(value) {
+        try {
+          window.localStorage.setItem(STORAGE_KEY, value);
+        } catch (e) {
+          /* localStorage unavailable; ignore */
+        }
+      }
+
+      function hide() {
+        root.hidden = true;
+      }
+
+      function choose(value) {
+        storeChoice(value);
+        hide();
+      }
+
+      var acceptBtn = root.querySelector('[data-ct-cookie-accept]');
+      var declineBtn = root.querySelector('[data-ct-cookie-decline]');
+
+      if (acceptBtn) {
+        acceptBtn.addEventListener('click', function () {
+          choose('accepted');
+        });
+      }
+
+      if (declineBtn) {
+        declineBtn.addEventListener('click', function () {
+          choose('declined');
+        });
+      }
+
+      if (designMode) {
+        // Theme editor: render visible and static; do not auto-hide.
+        root.hidden = false;
+        return;
+      }
+
+      if (readChoice()) {
+        hide();
+      } else {
+        root.hidden = false;
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cookie bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable cookie bar",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "message",
+      "label": "Message",
+      "default": "<p>We use cookies to improve your browsing experience and analyze site traffic. <a href=\"/policies/privacy-policy\">Learn more</a>.</p>"
+    },
+    {
+      "type": "text",
+      "id": "accept_label",
+      "label": "Accept button label",
+      "default": "Accept"
+    },
+    {
+      "type": "text",
+      "id": "decline_label",
+      "label": "Decline button label",
+      "default": "Decline"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "top", "label": "Top" }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "text",
+      "id": "region_label",
+      "label": "Accessible region label",
+      "default": "Cookie consent"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookie bar"
+    }
+  ]
+}
+{% endschema %}

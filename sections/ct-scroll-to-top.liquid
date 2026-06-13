@@ -1,0 +1,211 @@
+{%- liquid
+  assign show_after = section.settings.show_after | default: 400
+  assign position = section.settings.position | default: 'right'
+  assign btn_label = section.settings.label | default: 'Back to top'
+-%}
+
+<div
+  class="gs-scope ct-to-top ct-to-top--{{ position }}{% if request.design_mode %} is-visible{% endif %}"
+  id="ct-to-top-{{ section.id }}"
+  data-show-after="{{ show_after }}"
+>
+  <button
+    type="button"
+    class="ct-to-top__btn"
+    aria-label="{{ btn_label | escape }}"
+  >
+    {%- render 'ct-icon', name: 'caret' -%}
+    <span class="ct-to-top__arrow" aria-hidden="true"></span>
+    <span class="ct-to-top__label">{{ btn_label | escape }}</span>
+  </button>
+</div>
+
+{% style %}
+  #ct-to-top-{{ section.id }}.ct-to-top {
+    position: fixed;
+    bottom: 24px;
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition:
+      opacity var(--ct-dur-base) var(--ct-ease-out),
+      transform var(--ct-dur-base) var(--ct-ease-out),
+      visibility var(--ct-dur-base) var(--ct-ease-out);
+    pointer-events: none;
+  }
+
+  #ct-to-top-{{ section.id }}.ct-to-top--right {
+    right: 20px;
+    left: auto;
+  }
+
+  #ct-to-top-{{ section.id }}.ct-to-top--left {
+    left: 20px;
+    right: auto;
+  }
+
+  #ct-to-top-{{ section.id }}.ct-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  #ct-to-top-{{ section.id }} .ct-to-top__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ct-space-2);
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--ct-border-strong);
+    border-radius: var(--ct-r-pill);
+    background: var(--ct-action);
+    color: var(--ct-on-accent);
+    box-shadow: var(--ct-shadow-lg);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-medium);
+    line-height: 1;
+    transition:
+      background var(--ct-dur-fast) var(--ct-ease-out),
+      transform var(--ct-dur-fast) var(--ct-ease-out);
+  }
+
+  #ct-to-top-{{ section.id }} .ct-to-top__btn:hover {
+    background: var(--ct-action-hover);
+    transform: translateY(-2px);
+  }
+
+  #ct-to-top-{{ section.id }} .ct-to-top__btn:focus-visible {
+    outline: var(--ct-ring);
+    outline-offset: 2px;
+  }
+
+  #ct-to-top-{{ section.id }} .ct-to-top__arrow {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: translateY(3px) rotate(-45deg);
+  }
+
+  #ct-to-top-{{ section.id }} .ct-icon {
+    display: none;
+  }
+
+  #ct-to-top-{{ section.id }} .ct-to-top__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #ct-to-top-{{ section.id }}.ct-to-top {
+      transition: none;
+      transform: none;
+    }
+    #ct-to-top-{{ section.id }}.ct-to-top.is-visible {
+      transform: none;
+    }
+    #ct-to-top-{{ section.id }} .ct-to-top__btn {
+      transition: none;
+    }
+    #ct-to-top-{{ section.id }} .ct-to-top__btn:hover {
+      transform: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.getElementById('ct-to-top-{{ section.id }}');
+    if (!root || root.dataset.ready === 'true') return;
+    root.dataset.ready = 'true';
+
+    var btn = root.querySelector('.ct-to-top__btn');
+    if (!btn) return;
+
+    var designMode = {% if request.design_mode %}true{% else %}false{% endif %};
+    var showAfter = parseInt(root.getAttribute('data-show-after'), 10);
+    if (isNaN(showAfter)) showAfter = 400;
+
+    var reducedMotion = false;
+    try {
+      reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) {
+      reducedMotion = false;
+    }
+
+    function toggle() {
+      if (window.scrollY > showAfter) {
+        root.classList.add('is-visible');
+      } else {
+        root.classList.remove('is-visible');
+      }
+    }
+
+    btn.addEventListener('click', function () {
+      try {
+        window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+      } catch (e) {
+        window.scrollTo(0, 0);
+      }
+    });
+
+    if (designMode) {
+      // In the theme editor keep it statically visible for styling; no scroll listener nag.
+      root.classList.add('is-visible');
+      return;
+    }
+
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Back to top button",
+  "settings": [
+    {
+      "type": "range",
+      "id": "show_after",
+      "min": 100,
+      "max": 2000,
+      "step": 50,
+      "unit": "px",
+      "label": "Show after scrolling",
+      "default": 400
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        { "value": "right", "label": "Bottom right" },
+        { "value": "left", "label": "Bottom left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Accessible label",
+      "default": "Back to top"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Back to top button"
+    }
+  ]
+}
+{% endschema %}
