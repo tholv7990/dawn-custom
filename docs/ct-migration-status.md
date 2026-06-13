@@ -17,10 +17,13 @@ px/breakpoint retrofit (T10/T11), CSS file-split (T12), `theme-overrides.css` tr
 **W2 shared-primitive layer is complete (T01–T09)**. The **W3 PDP block library is complete and dual-host**
 (quantity-breaks, sticky-ATC, bundle, gift, upsells, shipping, discount, size-chart, custom-fields,
 reviews-showcase, savings-line — additive, no Dawn commerce-logic edits); the **W5 section library (14)**
-and **W6 overlays** are built. What remains is the **preview-gated lane**: Dawn-core buy-box edits +
-media-gallery blockification (W3.T09/T10), the whole **W4 cart system** (drawer blockification, rewards bar,
-TnC checkout gate), **W6.T02 mega-menu / W6.T05 RTL**, and the **W1 visual-regression lane** — all need a
-working `shopify theme dev` render, currently blocked by `ECONNRESET` on this machine.
+and **W6 overlays** are built. The **W4 cart system is ~85% done** (drawer blockification, free-shipping bar,
+upsell rail, TnC gate + discount field, cart-page parity — all shipped + adversarially reviewed; only the
+low-value multi-tier checkpoints / cart-gift leftovers remain). What remains is the **preview-gated lane**:
+Dawn-core buy-box edits + media-gallery blockification (W3.T09/T10), **W6.T02 mega-menu / W6.T05 RTL**, and the
+**W1 visual-regression lane** — these need a working `shopify theme dev` render + screenshot baselines. The
+batched `--only theme push` workaround now reliably lands code on the preview theme despite the earlier
+sustained-transfer `ECONNRESET`.
 
 > **Progress log (headless-safe lane, branch `custom-theme`):**
 > - **Chunk A** `e1e3a09` — W1.E2 token emission (`--ct-btn/input/pill/dropdown/qty/swatch/arrow/dot/card/drawer/popup/badge-*`, `--ct-h1…h6`, `--ct-reveal-*`) + dev `ct-styleguide` section.
@@ -115,7 +118,15 @@ T01 Quantity-breaks ✅ (`ct-quantity-breaks` block, per-unit variant selects) �
 **🔒 Remaining (needs live preview — touches the live buy box / monolithic gallery):**
 T09 Dawn-core price-in-button + variant-picker + buy-buttons upgrades · T10 Media gallery blockification. Unsafe blind.
 
-### W4 — Cart system — **all ⬜** (drawer blockification, progress/checkpoints bar, gift engine, discount/TnC, cart-page parity). All 🔒.
+### W4 — Cart system — **~85% ✅ (5 features shipped, adversarially reviewed); leftovers low-value**
+**✅ Done (2026-06-13, additive into the Dawn cart drawer + cart page; all default-off where they touch live flows):**
+T01 **Drawer blockification** ✅ — `sections/cart-drawer.liquid` is now a `{% section %}` block host (footer = subtotal/discount/terms/checkout/custom_liquid blocks, reorderable, editor `test_mode`), with a **verbatim no-block fallback** so the storefront never regresses and **post-loop guards** keeping `.cart-drawer__footer` + `#CartDrawer-Checkout` un-droppable (3-lens review, 3 fixes) ·
+T02 **Free-shipping progress bar** ✅ (server-rendered inside the refreshed region, no JS, drawer + page) ·
+T03 **Cart upsell rail** ✅ (exclude-in-cart, G-07 `ct-upsell-card` add, self-prunes on add) ·
+T05 **TnC checkout gate** ✅ (drawer + page + dynamic Shop Pay buttons; aria-disabled + capture guard, never touches native `disabled`; consent resets on empty cart; 3-lens review, 6 fixes incl. two false-open leaks) + **discount field** ✅ (native discount link) ·
+T06 **Cart-page parity** ✅ (all four mirrored onto `main-cart-footer`/`main-cart-items`).
+All `ct-qa` + Theme-Check 0-offenses green. QA steps in `docs/ct-cart-qa-checklist.md`.
+**🔒 Remaining (low value, optional):** T02b multi-tier checkpoints bar (free-shipping bar already covers the core reward UX) · T04 cart-level conditional gift (the PDP `gift_offer` block + `ct-gift-engine` already exist). Needs preview for interaction QA.
 
 ### W5 — Section library — **mostly ⬜; bases exist**
 T01 social-proof 🟡 (`ct-reviews`, `ct-brand-strip`) · T02 tickers 🟡 (`ct-trust-marquee`, `ct-announcement-bars`) · T03 comparison 🟡 (`ct-comparison`) · T05 builders 🟡 (`ct-feature-blocks` + Dawn natives) · T06 forms 🟡 (`ct-email-signup`, `ct-faq`, `contact-form`) · T04 hotspots/heroes ⬜. All 🔒.
