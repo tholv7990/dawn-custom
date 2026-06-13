@@ -15,7 +15,7 @@
 {%- assign header_logo_alt = shop.name | default: 'Storefront' | escape -%}
 {%- assign header_menu = section.settings.menu -%}
 
-<header class="gs-scope gs-head" role="banner">
+<header class="gs-scope gs-head" data-ct-sticky="{{ section.settings.sticky_mode | default: 'always' }}" role="banner">
   <div class="gs-wrap gs-head__wrap">
     <button type="button" class="gs-menu-toggle" data-gs-menu-toggle aria-expanded="false" aria-controls="GS-Mobile-Menu" aria-label="Open menu">
       <span class="gs-menu-toggle__icon gs-menu-toggle__icon--open" aria-hidden="true">{{ 'icon-hamburger.svg' | inline_asset_content }}</span>
@@ -100,6 +100,37 @@
   </div>
 </header>
 
+{%- style -%}
+  .gs-head[data-ct-sticky="none"] { position: static; }
+  .gs-head[data-ct-sticky="on-scroll-up"] { transition: transform var(--ct-dur-base) var(--ct-ease-out); }
+  .gs-head[data-ct-sticky="on-scroll-up"].gs-head--hidden { transform: translateY(-100%); }
+  @media (prefers-reduced-motion: reduce) {
+    .gs-head[data-ct-sticky="on-scroll-up"] { transition: none; }
+  }
+{%- endstyle -%}
+
+{%- if section.settings.sticky_mode == "on-scroll-up" -%}
+  <script>
+    (function () {
+      function initStickyHeader() {
+        var head = document.querySelector('.gs-head[data-ct-sticky="on-scroll-up"]');
+        if (!head || head.dataset.ctStickyReady === 'true') return;
+        head.dataset.ctStickyReady = 'true';
+        var lastY = window.scrollY || 0;
+        window.addEventListener('scroll', function () {
+          var y = window.scrollY || 0;
+          var past = (head.offsetHeight || 60);
+          if (y > lastY && y > past) head.classList.add('gs-head--hidden');
+          else head.classList.remove('gs-head--hidden');
+          lastY = y;
+        }, { passive: true });
+      }
+      initStickyHeader();
+      document.addEventListener('shopify:section:load', initStickyHeader);
+    })();
+  </script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Header",
@@ -125,6 +156,17 @@
       "id": "menu",
       "label": "Menu",
       "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "sticky_mode",
+      "label": "Sticky header",
+      "options": [
+        { "value": "always", "label": "Always visible" },
+        { "value": "on-scroll-up", "label": "Show on scroll up" },
+        { "value": "none", "label": "Not sticky" }
+      ],
+      "default": "always"
     },
     {
       "type": "paragraph",
