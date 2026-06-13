@@ -1,0 +1,201 @@
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope ct-steps section-{{ section.id }}-padding">
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="gs-section-sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ol class="ct-steps__grid" role="list">
+        {%- for block in section.blocks -%}
+          <li class="ct-steps__item" {{ block.shopify_attributes }}>
+            <div class="ct-steps__badge" aria-hidden="true">
+              <span class="ct-steps__num">{{ forloop.index }}</span>
+            </div>
+            <div class="ct-steps__body">
+              {%- if block.settings.icon != blank -%}
+                <span class="ct-steps__icon" aria-hidden="true">
+                  {% render 'ct-icon', name: block.settings.icon %}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h3 class="ct-steps__title">
+                  <span class="ct-steps__step-label">{{ forloop.index }}.</span>
+                  {{ block.settings.title | escape }}
+                </h3>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <p class="ct-steps__text">{{ block.settings.body | escape }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  .ct-steps .ct-steps__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ct-space-7);
+  }
+
+  @media screen and (min-width: 750px) {
+    .ct-steps .ct-steps__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--ct-space-6);
+    }
+  }
+
+  .ct-steps .ct-steps__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ct-space-5);
+    padding: var(--ct-pad-tight);
+    background: var(--ct-card-bg);
+    border: 1px solid var(--ct-card-border);
+    border-radius: var(--ct-r-lg);
+    box-shadow: var(--ct-shadow-sm);
+  }
+
+  .ct-steps .ct-steps__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--ct-r-pill);
+    background: var(--ct-action);
+    color: var(--ct-on-accent);
+    flex: 0 0 auto;
+  }
+
+  .ct-steps .ct-steps__num {
+    font-size: var(--ct-text-lg);
+    font-weight: var(--ct-fw-bold);
+    line-height: var(--ct-leading-tight);
+  }
+
+  .ct-steps .ct-steps__icon {
+    display: inline-flex;
+    margin-bottom: var(--ct-space-3);
+    color: var(--ct-action);
+  }
+
+  .ct-steps .ct-steps__icon :is(svg, img) {
+    width: 22px;
+    height: 22px;
+    display: block;
+  }
+
+  .ct-steps .ct-steps__title {
+    margin: 0 0 var(--ct-space-2);
+    font-size: var(--ct-text-lg);
+    font-weight: var(--ct-fw-semi);
+    line-height: var(--ct-leading-tight);
+    color: var(--ct-text);
+  }
+
+  .ct-steps .ct-steps__step-label {
+    color: var(--ct-action);
+    font-weight: var(--ct-fw-bold);
+    margin-right: var(--ct-space-1);
+  }
+
+  .ct-steps .ct-steps__text {
+    margin: 0;
+    font-size: var(--ct-body-size);
+    line-height: var(--ct-leading-base);
+    color: var(--ct-text-2);
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "How it works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A few simple steps from start to finish."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body",
+          "default": "Describe this step for your customer."
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Icon key, for example: check, truck, lock, star, leaf, bolt, recycle, info, heart.",
+          "default": "check"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How it works",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" }
+      ]
+    }
+  ]
+}
+{% endschema %}

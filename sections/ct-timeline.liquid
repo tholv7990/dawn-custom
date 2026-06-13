@@ -1,0 +1,200 @@
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope ct-timeline section-{{ section.id }}-padding">
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="gs-section-sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ol class="ct-timeline__list" role="list">
+        {%- for block in section.blocks -%}
+          <li class="ct-timeline__item" {{ block.shopify_attributes }}>
+            <span class="ct-timeline__marker" aria-hidden="true">
+              <span class="ct-timeline__dot"></span>
+            </span>
+            <div class="ct-timeline__content">
+              {%- if block.settings.label != blank -%}
+                <span class="ct-timeline__label">{{ block.settings.label | escape }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h3 class="ct-timeline__title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <p class="ct-timeline__body">{{ block.settings.body | escape }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  .ct-timeline .ct-timeline__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ct-timeline .ct-timeline__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--ct-space-5);
+    padding-bottom: var(--ct-space-8);
+  }
+
+  .ct-timeline .ct-timeline__item:last-child {
+    padding-bottom: 0;
+  }
+
+  .ct-timeline .ct-timeline__marker {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 16px;
+  }
+
+  .ct-timeline .ct-timeline__marker::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: calc(-1 * var(--ct-space-8));
+    left: 50%;
+    width: 2px;
+    transform: translateX(-50%);
+    background: var(--ct-border);
+  }
+
+  .ct-timeline .ct-timeline__item:last-child .ct-timeline__marker::before {
+    bottom: auto;
+    height: 16px;
+  }
+
+  .ct-timeline .ct-timeline__dot {
+    position: relative;
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+    margin-top: var(--ct-space-1);
+    border-radius: var(--ct-r-pill);
+    background: var(--ct-action);
+    box-shadow: 0 0 0 4px var(--ct-bg);
+  }
+
+  .ct-timeline .ct-timeline__content {
+    padding-bottom: var(--ct-space-2);
+  }
+
+  .ct-timeline .ct-timeline__label {
+    display: inline-block;
+    margin-bottom: var(--ct-space-2);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-semi);
+    line-height: var(--ct-leading-tight);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ct-action);
+  }
+
+  .ct-timeline .ct-timeline__title {
+    margin: 0 0 var(--ct-space-2);
+    font-size: var(--ct-h5);
+    font-weight: var(--ct-fw-bold);
+    line-height: var(--ct-leading-tight);
+    color: var(--ct-text);
+  }
+
+  .ct-timeline .ct-timeline__body {
+    margin: 0;
+    font-size: var(--ct-body-size);
+    line-height: var(--ct-leading-base);
+    color: var(--ct-text-2);
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Timeline",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our journey"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A look at the milestones along the way."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "milestone",
+      "name": "Milestone",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "2024"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Milestone title"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body",
+          "default": "Describe what happened at this milestone."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline",
+      "blocks": [
+        { "type": "milestone" },
+        { "type": "milestone" },
+        { "type": "milestone" },
+        { "type": "milestone" }
+      ]
+    }
+  ]
+}
+{% endschema %}

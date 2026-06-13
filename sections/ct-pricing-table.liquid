@@ -1,0 +1,358 @@
+{% render 'ct-section-padding', section: section %}
+
+<section class="gs-scope ct-pricing section-{{ section.id }}-padding">
+  <div class="gs-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="gs-section-sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <ul class="ct-pricing__grid" role="list">
+        {%- for block in section.blocks -%}
+          <li
+            class="ct-pricing__plan{% if block.settings.featured %} ct-pricing__plan--featured{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.featured -%}
+              <span class="ct-pricing__badge">{{ block.settings.badge_label | escape }}</span>
+            {%- endif -%}
+            <p class="ct-pricing__name">{{ block.settings.name | escape }}</p>
+            <p class="ct-pricing__price">
+              <span class="ct-pricing__amount">{{ block.settings.price | escape }}</span>
+              {%- if block.settings.period != blank -%}
+                <span class="ct-pricing__period">{{ block.settings.period | escape }}</span>
+              {%- endif -%}
+            </p>
+            {%- if block.settings.description != blank -%}
+              <p class="ct-pricing__desc">{{ block.settings.description | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.features != blank -%}
+              <ul class="ct-pricing__features" role="list">
+                {%- assign feature_lines = block.settings.features | strip | newline_to_br | split: '<br />' -%}
+                {%- for line in feature_lines -%}
+                  {%- assign feature_text = line | strip_newlines | strip -%}
+                  {%- if feature_text != blank -%}
+                    <li class="ct-pricing__feature">
+                      {% render 'ct-icon', name: 'check', class: 'ct-pricing__feature-icon' %}
+                      <span>{{ feature_text | escape }}</span>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+            {%- if block.settings.button_label != blank -%}
+              {%- if block.settings.button_url != blank -%}
+                <a
+                  class="ct-pricing__btn{% if block.settings.featured %} ct-pricing__btn--featured{% endif %}"
+                  href="{{ block.settings.button_url }}"
+                >
+                  {{ block.settings.button_label | escape }}
+                </a>
+              {%- else -%}
+                <span
+                  class="ct-pricing__btn{% if block.settings.featured %} ct-pricing__btn--featured{% endif %}"
+                  role="button"
+                  aria-disabled="true"
+                >
+                  {{ block.settings.button_label | escape }}
+                </span>
+              {%- endif -%}
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  .ct-pricing .gs-section-sub {
+    color: var(--ct-text-2);
+    margin-bottom: var(--ct-space-8);
+  }
+
+  .ct-pricing__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ct-space-6);
+  }
+
+  @media screen and (min-width: 750px) {
+    .ct-pricing__grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+  }
+
+  .ct-pricing__plan {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--ct-card-bg);
+    border: 1px solid var(--ct-card-border);
+    border-radius: var(--ct-r-lg);
+    padding: var(--ct-space-7);
+    box-shadow: var(--ct-shadow-sm);
+    transition: transform var(--ct-dur-base) var(--ct-ease-out), box-shadow var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-pricing__plan:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--ct-shadow-md);
+  }
+
+  .ct-pricing__plan--featured {
+    border: 2px solid var(--ct-action);
+    box-shadow: var(--ct-shadow-md);
+  }
+
+  .ct-pricing__badge {
+    position: absolute;
+    top: var(--ct-space-4);
+    right: var(--ct-space-4);
+    display: inline-block;
+    background: var(--ct-action-tint);
+    color: var(--ct-action);
+    border: 1px solid var(--ct-action-border);
+    border-radius: var(--ct-r-pill);
+    padding: var(--ct-space-1) var(--ct-space-3);
+    font-size: var(--ct-text-xs);
+    font-weight: var(--ct-fw-semi);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .ct-pricing__name {
+    margin: 0;
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-md);
+    font-weight: var(--ct-fw-semi);
+  }
+
+  .ct-pricing__price {
+    margin: var(--ct-space-3) 0 0;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--ct-space-2);
+    color: var(--ct-text);
+  }
+
+  .ct-pricing__amount {
+    font-size: var(--ct-text-3xl);
+    font-weight: var(--ct-fw-bold);
+    line-height: var(--ct-leading-tight);
+  }
+
+  .ct-pricing__period {
+    font-size: var(--ct-text-sm);
+    color: var(--ct-text-3);
+  }
+
+  .ct-pricing__desc {
+    margin: var(--ct-space-4) 0 0;
+    color: var(--ct-text-2);
+    font-size: var(--ct-text-sm);
+    line-height: var(--ct-leading-base);
+  }
+
+  .ct-pricing__features {
+    list-style: none;
+    margin: var(--ct-space-6) 0 0;
+    padding: var(--ct-space-6) 0 0;
+    border-top: 1px solid var(--ct-border);
+    display: grid;
+    gap: var(--ct-space-3);
+  }
+
+  .ct-pricing__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ct-space-3);
+    color: var(--ct-text);
+    font-size: var(--ct-text-sm);
+    line-height: var(--ct-leading-base);
+  }
+
+  .ct-pricing__feature-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    margin-top: var(--ct-space-1);
+    color: var(--ct-success);
+  }
+
+  .ct-pricing__feature-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ct-pricing__btn {
+    margin-top: var(--ct-space-7);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    background: var(--ct-bg-control);
+    color: var(--ct-text);
+    border: 1px solid var(--ct-border-strong);
+    border-radius: var(--ct-r-md);
+    padding: var(--ct-space-3) var(--ct-space-5);
+    font-size: var(--ct-text-base);
+    font-weight: var(--ct-fw-semi);
+    transition: background var(--ct-dur-base) var(--ct-ease-out), border-color var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-pricing__btn:hover {
+    border-color: var(--ct-action);
+  }
+
+  .ct-pricing__btn--featured {
+    background: var(--ct-action);
+    color: var(--ct-on-accent);
+    border-color: var(--ct-action);
+  }
+
+  .ct-pricing__btn--featured:hover {
+    background: var(--ct-action-hover);
+    border-color: var(--ct-action-hover);
+  }
+
+  .ct-pricing__btn[aria-disabled='true'] {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ct-pricing__plan,
+    .ct-pricing__btn {
+      transition: none;
+    }
+
+    .ct-pricing__plan:hover {
+      transform: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Pricing table",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose a plan"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Compare options and pick the plan that fits."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "plan",
+      "name": "Plan",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Plan"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "$0"
+        },
+        {
+          "type": "text",
+          "id": "period",
+          "label": "Period",
+          "default": "per month"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "A short summary of what this plan includes."
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Highlight this plan",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "Highlight badge label",
+          "default": "Popular"
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features",
+          "info": "One feature per line.",
+          "default": "Feature one\nFeature two\nFeature three"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Choose plan"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pricing table",
+      "blocks": [
+        { "type": "plan" },
+        { "type": "plan" },
+        { "type": "plan" }
+      ]
+    }
+  ]
+}
+{% endschema %}
