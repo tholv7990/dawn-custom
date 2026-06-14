@@ -41,7 +41,7 @@
               class="gs-gallery__slide gs-media-slot"
               data-gs-slide
               data-gs-gallery-open
-              data-gs-full-image="{{ media.preview_image | image_url: width: 2200 }}"
+              data-gs-full-image="{{ media.preview_image | image_url: width: 1600 }}"
               aria-label="Open product image {{ forloop.index }}"
             >
               {%- if media.preview_image != blank -%}
@@ -76,7 +76,7 @@
             class="gs-gallery__slide gs-media-slot"
             data-gs-slide
             data-gs-gallery-open
-            data-gs-full-image="{{ section.settings.fallback_image | image_url: width: 2200 }}"
+            data-gs-full-image="{{ section.settings.fallback_image | image_url: width: 1600 }}"
             aria-label="Open product image"
           >
             {{
