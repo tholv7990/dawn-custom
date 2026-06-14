@@ -41,7 +41,11 @@
             "heading": "Save when you buy more",
             "layout": "normal",
             "enable_per_unit": false,
-            "button_label": "Add to cart"
+            "button_label": "Add to cart",
+            "tier_2_badge": "Most popular",
+            "tier_2_badge_style": "success",
+            "tier_3_badge": "Best value",
+            "tier_3_badge_style": "gold"
           }
         },
         "buy_buttons": {

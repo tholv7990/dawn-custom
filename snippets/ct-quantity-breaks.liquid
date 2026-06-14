@@ -69,6 +69,7 @@
           assign qty_key = 'tier_' | append: n | append: '_quantity'
           assign label_key = 'tier_' | append: n | append: '_label'
           assign badge_key = 'tier_' | append: n | append: '_badge'
+          assign badge_style_key = 'tier_' | append: n | append: '_badge_style'
           assign benefit_key = 'tier_' | append: n | append: '_benefit'
           assign highlight_key = 'tier_' | append: n | append: '_highlight'
           assign tier_enabled = s[enable_key]
@@ -100,7 +101,7 @@
           >
             <span class="ct-qb__radio" aria-hidden="true"></span>
             {%- if s[badge_key] != blank -%}
-              <span class="ct-qb__badge">{{ s[badge_key] | escape }}</span>
+              <span class="ct-qb__badge ct-qb__badge--{{ s[badge_style_key] | default: 'accent' }}">{{ s[badge_key] | escape }}</span>
             {%- endif -%}
             <div class="ct-qb__tier-main">
               <div class="ct-qb__tier-copy">
