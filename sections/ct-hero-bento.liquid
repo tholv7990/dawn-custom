@@ -46,7 +46,7 @@
         {%- if hero_rating_num > 0 -%}
           <div class="ct-hero-bento__rating" role="img" aria-label="Rated {{ hero_rating_num | round: 1 }} out of 5 stars">
             <span class="ct-hero-bento__stars" aria-hidden="true">
-              {%- for i in (1..5) -%}{{ 'icon-star.svg' | inline_asset_content }}{%- endfor -%}
+              {%- for i in (1..5) -%}<svg class="ct-hero-bento__star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>{%- endfor -%}
             </span>
             <b class="ct-hero-bento__rating-score">{{ hero_rating_num | round: 1 }}</b>
             {%- if hero_rating_count != blank -%}
@@ -166,7 +166,11 @@
   }
 
   /* ---- left column ---- */
-  .ct-hero-bento__eyebrow {
+  /* NOTE: the .gs-scope h1..h5 / .gs-scope p reset (0-1-1) zeroes heading +
+     paragraph margins, so these intro rules are prefixed with .ct-hero-bento
+     (0-2-0) to keep their margin-bottom. Each block carries ONLY margin-bottom
+     (no margin-top) to avoid stacked/doubled vertical gaps. */
+  .ct-hero-bento .ct-hero-bento__eyebrow {
     display: flex;
     align-items: center;
     gap: var(--ct-space-2);
@@ -186,7 +190,7 @@
     background: var(--ct-action);
   }
 
-  .ct-hero-bento__heading {
+  .ct-hero-bento .ct-hero-bento__heading {
     margin: 0 0 var(--ct-space-4);
     font-family: var(--ct-font-display);
     font-weight: 900;
@@ -211,7 +215,7 @@
     color: var(--ct-action);
   }
 
-  .ct-hero-bento__lead {
+  .ct-hero-bento .ct-hero-bento__lead {
     margin: 0 0 var(--ct-space-4);
     max-width: 640px;
     font-family: var(--ct-font-body);
@@ -236,16 +240,12 @@
   .ct-hero-bento__stars {
     display: inline-flex;
     gap: 2px;
-    color: var(--ct-rating);
   }
 
-  .ct-hero-bento__stars svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .ct-hero-bento__stars svg path {
-    fill: currentColor;
+  .ct-hero-bento__star {
+    width: 15px;
+    height: 15px;
+    fill: var(--ct-rating);
   }
 
   .ct-hero-bento__rating-score {
