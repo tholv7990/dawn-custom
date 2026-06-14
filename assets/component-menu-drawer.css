@@ -260,9 +260,21 @@ details[open].menu-opening > .menu-drawer__submenu {
 
   header-drawer > details[open].menu-drawer-container > summary.header__icon--menu {
     position: fixed;
-    top: var(--ct-space-3);
-    left: var(--ct-space-3);
+    top: var(--ct-space-4);
+    left: auto;
+    /* Pin the close button to the TOP-RIGHT of the panel (panel is left-anchored
+       at min(86vw,36rem)) so it no longer overlaps the menu content top-left. */
+    right: calc(100vw - min(86vw, 36rem) + var(--ct-space-4));
     z-index: 1003;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ct-touch);
+    height: var(--ct-touch);
+    border-radius: var(--ct-r-pill);
+    background: var(--ct-bg-surface);
+    box-shadow: var(--ct-shadow-sm);
+    color: var(--ct-text);
   }
 
   .header__icon--menu[aria-expanded='true']::before {
@@ -341,21 +353,36 @@ details[open].menu-opening > .menu-drawer__submenu {
   .menu-drawer__navigation {
     flex: 0 0 auto;
     min-height: 0;
-    padding: var(--ct-space-5) 0;
+    /* Top padding clears the fixed top-right close button so links never sit under it. */
+    padding: calc(var(--ct-touch) + var(--ct-space-5)) 0 var(--ct-space-4);
     overscroll-behavior: contain;
   }
 
   .menu-drawer__menu-item {
+    display: flex;
+    align-items: center;
     color: var(--ct-text);
     font-family: var(--ct-font-body);
     font-size: var(--ct-text-md);
-    font-weight: var(--ct-fw-bold);
+    font-weight: var(--ct-fw-semi);
+    padding: var(--ct-space-4) var(--ct-space-5);
+    border-bottom: 1px solid var(--ct-border-subtle);
+  }
+
+  .menu-drawer__menu > li:last-child > .menu-drawer__menu-item,
+  .menu-drawer__menu > li:last-child > details > .menu-drawer__menu-item {
+    border-bottom: 0;
+  }
+
+  .menu-drawer__menu-item > .svg-wrapper {
+    right: var(--ct-space-5);
   }
 
   .menu-drawer__utility-links {
     flex: 0 0 auto;
     max-height: 42vh;
     overflow-y: auto;
+    padding: var(--ct-space-4) var(--ct-space-5);
     background: var(--ct-bg);
     border-top: 1px solid var(--ct-border-subtle);
     overscroll-behavior: contain;
