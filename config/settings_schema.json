@@ -1463,13 +1463,13 @@
         "type": "color",
         "id": "color_accent",
         "label": "Accent",
-        "default": "#111827"
+        "default": "#FF6B1A"
       },
       {
         "type": "color",
         "id": "color_accent_hover",
         "label": "Accent (hover/strong)",
-        "default": "#374151"
+        "default": "#E35708"
       },
       {
         "type": "header",

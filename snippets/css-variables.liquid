@@ -74,12 +74,12 @@ body {
   --ct-ring:var(--ct-focus);
 
   /* CT L2 semantic roles */
-  --ct-bg:#ffffff; --ct-bg-surface:#fffaf0; --ct-bg-raised:#ffffff;
+  --ct-bg:#f6f5f2; --ct-bg-surface:#eceef0; --ct-bg-raised:#ffffff;
   --ct-bg-control:rgba(224,169,46,.12); --ct-bg-control-h:rgba(63,87,67,.16);
   --ct-bg-overlay:rgba(18,24,28,.80);
 
-  --ct-text:#16181d; --ct-text-2:#6b7280; --ct-text-3:#8b929a; --ct-text-off:#c2c8cd;
-  --ct-espresso:#16181d; --ct-footer-bg:#fff8e8;
+  --ct-text:#101216; --ct-text-2:#444a55; --ct-text-3:#5b6573; --ct-text-off:#9aa1ab;
+  --ct-espresso:#101216; --ct-footer-bg:#fff8e8;
   /* Footer dark skin (section-ct-footer.css): dark surface + white-on-dark scale.
      -dark-rgb/-on-rgb are raw triples for Dawn's rgb(var(--color-*)) plumbing. */
   --ct-footer-dark-rgb:33,43,54; --ct-footer-on-rgb:255,255,255;
@@ -89,7 +89,7 @@ body {
   --ct-footer-on-40:rgba(255,255,255,.40); --ct-footer-on-18:rgba(255,255,255,.18);
   --ct-footer-on-10:rgba(255,255,255,.10); --ct-footer-on-04:rgba(255,255,255,.04);
 
-  --ct-border:#e7e9ec; --ct-border-strong:rgba(22,24,29,.20);
+  --ct-border:#e4e2dc; --ct-border-strong:rgba(22,24,29,.20);
   --ct-border-subtle:rgba(22,24,29,.12); --ct-border-faint:rgba(22,24,29,.07);
 
   --ct-shadow-xs:0 1px 2px rgba(20,30,24,.08);
@@ -98,15 +98,15 @@ body {
   --ct-shadow-lg:0 16px 36px rgba(20,30,24,.10);
   --ct-shadow-2xl:0 26px 56px rgba(20,30,24,.12);
 
-  --ct-accent: {{ settings.color_accent | default: '#111827' }};
-  --ct-accent-strong: {{ settings.color_accent_hover | default: '#374151' }};
+  --ct-accent: {{ settings.color_accent | default: '#ff6b1a' }};
+  --ct-accent-strong: {{ settings.color_accent_hover | default: '#e35708' }};
   --ct-action:var(--ct-accent);
   --ct-action-hover:var(--ct-accent-strong);
   {%- comment -%} RGB triples for Dawn's --color-* vars, which use rgb()/rgba() (hex would break them) {%- endcomment -%}
   --ct-accent-rgb: {{ settings.color_accent.red }},{{ settings.color_accent.green }},{{ settings.color_accent.blue }};
   --ct-accent-strong-rgb: {{ settings.color_accent_hover.red }},{{ settings.color_accent_hover.green }},{{ settings.color_accent_hover.blue }};
-  --ct-accent-text:var(--ct-accent-strong); --ct-accent-subtle:#f3f4f6; --ct-accent-border:#d1d5db;
-  --ct-accent-glow:rgba(17,24,39,.14);
+  --ct-accent-text:var(--ct-accent-strong); --ct-accent-subtle:#fff1e6; --ct-accent-border:#d1d5db;
+  --ct-accent-glow:rgba(255,107,26,.16);
   --ct-action-tint:var(--ct-accent-subtle);
   --ct-action-border:var(--ct-accent-border);
 
@@ -120,21 +120,21 @@ body {
   --ct-table-alt-bg:#fafbfc; --ct-video-bg:#0d0f12; --ct-muted-chip:#4b5563;
 
   /* Status commerce signals - deliberately separate from brand */
-  --ct-urgency:#e23a2a;
+  --ct-urgency:#d23a2c;
   --ct-urgency-tint:var(--ct-error-light);
-  --ct-success:#1e7d34; --ct-success-dark:#176a2b; --ct-success-light:#eef7f0;
-  --ct-warning:#f4b400; --ct-warning-dark:#9a6b00; --ct-warning-light:#fbefce;
-  --ct-error:#e23a2a; --ct-error-dark:#b12b20; --ct-error-light:#fde4e1;
+  --ct-success:#1e7a4f; --ct-success-dark:#18603f; --ct-success-light:#e9f4ee;
+  --ct-warning:#eda21a; --ct-warning-dark:#9a6b00; --ct-warning-light:#fbefce;
+  --ct-error:#d23a2c; --ct-error-dark:#a82b20; --ct-error-light:#fbeceb;
   --ct-trust:var(--ct-success);
   --ct-trust-tint:var(--ct-success-light);
 
   /* Commerce */
-  --ct-price:#111827; --ct-price-was:#6b7280; --ct-price-save:#e23a2a;
+  --ct-price:#101216; --ct-price-was:#5b6573; --ct-price-save:#d23a2c;
   --ct-price-compare:var(--ct-price-was);
   --ct-savings:var(--ct-price-save);
-  --ct-badge-sale:#e23a2a; --ct-badge-new:var(--ct-warning); --ct-badge-best:var(--ct-warning);
-  --ct-stock-in:#1e7d34; --ct-stock-low:#f4b400; --ct-stock-out:#9ca3af;
-  --ct-rating:#f4b400; --ct-rating-empty:#e7e9ec; --ct-touch:48px;
+  --ct-badge-sale:#d23a2c; --ct-badge-new:var(--ct-warning); --ct-badge-best:var(--ct-warning);
+  --ct-stock-in:#1e7a4f; --ct-stock-low:#eda21a; --ct-stock-out:#9ca3af;
+  --ct-rating:#eda21a; --ct-rating-empty:#e4e2dc; --ct-touch:48px;
   --ct-swatch-coffee:#7B5A3E; --ct-swatch-oatmeal:#E4D8C4; --ct-swatch-black:#25211D; --ct-swatch-grey:#B8B3AA;
 
   /* Radius - soft and cozy */
@@ -142,11 +142,11 @@ body {
   --ct-r-md: {{ settings.border_radius | default: 12 }}px;
   --ct-r-lg:18px; --ct-r-xl:24px; --ct-r-pill:9999px;
 
-  /* Heading is picker-driven (W1.T05): follows Dawn's --font-heading-family
-     from the type_header_font picker, defaulting to Poppins. Body stays a
-     brand-locked Inter (Inter is not in Shopify's font library). */
-  --ct-font-display: var(--font-heading-family, 'Poppins', system-ui, sans-serif);
-  --ct-font-heading: var(--font-heading-family, 'Poppins', system-ui, sans-serif);
+  /* Display face is Saira Condensed, hardcoded (not in Shopify's font library,
+     same situation as Inter, so the picker can't deliver it - it loads via the
+     Google Fonts <link> in theme.liquid). Body stays brand-locked Inter. */
+  --ct-font-display: 'Saira Condensed', system-ui, sans-serif;
+  --ct-font-heading: 'Saira Condensed', system-ui, sans-serif;
   --ct-font-body: 'Inter', system-ui, sans-serif;
   --ct-font-mono: 'Inter', ui-monospace, monospace;
   --font-body-family: 'Inter', system-ui, sans-serif;
@@ -185,7 +185,7 @@ body {
   --ct-gallery-badge-font:11px;
   --ct-gallery-badge-pad-y:7px;
   --ct-gallery-badge-pad-x:13px;
-  --ct-focus:0 0 0 2px var(--ct-bg), 0 0 0 4px var(--ct-accent-text);
+  --ct-focus:0 0 0 3px rgba(255,107,26,.35);
   --ct-glass-bg:rgba(255,255,255,.94);
   --ct-glass-strong:rgba(255,255,255,.97);
   --ct-glass-soft:rgba(255,255,255,.90);
