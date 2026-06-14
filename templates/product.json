@@ -66,6 +66,14 @@
             "button_label": "Add to cart",
             "save_label": "Save"
           }
+        },
+        "bundle_builder": {
+          "type": "bundle",
+          "settings": {
+            "mode": "builder",
+            "heading": "Build your bundle",
+            "button_label": "Add bundle to cart"
+          }
         }
       },
       "block_order": [
@@ -77,6 +85,7 @@
         "quantity_selector",
         "quantity_breaks",
         "buy_buttons",
+        "bundle_builder",
         "description",
         "sticky_atc"
       ],

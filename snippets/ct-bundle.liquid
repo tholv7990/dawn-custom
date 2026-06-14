@@ -17,6 +17,9 @@
   assign enable_variant = s.enable_variant_select
 -%}
 {%- if main_product != blank -%}
+  {%- if s.mode == 'builder' -%}
+    {% render 'ct-bundle-builder', product: main_product, section_id: section_id, block: block %}
+  {%- else -%}
   {%- liquid
     assign total = 0
     assign compare_total = 0
@@ -131,4 +134,5 @@
     </div>
   </ct-bundle>
   <script src="{{ 'ct-bundle.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
 {%- endif -%}
