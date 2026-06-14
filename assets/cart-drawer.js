@@ -71,8 +71,14 @@ class CartDrawer extends HTMLElement {
   }
 
   renderContents(parsedState) {
-    this.querySelector('.drawer__inner').classList.contains('is-empty') &&
-      this.querySelector('.drawer__inner').classList.remove('is-empty');
+    // The empty-state class lives on the <cart-drawer> element itself (see
+    // cart-drawer.liquid), so clearing it only from .drawer__inner left the
+    // wrapper .is-empty after the first add — and `.is-empty .cart__contents`
+    // then hid the freshly-rendered item lines while the drawer footer (which
+    // keys off .cart__footer, not .drawer__footer) still showed the total.
+    this.classList.remove('is-empty');
+    const drawerInner = this.querySelector('.drawer__inner');
+    if (drawerInner) drawerInner.classList.remove('is-empty');
     this.productId = parsedState.id;
     this.getSectionsToRender().forEach((section) => {
       const sectionElement = section.selector
