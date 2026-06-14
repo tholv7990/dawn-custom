@@ -121,14 +121,18 @@
       // fallback for the no-media (fallback image) case.
       var src = image ? image.currentSrc || image.src : trigger.dataset.gsFullImage;
       if (!src) return;
-      lightboxStage.textContent = '';
-      lightboxImage = document.createElement('img');
-      lightboxImage.loading = 'eager';
-      lightboxImage.decoding = 'async';
-      lightboxImage.setAttribute('fetchpriority', 'high');
+      // Reuse one <img> across swipes (create it once per open) so changing slide
+      // is a cheap src swap, not a DOM teardown + rebuild + relayout each time.
+      if (!lightboxImage || lightboxImage.parentNode !== lightboxStage) {
+        lightboxStage.textContent = '';
+        lightboxImage = document.createElement('img');
+        lightboxImage.loading = 'eager';
+        lightboxImage.decoding = 'async';
+        lightboxImage.setAttribute('fetchpriority', 'high');
+        lightboxStage.appendChild(lightboxImage);
+      }
       lightboxImage.alt = image ? image.alt || '' : '';
       lightboxImage.src = src;
-      lightboxStage.appendChild(lightboxImage);
 
       // Warm neighbours so a swipe shows their (already device-sized) gallery
       // image instantly even if that slide had not been viewed in the gallery.

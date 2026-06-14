@@ -93,7 +93,10 @@
   object-fit: contain;
   border-radius: var(--ct-r-md);
   background: transparent;
-  box-shadow: var(--ct-shadow-float);
+  /* Lighter than --ct-shadow-float (0 24px 80px): an 80px-blur shadow on a
+     near-fullscreen image is an expensive repaint on every open/swipe, and is
+     nearly invisible over the dark overlay anyway. */
+  box-shadow: var(--ct-shadow-lg);
 }
 
 .gs-lightbox__close {
