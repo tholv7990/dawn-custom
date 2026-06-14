@@ -65,6 +65,40 @@ section schema defaults, `settings_schema.json`, and `settings_data.json`
 together when a design changes. Scope CSS/JS to the section or design root, and
 bind commerce data from Shopify objects instead of JSON strings.
 
+## Design-port fidelity rules (MUST follow — learned from the hero rebuild)
+
+When porting a design (e.g. GainsSteel) section by section, these are blockers,
+not preferences. Full rationale + token names in `docs/gainssteel-css-token-map.md` §0.
+
+1. **Copy content from the design verbatim — 100%. Never invent, reword, or
+   summarize copy.** Headings, eyebrows, lead text, button labels, stat values,
+   captions, trust text are reproduced exactly from the design HTML. The
+   store-specific brand name (e.g. `GainsSteel™`) DOES belong in **template**
+   content (`templates/*.json`) and is allow-listed in
+   `qa/ct-brand-audit-allowlist.json`; the reusable **section library**
+   (`sections/`, `snippets/`, `assets/`, schema defaults) stays brand-neutral.
+2. **Match the design's sizes/geometry by fixing the GLOBAL CSS, not by patching
+   one section.** If a heading, button, or text renders the wrong size/radius,
+   the bug is in the global token scale or a global setting — fix it there:
+   `snippets/css-variables.liquid` (type scale: `--ct-display-hero`,
+   `--ct-display-1/2`; radii; spacing), `config/settings_schema.json` +
+   `config/settings_data.json` (Dawn settings like `buttons_radius`), and the
+   global components in `assets/theme-overrides.css` (`.ct-btn`, `.ct-btn--lg`).
+   **A fix that has to be repeated per-section is proof the global CSS doesn't
+   match the design yet — go fix the global CSS.**
+3. **Never hard-size headings/buttons inside a section** unless the value is
+   genuinely unique to that one section with no global role. Buttons use
+   `.ct-btn` + `--lg`/`--sm`; headings use `.gs-section-heading` / the display
+   tokens.
+4. **A reused snippet only works if its CSS is loaded.** `ct-rating-stars` needs
+   `.ct-stars` (in `component-ct-primitives.css`, NOT global) or its track+fill
+   layers stack as double the stars. For a fixed-count design chip, render the
+   icon SVGs directly instead of pulling a snippet whose stylesheet isn't loaded.
+5. **After every section: run `node qa/ct-qa.mjs` + `shopify theme check`, sweep
+   for mojibake, push, and let the user QA before the next section.** Compare the
+   rendered result against the design file field-by-field (size, spacing, count,
+   copy) — do not assume it matches.
+
 ## Commands
 
 All development goes through the [Shopify CLI](https://shopify.dev/docs/themes/tools/cli) (run from the theme root):

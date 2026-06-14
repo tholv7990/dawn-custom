@@ -5,6 +5,20 @@ This doc answers: **which token drives which design value (content/styling/behav
 
 ---
 
+## 0. Authoring rules (MUST DO — non-negotiable)
+
+These were learned the hard way porting the hero. Treat as blockers.
+
+1. **Content is copied from the design verbatim — 100%. Never invent or reword copy.** Headings, eyebrows, lead, button labels, stat values, captions, trust text come from the design HTML exactly. The store-specific brand name (e.g. `GainsSteel™`) DOES appear in **template** content (`templates/*.json`) — it is allow-listed in `qa/ct-brand-audit-allowlist.json` for that template. The reusable **section library** (`sections/`, `snippets/`, `assets/`, schema defaults) stays brand-neutral.
+2. **Font sizes follow the design — fix the GLOBAL scale, not the section.** If a heading/button/text looks wrong size, the bug is in the global token scale, not the section. Fix it at the source:
+   - Hero display = `--ct-display-hero` `clamp(2.9rem,8.4vw,4.9rem)`; section headings (`.gs-section-heading`) = `--ct-display-2` `clamp(2rem,4.6vw,3rem)`. Do NOT hard-size headings inside a section.
+   - Only add a per-section font-size when the design value is genuinely unique to that one section and has no global role.
+3. **Buttons follow the design — globally.** The design button = Saira display, UPPERCASE, weight 700–800, `letter-spacing:.05em`, radius from Dawn's `buttons_radius` setting (set to **12** in `settings_schema.json` default + every `settings_data.json` preset → `--buttons-radius` → `--ct-btn-radius`). Base/lg/sm live on `.ct-btn` / `.ct-btn--lg` / `.ct-btn--sm` in `theme-overrides.css`. Hero CTAs = `ct-btn ct-btn--primary ct-btn--lg` + `ct-btn ct-btn--outlined ct-btn--lg`. Don't re-declare button typography/radius/size in a section.
+4. **Reused primitives must have their CSS loaded.** `ct-rating-stars` needs `.ct-stars` from `component-ct-primitives.css` (not global) — without it the track+fill layers stack as 10 stars. For a fixed 5-star design chip, render 5 `icon-star.svg` directly (gold via `--ct-rating`) instead of pulling the snippet + its stylesheet.
+5. **When a fix has to be applied per-section, it means the global CSS doesn't match the design yet — go fix the global CSS.**
+
+---
+
 ## 1. The integration model (read this first)
 
 **The design** (`gs2.css`) = one shared sheet with design tokens (`--orange`, `--ink`, `--steel`, …) + `gs-*` classes.

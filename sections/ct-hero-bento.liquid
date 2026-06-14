@@ -9,6 +9,9 @@
     assign hero_rating = hero_product.metafields.reviews.rating.value.rating
     assign hero_rating_count = hero_product.metafields.reviews.rating_count.value
   endif
+  assign hero_rating = hero_rating | default: section.settings.fallback_rating
+  assign hero_rating_count = hero_rating_count | default: section.settings.fallback_review_count
+  assign hero_rating_num = hero_rating | times: 1.0
 
   assign outline_text = section.settings.heading_outline | strip
   assign outline_lines = section.settings.heading_outline | escape | newline_to_br | split: '<br />'
@@ -40,10 +43,12 @@
           <p class="ct-hero-bento__lead">{{ section.settings.lead | escape }}</p>
         {%- endif -%}
 
-        {%- if hero_rating != blank and hero_rating > 0 -%}
-          <div class="ct-hero-bento__rating">
-            {% render 'ct-rating-stars', rating: hero_rating, label: hero_rating | round: 1 | append: ' out of 5 stars' %}
-            <b class="ct-hero-bento__rating-score">{{ hero_rating | round: 1 }}</b>
+        {%- if hero_rating_num > 0 -%}
+          <div class="ct-hero-bento__rating" role="img" aria-label="Rated {{ hero_rating_num | round: 1 }} out of 5 stars">
+            <span class="ct-hero-bento__stars" aria-hidden="true">
+              {%- for i in (1..5) -%}{{ 'icon-star.svg' | inline_asset_content }}{%- endfor -%}
+            </span>
+            <b class="ct-hero-bento__rating-score">{{ hero_rating_num | round: 1 }}</b>
             {%- if hero_rating_count != blank -%}
               <span class="ct-hero-bento__rating-count">· {{ hero_rating_count | remove: '(' | remove: ')' }} verified reviews</span>
             {%- endif -%}
@@ -54,13 +59,13 @@
           <div class="ct-hero-bento__actions">
             {%- if section.settings.button_label != blank -%}
               <a
-                class="ct-btn ct-btn--primary ct-hero-bento__btn"
+                class="ct-btn ct-btn--primary ct-btn--lg ct-hero-bento__btn"
                 {% if section.settings.button_url != blank %}href="{{ section.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %}
               >{{ section.settings.button_label | escape }}</a>
             {%- endif -%}
             {%- if section.settings.button2_label != blank -%}
               <a
-                class="ct-btn ct-btn--outlined ct-hero-bento__btn"
+                class="ct-btn ct-btn--outlined ct-btn--lg ct-hero-bento__btn"
                 {% if section.settings.button2_url != blank %}href="{{ section.settings.button2_url }}"{% else %}role="link" aria-disabled="true"{% endif %}
               >{{ section.settings.button2_label | escape }}</a>
             {%- endif -%}
@@ -228,8 +233,19 @@
     font-weight: var(--ct-fw-bold);
   }
 
-  .ct-hero-bento__rating .ct-stars {
+  .ct-hero-bento__stars {
+    display: inline-flex;
+    gap: 2px;
     color: var(--ct-rating);
+  }
+
+  .ct-hero-bento__stars svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .ct-hero-bento__stars svg path {
+    fill: currentColor;
   }
 
   .ct-hero-bento__rating-score {
@@ -248,15 +264,6 @@
     align-items: center;
     gap: var(--ct-space-3);
     margin-bottom: var(--ct-space-4);
-  }
-
-  .ct-hero-bento__btn {
-    font-family: var(--ct-font-display);
-    font-size: var(--ct-text-lg);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    min-height: 56px;
-    padding: 0 var(--ct-space-6);
   }
 
   /* primary = orange fill + ink hard-lift (design .btn-primary.lift) */
@@ -464,7 +471,18 @@
       "type": "product",
       "id": "product",
       "label": "Product",
-      "info": "Binds the live rating chip (reviews metafield). The chip hides when the product has no reviews — never a placeholder."
+      "info": "Binds the live rating chip (reviews metafield). Live review data always overrides the fallback below."
+    },
+    {
+      "type": "text",
+      "id": "fallback_rating",
+      "label": "Fallback rating",
+      "info": "Build-time placeholder shown until live review data exists. Replace with real reviews before launch."
+    },
+    {
+      "type": "text",
+      "id": "fallback_review_count",
+      "label": "Fallback review count"
     },
     {
       "type": "text",

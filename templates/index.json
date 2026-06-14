@@ -4,9 +4,11 @@
       "type": "ct-hero-bento",
       "settings": {
         "eyebrow": "Compact Hydraulic Strength System",
+        "fallback_rating": "4.7",
+        "fallback_review_count": "52",
         "heading_outline": "No gym room.\nNo commute.",
         "heading_highlight": "No restarting.",
-        "lead": "Progressive upper-body and core training in the room you already have — a 15-level hydraulic trainer, a 12-week plan, training playlists, a nutrition guide, and optional form-check coaching.",
+        "lead": "GainsSteel™ puts progressive upper-body and core training in the room you already have — a 15-level hydraulic trainer, a 12-week plan, training playlists, a nutrition guide, and optional form-check coaching.",
         "button_label": "Start the 12-Week System",
         "button_url": "",
         "button2_label": "See how it works",

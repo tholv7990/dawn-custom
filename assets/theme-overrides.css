@@ -162,11 +162,13 @@ img { max-width: 100%; }
   padding: 0 var(--ct-space-5);
   border: var(--ct-btn-border-width) solid transparent;
   border-radius: var(--ct-btn-radius);
-  font-family: var(--ct-font-body);
-  font-weight: var(--ct-fw-semi);
-  font-size: var(--ct-text-base);
+  font-family: var(--ct-font-display);
+  font-weight: var(--ct-fw-bold);
+  font-size: var(--ct-text-md);
   line-height: 1;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   text-decoration: none;
   cursor: pointer;
   transition: background var(--ct-dur-base) var(--ct-ease-out),
@@ -189,6 +191,11 @@ img { max-width: 100%; }
   min-height: var(--ct-touch);
   padding: 0 var(--ct-space-4);
   font-size: var(--ct-text-sm);
+}
+.ct-btn.ct-btn--lg {
+  min-height: 56px;
+  padding: 0 var(--ct-space-6);
+  font-size: var(--ct-text-lg);
 }
 
 /* ---- ct-field: floating-label wrapper (visual only; never replaces Dawn form logic) ---- */
