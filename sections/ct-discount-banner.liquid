@@ -13,7 +13,7 @@
   <div class="gs-wrap">
     <div class="ct-discount__card">
       {%- if section.settings.heading != blank -%}
-        <h2 class="ct-discount__heading">{{ section.settings.heading | escape }}</h2>
+        <h2 class="gs-section-heading ct-discount__heading">{{ section.settings.heading | escape }}</h2>
       {%- endif -%}
 
       {%- if section.settings.message != blank -%}
@@ -64,7 +64,6 @@
 
   .ct-discount .ct-discount__heading {
     margin: 0;
-    color: var(--ct-text);
     font-size: var(--ct-h3);
     font-weight: var(--ct-fw-bold);
     line-height: 1.2;
