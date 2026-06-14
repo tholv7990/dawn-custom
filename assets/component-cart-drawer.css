@@ -7,7 +7,11 @@
   height: 100%;
   display: flex;
   justify-content: flex-end;
-  background-color: rgba(var(--color-foreground), 0.5);
+  /* Fixed dark scrim (like Shrine Pro) so the page stays visible/dimmed behind
+     the panel. The previous rgba(var(--color-foreground),0.5) inherited a light
+     foreground here (body has no color-scheme class), giving a white wash that
+     hid the page on desktop. */
+  background-color: var(--ct-overlay-bg);
   transition: visibility var(--duration-default) ease;
 }
 
