@@ -270,14 +270,14 @@
 .gs-head__nav {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: var(--ct-space-4);
   color: var(--ct-text-2);
 }
 
 .gs-head__links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: var(--ct-space-4);
 }
 
 .gs-head__links a {

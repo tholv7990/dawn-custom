@@ -206,7 +206,7 @@
   }
 
   .gs-secure-pill {
-    margin-left: 38px;
+    margin-left: var(--ct-space-9);
   }
 
   .gs-tier {

@@ -74,7 +74,7 @@
 }
 
 .ct-size-chart-modal__heading {
-  margin: 0 var(--ct-space-8) var(--ct-space-4) 0;
+  margin: 0 var(--ct-space-7) var(--ct-space-4) 0;
   font-size: var(--ct-h4);
   font-weight: var(--ct-fw-bold);
   color: var(--ct-text);

@@ -1150,7 +1150,7 @@
 .gs-review-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
+  gap: var(--ct-grid-gap);
   max-width: 1180px;
   margin: 0 auto;
 }
