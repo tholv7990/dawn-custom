@@ -33,6 +33,7 @@
   }
 
   function initAutoplayVideos(root) {
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     qsa('[data-gs-autoplay-video]', root).forEach(function (video) {
       video.muted = true;
       video.defaultMuted = true;
@@ -40,6 +41,13 @@
       video.setAttribute('muted', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
+      // Honour prefers-reduced-motion: keep the muted video pausable and visible
+      // on its first frame, but do not auto-start it for users who opt out.
+      if (reduceMotion) {
+        video.removeAttribute('autoplay');
+        video.setAttribute('controls', '');
+        return;
+      }
       video.setAttribute('autoplay', '');
       video.setAttribute('loop', '');
 
