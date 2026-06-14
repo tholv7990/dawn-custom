@@ -105,7 +105,7 @@ Legend: ✅ done · 🟡 partial · ⬜ todo · 🔒 needs-live-preview (visual/
 | W1.T08 Animation/reveal tokens | ⬜ | ⚙️ | Dawn panel exists; **0 `--ct-reveal-*` tokens, no data-flags** |
 | W1.T09 `ct-section-padding` partial | ✅ | ⚙️ | In use by 11/13 sections |
 | W1.T10 Section token retrofit + unified breakpoints | 🟡 | 🔒 | 192 px-literals + legacy 620/760/780/820/1040 breakpoints remain; 2 sections (announce, sticky) not on padding partial |
-| W1.T11 Typography retrofit | 🟡 | 🔒 | Type tokens exist; `.gs-section-heading` still `clamp(22px,3vw,30px)` literal |
+| W1.T11 Typography retrofit | 🟡 ⚙️ | 🔒 | **2026-06-14: 38 exact-scale `font-size` px → `--ct-text-*` in section-ct-* (CT font-size px 97→59), zero visual change**; remaining are odd values (13.5/11.5px) + clamps (e.g. `.gs-section-heading`) whose mapping to the scale changes sizes → needs live verify |
 | W1.T12 Split `section-ct-page.css` (2,510 lines) | ✅ | ⚙️ | Split into `section-ct-base/components/responsive.css`, loaded in order; byte-identical concat (no-op). Per-section loading deferred. |
 | W1.T13 Triage `theme-overrides.css` → 0 | 🟡 ⚙️ | 🔒 | **2026-06-14: 14→7 px-literals** (exact-match spacing → `--ct-space-*`); remaining 7 are intentional (iOS-16px font, negative spinner-centering, 2/10/18px non-scale) + 2 justified `!important`. Allowlist re-baselined. |
 | W1.T14 Retire `.gs-scope` | ⬜ | 🔒 | 27 occurrences (14 in CSS + 13 sections); needs full screenshot matrix |

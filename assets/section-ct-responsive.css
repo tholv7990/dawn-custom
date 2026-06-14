@@ -81,7 +81,7 @@
     padding: 16px var(--ct-grid-gap);
     font-family: var(--ct-font-heading);
     font-weight: 800;
-    font-size: 15px;
+    font-size: var(--ct-text-base);
     justify-content: space-between;
     align-items: center;
     color: var(--ct-text);
@@ -194,7 +194,7 @@
   .gs-countdown,
   .gs-secure-pill {
     padding: 7px 10px;
-    font-size: 12px;
+    font-size: var(--ct-text-xs);
   }
 
   .gs-made-bar {
@@ -304,7 +304,7 @@
     margin-left: 0;
     padding: 10px 12px;
     border-radius: 11px;
-    font-size: 13px;
+    font-size: var(--ct-text-sm);
   }
 
   .gs-sticky .product-form {
