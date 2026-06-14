@@ -83,7 +83,7 @@
   position: absolute;
   top: 0;
   right: var(--ct-space-4);
-  transform: translateY(-50%) rotate(8deg);
+  transform: translateY(-50%) rotate(var(--ct-qb-badge-angle, 8deg));
   z-index: 1;
   padding: var(--ct-space-1) var(--ct-space-3);
   font-size: var(--ct-text-xs);

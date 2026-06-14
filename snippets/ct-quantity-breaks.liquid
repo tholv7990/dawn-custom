@@ -54,6 +54,7 @@
     data-form-id="{{ product_form_id }}"
     data-money-format="{{ shop.money_format | escape }}"
     data-unit-cents="{{ qb_unit }}"
+    style="--ct-qb-badge-angle: {{ s.badge_angle | default: 8 }}deg;"
     {% if qb_per_unit %}data-per-unit="true"{% endif %}
     {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
   >
