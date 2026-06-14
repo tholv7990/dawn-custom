@@ -212,9 +212,13 @@
   animation-duration: 28s;
 }
 
+/* Documented ticker pattern: the track holds an EVEN number of identical
+   server-side sets; translateX(-50%) shifts to an exact copy boundary so the
+   loop is seamless, while the extra copies keep short tickers viewport-wide.
+   (Was calc(-100%/6), which shifted only one set per cycle -> near-static.) */
 @keyframes gs-scroll {
   to {
-    transform: translateX(calc(-100% / 6));
+    transform: translateX(-50%);
   }
 }
 
