@@ -35,16 +35,21 @@
           "type": "quantity_selector",
           "settings": {}
         },
+        "quantity_breaks": {
+          "type": "quantity_breaks",
+          "settings": {
+            "heading": "Save when you buy more",
+            "layout": "normal",
+            "enable_per_unit": false,
+            "button_label": "Add to cart"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {}
         },
         "description": {
           "type": "description",
-          "settings": {}
-        },
-        "share": {
-          "type": "share",
           "settings": {}
         },
         "sticky_atc": {
@@ -57,105 +62,6 @@
             "button_label": "Add to cart",
             "save_label": "Save"
           }
-        },
-        "quantity_breaks": {
-          "type": "quantity_breaks",
-          "settings": {
-            "heading": "Choose your quantity",
-            "layout": "normal",
-            "enable_per_unit": false,
-            "button_label": "Add to cart"
-          }
-        },
-        "bundle": {
-          "type": "bundle",
-          "settings": {
-            "heading": "Frequently bought together",
-            "addon_1": "womens-minimalist-casual-chic-denim-jacket-vest",
-            "addon_1_qty": 1,
-            "enable_variant_select": true,
-            "show_savings": true,
-            "button_label": "Add bundle to cart"
-          }
-        },
-        "product_upsells": {
-          "type": "product_upsells",
-          "settings": {
-            "heading": "You may also like",
-            "source": "manual",
-            "products": [
-              "womens-minimalist-casual-chic-denim-jacket-vest",
-              "crew-neck-t-shirt-slim-fit-athletic-training-top"
-            ],
-            "columns": 4,
-            "layout": "grid",
-            "show_add": true,
-            "show_variant": false,
-            "exclude_in_cart": true
-          }
-        },
-        "shipping_estimate": {
-          "type": "shipping_estimate",
-          "settings": {
-            "heading": "Fast, tracked shipping",
-            "processing_days": 1,
-            "transit_min": 3,
-            "transit_max": 7,
-            "show_dates": true,
-            "show_timeline": true
-          }
-        },
-        "discount_code": {
-          "type": "discount_code",
-          "settings": {
-            "heading": "Save 10%",
-            "message": "Use this code at checkout.",
-            "code": "SAVE10",
-            "show_copy": true,
-            "auto_apply": true
-          }
-        },
-        "size_chart": {
-          "type": "size_chart",
-          "settings": {
-            "trigger_label": "Size guide",
-            "heading": "Size guide",
-            "source": "richtext",
-            "content": "<p>Size guide</p><ul><li>S: 36in chest</li><li>M: 40in chest</li></ul>"
-          }
-        },
-        "custom_field": {
-          "type": "custom_field",
-          "settings": {
-            "label": "Gift message",
-            "field_type": "textarea",
-            "placeholder": "Write your message",
-            "required": false
-          }
-        },
-        "gift_offer": {
-          "type": "gift_offer",
-          "settings": {
-            "gift_product": "womens-minimalist-casual-chic-denim-jacket-vest",
-            "threshold_cents": "100000",
-            "locked_text": "Spend [amount] more for a free gift",
-            "unlocked_text": "Free gift added!",
-            "show_bar": true,
-            "show_gift_preview": true
-          }
-        },
-        "reviews_showcase": {
-          "type": "reviews_showcase",
-          "settings": {
-            "heading": "What customers say",
-            "show_score": true,
-            "fallback_score": "4.8",
-            "fallback_count": "126",
-            "quote_1_text": "Exactly as described, great quality.",
-            "quote_1_author": "Sam R.",
-            "quote_1_rating": 5,
-            "quote_1_verified": true
-          }
         }
       },
       "block_order": [
@@ -165,19 +71,10 @@
         "savings_line",
         "variant_picker",
         "quantity_selector",
-        "buy_buttons",
         "quantity_breaks",
+        "buy_buttons",
         "description",
-        "share",
-        "sticky_atc",
-        "bundle",
-        "product_upsells",
-        "shipping_estimate",
-        "discount_code",
-        "size_chart",
-        "custom_field",
-        "gift_offer",
-        "reviews_showcase"
+        "sticky_atc"
       ],
       "settings": {
         "gallery_layout": "thumbnail_slider",
@@ -185,13 +82,241 @@
         "mobile_thumbnails": "show"
       }
     },
-    "related-products": {
-      "type": "related-products",
-      "settings": {}
+    "trust_strip_1": {
+      "type": "ct-trust-bar",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "title": "Fast shipping",
+            "text": "Dispatched quickly with tracking"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "return",
+            "title": "Easy returns",
+            "text": "Hassle-free return process"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure payments",
+            "text": "Encrypted, trusted checkout"
+          }
+        }
+      },
+      "block_order": ["b1", "b2", "b3"]
+    },
+    "marquee": {
+      "type": "ct-trust-marquee",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "message",
+          "settings": {
+            "icon": "&#128666;",
+            "text": "Free shipping on qualifying orders"
+          }
+        },
+        "b2": {
+          "type": "message",
+          "settings": {
+            "icon": "&#10003;",
+            "text": "Quality you can trust"
+          }
+        },
+        "b3": {
+          "type": "message",
+          "settings": {
+            "icon": "&#8634;",
+            "text": "Easy returns"
+          }
+        },
+        "b4": {
+          "type": "message",
+          "settings": {
+            "icon": "&#128737;",
+            "text": "Secure checkout"
+          }
+        }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"]
+    },
+    "why": {
+      "type": "ct-icon-columns",
+      "settings": {
+        "heading": "Why you'll love it",
+        "subheading": "Thoughtful details that make it easy to live with.",
+        "columns": 2
+      },
+      "blocks": {
+        "b1": {
+          "type": "column",
+          "settings": {
+            "icon": "heart",
+            "title": "Made for comfort",
+            "body": "Soft, premium materials chosen so it feels great to use every day."
+          }
+        },
+        "b2": {
+          "type": "column",
+          "settings": {
+            "icon": "verified",
+            "title": "Thoughtful design",
+            "body": "Considered details that make it easy to use and a pleasure to own."
+          }
+        },
+        "b3": {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "title": "Built to last",
+            "body": "Durable construction that holds up to everyday use and keeps its shape."
+          }
+        },
+        "b4": {
+          "type": "column",
+          "settings": {
+            "icon": "recycle",
+            "title": "Easy to care for",
+            "body": "Simple, low-maintenance care so it keeps looking its best."
+          }
+        }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"]
+    },
+    "details": {
+      "type": "ct-tabs",
+      "settings": {
+        "heading": "Product details",
+        "subheading": "Everything you need to know."
+      },
+      "blocks": {
+        "b1": {
+          "type": "tab",
+          "settings": {
+            "title": "Specifications",
+            "content": "<ul><li><strong>Dimensions</strong> — Add product dimensions</li><li><strong>Materials</strong> — Add materials</li><li><strong>In the box</strong> — Add what's included</li></ul>"
+          }
+        },
+        "b2": {
+          "type": "tab",
+          "settings": {
+            "title": "Materials & care",
+            "content": "<p>Add material details and care instructions here. This content is editable in the theme customizer.</p>"
+          }
+        }
+      },
+      "block_order": ["b1", "b2"]
+    },
+    "shipping": {
+      "type": "ct-shipping-estimate",
+      "settings": {
+        "icon": "truck",
+        "heading": "Shipping & delivery",
+        "processing_days": 1,
+        "transit_min": 3,
+        "transit_max": 7,
+        "show_dates": true,
+        "note": "We ship with tracking. Delivery times vary by destination."
+      }
+    },
+    "trust_strip_2": {
+      "type": "ct-trust-bar",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "verified",
+            "title": "Thoughtfully made",
+            "text": "Designed with care and attention"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "chat",
+            "title": "Support that cares",
+            "text": "We're here before and after you buy"
+          }
+        },
+        "b3": {
+          "type": "payment",
+          "settings": {
+            "note": "Secure checkout"
+          }
+        }
+      },
+      "block_order": ["b1", "b2", "b3"]
+    },
+    "reviews": {
+      "type": "ct-reviews",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "review",
+          "settings": {
+            "name": "[Customer name]",
+            "verified": false,
+            "rating": 5,
+            "title": "[Review title]",
+            "body": "[Paste a genuine customer review here]"
+          }
+        },
+        "b2": {
+          "type": "review",
+          "settings": {
+            "name": "[Customer name]",
+            "verified": false,
+            "rating": 5,
+            "title": "[Review title]",
+            "body": "[Paste a genuine customer review here]"
+          }
+        },
+        "b3": {
+          "type": "review",
+          "settings": {
+            "name": "[Customer name]",
+            "verified": false,
+            "rating": 4,
+            "title": "[Review title]",
+            "body": "[Paste a genuine customer review here]"
+          }
+        }
+      },
+      "block_order": ["b1", "b2", "b3"]
+    },
+    "final_cta": {
+      "type": "ct-cta-banner",
+      "settings": {
+        "eyebrow": "Ready when you are",
+        "heading": "Make it yours today",
+        "subheading": "Fast shipping, easy returns, and secure checkout — with help whenever you need it.",
+        "button_label": "View options",
+        "button_url": "#MainContent",
+        "button2_label": "",
+        "tint": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
     "main",
-    "related-products"
+    "trust_strip_1",
+    "marquee",
+    "why",
+    "details",
+    "shipping",
+    "trust_strip_2",
+    "reviews",
+    "final_cta"
   ]
 }
