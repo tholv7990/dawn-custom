@@ -198,18 +198,15 @@
                 {%- endif -%}
               </div>
             </div>
-            <div class="gs-tier__picks">
-              {%- for i in (1..block.settings.quantity) -%}
-                <label class="gs-pick">
-                  <span class="gs-pick__label">#{{ i }}</span>
-                  <select aria-label="Choose color for unit {{ i }}">
-                    {%- for variant in gs_product.variants -%}
-                      <option value="{{ variant.id }}" {% if variant.id == selected_variant.id %}selected{% endif %}>{{ variant.title }}</option>
-                    {%- endfor -%}
-                  </select>
-                </label>
-              {%- endfor -%}
-            </div>
+            {%- comment -%}
+              Per-unit colour pickers removed: this bespoke tier path only posts
+              qty x the currently-selected variant (the <select>s carried no name
+              and ct-page.js never read them), so multi-colour picks were silently
+              dropped. For true per-unit variant bundles (each unit a different
+              colour, correct multi-line cart add) use the quantity_breaks block
+              (snippets/ct-quantity-breaks.liquid) on main-product, which is the
+              maintained tier component.
+            {%- endcomment -%}
           </div>
         {%- endif -%}
       {%- endfor -%}
