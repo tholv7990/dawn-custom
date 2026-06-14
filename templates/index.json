@@ -1,17 +1,71 @@
 {
   "sections": {
     "hero": {
-      "type": "ct-hero",
+      "type": "ct-hero-bento",
       "settings": {
-        "eyebrow": "",
-        "heading": "",
-        "subheading": "",
-        "button_label": "",
+        "eyebrow": "Compact Hydraulic Strength System",
+        "heading_outline": "No gym room.\nNo commute.",
+        "heading_highlight": "No restarting.",
+        "lead": "Progressive upper-body and core training in the room you already have — a 15-level hydraulic trainer, a 12-week plan, training playlists, a nutrition guide, and optional form-check coaching.",
+        "button_label": "Start the 12-Week System",
         "button_url": "",
-        "button2_label": "",
-        "content_alignment": "center",
-        "min_height": "medium"
-      }
+        "button2_label": "See how it works",
+        "button2_url": "#how",
+        "trust_1": "Free US shipping",
+        "trust_2": "90-day returns",
+        "trust_3": "1-year warranty",
+        "padding_top": 80,
+        "padding_bottom": 80
+      },
+      "blocks": {
+        "tile_main": {
+          "type": "media",
+          "settings": {}
+        },
+        "tile_1": {
+          "type": "stat",
+          "settings": {
+            "value": "22–440",
+            "caption": "lb resistance",
+            "skin": "accent"
+          }
+        },
+        "tile_2": {
+          "type": "stat",
+          "settings": {
+            "value": "15",
+            "caption": "hydraulic levels",
+            "skin": "surface",
+            "highlight_value": true
+          }
+        },
+        "tile_3": {
+          "type": "stat",
+          "settings": {
+            "value": "5.3",
+            "unit": "lb",
+            "caption": "stores under the couch",
+            "skin": "ink"
+          }
+        },
+        "tile_4": {
+          "type": "stat",
+          "settings": {
+            "value": "12-week\nprogram",
+            "caption": "included in Core",
+            "skin": "surface",
+            "wide": true
+          }
+        },
+        "tile_video": {
+          "type": "video",
+          "settings": {
+            "title": "Watch it work",
+            "caption": "Video slot · dial demo"
+          }
+        }
+      },
+      "block_order": ["tile_main", "tile_1", "tile_2", "tile_3", "tile_4", "tile_video"]
     },
     "trust_bar": {
       "type": "ct-trust-bar",

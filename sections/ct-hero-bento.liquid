@@ -1,0 +1,663 @@
+{% render 'ct-section-padding', section: section %}
+
+{%- liquid
+  assign hero_product = section.settings.product | default: product
+
+  assign hero_rating = blank
+  assign hero_rating_count = blank
+  if hero_product.metafields.reviews.rating.value != blank
+    assign hero_rating = hero_product.metafields.reviews.rating.value.rating
+    assign hero_rating_count = hero_product.metafields.reviews.rating_count.value
+  endif
+
+  assign outline_lines = section.settings.heading_outline | escape | newline_to_br | split: '<br />'
+-%}
+
+<section class="gs-scope ct-hero-bento section-{{ section.id }}-padding">
+  <div class="ct-hero-bento__inner">
+    <div class="ct-hero-bento__split">
+      <div class="ct-hero-bento__copy" data-ct-reveal>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ct-hero-bento__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        {%- if outline_lines.size > 0 or section.settings.heading_highlight != blank -%}
+          <h1 class="ct-hero-bento__heading">
+            {%- for line in outline_lines -%}
+              {%- assign clean = line | strip -%}
+              {%- if clean != blank -%}
+                <span class="ct-hero-bento__ol">{{ clean }}</span><br>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if section.settings.heading_highlight != blank -%}
+              <span class="ct-hero-bento__hl">{{ section.settings.heading_highlight | escape }}</span>
+            {%- endif -%}
+          </h1>
+        {%- endif -%}
+
+        {%- if section.settings.lead != blank -%}
+          <p class="ct-hero-bento__lead">{{ section.settings.lead | escape }}</p>
+        {%- endif -%}
+
+        {%- if hero_rating != blank and hero_rating > 0 -%}
+          <div class="ct-hero-bento__rating">
+            {% render 'ct-rating-stars', rating: hero_rating, label: hero_rating | round: 1 | append: ' out of 5 stars' %}
+            <b class="ct-hero-bento__rating-score">{{ hero_rating | round: 1 }}</b>
+            {%- if hero_rating_count != blank -%}
+              <span class="ct-hero-bento__rating-count">· {{ hero_rating_count | remove: '(' | remove: ')' }} verified reviews</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank or section.settings.button2_label != blank -%}
+          <div class="ct-hero-bento__actions">
+            {%- if section.settings.button_label != blank -%}
+              <a
+                class="ct-btn ct-btn--primary ct-hero-bento__btn"
+                {% if section.settings.button_url != blank %}href="{{ section.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %}
+              >{{ section.settings.button_label | escape }}</a>
+            {%- endif -%}
+            {%- if section.settings.button2_label != blank -%}
+              <a
+                class="ct-btn ct-btn--outlined ct-hero-bento__btn"
+                {% if section.settings.button2_url != blank %}href="{{ section.settings.button2_url }}"{% else %}role="link" aria-disabled="true"{% endif %}
+              >{{ section.settings.button2_label | escape }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign has_trust = false -%}
+        {%- if section.settings.trust_1 != blank or section.settings.trust_2 != blank or section.settings.trust_3 != blank -%}
+          {%- assign has_trust = true -%}
+        {%- endif -%}
+        {%- if has_trust -%}
+          <div class="ct-hero-bento__trust">
+            {%- if section.settings.trust_1 != blank -%}
+              <span class="ct-hero-bento__tbadge">{% render 'ct-icon', name: 'truck', label: section.settings.trust_1 %}{{ section.settings.trust_1 | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.trust_2 != blank -%}
+              <span class="ct-hero-bento__tbadge">{% render 'ct-icon', name: 'return', label: section.settings.trust_2 %}{{ section.settings.trust_2 | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.trust_3 != blank -%}
+              <span class="ct-hero-bento__tbadge">{% render 'ct-icon', name: 'shield', label: section.settings.trust_3 %}{{ section.settings.trust_3 | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="ct-hero-bento__bento" data-ct-reveal data-ct-reveal-order="1">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'media' -%}
+                <div class="ct-hero-bento__tile ct-hero-bento__tile--media" {{ block.shopify_attributes }}>
+                  {% render 'ct-media-slot',
+                    image: block.settings.image,
+                    video: block.settings.video,
+                    class: 'ct-hero-bento__media',
+                    label: 'Product'
+                  %}
+                </div>
+
+              {%- when 'stat' -%}
+                <div
+                  class="ct-hero-bento__tile ct-hero-bento__tile--{{ block.settings.skin }}{% if block.settings.wide %} ct-hero-bento__tile--wide{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.value != blank -%}
+                    <span class="ct-hero-bento__big{% if block.settings.highlight_value %} ct-hero-bento__big--accent{% endif %}{% if block.settings.wide %} ct-hero-bento__big--sm{% endif %}">{{ block.settings.value | escape | newline_to_br }}{%- if block.settings.unit != blank -%}<span class="ct-hero-bento__unit"> {{ block.settings.unit | escape }}</span>{%- endif -%}</span>
+                  {%- endif -%}
+                  {%- if block.settings.caption != blank -%}
+                    <span class="ct-hero-bento__small">{{ block.settings.caption | escape }}</span>
+                  {%- endif -%}
+                </div>
+
+              {%- when 'video' -%}
+                <div class="ct-hero-bento__tile ct-hero-bento__tile--wide ct-hero-bento__tile--video" {{ block.shopify_attributes }}>
+                  <div class="ct-hero-bento__video-text">
+                    {%- if block.settings.title != blank -%}
+                      <span class="ct-hero-bento__big ct-hero-bento__big--sm">{{ block.settings.title | escape }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.caption != blank -%}
+                      <span class="ct-hero-bento__small">{{ block.settings.caption | escape }}</span>
+                    {%- endif -%}
+                  </div>
+                  {%- if block.settings.link != blank -%}
+                    <a class="ct-hero-bento__play" href="{{ block.settings.link }}" aria-label="{{ block.settings.title | default: 'Play video' | escape }}">
+                      {{ 'icon-play.svg' | inline_asset_content }}
+                    </a>
+                  {%- else -%}
+                    <span class="ct-hero-bento__play" aria-hidden="true">
+                      {{ 'icon-play.svg' | inline_asset_content }}
+                    </span>
+                  {%- endif -%}
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .ct-hero-bento {
+    background: var(--ct-bg);
+    color: var(--ct-text);
+  }
+
+  .ct-hero-bento__inner {
+    max-width: var(--ct-mw);
+    margin-inline: auto;
+    padding-inline: var(--ct-gutter);
+  }
+
+  .ct-hero-bento__split {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: var(--ct-space-6);
+    align-items: center;
+  }
+
+  /* ---- left column ---- */
+  .ct-hero-bento__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--ct-space-2);
+    margin: 0 0 var(--ct-space-3);
+    font-family: var(--ct-font-display);
+    font-weight: var(--ct-fw-bold);
+    font-size: var(--ct-text-sm);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ct-action);
+  }
+
+  .ct-hero-bento__eyebrow::before {
+    content: "";
+    width: 26px;
+    height: 3px;
+    background: var(--ct-action);
+  }
+
+  .ct-hero-bento__heading {
+    margin: 0 0 var(--ct-space-4);
+    font-family: var(--ct-font-display);
+    font-weight: 900;
+    font-size: var(--ct-display-1);
+    line-height: 0.96;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .ct-hero-bento__ol {
+    color: transparent;
+    -webkit-text-stroke: 2.5px var(--ct-text);
+  }
+
+  @supports not ((-webkit-text-stroke: 1px black)) {
+    .ct-hero-bento__ol {
+      color: var(--ct-text);
+    }
+  }
+
+  .ct-hero-bento__hl {
+    color: var(--ct-action);
+  }
+
+  .ct-hero-bento__lead {
+    margin: 0 0 var(--ct-space-4);
+    max-width: 640px;
+    font-family: var(--ct-font-body);
+    font-size: var(--ct-text-md);
+    line-height: var(--ct-leading-base);
+    color: var(--ct-text-2);
+  }
+
+  .ct-hero-bento__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ct-space-2);
+    margin-bottom: var(--ct-space-4);
+    padding: var(--ct-space-2) var(--ct-space-3);
+    background: var(--ct-bg-raised);
+    border: 1.5px solid var(--ct-border);
+    border-radius: var(--ct-r-pill);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-bold);
+  }
+
+  .ct-hero-bento__rating .ct-stars {
+    color: var(--ct-rating);
+  }
+
+  .ct-hero-bento__rating-score {
+    font-family: var(--ct-font-display);
+    color: var(--ct-text);
+  }
+
+  .ct-hero-bento__rating-count {
+    color: var(--ct-text-2);
+    font-weight: var(--ct-fw-medium);
+  }
+
+  .ct-hero-bento__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ct-space-3);
+    margin-bottom: var(--ct-space-4);
+  }
+
+  .ct-hero-bento__btn {
+    font-family: var(--ct-font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* primary = orange fill + ink hard-lift (design .btn-primary.lift) */
+  .ct-hero-bento__actions .ct-btn--primary {
+    border: 2px solid var(--ct-text);
+    box-shadow: var(--ct-shadow-lift);
+  }
+
+  /* secondary = ink ghost (design .btn-ghost) */
+  .ct-hero-bento__actions .ct-btn--outlined {
+    color: var(--ct-text);
+    border-color: var(--ct-text);
+  }
+
+  .ct-hero-bento__actions .ct-btn--outlined:hover {
+    background: var(--ct-text);
+    color: var(--ct-on-accent);
+  }
+
+  .ct-hero-bento__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ct-space-2);
+  }
+
+  .ct-hero-bento__tbadge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ct-space-2);
+    padding: var(--ct-space-2) var(--ct-space-3);
+    background: var(--ct-success-light);
+    border: 1px solid var(--ct-border);
+    border-radius: var(--ct-r-pill);
+    font-size: var(--ct-text-sm);
+    font-weight: var(--ct-fw-semi);
+    color: var(--ct-text-2);
+  }
+
+  .ct-hero-bento__tbadge .ct-icon {
+    display: inline-flex;
+    width: 15px;
+    height: 15px;
+    color: var(--ct-success);
+  }
+
+  .ct-hero-bento__tbadge .ct-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .ct-hero-bento__tbadge .ct-icon svg [fill="currentColor"],
+  .ct-hero-bento__tbadge .ct-icon svg path:not([fill]),
+  .ct-hero-bento__tbadge .ct-icon svg circle:not([fill]) {
+    fill: currentColor;
+  }
+
+  /* ---- right column: bento grid ---- */
+  .ct-hero-bento__bento {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(106px, auto);
+    gap: var(--ct-space-3);
+  }
+
+  .ct-hero-bento__tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--ct-space-4);
+    position: relative;
+    overflow: hidden;
+    background: var(--ct-bg-raised);
+    border: 1.5px solid var(--ct-border);
+    border-radius: var(--ct-r-lg);
+    transition: transform var(--ct-dur-base) var(--ct-ease-out),
+                box-shadow var(--ct-dur-base) var(--ct-ease-out);
+  }
+
+  .ct-hero-bento__tile:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--ct-shadow-lg);
+  }
+
+  .ct-hero-bento__tile--accent {
+    background: var(--ct-action);
+    border-color: var(--ct-action);
+    color: var(--ct-on-accent);
+  }
+
+  .ct-hero-bento__tile--ink {
+    background: var(--ct-espresso);
+    border-color: var(--ct-espresso);
+    color: var(--ct-on-accent);
+  }
+
+  .ct-hero-bento__tile--media {
+    grid-row: span 3;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: radial-gradient(circle at 50% 38%, var(--ct-action-tint), var(--ct-bg-raised) 70%);
+  }
+
+  .ct-hero-bento__tile--wide {
+    grid-column: 1 / -1;
+  }
+
+  .ct-hero-bento__media {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ct-hero-bento__media img,
+  .ct-hero-bento__media video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ct-hero-bento__big {
+    font-family: var(--ct-font-display);
+    font-weight: 900;
+    font-size: var(--ct-text-2xl);
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .ct-hero-bento__big--sm {
+    font-size: var(--ct-text-lg);
+  }
+
+  .ct-hero-bento__big--accent {
+    color: var(--ct-action);
+  }
+
+  .ct-hero-bento__unit {
+    font-size: 0.55em;
+  }
+
+  .ct-hero-bento__small {
+    margin-top: var(--ct-space-1);
+    font-size: var(--ct-text-xs);
+    font-weight: var(--ct-fw-semi);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  .ct-hero-bento__tile--video {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ct-space-3);
+  }
+
+  .ct-hero-bento__play {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: var(--ct-r-pill);
+    background: var(--ct-action);
+    color: var(--ct-on-accent);
+    text-decoration: none;
+  }
+
+  .ct-hero-bento__play svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* ---- responsive ---- */
+  @media screen and (max-width: 860px) {
+    .ct-hero-bento__split {
+      grid-template-columns: 1fr;
+      gap: var(--ct-space-5);
+    }
+
+    .ct-hero-bento__bento {
+      grid-auto-rows: minmax(92px, auto);
+    }
+
+    .ct-hero-bento__tile--media {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      aspect-ratio: 16 / 10;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    .ct-hero-bento__actions .ct-btn {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<script src="{{ 'ct-reveal.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Hero bento",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Binds the live rating chip (reviews metafield). The chip hides when the product has no reviews — never a placeholder."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Add an eyebrow"
+    },
+    {
+      "type": "textarea",
+      "id": "heading_outline",
+      "label": "Outlined heading lines",
+      "info": "One line per row. Each renders as outlined display type.",
+      "default": "First line.\nSecond line."
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Highlight line",
+      "info": "Final heading line, painted in the accent color.",
+      "default": "Highlight line."
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead paragraph",
+      "default": "Add a short supporting paragraph that introduces the product and sets the tone."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Primary button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "button2_label",
+      "label": "Secondary button label",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "button2_url",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Trust badges"
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Badge 1 (shipping)",
+      "default": "Free shipping"
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Badge 2 (returns)",
+      "default": "Easy returns"
+    },
+    {
+      "type": "text",
+      "id": "trust_3",
+      "label": "Badge 3 (warranty)",
+      "default": "Warranty included"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Product media tile",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Stat tile",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "value",
+          "label": "Value",
+          "default": "00"
+        },
+        {
+          "type": "text",
+          "id": "unit",
+          "label": "Unit (small suffix)"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Add a caption"
+        },
+        {
+          "type": "select",
+          "id": "skin",
+          "label": "Tile color",
+          "options": [
+            { "value": "surface", "label": "Surface (white)" },
+            { "value": "accent", "label": "Accent (orange)" },
+            { "value": "ink", "label": "Ink (dark)" }
+          ],
+          "default": "surface"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_value",
+          "label": "Accent-color the value",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "wide",
+          "label": "Full-width tile",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video slot tile",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Watch it work"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Video slot"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Play link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero bento",
+      "blocks": [
+        { "type": "media" },
+        { "type": "stat", "settings": { "value": "00", "caption": "Add a caption", "skin": "accent" } },
+        { "type": "stat", "settings": { "value": "00", "caption": "Add a caption", "skin": "surface", "highlight_value": true } },
+        { "type": "stat", "settings": { "value": "0.0", "unit": "lb", "caption": "Add a caption", "skin": "ink" } },
+        { "type": "stat", "settings": { "value": "Add a stat", "caption": "Add a caption", "skin": "surface", "wide": true } },
+        { "type": "video", "settings": { "title": "Watch it work", "caption": "Video slot" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,5 +1,6 @@
 {
   "fixed-warranty": {
-    "sections/header-group.json": 1
+    "sections/header-group.json": 1,
+    "templates/index.json": 1
   }
 }
