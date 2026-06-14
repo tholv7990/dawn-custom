@@ -1,35 +1,3 @@
-{% style %}
-  #shopify-section-{{ section.id }} .gs-announce {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Slightly larger gap + icon legibility so each item reads cleanly on mobile. */
-  #shopify-section-{{ section.id }} .gs-announce__track span {
-    gap: var(--ct-space-2);
-    margin-right: var(--ct-space-6);
-  }
-
-  #shopify-section-{{ section.id }} .gs-announce__track b {
-    display: inline-flex;
-    align-items: center;
-    line-height: 1;
-    opacity: 0.92;
-  }
-
-  /* Keep the secondary bar's accent text comfortably readable. */
-  #shopify-section-{{ section.id }} .gs-announce--green .gs-announce__track b {
-    opacity: 1;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    #shopify-section-{{ section.id }} .gs-announce__track {
-      animation: none;
-      justify-content: center;
-    }
-  }
-{% endstyle %}
-
 <div class="gs-scope">
   <div class="gs-announce gs-announce--top">
     <div class="gs-announce__track">
@@ -37,17 +5,8 @@
         <div class="gs-announce__set"{% if repeat > 1 %} aria-hidden="true"{% endif %}>
           {%- for block in section.blocks -%}
             {%- if block.type == 'top_message' -%}
-              {%- liquid
-                assign icon = block.settings.icon | strip
-                comment
-                  # Only render the icon when it is a glyph/symbol (e.g. an emoji).
-                  # A plain word like "Info" has no matching icon and would print as
-                  # literal text, so skip values that are purely letters/spaces.
-                endcomment
-                assign icon_letters = icon | downcase | remove: 'a' | remove: 'b' | remove: 'c' | remove: 'd' | remove: 'e' | remove: 'f' | remove: 'g' | remove: 'h' | remove: 'i' | remove: 'j' | remove: 'k' | remove: 'l' | remove: 'm' | remove: 'n' | remove: 'o' | remove: 'p' | remove: 'q' | remove: 'r' | remove: 's' | remove: 't' | remove: 'u' | remove: 'v' | remove: 'w' | remove: 'x' | remove: 'y' | remove: 'z' | remove: ' '
-              -%}
               <span{% if repeat == 1 %} {{ block.shopify_attributes }}{% endif %}>
-                {%- if icon != blank and icon_letters != blank -%}<b aria-hidden="true">{{ icon }}</b>{%- endif -%}
+                {%- if block.settings.icon != blank -%}<b aria-hidden="true">{{ block.settings.icon }}</b>{%- endif -%}
                 {{ block.settings.text }}
               </span>
             {%- endif -%}
@@ -62,17 +21,8 @@
         <div class="gs-announce__set"{% if repeat > 1 %} aria-hidden="true"{% endif %}>
           {%- for block in section.blocks -%}
             {%- if block.type == 'bottom_message' -%}
-              {%- liquid
-                assign icon = block.settings.icon | strip
-                comment
-                  # Only render the icon when it is a glyph/symbol (e.g. an emoji).
-                  # A plain word like "Info" has no matching icon and would print as
-                  # literal text, so skip values that are purely letters/spaces.
-                endcomment
-                assign icon_letters = icon | downcase | remove: 'a' | remove: 'b' | remove: 'c' | remove: 'd' | remove: 'e' | remove: 'f' | remove: 'g' | remove: 'h' | remove: 'i' | remove: 'j' | remove: 'k' | remove: 'l' | remove: 'm' | remove: 'n' | remove: 'o' | remove: 'p' | remove: 'q' | remove: 'r' | remove: 's' | remove: 't' | remove: 'u' | remove: 'v' | remove: 'w' | remove: 'x' | remove: 'y' | remove: 'z' | remove: ' '
-              -%}
               <span{% if repeat == 1 %} {{ block.shopify_attributes }}{% endif %}>
-                {%- if icon != blank and icon_letters != blank -%}<b aria-hidden="true">{{ icon }}</b>{%- endif -%}
+                {%- if block.settings.icon != blank -%}<b aria-hidden="true">{{ block.settings.icon }}</b>{%- endif -%}
                 {{ block.settings.text }}
               </span>
             {%- endif -%}
@@ -94,16 +44,16 @@
       "type": "top_message",
       "name": "Top message",
       "settings": [
-        { "type": "text", "id": "icon", "label": "Icon", "info": "Paste an emoji or symbol (e.g. ★ or ✦). Plain words are ignored so no stray text appears.", "default": "★" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping on all orders" }
+        { "type": "text", "id": "icon", "label": "Icon", "default": "Info" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Add announcement text" }
       ]
     },
     {
       "type": "bottom_message",
       "name": "Bottom message",
       "settings": [
-        { "type": "text", "id": "icon", "label": "Icon", "info": "Paste an emoji or symbol (e.g. ★ or ✦). Plain words are ignored so no stray text appears.", "default": "✦" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Easy returns" }
+        { "type": "text", "id": "icon", "label": "Icon", "default": "Info" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Add secondary announcement text" }
       ]
     }
   ],
@@ -111,8 +61,8 @@
     {
       "name": "Announcement bars",
       "blocks": [
-        { "type": "top_message", "settings": { "icon": "★", "text": "Free shipping on all orders" } },
-        { "type": "bottom_message", "settings": { "icon": "✦", "text": "Easy returns" } }
+        { "type": "top_message", "settings": { "icon": "Info", "text": "Add announcement text" } },
+        { "type": "bottom_message", "settings": { "icon": "Info", "text": "Add secondary announcement text" } }
       ]
     }
   ]

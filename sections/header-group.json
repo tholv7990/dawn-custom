@@ -8,15 +8,15 @@
         "b1": {
           "type": "top_message",
           "settings": {
-            "icon": "Info",
+            "icon": "&#128666;",
             "text": "Free shipping on qualifying orders"
           }
         },
         "b2": {
           "type": "bottom_message",
           "settings": {
-            "icon": "Info",
-            "text": "Hassle-free returns"
+            "icon": "&#8634;",
+            "text": "Easy returns"
           }
         }
       },

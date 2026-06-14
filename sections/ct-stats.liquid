@@ -33,22 +33,10 @@
     color: var(--ct-text);
   }
 
-  .ct-stats .gs-section-heading {
-    text-align: center;
-  }
-
-  .ct-stats .gs-section-sub {
-    max-width: 56ch;
-    margin-inline: auto;
-    margin-bottom: var(--ct-space-5);
-    text-align: center;
-    color: var(--ct-text-2);
-  }
-
   .ct-stats__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--ct-space-4);
+    gap: var(--ct-space-6);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -58,19 +46,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--ct-space-2);
     text-align: center;
-    padding: var(--ct-space-6) var(--ct-space-4);
+    padding: var(--ct-space-6);
     background: var(--ct-bg-surface);
     border: 1px solid var(--ct-border);
     border-radius: var(--ct-r-lg);
-    transition: border-color 0.2s ease, transform 0.2s ease;
-  }
-
-  .ct-stats__item:hover {
-    border-color: var(--ct-action-border);
-    transform: translateY(-2px);
   }
 
   .ct-stats__value {
@@ -83,14 +65,12 @@
     font-size: var(--ct-h2);
     font-weight: var(--ct-fw-bold);
     line-height: var(--ct-leading-tight);
-    letter-spacing: -0.01em;
   }
 
   .ct-stats__suffix {
-    font-size: var(--ct-h3);
+    font-size: var(--ct-h2);
     font-weight: var(--ct-fw-bold);
     line-height: var(--ct-leading-tight);
-    color: var(--ct-action);
   }
 
   .ct-stats__label {
@@ -104,17 +84,7 @@
   @media screen and (min-width: 750px) {
     .ct-stats__grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--ct-space-5);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ct-stats__item {
-      transition: none;
-    }
-
-    .ct-stats__item:hover {
-      transform: none;
+      gap: var(--ct-space-8);
     }
   }
 {% endstyle %}
@@ -133,8 +103,7 @@
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "info": "Use real, verifiable figures only. Edit each stat below with your own numbers and labels.",
-      "default": "Add your own real metrics here — replace each placeholder with a number you can stand behind."
+      "default": "A quick snapshot of the metrics that matter."
     },
     {
       "type": "header",
@@ -170,21 +139,19 @@
           "type": "text",
           "id": "value",
           "label": "Value",
-          "info": "Enter a real number. Leave at 0 until you have a figure you can verify.",
           "default": "0"
         },
         {
           "type": "text",
           "id": "suffix",
           "label": "Suffix",
-          "info": "Optional unit or symbol, e.g. %, +, hrs, ★. Leave blank if not needed.",
-          "default": ""
+          "default": "+"
         },
         {
           "type": "text",
           "id": "label",
           "label": "Label",
-          "default": "Add a stat"
+          "default": "Stat label"
         }
       ]
     }

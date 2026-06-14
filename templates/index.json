@@ -2,7 +2,16 @@
   "sections": {
     "hero": {
       "type": "ct-hero",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Featured",
+        "heading": "Everyday essentials, made to last",
+        "subheading": "Thoughtfully made products with fast shipping, easy returns, and friendly support whenever you need it.",
+        "button_label": "Shop now",
+        "button_url": "/collections/all",
+        "button2_label": "",
+        "content_alignment": "center",
+        "min_height": "medium"
+      }
     },
     "trust_bar": {
       "type": "ct-trust-bar",
@@ -50,7 +59,13 @@
     },
     "before_after": {
       "type": "ct-before-after",
-      "settings": {}
+      "settings": {
+        "heading": "See the difference",
+        "subheading": "Drag the handle to compare before and after.",
+        "before_label": "Before",
+        "after_label": "After",
+        "start_position": 50
+      }
     },
     "pillars": {
       "type": "ct-icon-columns",
@@ -276,34 +291,6 @@
         "b5"
       ]
     },
-    "stats": {
-      "type": "ct-stats",
-      "settings": {},
-      "blocks": {
-        "b1": {
-          "type": "stat",
-          "settings": {}
-        },
-        "b2": {
-          "type": "stat",
-          "settings": {}
-        },
-        "b3": {
-          "type": "stat",
-          "settings": {}
-        },
-        "b4": {
-          "type": "stat",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3",
-        "b4"
-      ]
-    },
     "featured_products": {
       "type": "featured-collection",
       "settings": {}
@@ -435,7 +422,6 @@
     "marquee",
     "gallery",
     "comparison",
-    "stats",
     "featured_products",
     "reviews",
     "faq",

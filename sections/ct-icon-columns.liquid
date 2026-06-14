@@ -32,31 +32,13 @@
     color: var(--ct-text);
   }
 
-  .ct-icon-cols .gs-section-heading,
-  .ct-icon-cols .gs-section-sub {
-    text-align: center;
-  }
-
-  .ct-icon-cols .gs-section-sub {
-    max-width: 52ch;
-    margin-inline: auto;
-  }
-
   .ct-icon-cols__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--ct-space-5);
-    margin-top: var(--ct-space-8);
+    gap: var(--ct-space-6);
   }
 
-  @media screen and (min-width: 600px) {
-    .ct-icon-cols__grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--ct-space-6);
-    }
-  }
-
-  @media screen and (min-width: 990px) {
+  @media screen and (min-width: 750px) {
     .ct-icon-cols__grid {
       grid-template-columns: repeat(var(--ct-cols, 3), 1fr);
       gap: var(--ct-space-8);
@@ -68,31 +50,11 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--ct-space-3);
-    height: 100%;
     padding: var(--ct-space-6);
     background: var(--ct-card-bg);
     border: 1px solid var(--ct-card-border);
     border-radius: var(--ct-r-lg);
     box-shadow: var(--ct-shadow-sm);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  }
-
-  @media (hover: hover) {
-    .ct-icon-cols__col:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--ct-shadow-md);
-      border-color: var(--ct-action);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ct-icon-cols__col {
-      transition: none;
-    }
-
-    .ct-icon-cols__col:hover {
-      transform: none;
-    }
   }
 
   .ct-icon-cols__icon {
@@ -141,13 +103,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Why shop with us"
+      "default": "Why choose us"
     },
     {
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Thoughtful details and dependable service behind every order."
+      "default": "A few reasons customers keep coming back."
     },
     {
       "type": "range",
@@ -156,7 +118,7 @@
       "max": 4,
       "step": 1,
       "label": "Columns",
-      "default": 4
+      "default": 3
     },
     {
       "type": "header",
@@ -193,19 +155,19 @@
           "id": "icon",
           "label": "Icon",
           "info": "Icon key, e.g. check, truck, lock, star, leaf, bolt, recycle, info, heart.",
-          "default": "verified"
+          "default": "check"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Quality materials"
+          "default": "Feature title"
         },
         {
           "type": "textarea",
           "id": "body",
           "label": "Body",
-          "default": "Chosen for durability and finish, so every piece holds up to everyday use."
+          "default": "Add a short supporting sentence here."
         }
       ]
     }
@@ -214,38 +176,9 @@
     {
       "name": "Icon columns",
       "blocks": [
-        {
-          "type": "column",
-          "settings": {
-            "icon": "verified",
-            "title": "Quality materials",
-            "body": "Chosen for durability and finish, so every piece holds up to everyday use."
-          }
-        },
-        {
-          "type": "column",
-          "settings": {
-            "icon": "truck",
-            "title": "Fast shipping",
-            "body": "Orders are packed quickly and dispatched with tracking from the moment they leave."
-          }
-        },
-        {
-          "type": "column",
-          "settings": {
-            "icon": "lock",
-            "title": "Secure checkout",
-            "body": "Pay with confidence through encrypted, trusted payment providers."
-          }
-        },
-        {
-          "type": "column",
-          "settings": {
-            "icon": "heart",
-            "title": "Here to help",
-            "body": "Friendly support is ready to answer questions before and after you buy."
-          }
-        }
+        { "type": "column" },
+        { "type": "column" },
+        { "type": "column" }
       ]
     }
   ]
