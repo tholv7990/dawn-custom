@@ -8,7 +8,7 @@
       <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
     {%- if section.settings.subheading != blank -%}
-      <p class="ct-hotspots__sub">{{ section.settings.subheading | escape }}</p>
+      <p class="gs-section-sub">{{ section.settings.subheading | escape }}</p>
     {%- endif -%}
 
     <div class="ct-hotspots__stage">
@@ -56,14 +56,6 @@
 </section>
 
 {% style %}
-  .ct-hotspots__sub {
-    margin: 0 0 var(--ct-space-6);
-    max-width: 60ch;
-    color: var(--ct-text-2);
-    font-size: var(--ct-body-size);
-    line-height: var(--ct-leading-base);
-  }
-
   .ct-hotspots__stage {
     position: relative;
     width: 100%;

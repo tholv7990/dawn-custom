@@ -6,7 +6,7 @@
       <h2 class="gs-section-heading">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
     {%- if section.settings.subheading != blank -%}
-      <p class="ct-gallery__sub">{{ section.settings.subheading | escape }}</p>
+      <p class="gs-section-sub">{{ section.settings.subheading | escape }}</p>
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
@@ -41,18 +41,11 @@
 </section>
 
 {% style %}
-  .ct-gallery .ct-gallery__sub {
-    margin: var(--ct-space-2) 0 0;
-    color: var(--ct-text-2);
-    font-size: var(--ct-body-size);
-    line-height: var(--ct-leading-base);
-  }
-
   .ct-gallery .ct-gallery__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--ct-space-4);
-    margin: var(--ct-space-6) 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
   }
@@ -88,7 +81,7 @@
 
   @media (min-width: 750px) {
     .ct-gallery .ct-gallery__grid {
-      grid-template-columns: repeat(var(--ct-cols), 1fr);
+      grid-template-columns: repeat(var(--ct-cols, 4), 1fr);
       gap: var(--ct-space-5);
     }
   }
@@ -127,7 +120,7 @@
       "max": 5,
       "step": 1,
       "label": "Columns",
-      "default": 3
+      "default": 4
     },
     {
       "type": "header",

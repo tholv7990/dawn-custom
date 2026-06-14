@@ -328,12 +328,23 @@
             "title": "[Review title]",
             "body": "[Paste a genuine customer review here]"
           }
+        },
+        "b4": {
+          "type": "review",
+          "settings": {
+            "name": "[Customer name]",
+            "verified": false,
+            "rating": 5,
+            "title": "[Review title]",
+            "body": "[Paste a genuine customer review here]"
+          }
         }
       },
       "block_order": [
         "b1",
         "b2",
-        "b3"
+        "b3",
+        "b4"
       ]
     },
     "faq": {
