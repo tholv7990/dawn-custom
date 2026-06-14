@@ -3,11 +3,11 @@
     "hero": {
       "type": "ct-hero",
       "settings": {
-        "eyebrow": "Featured",
-        "heading": "Everyday essentials, made to last",
-        "subheading": "Thoughtfully made products with fast shipping, easy returns, and friendly support whenever you need it.",
-        "button_label": "Shop now",
-        "button_url": "/collections/all",
+        "eyebrow": "",
+        "heading": "",
+        "subheading": "",
+        "button_label": "",
+        "button_url": "",
         "button2_label": "",
         "content_alignment": "center",
         "min_height": "medium"
@@ -21,32 +21,32 @@
           "type": "benefit",
           "settings": {
             "icon": "truck",
-            "title": "Free shipping",
-            "text": "On qualifying orders"
+            "title": "",
+            "text": ""
           }
         },
         "b2": {
           "type": "benefit",
           "settings": {
             "icon": "return",
-            "title": "Easy returns",
-            "text": "Hassle-free return process"
+            "title": "",
+            "text": ""
           }
         },
         "b3": {
           "type": "benefit",
           "settings": {
             "icon": "lock",
-            "title": "Secure checkout",
-            "text": "Your details stay protected"
+            "title": "",
+            "text": ""
           }
         },
         "b4": {
           "type": "benefit",
           "settings": {
             "icon": "chat",
-            "title": "Friendly support",
-            "text": "We're here to help"
+            "title": "",
+            "text": ""
           }
         }
       },
@@ -60,10 +60,10 @@
     "before_after": {
       "type": "ct-before-after",
       "settings": {
-        "heading": "See the difference",
-        "subheading": "Drag the handle to compare before and after.",
-        "before_label": "Before",
-        "after_label": "After",
+        "heading": "",
+        "subheading": "",
+        "before_label": "",
+        "after_label": "",
         "start_position": 50
       }
     },
@@ -75,32 +75,32 @@
           "type": "column",
           "settings": {
             "icon": "verified",
-            "title": "Quality materials",
-            "body": "Chosen for durability and finish, so every piece holds up to everyday use."
+            "title": "",
+            "body": ""
           }
         },
         "b2": {
           "type": "column",
           "settings": {
             "icon": "truck",
-            "title": "Fast shipping",
-            "body": "Orders are packed quickly and dispatched with tracking from the moment they leave."
+            "title": "",
+            "body": ""
           }
         },
         "b3": {
           "type": "column",
           "settings": {
             "icon": "lock",
-            "title": "Secure checkout",
-            "body": "Pay with confidence through encrypted, trusted payment providers."
+            "title": "",
+            "body": ""
           }
         },
         "b4": {
           "type": "column",
           "settings": {
             "icon": "heart",
-            "title": "Here to help",
-            "body": "Friendly support is ready to answer questions before and after you buy."
+            "title": "",
+            "body": ""
           }
         }
       },
@@ -119,33 +119,33 @@
           "type": "feature",
           "settings": {
             "image_side": "right",
-            "heading": "Designed for everyday use",
-            "body": "Built to slot into daily routines without fuss. Highlight the practical benefit customers notice first and the small details that make it easy to live with.",
-            "image_label": "Add lifestyle image",
-            "tag_1": "Practical",
-            "tag_2": "Everyday"
+            "heading": "",
+            "body": "",
+            "image_label": "",
+            "tag_1": "",
+            "tag_2": ""
           }
         },
         "b2": {
           "type": "feature",
           "settings": {
             "image_side": "left",
-            "heading": "Made with quality materials",
-            "body": "Call out the materials and construction that set your product apart. Explain how thoughtful choices translate into a better feel and longer life.",
-            "image_label": "Add detail close-up",
-            "tag_1": "Durable",
-            "tag_2": "Premium"
+            "heading": "",
+            "body": "",
+            "image_label": "",
+            "tag_1": "",
+            "tag_2": ""
           }
         },
         "b3": {
           "type": "feature",
           "settings": {
             "image_side": "right",
-            "heading": "Thoughtful details throughout",
-            "body": "Show the finishing touches that reward a closer look. Use this block to connect the small, considered details to the experience your customer gets.",
-            "image_label": "Add feature image",
-            "tag_1": "Considered",
-            "tag_2": "Refined"
+            "heading": "",
+            "body": "",
+            "image_label": "",
+            "tag_1": "",
+            "tag_2": ""
           }
         }
       },
@@ -163,28 +163,28 @@
           "type": "message",
           "settings": {
             "icon": "&#128666;",
-            "text": "Free shipping on qualifying orders"
+            "text": ""
           }
         },
         "b2": {
           "type": "message",
           "settings": {
             "icon": "&#10003;",
-            "text": "Quality you can trust"
+            "text": ""
           }
         },
         "b3": {
           "type": "message",
           "settings": {
             "icon": "&#8634;",
-            "text": "Easy returns"
+            "text": ""
           }
         },
         "b4": {
           "type": "message",
           "settings": {
             "icon": "&#128737;",
-            "text": "Secure checkout"
+            "text": ""
           }
         }
       },
@@ -230,55 +230,55 @@
         "b1": {
           "type": "row",
           "settings": {
-            "feature": "Quality",
-            "us": "Premium",
-            "alt_1": "Mixed",
+            "feature": "",
+            "us": "",
+            "alt_1": "",
             "alt_1_good": false,
-            "alt_2": "Low",
+            "alt_2": "",
             "alt_2_good": false
           }
         },
         "b2": {
           "type": "row",
           "settings": {
-            "feature": "Comfort",
-            "us": "Yes",
-            "alt_1": "Sometimes",
+            "feature": "",
+            "us": "",
+            "alt_1": "",
             "alt_1_good": false,
-            "alt_2": "No",
+            "alt_2": "",
             "alt_2_good": false
           }
         },
         "b3": {
           "type": "row",
           "settings": {
-            "feature": "Durability",
-            "us": "Built to last",
-            "alt_1": "Varies",
+            "feature": "",
+            "us": "",
+            "alt_1": "",
             "alt_1_good": false,
-            "alt_2": "Wears quickly",
+            "alt_2": "",
             "alt_2_good": false
           }
         },
         "b4": {
           "type": "row",
           "settings": {
-            "feature": "Value",
-            "us": "Yes",
-            "alt_1": "Overpriced",
+            "feature": "",
+            "us": "",
+            "alt_1": "",
             "alt_1_good": false,
-            "alt_2": "Hidden costs",
+            "alt_2": "",
             "alt_2_good": false
           }
         },
         "b5": {
           "type": "row",
           "settings": {
-            "feature": "Support",
-            "us": "Dedicated",
-            "alt_1": "Limited",
+            "feature": "",
+            "us": "",
+            "alt_1": "",
             "alt_1_good": false,
-            "alt_2": "None",
+            "alt_2": "",
             "alt_2_good": false
           }
         }
@@ -302,41 +302,41 @@
         "b1": {
           "type": "review",
           "settings": {
-            "name": "[Customer name]",
+            "name": "",
             "verified": false,
             "rating": 5,
-            "title": "[Review title]",
-            "body": "[Paste a genuine customer review here]"
+            "title": "",
+            "body": ""
           }
         },
         "b2": {
           "type": "review",
           "settings": {
-            "name": "[Customer name]",
+            "name": "",
             "verified": false,
             "rating": 5,
-            "title": "[Review title]",
-            "body": "[Paste a genuine customer review here]"
+            "title": "",
+            "body": ""
           }
         },
         "b3": {
           "type": "review",
           "settings": {
-            "name": "[Customer name]",
+            "name": "",
             "verified": false,
             "rating": 5,
-            "title": "[Review title]",
-            "body": "[Paste a genuine customer review here]"
+            "title": "",
+            "body": ""
           }
         },
         "b4": {
           "type": "review",
           "settings": {
-            "name": "[Customer name]",
+            "name": "",
             "verified": false,
             "rating": 5,
-            "title": "[Review title]",
-            "body": "[Paste a genuine customer review here]"
+            "title": "",
+            "body": ""
           }
         }
       },
@@ -354,36 +354,36 @@
         "b1": {
           "type": "item",
           "settings": {
-            "question": "When will my order ship?",
-            "answer": "Add your shipping timeline, carrier details, and tracking expectations here."
+            "question": "",
+            "answer": ""
           }
         },
         "b2": {
           "type": "item",
           "settings": {
-            "question": "How do returns work?",
-            "answer": "Use the return policy linked in the footer for the current store terms. Keep the product and packaging until the request is approved."
+            "question": "",
+            "answer": ""
           }
         },
         "b3": {
           "type": "item",
           "settings": {
-            "question": "Can I change or cancel an order?",
-            "answer": "Add your order-change policy here, including when changes are no longer available."
+            "question": "",
+            "answer": ""
           }
         },
         "b4": {
           "type": "item",
           "settings": {
-            "question": "Where can I find product details?",
-            "answer": "Check the product details, materials, and care information on this page."
+            "question": "",
+            "answer": ""
           }
         },
         "b5": {
           "type": "item",
           "settings": {
-            "question": "Who can I contact for help?",
-            "answer": "Use the support email or contact form linked in the footer. Include your order number."
+            "question": "",
+            "answer": ""
           }
         }
       },
@@ -398,12 +398,12 @@
     "final_cta": {
       "type": "ct-cta-banner",
       "settings": {
-        "eyebrow": "Ready when you are",
-        "heading": "Let's get you started today",
-        "subheading": "Everything you need is ready to go. Take the next step and we'll handle the rest, with help on hand whenever you need it.",
-        "button_label": "Get started",
+        "eyebrow": "",
+        "heading": "",
+        "subheading": "",
+        "button_label": "",
         "button_url": "",
-        "button2_label": "Learn more",
+        "button2_label": "",
         "button2_url": "",
         "tint": true,
         "padding_top": 60,
@@ -413,11 +413,11 @@
     "email_signup": {
       "type": "ct-email-signup",
       "settings": {
-        "eyebrow": "JOIN THE LIST",
-        "heading": "Join the list",
-        "body": "Get product updates, launch notes, and store news by email. Unsubscribe anytime.",
-        "placeholder": "you@email.com",
-        "button_label": "Sign up",
+        "eyebrow": "",
+        "heading": "",
+        "body": "",
+        "placeholder": "",
+        "button_label": "",
         "disclaimer": "We will only use your email for store updates and offers you choose to receive.",
         "padding_top": 80,
         "padding_bottom": 88
