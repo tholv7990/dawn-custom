@@ -1304,7 +1304,7 @@
 .gs-video-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--ct-space-3);
+  gap: var(--ct-space-4);
   max-width: 1080px;
   margin: var(--ct-card-pad-lg) auto 0;
 }
@@ -1402,7 +1402,7 @@
 .gs-related-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--ct-space-3);
+  gap: var(--ct-space-4);
 }
 
 .gs-product-card {
