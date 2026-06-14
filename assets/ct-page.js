@@ -113,44 +113,29 @@
       if (!lightboxStage || !galleryTriggers.length) return;
       lightboxIndex = Math.max(0, Math.min(galleryTriggers.length - 1, index));
       var trigger = galleryTriggers[lightboxIndex];
-      var fullSrc = trigger.dataset.gsFullImage;
       var image = trigger.querySelector('img');
-      // The gallery thumb the user just clicked is already decoded in-browser;
-      // reuse it for an instant paint, then upgrade to the hi-res file. Without
-      // this the stage stayed blank while the 2200px image downloaded (the lag).
-      var placeholder = image ? image.currentSrc || image.src : '';
-      if (!fullSrc) fullSrc = placeholder;
-      if (!fullSrc) return;
+      // Match Dawn: reuse the image the gallery already downloaded + decoded
+      // (image.currentSrc) instead of fetching a separate large file per slide.
+      // That separate fetch + decode was the only thing the smooth gallery never
+      // did, and the only place this popup lagged. dataset.gsFullImage is just a
+      // fallback for the no-media (fallback image) case.
+      var src = image ? image.currentSrc || image.src : trigger.dataset.gsFullImage;
+      if (!src) return;
       lightboxStage.textContent = '';
       lightboxImage = document.createElement('img');
-      // Eager + high priority: the user explicitly opened this image, so fetch
-      // it now instead of deferring it like a lazy below-the-fold image.
       lightboxImage.loading = 'eager';
       lightboxImage.decoding = 'async';
       lightboxImage.setAttribute('fetchpriority', 'high');
       lightboxImage.alt = image ? image.alt || '' : '';
-      var imgEl = lightboxImage;
-      if (placeholder && placeholder !== fullSrc) {
-        imgEl.src = placeholder;
-        var hiRes = new Image();
-        hiRes.onload = function () {
-          // Only upgrade if this slide is still the one on screen (guards fast
-          // prev/next navigation from swapping in a stale hi-res image).
-          if (lightboxImage === imgEl) imgEl.src = fullSrc;
-        };
-        hiRes.src = fullSrc;
-      } else {
-        imgEl.src = fullSrc;
-      }
-      lightboxStage.appendChild(imgEl);
+      lightboxImage.src = src;
+      lightboxStage.appendChild(lightboxImage);
 
-      // Warm the neighbouring slides' full images so the NEXT swipe paints from
-      // cache instead of waiting on a fresh 2200px download (the swipe lag).
+      // Warm neighbours so a swipe shows their (already device-sized) gallery
+      // image instantly even if that slide had not been viewed in the gallery.
       [lightboxIndex - 1, lightboxIndex + 1].forEach(function (neighbor) {
         if (neighbor < 0 || neighbor >= galleryTriggers.length) return;
-        var nt = galleryTriggers[neighbor];
-        var nimg = nt.querySelector('img');
-        var nsrc = nt.dataset.gsFullImage || (nimg ? nimg.currentSrc || nimg.src : '');
+        var nimg = galleryTriggers[neighbor].querySelector('img');
+        var nsrc = nimg ? nimg.currentSrc || nimg.src : galleryTriggers[neighbor].dataset.gsFullImage;
         if (nsrc) {
           var warm = new Image();
           warm.src = nsrc;
