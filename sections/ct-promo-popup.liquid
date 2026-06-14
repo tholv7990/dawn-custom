@@ -58,12 +58,11 @@
       {%- endif -%}
 
       <div class="ct-promo-popup__body">
-        <h2 id="{{ ct_pp_label_id }}" class="ct-promo-popup__heading">
-          {{- section.settings.heading | escape -}}
-        </h2>
-        <p class="ct-promo-popup__text">{{ section.settings.body | escape }}</p>
-
         {%- if section.settings.mode == 'code' -%}
+          <h2 id="{{ ct_pp_label_id }}" class="ct-promo-popup__heading">
+            {{- section.settings.heading | escape -}}
+          </h2>
+          <p class="ct-promo-popup__text">{{ section.settings.body | escape }}</p>
           <div class="ct-promo-popup__code">
             <span class="ct-promo-popup__code-value" data-ct-promo-code>
               {{- section.settings.code | escape -}}
@@ -84,10 +83,22 @@
           {%- form 'customer', id: ct_pp_form_id, class: 'ct-promo-popup__form' -%}
             <input type="hidden" name="contact[tags]" value="newsletter">
             {%- if form.posted_successfully? -%}
-              <p class="ct-promo-popup__success" role="status">
-                {{- section.settings.success_message | escape -}}
-              </p>
+              <div class="ct-promo-popup__thanks" data-ct-promo-thanks>
+                <span class="ct-promo-popup__badge" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="34" height="34" focusable="false"><path d="M20 6 9 17l-5-5" /></svg>
+                </span>
+                <h2 id="{{ ct_pp_label_id }}" class="ct-promo-popup__thanks-heading">
+                  {{- section.settings.success_heading | escape -}}
+                </h2>
+                <p class="ct-promo-popup__success" role="status">
+                  {{- section.settings.success_message | escape -}}
+                </p>
+              </div>
             {%- else -%}
+              <h2 id="{{ ct_pp_label_id }}" class="ct-promo-popup__heading">
+                {{- section.settings.heading | escape -}}
+              </h2>
+              <p class="ct-promo-popup__text">{{ section.settings.body | escape }}</p>
               <label class="visually-hidden" for="CtPromoEmail-{{ section.id }}">
                 {{- section.settings.placeholder | escape -}}
               </label>
@@ -310,10 +321,62 @@
       margin-top: var(--ct-space-3);
       color: var(--ct-error, var(--ct-text));
     }
+    #{{ ct_pp_id }} .ct-promo-popup__thanks {
+      text-align: center;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      margin-bottom: var(--ct-space-4);
+      border-radius: var(--ct-r-pill);
+      color: var(--ct-success, var(--ct-action));
+      background: var(--ct-success-light, var(--ct-action-tint));
+      animation: ct-pp-pop var(--ct-dur-base) var(--ct-ease-out) both;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__badge svg {
+      width: 34px;
+      height: 34px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__thanks-heading {
+      margin: 0 0 var(--ct-space-3);
+      font-family: var(--ct-font-heading);
+      font-size: var(--ct-h3);
+      font-weight: var(--ct-fw-bold);
+      line-height: var(--ct-leading-tight);
+      color: var(--ct-text);
+    }
+    #{{ ct_pp_id }} .ct-promo-popup__thanks .ct-promo-popup__success {
+      color: var(--ct-text-2);
+      font-weight: var(--ct-fw-normal);
+    }
+    @keyframes ct-pp-pop {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.12);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
     @media (prefers-reduced-motion: reduce) {
       #{{ ct_pp_id }} .ct-promo-popup__dialog {
         transition: none;
         transform: none;
+      }
+      #{{ ct_pp_id }} .ct-promo-popup__badge {
+        animation: none;
       }
     }
   {%- endstyle -%}
@@ -437,6 +500,14 @@
 
       if (design) return;
 
+      // After a successful signup the page reloads with the thank-you state
+      // rendered server-side. Re-open immediately so the celebration shows,
+      // bypassing the delay and frequency cap.
+      if (root.querySelector('[data-ct-promo-thanks]')) {
+        open();
+        return;
+      }
+
       if (dismissedRecently()) return;
 
       if (delayMs > 0) {
@@ -498,6 +569,12 @@
       "id": "placeholder",
       "label": "Email placeholder",
       "default": "you@email.com"
+    },
+    {
+      "type": "text",
+      "id": "success_heading",
+      "label": "Success heading",
+      "default": "Thank you!"
     },
     {
       "type": "text",

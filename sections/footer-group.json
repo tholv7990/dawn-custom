@@ -13,7 +13,22 @@
     "scroll_to_top": {
       "type": "ct-scroll-to-top",
       "settings": {}
+    },
+    "promo_popup": {
+      "type": "ct-promo-popup",
+      "settings": {
+        "enable": true,
+        "mode": "email",
+        "heading": "Join our list",
+        "body": "Get product news and early access, straight to your inbox.",
+        "placeholder": "you@email.com",
+        "button_label": "Sign up",
+        "success_heading": "Thank you!",
+        "success_message": "You're on the list - check your inbox.",
+        "delay_seconds": 5,
+        "frequency_days": 7
+      }
     }
   },
-  "order": ["footer", "cookie_bar", "scroll_to_top"]
+  "order": ["footer", "cookie_bar", "scroll_to_top", "promo_popup"]
 }
