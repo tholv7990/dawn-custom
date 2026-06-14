@@ -260,11 +260,12 @@ details[open].menu-opening > .menu-drawer__submenu {
 
   header-drawer > details[open].menu-drawer-container > summary.header__icon--menu {
     position: fixed;
+    /* Keep the open close-button where the hamburger already sits (top-left) so it
+       morphs in place — open/closed positions coincide, so there is no jump when
+       the drawer closes. The nav below is padded to clear it (no overlap). */
     top: var(--ct-space-4);
-    left: auto;
-    /* Pin the close button to the TOP-RIGHT of the panel (panel is left-anchored
-       at min(86vw,36rem)) so it no longer overlaps the menu content top-left. */
-    right: calc(100vw - min(86vw, 36rem) + var(--ct-space-4));
+    left: var(--ct-space-4);
+    right: auto;
     z-index: 1003;
     display: flex;
     align-items: center;
