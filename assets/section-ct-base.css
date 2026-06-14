@@ -165,7 +165,7 @@
   align-items: center;
   width: max-content;
   min-width: max-content;
-  padding: 8px 0;
+  padding: var(--ct-space-2) 0;
   animation: gs-scroll 24s linear infinite;
   will-change: transform;
 }

@@ -694,7 +694,7 @@
 }
 
 .gs-spec-table td {
-  padding: 12px var(--ct-card-pad);
+  padding: var(--ct-space-3) var(--ct-card-pad);
   border-top: 1px solid var(--ct-border);
   vertical-align: middle;
   line-height: 1.45;
@@ -910,7 +910,7 @@
 }
 
 .gs-email-signup__eyebrow {
-  margin: 0 0 12px;
+  margin: 0 0 var(--ct-space-3);
   color: var(--ct-on-accent);
   font-size: var(--ct-text-xs);
   font-weight: 800;
@@ -1010,7 +1010,7 @@
   z-index: 1200;
   display: grid;
   place-items: center;
-  padding: 20px;
+  padding: var(--ct-space-4);
 }
 
 .gs-email-modal__backdrop {
@@ -1079,7 +1079,7 @@
 
 .gs-email-modal__body {
   max-width: 430px;
-  margin: 12px auto 0;
+  margin: var(--ct-space-3) auto 0;
   color: var(--ct-text-2);
   font-size: var(--ct-text-base);
   line-height: 1.5;
@@ -1625,7 +1625,7 @@
   align-items: center;
   min-height: 24px;
   border-radius: 6px;
-  padding: 4px 8px;
+  padding: var(--ct-space-1) var(--ct-space-2);
   background: var(--ct-badge-sale);
   color: var(--ct-on-accent);
   font-size: var(--ct-text-xs);
