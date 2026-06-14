@@ -1,52 +1,136 @@
 {
   "sections": {
-    "ct_hero_0": {
+    "hero": {
       "type": "ct-hero",
       "settings": {}
     },
-    "ct_icon_columns_1": {
-      "type": "ct-icon-columns",
+    "trust_bar": {
+      "type": "ct-trust-bar",
       "settings": {},
       "blocks": {
         "b1": {
-          "type": "column",
-          "settings": {}
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping",
+            "text": "On qualifying orders"
+          }
         },
         "b2": {
-          "type": "column",
-          "settings": {}
+          "type": "benefit",
+          "settings": {
+            "icon": "return",
+            "title": "Easy returns",
+            "text": "Hassle-free return process"
+          }
         },
         "b3": {
-          "type": "column",
-          "settings": {}
+          "type": "benefit",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure checkout",
+            "text": "Your details stay protected"
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "chat",
+            "title": "Friendly support",
+            "text": "We're here to help"
+          }
         }
       },
       "block_order": [
         "b1",
         "b2",
-        "b3"
+        "b3",
+        "b4"
       ]
     },
-    "ct_feature_blocks_2": {
+    "before_after": {
+      "type": "ct-before-after",
+      "settings": {}
+    },
+    "pillars": {
+      "type": "ct-icon-columns",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "column",
+          "settings": {
+            "icon": "verified",
+            "title": "Quality materials",
+            "body": "Chosen for durability and finish, so every piece holds up to everyday use."
+          }
+        },
+        "b2": {
+          "type": "column",
+          "settings": {
+            "icon": "truck",
+            "title": "Fast shipping",
+            "body": "Orders are packed quickly and dispatched with tracking from the moment they leave."
+          }
+        },
+        "b3": {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure checkout",
+            "body": "Pay with confidence through encrypted, trusted payment providers."
+          }
+        },
+        "b4": {
+          "type": "column",
+          "settings": {
+            "icon": "heart",
+            "title": "Here to help",
+            "body": "Friendly support is ready to answer questions before and after you buy."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "features": {
       "type": "ct-feature-blocks",
       "settings": {},
       "blocks": {
         "b1": {
           "type": "feature",
           "settings": {
-            "image_side": "right"
+            "image_side": "right",
+            "heading": "Designed for everyday use",
+            "body": "Built to slot into daily routines without fuss. Highlight the practical benefit customers notice first and the small details that make it easy to live with.",
+            "image_label": "Add lifestyle image",
+            "tag_1": "Practical",
+            "tag_2": "Everyday"
           }
         },
         "b2": {
           "type": "feature",
           "settings": {
-            "image_side": "left"
+            "image_side": "left",
+            "heading": "Made with quality materials",
+            "body": "Call out the materials and construction that set your product apart. Explain how thoughtful choices translate into a better feel and longer life.",
+            "image_label": "Add detail close-up",
+            "tag_1": "Durable",
+            "tag_2": "Premium"
           }
         },
         "b3": {
           "type": "feature",
           "settings": {
-            "image_side": "right"
+            "image_side": "right",
+            "heading": "Thoughtful details throughout",
+            "body": "Show the finishing touches that reward a closer look. Use this block to connect the small, considered details to the experience your customer gets.",
+            "image_label": "Add feature image",
+            "tag_1": "Considered",
+            "tag_2": "Refined"
           }
         }
       },
@@ -56,11 +140,143 @@
         "b3"
       ]
     },
-    "ct_before_after_3": {
-      "type": "ct-before-after",
-      "settings": {}
+    "marquee": {
+      "type": "ct-trust-marquee",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "message",
+          "settings": {
+            "icon": "&#128666;",
+            "text": "Free shipping on qualifying orders"
+          }
+        },
+        "b2": {
+          "type": "message",
+          "settings": {
+            "icon": "&#10003;",
+            "text": "Quality you can trust"
+          }
+        },
+        "b3": {
+          "type": "message",
+          "settings": {
+            "icon": "&#8634;",
+            "text": "Easy returns"
+          }
+        },
+        "b4": {
+          "type": "message",
+          "settings": {
+            "icon": "&#128737;",
+            "text": "Secure checkout"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
     },
-    "ct_stats_4": {
+    "gallery": {
+      "type": "ct-gallery",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "image",
+          "settings": {}
+        },
+        "b2": {
+          "type": "image",
+          "settings": {}
+        },
+        "b3": {
+          "type": "image",
+          "settings": {}
+        },
+        "b4": {
+          "type": "image",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "comparison": {
+      "type": "ct-comparison",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "row",
+          "settings": {
+            "feature": "Quality",
+            "us": "Premium",
+            "alt_1": "Mixed",
+            "alt_1_good": false,
+            "alt_2": "Low",
+            "alt_2_good": false
+          }
+        },
+        "b2": {
+          "type": "row",
+          "settings": {
+            "feature": "Comfort",
+            "us": "Yes",
+            "alt_1": "Sometimes",
+            "alt_1_good": false,
+            "alt_2": "No",
+            "alt_2_good": false
+          }
+        },
+        "b3": {
+          "type": "row",
+          "settings": {
+            "feature": "Durability",
+            "us": "Built to last",
+            "alt_1": "Varies",
+            "alt_1_good": false,
+            "alt_2": "Wears quickly",
+            "alt_2_good": false
+          }
+        },
+        "b4": {
+          "type": "row",
+          "settings": {
+            "feature": "Value",
+            "us": "Yes",
+            "alt_1": "Overpriced",
+            "alt_1_good": false,
+            "alt_2": "Hidden costs",
+            "alt_2_good": false
+          }
+        },
+        "b5": {
+          "type": "row",
+          "settings": {
+            "feature": "Support",
+            "us": "Dedicated",
+            "alt_1": "Limited",
+            "alt_1_good": false,
+            "alt_2": "None",
+            "alt_2_good": false
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ]
+    },
+    "stats": {
       "type": "ct-stats",
       "settings": {},
       "blocks": {
@@ -92,21 +308,39 @@
       "type": "featured-collection",
       "settings": {}
     },
-    "ct_reviews_5": {
+    "reviews": {
       "type": "ct-reviews",
       "settings": {},
       "blocks": {
         "b1": {
           "type": "review",
-          "settings": {}
+          "settings": {
+            "name": "[Customer name]",
+            "verified": false,
+            "rating": 5,
+            "title": "[Review title]",
+            "body": "[Paste a genuine customer review here]"
+          }
         },
         "b2": {
           "type": "review",
-          "settings": {}
+          "settings": {
+            "name": "[Customer name]",
+            "verified": false,
+            "rating": 5,
+            "title": "[Review title]",
+            "body": "[Paste a genuine customer review here]"
+          }
         },
         "b3": {
           "type": "review",
-          "settings": {}
+          "settings": {
+            "name": "[Customer name]",
+            "verified": false,
+            "rating": 5,
+            "title": "[Review title]",
+            "body": "[Paste a genuine customer review here]"
+          }
         }
       },
       "block_order": [
@@ -115,68 +349,7 @@
         "b3"
       ]
     },
-    "ct_comparison_6": {
-      "type": "ct-comparison",
-      "settings": {},
-      "blocks": {
-        "b1": {
-          "type": "row",
-          "settings": {}
-        },
-        "b2": {
-          "type": "row",
-          "settings": {}
-        },
-        "b3": {
-          "type": "row",
-          "settings": {}
-        },
-        "b4": {
-          "type": "row",
-          "settings": {}
-        },
-        "b5": {
-          "type": "row",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3",
-        "b4",
-        "b5"
-      ]
-    },
-    "ct_gallery_7": {
-      "type": "ct-gallery",
-      "settings": {},
-      "blocks": {
-        "b1": {
-          "type": "image",
-          "settings": {}
-        },
-        "b2": {
-          "type": "image",
-          "settings": {}
-        },
-        "b3": {
-          "type": "image",
-          "settings": {}
-        },
-        "b4": {
-          "type": "image",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3",
-        "b4"
-      ]
-    },
-    "ct_faq_8": {
+    "faq": {
       "type": "ct-faq",
       "settings": {},
       "blocks": {
@@ -224,27 +397,49 @@
         "b5"
       ]
     },
-    "ct_cta_banner_9": {
+    "final_cta": {
       "type": "ct-cta-banner",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Ready when you are",
+        "heading": "Let's get you started today",
+        "subheading": "Everything you need is ready to go. Take the next step and we'll handle the rest, with help on hand whenever you need it.",
+        "button_label": "Get started",
+        "button_url": "",
+        "button2_label": "Learn more",
+        "button2_url": "",
+        "tint": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     },
-    "ct_email_signup_10": {
+    "email_signup": {
       "type": "ct-email-signup",
-      "settings": {}
+      "settings": {
+        "eyebrow": "JOIN THE LIST",
+        "heading": "Join the list",
+        "body": "Get product updates, launch notes, and store news by email. Unsubscribe anytime.",
+        "placeholder": "you@email.com",
+        "button_label": "Sign up",
+        "disclaimer": "We will only use your email for store updates and offers you choose to receive.",
+        "padding_top": 80,
+        "padding_bottom": 88
+      }
     }
   },
   "order": [
-    "ct_hero_0",
-    "ct_icon_columns_1",
-    "ct_feature_blocks_2",
-    "ct_before_after_3",
-    "ct_stats_4",
+    "hero",
+    "trust_bar",
+    "before_after",
+    "pillars",
+    "features",
+    "marquee",
+    "gallery",
+    "comparison",
+    "stats",
     "featured_products",
-    "ct_reviews_5",
-    "ct_comparison_6",
-    "ct_gallery_7",
-    "ct_faq_8",
-    "ct_cta_banner_9",
-    "ct_email_signup_10"
+    "reviews",
+    "faq",
+    "final_cta",
+    "email_signup"
   ]
 }
