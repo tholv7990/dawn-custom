@@ -1198,24 +1198,6 @@
   color: var(--ct-text-2);
 }
 
-.gs-feature-head {
-  margin-bottom: var(--ct-section-sub-gap);
-  text-align: center;
-}
-
-.gs-feature-head .gs-section-heading {
-  margin: 0;
-  font-size: clamp(26px, 3.8vw, 34px);
-  line-height: 1.15;
-}
-
-.gs-feature-head .gs-section-sub {
-  max-width: 760px;
-  margin: var(--ct-grid-gap) auto 0;
-  font-size: clamp(15px, 1.7vw, 17px);
-  line-height: 1.45;
-}
-
 .gs-feature {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -2,10 +2,8 @@
 
 <section class="gs-scope gs-section section-{{ section.id }}-padding">
   <div class="gs-wrap">
-    <div class="gs-feature-head">
-      <h2 class="gs-section-heading">{{ section.settings.heading }}</h2>
-      <p class="gs-section-sub">{{ section.settings.subheading }}</p>
-    </div>
+    <h2 class="gs-section-heading">{{ section.settings.heading }}</h2>
+    <p class="gs-section-sub">{{ section.settings.subheading }}</p>
     {%- for block in section.blocks -%}
       {%- assign media_ratio = '4 / 3' -%}
       {%- if block.settings.video != blank and block.settings.video.aspect_ratio != blank -%}
