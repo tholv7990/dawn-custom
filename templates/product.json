@@ -1,99 +1,33 @@
 {
   "sections": {
     "main": {
-      "type": "main-product",
+      "type": "ct-product-buy",
+      "settings": {},
       "blocks": {
-        "vendor": {
-          "type": "text",
+        "tier_1": {
+          "type": "tier",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
+            "quantity": 1
           }
         },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
-        "savings_line": {
-          "type": "savings_line",
+        "tier_2": {
+          "type": "tier",
           "settings": {
-            "prefix": "You save",
-            "show_amount": true,
-            "show_percent": true,
-            "style": "text"
+            "quantity": 2
           }
         },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {}
-        },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "settings": {}
-        },
-        "quantity_breaks": {
-          "type": "quantity_breaks",
+        "tier_3": {
+          "type": "tier",
           "settings": {
-            "heading": "Save when you buy more",
-            "layout": "normal",
-            "enable_per_unit": false,
-            "button_label": "Add to cart",
-            "tier_2_badge": "Save more",
-            "tier_2_badge_style": "success",
-            "tier_3_badge": "Best value",
-            "tier_3_badge_style": "gold"
-          }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {}
-        },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
-        "sticky_atc": {
-          "type": "sticky_atc",
-          "settings": {
-            "show_image": true,
-            "show_title": true,
-            "show_price": true,
-            "show_save_badge": true,
-            "button_label": "Add to cart",
-            "save_label": "Save"
-          }
-        },
-        "bundle_builder": {
-          "type": "bundle",
-          "settings": {
-            "mode": "builder",
-            "heading": "Build your bundle",
-            "button_label": "Add bundle to cart"
+            "quantity": 3
           }
         }
       },
       "block_order": [
-        "vendor",
-        "title",
-        "price",
-        "savings_line",
-        "variant_picker",
-        "quantity_selector",
-        "quantity_breaks",
-        "buy_buttons",
-        "bundle_builder",
-        "description",
-        "sticky_atc"
-      ],
-      "settings": {
-        "gallery_layout": "thumbnail_slider",
-        "media_size": "large",
-        "mobile_thumbnails": "show"
-      }
+        "tier_1",
+        "tier_2",
+        "tier_3"
+      ]
     },
     "trust_strip_1": {
       "type": "ct-trust-bar",
@@ -329,6 +263,10 @@
         "padding_top": 60,
         "padding_bottom": 60
       }
+    },
+    "sticky_atc": {
+      "type": "ct-sticky-atc",
+      "settings": {}
     }
   },
   "order": [
@@ -340,6 +278,7 @@
     "shipping",
     "trust_strip_2",
     "reviews",
-    "final_cta"
+    "final_cta",
+    "sticky_atc"
   ]
 }
