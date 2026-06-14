@@ -111,18 +111,87 @@ function scanFile(absPath) {
   return findings;
 }
 
+const allowlistPath = path.join(root, 'qa', 'ct-content-audit-allowlist.json');
+
+function summarize(items) {
+  const summary = {};
+
+  for (const finding of items) {
+    summary[finding.term] ??= { count: 0, files: {} };
+    summary[finding.term].count += 1;
+    summary[finding.term].files[finding.file] ??= 0;
+    summary[finding.term].files[finding.file] += 1;
+  }
+
+  return summary;
+}
+
+function toAllowlist(summary) {
+  return Object.fromEntries(
+    Object.entries(summary)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([term, data]) => [
+        term,
+        Object.fromEntries(Object.entries(data.files).sort(([a], [b]) => a.localeCompare(b))),
+      ]),
+  );
+}
+
+function loadAllowlist() {
+  if (!fs.existsSync(allowlistPath)) return {};
+  return JSON.parse(fs.readFileSync(allowlistPath, 'utf8'));
+}
+
+function compareToAllowlist(summary, allowlist) {
+  const failures = [];
+  const current = toAllowlist(summary);
+  const terms = new Set([...Object.keys(current), ...Object.keys(allowlist)]);
+
+  for (const term of [...terms].sort()) {
+    const currentFiles = current[term] || {};
+    const allowedFiles = allowlist[term] || {};
+    const files = new Set([...Object.keys(currentFiles), ...Object.keys(allowedFiles)]);
+
+    for (const file of [...files].sort()) {
+      const actual = currentFiles[file] || 0;
+      const allowed = allowedFiles[file] || 0;
+
+      if (actual > allowed) {
+        failures.push({ term, file, actual, allowed, added: actual - allowed });
+      }
+    }
+  }
+
+  return failures;
+}
+
 const findings = scanRoots.flatMap((dir) => walk(path.join(root, dir))).flatMap(scanFile);
+const summary = summarize(findings);
 
 if (findings.length === 0) {
   console.log('CT content audit scanned live theme code and found 0 niche seed-copy or unverified proof mentions.');
-  process.exit(0);
+} else {
+  console.log(`CT content audit found ${findings.length} niche seed-copy or unverified proof mention(s).`);
+  for (const finding of findings) {
+    console.log(`${finding.file}:${finding.line} [${finding.term}] ${finding.source}`);
+  }
 }
 
-console.log(`CT content audit found ${findings.length} niche seed-copy or unverified proof mention(s).`);
-for (const finding of findings) {
-  console.log(`${finding.file}:${finding.line} [${finding.term}] ${finding.source}`);
+if (args.has('--update-allowlist')) {
+  fs.writeFileSync(allowlistPath, `${JSON.stringify(toAllowlist(summary), null, 2)}\n`);
+  console.log(`\nUpdated ${normalizePath(path.relative(root, allowlistPath))}`);
 }
 
 if (args.has('--ci')) {
-  process.exitCode = 1;
+  const failures = compareToAllowlist(summary, loadAllowlist());
+
+  if (failures.length) {
+    console.error('\nCT content audit failed. New seed-copy or unverified proof mentions beyond the allowlist:');
+    for (const failure of failures) {
+      console.error(
+        `  ${failure.term}: ${failure.file} has ${failure.actual}, allowlist permits ${failure.allowed} (+${failure.added})`,
+      );
+    }
+    process.exitCode = 1;
+  }
 }

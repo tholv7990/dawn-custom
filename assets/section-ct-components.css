@@ -827,6 +827,11 @@
   border-top: 0;
 }
 
+.gs-trust-marquee--ink {
+  background: var(--ct-espresso);
+  color: var(--ct-on-accent);
+}
+
 .gs-marquee-track {
   display: inline-flex;
   align-items: center;

@@ -1,6 +1,6 @@
 {% render 'ct-section-padding', section: section %}
 
-<div class="gs-scope gs-trust-marquee section-{{ section.id }}-padding">
+<div class="gs-scope gs-trust-marquee gs-trust-marquee--{{ section.settings.skin }} section-{{ section.id }}-padding">
   <div class="gs-marquee-track" style="--ct-marquee-duration: {{ section.settings.speed }}s;">
     {%- for repeat in (1..6) -%}
       <div class="gs-marquee-set"{% if repeat > 1 %} aria-hidden="true"{% endif %}>
@@ -33,6 +33,16 @@
 {
   "name": "Trust marquee",
   "settings": [
+    {
+      "type": "select",
+      "id": "skin",
+      "label": "Band color",
+      "options": [
+        { "value": "accent", "label": "Accent" },
+        { "value": "ink", "label": "Ink (dark)" }
+      ],
+      "default": "accent"
+    },
     { "type": "range", "id": "speed", "label": "Speed", "min": 30, "max": 90, "step": 5, "default": 30 },
     { "type": "header", "content": "Section padding" },
     {

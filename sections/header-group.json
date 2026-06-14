@@ -3,25 +3,35 @@
   "type": "header",
   "sections": {
     "announcement": {
-      "type": "ct-announcement-bars",
+      "type": "ct-trust-marquee",
       "blocks": {
         "b1": {
-          "type": "top_message",
+          "type": "message",
           "settings": {
-            "icon": "&#128666;",
-            "text": "Free shipping on qualifying orders"
+            "icon": "&#9733;",
+            "text": "Free US shipping"
           }
         },
         "b2": {
-          "type": "bottom_message",
+          "type": "message",
           "settings": {
-            "icon": "&#8634;",
-            "text": "Easy returns"
+            "icon": "&#9733;",
+            "text": "90-day returns"
+          }
+        },
+        "b3": {
+          "type": "message",
+          "settings": {
+            "icon": "&#9733;",
+            "text": "1-year warranty"
           }
         }
       },
-      "block_order": ["b1", "b2"],
-      "settings": {}
+      "block_order": ["b1", "b2", "b3"],
+      "settings": {
+        "skin": "ink",
+        "speed": 45
+      }
     },
     "header": {
       "type": "header",
