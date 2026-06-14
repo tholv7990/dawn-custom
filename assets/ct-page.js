@@ -143,6 +143,19 @@
         imgEl.src = fullSrc;
       }
       lightboxStage.appendChild(imgEl);
+
+      // Warm the neighbouring slides' full images so the NEXT swipe paints from
+      // cache instead of waiting on a fresh 2200px download (the swipe lag).
+      [lightboxIndex - 1, lightboxIndex + 1].forEach(function (neighbor) {
+        if (neighbor < 0 || neighbor >= galleryTriggers.length) return;
+        var nt = galleryTriggers[neighbor];
+        var nimg = nt.querySelector('img');
+        var nsrc = nt.dataset.gsFullImage || (nimg ? nimg.currentSrc || nimg.src : '');
+        if (nsrc) {
+          var warm = new Image();
+          warm.src = nsrc;
+        }
+      });
     }
 
     function moveLightbox(direction) {
