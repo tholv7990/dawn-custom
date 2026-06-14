@@ -1,0 +1,122 @@
+/* section-ct-footer.css — Minimals dark footer skin over Dawn's native footer.
+   Flips the footer dark by overriding the color-scheme vars on .footer (reuses
+   Dawn's --color-* plumbing), then tweaks headings/links/newsletter/social/bottom
+   bar. Payment icons stay Dawn-native (payment_type_svg_tag full-color).
+   Presentation only — newsletter form, social-icons, localization, policies and
+   all logic untouched. Colours come from --ct-footer-* tokens (css-variables);
+   remove this stylesheet load and the footer falls back to Dawn's light scheme. */
+
+/* ---- Flip dark (element+class beats .color-scheme-N) ---- */
+footer.footer {
+  --color-background: var(--ct-footer-dark-rgb);
+  --color-foreground: var(--ct-footer-on-rgb);
+  background-color: rgb(var(--color-background));
+  color: var(--ct-footer-on-66);
+  margin-top: 0;
+}
+footer.footer.gradient {
+  background: rgb(var(--color-background));
+}
+
+/* ---- Column headings (mono, uppercase) ---- */
+.footer-block__heading {
+  font-family: var(--ct-font-mono);
+  font-size: var(--ct-text-xs);
+  font-weight: var(--ct-fw-medium);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ct-footer-on);
+}
+
+/* ---- Brand block ---- */
+.footer-block__brand-info .rte {
+  color: var(--ct-footer-on-50);
+  font-size: var(--ct-text-sm);
+}
+
+/* ---- Link lists ---- */
+.footer-block__details-content .list-menu__item--link,
+.footer-block__details-content a {
+  color: var(--ct-footer-on-55);
+  font-size: var(--ct-text-sm);
+}
+.footer-block__details-content .list-menu__item--link:hover,
+.footer-block__details-content a:hover {
+  color: var(--ct-footer-on);
+}
+
+/* ---- Newsletter form (dark) ---- */
+.footer-block__newsletter .field {
+  border: 1px solid var(--ct-footer-on-18);
+  border-radius: var(--ct-r-md);
+  background: var(--ct-footer-on-04);
+  overflow: hidden;
+}
+.footer-block__newsletter .field__input {
+  background: transparent;
+  border: 0;
+  color: var(--ct-footer-on);
+  box-shadow: none;
+}
+.footer-block__newsletter .field__input::placeholder {
+  color: var(--ct-footer-on-40);
+}
+.footer-block__newsletter .field__label {
+  color: var(--ct-footer-on-40);
+}
+/* Brand accent is near-black on this brand, so it would vanish on the dark
+   footer — brighten to white on hover instead of the spec's accent hover. */
+.footer-block__newsletter .newsletter-form__button {
+  color: var(--ct-footer-on-70);
+}
+.footer-block__newsletter .newsletter-form__button:hover {
+  color: var(--ct-footer-on);
+}
+.footer-block__newsletter .newsletter-form__message {
+  color: var(--ct-footer-on);
+}
+
+/* ---- Social icons ---- */
+.footer__list-social .list-social__link {
+  color: var(--ct-footer-on-70);
+}
+.footer__list-social .list-social__link:hover {
+  color: var(--ct-footer-on);
+}
+
+/* ---- Bottom bar ---- */
+.footer__content-bottom {
+  border-top: 1px solid var(--ct-footer-on-10);
+  margin-top: var(--ct-space-5);
+}
+.footer__content-bottom-wrapper {
+  padding-top: var(--ct-space-4);
+}
+.footer__copyright,
+.copyright__content {
+  color: var(--ct-footer-on-40);
+  font-size: var(--ct-text-xs);
+}
+.footer__copyright a,
+.policies a {
+  color: var(--ct-footer-on-40);
+}
+.footer__copyright a:hover,
+.policies a:hover {
+  color: var(--ct-footer-on);
+}
+
+/* ---- Localization selectors (dark-friendly) ---- */
+.footer__localization .localization-form__select,
+.footer__localization .disclosure__button {
+  color: var(--ct-footer-on-70);
+  border-color: var(--ct-footer-on-18);
+}
+.footer__localization .caption-large {
+  color: var(--ct-footer-on-50);
+}
+
+/* ---- Payment icons: keep Dawn native full-colour; spacing only ---- */
+.footer__payment {
+  margin-top: var(--ct-space-2);
+}
