@@ -1,0 +1,125 @@
+/* component-ct-addons.css - opt-in cross-sell add-on cards under the buy box. */
+.ct-addons {
+  margin-top: var(--ct-space-5);
+}
+
+.ct-addons__heading {
+  margin: 0 0 var(--ct-space-3);
+  font-weight: var(--ct-fw-bold);
+  font-size: var(--ct-text-md);
+  color: var(--ct-text);
+}
+
+.ct-addons__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--ct-space-3);
+}
+
+.ct-addons__item {
+  margin: 0;
+}
+
+.ct-addon {
+  display: flex;
+  align-items: center;
+  gap: var(--ct-space-3);
+  padding: var(--ct-space-3);
+  border: 1px solid var(--ct-card-border);
+  border-radius: var(--ct-r-md);
+  background: var(--ct-card-bg);
+}
+
+.ct-addon__media {
+  position: relative;
+  flex: 0 0 64px;
+  width: 64px;
+}
+
+.ct-addon__img {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--ct-r-sm);
+  overflow: hidden;
+}
+
+.ct-addon__badge {
+  position: absolute;
+  top: calc(-1 * var(--ct-space-2));
+  left: calc(-1 * var(--ct-space-1));
+  padding: var(--ct-space-1) var(--ct-space-2);
+  font-size: var(--ct-text-xs);
+  font-weight: var(--ct-fw-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ct-on-accent);
+  background: var(--ct-action);
+  border-radius: var(--ct-r-pill);
+}
+
+.ct-addon__badge--urgency {
+  background: var(--ct-urgency);
+}
+
+.ct-addon__badge--gold {
+  background: var(--ct-rating);
+  color: var(--ct-text);
+}
+
+.ct-addon__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ct-space-1);
+}
+
+.ct-addon__title {
+  margin: 0;
+  font-weight: var(--ct-fw-semi);
+  font-size: var(--ct-text-base);
+  line-height: var(--ct-leading-tight);
+  color: var(--ct-text);
+  text-decoration: none;
+}
+
+.ct-addon__title:hover {
+  text-decoration: underline;
+}
+
+.ct-addon__price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--ct-space-2);
+}
+
+.ct-addon__price-now {
+  font-weight: var(--ct-fw-bold);
+  color: var(--ct-text);
+}
+
+.ct-addon__price-was {
+  color: var(--ct-text-2);
+}
+
+.ct-addon__save {
+  color: var(--ct-success);
+  font-weight: var(--ct-fw-semi);
+  font-size: var(--ct-text-sm);
+}
+
+.ct-addon__form {
+  margin-top: var(--ct-space-2);
+}
+
+.ct-addon__variant {
+  width: 100%;
+  margin-bottom: var(--ct-space-2);
+}
+
+.ct-addon__add {
+  width: 100%;
+}

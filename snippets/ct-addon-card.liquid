@@ -1,0 +1,68 @@
+{%- comment -%}
+  snippets/ct-addon-card.liquid - opt-in cross-sell add-on card.
+  Commerce goes through Dawn's <product-form> pipeline (G-07): each card adds
+  its own product to cart. The host section must load assets/product-form.js
+  (main-product already does). Renders nothing without a product.
+
+  Params:
+    addon_product - product object (required)
+    section_id    - host section id (for section rendering / ATC)
+    badge         - optional badge text (e.g. "Best-selling combo")
+    badge_style   - accent (default) | urgency | gold
+    savings       - optional savings override text
+{%- endcomment -%}
+{%- if addon_product != blank -%}
+  {%- liquid
+    assign a_var = addon_product.selected_or_first_available_variant
+    assign a_form = 'ct-addon-form-' | append: addon_product.id
+    assign a_style = badge_style | default: 'accent'
+    assign a_multi = false
+    if addon_product.has_only_default_variant == false
+      assign a_multi = true
+    endif
+  -%}
+  <div class="ct-addon">
+    <div class="ct-addon__media">
+      {% render 'ct-media-slot', image: addon_product.featured_image, class: 'ct-addon__img', ratio: '1 / 1', label: addon_product.title %}
+      {%- if badge != blank -%}
+        <span class="ct-addon__badge ct-addon__badge--{{ a_style }}">{{ badge | escape }}</span>
+      {%- endif -%}
+    </div>
+    <div class="ct-addon__body">
+      <a class="ct-addon__title" href="{{ addon_product.url }}">{{ addon_product.title | escape }}</a>
+      <div class="ct-addon__price">
+        <span class="ct-addon__price-now">{{ a_var.price | money }}</span>
+        {%- if a_var.compare_at_price > a_var.price -%}
+          <s class="ct-addon__price-was">{{ a_var.compare_at_price | money }}</s>
+        {%- endif -%}
+        {%- if savings != blank -%}
+          <span class="ct-addon__save">{{ savings | escape }}</span>
+        {%- endif -%}
+      </div>
+      <product-form class="product-form ct-addon__form" data-section-id="{{ section_id }}" data-hide-errors="true">
+        {%- form 'product', addon_product, id: a_form, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+          {%- if a_multi -%}
+            <select name="id" class="product-variant-id ct-addon__variant" aria-label="{{ addon_product.title | escape }}">
+              {%- for v in addon_product.variants -%}
+                <option value="{{ v.id }}"{% unless v.available %} disabled{% endunless %}>
+                  {{ v.title }}{% unless v.available %} - {{ 'products.product.sold_out' | t }}{% endunless %}
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ a_var.id }}" class="product-variant-id"{% unless a_var.available %} disabled{% endunless %}>
+          {%- endif -%}
+          <button
+            type="submit"
+            name="add"
+            class="ct-addon__add button button--secondary"
+            {% unless a_var.available %}disabled aria-disabled="true"{% endunless %}
+          >
+            <span>{{ 'products.product.add_to_cart' | t }}</span>
+            {% render 'loading-spinner' %}
+          </button>
+        {%- endform -%}
+      </product-form>
+    </div>
+  </div>
+{%- endif -%}
