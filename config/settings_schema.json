@@ -1520,8 +1520,8 @@
         "type": "text",
         "id": "ct_free_shipping_threshold_cents",
         "label": "Free shipping threshold",
-        "info": "Shop-currency subunits (amount x 100). Use 0 to disable. Seeded with a demo value — set your real free-shipping threshold here.",
-        "default": "50000000"
+        "info": "Shop-currency subunits (amount x 100). Use 0 to disable. Set your real free-shipping threshold here to show the cart progress bar.",
+        "default": "0"
       },
       {
         "type": "text",

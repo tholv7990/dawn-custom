@@ -145,6 +145,52 @@ img { max-width: 100%; }
 .button.is-success { background: var(--ct-success) !important; }
 @keyframes ct-spin { to { transform: rotate(360deg); } }
 
+/* ---- ct-btn: token-driven button component ----
+   Used by the customer account sections (login/register/reset/activate/addresses)
+   and ct-styleguide. The markup commits to these classes but no rule defined them,
+   so --outlined/--soft/--full/--sm were inert and Dawn's `.customer button` (0-1-1)
+   fallback rendered every variant as a solid fill. Modifiers use the doubled-class
+   form (.ct-btn.ct-btn--x, 0-2-0) so they win over `.customer button` without a
+   `.customer` scope, and --outlined sets its own border because `.customer button`
+   forces border:0. */
+.ct-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ct-space-2);
+  min-height: var(--ct-btn-min-height);
+  padding: 0 var(--ct-space-5);
+  border: var(--ct-btn-border-width) solid transparent;
+  border-radius: var(--ct-btn-radius);
+  font-family: var(--ct-font-body);
+  font-weight: var(--ct-fw-semi);
+  font-size: var(--ct-text-base);
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--ct-dur-base) var(--ct-ease-out),
+              transform var(--ct-dur-fast) var(--ct-ease-out);
+}
+.ct-btn:hover { transform: translateY(-1px); }
+.ct-btn.ct-btn--primary { background: var(--ct-btn-bg); color: var(--ct-btn-text); }
+.ct-btn.ct-btn--primary:hover { background: var(--ct-btn-bg-hover); }
+.ct-btn.ct-btn--outlined {
+  background: transparent;
+  color: var(--ct-action);
+  border: 1.5px solid var(--ct-action-border);
+}
+.ct-btn.ct-btn--outlined:hover { background: var(--ct-action-tint); }
+.ct-btn.ct-btn--soft { background: var(--ct-action-tint); color: var(--ct-action-hover); }
+.ct-btn.ct-btn--soft:hover { background: var(--ct-action-border); }
+.ct-btn.ct-btn--full { width: 100%; }
+.ct-btn.ct-btn--sm {
+  min-width: 0;
+  min-height: var(--ct-touch);
+  padding: 0 var(--ct-space-4);
+  font-size: var(--ct-text-sm);
+}
+
 /* ---- ct-field: floating-label wrapper (visual only; never replaces Dawn form logic) ---- */
 .ct-field { position: relative; margin-bottom: var(--ct-space-3); }
 .ct-field__input {
