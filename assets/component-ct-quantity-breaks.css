@@ -83,7 +83,7 @@
   position: absolute;
   top: 0;
   right: var(--ct-space-4);
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotate(8deg);
   z-index: 1;
   padding: var(--ct-space-1) var(--ct-space-3);
   font-size: var(--ct-text-xs);
@@ -92,7 +92,7 @@
   text-transform: uppercase;
   color: var(--ct-on-accent);
   background: var(--ct-action);
-  border-radius: var(--ct-r-pill);
+  border-radius: var(--ct-r-sm);
   box-shadow: var(--ct-shadow-sm);
 }
 
