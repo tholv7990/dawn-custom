@@ -113,18 +113,36 @@
       if (!lightboxStage || !galleryTriggers.length) return;
       lightboxIndex = Math.max(0, Math.min(galleryTriggers.length - 1, index));
       var trigger = galleryTriggers[lightboxIndex];
-      var src = trigger.dataset.gsFullImage;
+      var fullSrc = trigger.dataset.gsFullImage;
       var image = trigger.querySelector('img');
-      if (!src && image) src = image.currentSrc || image.src;
-      if (!src) return;
+      // The gallery thumb the user just clicked is already decoded in-browser;
+      // reuse it for an instant paint, then upgrade to the hi-res file. Without
+      // this the stage stayed blank while the 2200px image downloaded (the lag).
+      var placeholder = image ? image.currentSrc || image.src : '';
+      if (!fullSrc) fullSrc = placeholder;
+      if (!fullSrc) return;
       lightboxStage.textContent = '';
       lightboxImage = document.createElement('img');
-      lightboxImage.loading = 'lazy';
-      lightboxImage.width = 1200;
-      lightboxImage.height = 1200;
-      lightboxImage.src = src;
+      // Eager + high priority: the user explicitly opened this image, so fetch
+      // it now instead of deferring it like a lazy below-the-fold image.
+      lightboxImage.loading = 'eager';
+      lightboxImage.decoding = 'async';
+      lightboxImage.setAttribute('fetchpriority', 'high');
       lightboxImage.alt = image ? image.alt || '' : '';
-      lightboxStage.appendChild(lightboxImage);
+      var imgEl = lightboxImage;
+      if (placeholder && placeholder !== fullSrc) {
+        imgEl.src = placeholder;
+        var hiRes = new Image();
+        hiRes.onload = function () {
+          // Only upgrade if this slide is still the one on screen (guards fast
+          // prev/next navigation from swapping in a stale hi-res image).
+          if (lightboxImage === imgEl) imgEl.src = fullSrc;
+        };
+        hiRes.src = fullSrc;
+      } else {
+        imgEl.src = fullSrc;
+      }
+      lightboxStage.appendChild(imgEl);
     }
 
     function moveLightbox(direction) {
