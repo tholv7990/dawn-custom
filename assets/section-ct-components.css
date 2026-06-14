@@ -81,21 +81,25 @@
 .gs-lightbox__stage {
   display: grid;
   place-items: center;
-  /* Fixed square box: the popup keeps ONE size, so swiping between images of
-     different shapes never resizes/jumps the popup. The image fits inside it
-     via object-fit: contain (off-square images letterbox on the dark overlay). */
+  /* Fixed-size VISIBLE card: the popup keeps ONE constant frame, so swiping only
+     swaps the picture inside it. The box was previously transparent, so a
+     contained image of a different shape looked like the popup resized; giving
+     the box the same media-slot background the gallery uses makes the frame
+     constant and any off-shape image just letterboxes inside it. */
   width: min(92vh, 94vw, 960px);
   aspect-ratio: 1 / 1;
   max-width: 94vw;
   max-height: 92vh;
+  background: var(--ct-media-slot-bg);
+  border-radius: var(--ct-r-md);
+  overflow: hidden;
+  box-shadow: var(--ct-shadow-lg);
 }
 
 .gs-lightbox__stage img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: var(--ct-r-md);
-  background: transparent;
 }
 
 .gs-lightbox__close {
