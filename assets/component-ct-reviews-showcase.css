@@ -39,7 +39,7 @@
 .ct-reviews-showcase__quotes {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--ct-space-4);
+  gap: var(--ct-space-3);
   margin: 0;
   padding: 0;
   list-style: none;

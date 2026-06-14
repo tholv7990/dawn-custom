@@ -33,7 +33,6 @@
 /* Page: responsive multi-column. */
 .ct-cart-upsells-rail--page .ct-cart-upsells-rail__list {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--ct-space-5);
 }
 
 @media screen and (min-width: 750px) {
