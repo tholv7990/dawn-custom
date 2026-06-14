@@ -10,6 +10,7 @@
     assign hero_rating_count = hero_product.metafields.reviews.rating_count.value
   endif
 
+  assign outline_text = section.settings.heading_outline | strip
   assign outline_lines = section.settings.heading_outline | escape | newline_to_br | split: '<br />'
 -%}
 
@@ -21,7 +22,7 @@
           <p class="ct-hero-bento__eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {%- endif -%}
 
-        {%- if outline_lines.size > 0 or section.settings.heading_highlight != blank -%}
+        {%- if outline_text != blank or section.settings.heading_highlight != blank -%}
           <h1 class="ct-hero-bento__heading">
             {%- for line in outline_lines -%}
               {%- assign clean = line | strip -%}
